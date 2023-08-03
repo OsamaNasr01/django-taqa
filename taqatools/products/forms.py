@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Category, Product, Brand, Price, Spec, SpecValue
+from .models import Category, Product, Brand, Price, Spec, NumSpecs, TxtSpecs, BoolSpecs
 
 
 
@@ -68,7 +68,22 @@ class SpecForm(forms.ModelForm):
         self.fields['type'].widget.attrs.update({'class': 'form-control'})
         self.fields['unit'].widget.attrs.update({'class': 'form-control'})
 
-class SpecValueForm(forms.ModelForm):
+
+class NumSpecForm(forms.ModelForm):
     class Meta:
-        model = SpecValue
-        fields = ('num', 'text', 'bo')
+        model = NumSpecs
+        fields = ('value', )
+
+
+
+class TxtSpecForm(forms.ModelForm):
+    class Meta:
+        model = TxtSpecs
+        fields = ('value', )
+
+
+
+class BoolSpecForm(forms.ModelForm):
+    class Meta:
+        model = BoolSpecs
+        fields = ('value', )

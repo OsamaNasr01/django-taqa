@@ -127,8 +127,17 @@ class Spec(models.Model):
     category = models.ForeignKey(Category, related_name='specs', on_delete=models.CASCADE)
 
 
-class SpecValue(models.Model):
-    num = models.FloatField()
-    text = models.CharField(max_length=100)
-    bo = models.BooleanField()
-    spec = models.ForeignKey(Spec, related_name='numeric', on_delete=models.CASCADE)
+class NumSpecs(models.Model):
+    value = models.FloatField()
+    product = models.ForeignKey(Product, related_name='num_spec', on_delete=models.CASCADE)
+    spec = models.ForeignKey(Spec, related_name='num_spec', on_delete=models.CASCADE)
+
+class TxtSpecs(models.Model):
+    value = models.CharField(max_length=100)
+    product = models.ForeignKey(Product, related_name='txt_spec', on_delete=models.CASCADE)
+    spec = models.ForeignKey(Spec, related_name='txt_spec', on_delete=models.CASCADE)
+
+class BoolSpecs(models.Model):
+    value = models.BooleanField(default=False)
+    product = models.ForeignKey(Product,  related_name='bool_spec', on_delete=models.CASCADE)
+    spec = models.ForeignKey(Spec, related_name='bool_spec', on_delete=models.CASCADE)

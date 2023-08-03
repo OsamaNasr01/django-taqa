@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Category, Product, Brand, Price
-from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, SpecValueForm
+from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, NumSpecForm, TxtSpecForm, BoolSpecForm
 from django.contrib import messages
 
 # Create your views here.
@@ -101,26 +101,31 @@ def add_product(request):
             price.save()
             specs = category.specs.all()
             for spec in specs:
-                spec_input_type = request.POST.get(spec.name, None)
-                print(spec_input_type)
-                # if spec_input_type is int:
-                #     spec_form = NumericSpecForm(request.POST)
-                #     spec_value = spec_form.save(commit=False)
-                #     spec_value.value = request.POST.get(spec.name)
-                #     spec_value.spec = spec
-                #     spec_value.save()
-                # elif spec_input_type is str:
-                #     spec_form = TextSpecForm(request.POST)
-                #     spec_value = spec_form.save(commit=False)
-                #     spec_value.value = request.POST.get(spec.name)
-                #     spec_value.spec = spec
-                #     spec_value.save()
-                # elif spec_input_type is bool:
-                #     spec_form = BooleanSpecForm(request.POST)
-                #     spec_value = spec_form.save(commit=False)
-                #     spec_value.value = request.POST.get(spec.name)
-                #     spec_value.spec = spec
-                #     spec_value.save()                        
+                spec_type = spec.type
+                if spec_type == 1:
+                    spec_form = NumSpecForm(request.POST)
+                    spec_value = spec_form.save(commit=False)
+                    spec_value.value = request.POST.get(spec.name)
+                    spec_value.spec = spec
+                    spec_value.product = productt
+                    spec_value.save()
+                if spec_type == 2:
+                    spec_form = TxtSpecForm(request.POST)
+                    spec_value = spec_form.save(commit=False)
+                    spec_value.value = request.POST.get(spec.name)
+                    spec_value.spec = spec
+                    spec_value.product = productt
+                    spec_value.save()
+                if spec_type == 3:
+                    spec_form = BoolSpecForm(request.POST)
+                    spec_value = spec_form.save(commit=False)
+                    if request.POST.get(spec.name):
+                        spec_value.value = True
+                    else:
+                        spec_value.value = False
+                    spec_value.spec = spec
+                    spec_value.product = productt
+                    spec_value.save()                       
             messages.success(request, ('The Product has been Added Successfully!'))
             return product(request, productt.slug)
         else:
