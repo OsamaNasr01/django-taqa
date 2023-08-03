@@ -6,7 +6,7 @@ from django.contrib import messages
 # Create your views here.
 
 def p_category_list(request):
-    categories = Category.objects.all()
+    categories = Category.objects.filter(parent_id = 0)
     form = AddCategoryForm()
     return render(request, 'products/categories/p_category_list.html', {
         'categories':categories,
@@ -158,16 +158,9 @@ def product(request, slug):
 def update_product(request, slug):
     productt  = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
-        form = AddProductForm(request.POST, instance=product)
+        form = AddProductForm(request.POST, instance=productt)
         if form.is_valid():
             form.save()
-            form = AddProductForm(instance = product)
-            price_form = PriceForm(instance = product.prices.last())
-            context = {
-                'product' : productt,
-                'form' : form,
-                'price_form' : price_form,
-                }
             messages.success(request, ('The Product Category has been Updated Successfully!'))
             return product(request, productt.slug)
     else:

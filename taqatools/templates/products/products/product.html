@@ -57,30 +57,38 @@
   
 
     <div class="shadow p-3 mb-5 bg-white rounded">
-        <h3>
-            <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ product.name  }}
-        </h3>
-        <h6>
-          Price : {{ price }}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
-            Update Price
-          </button>
-        </h6>
+      <h3>
+          <!-- {{member.first_name}} {{ member.last_name }} -->
+          {{ product.name  }}
+      </h3>
+      <h6>
+        Price : {{ price }}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
+          Update Price
+        </button>
+      </h6>
+      <ul>
+        <li>
+          Orignal Price : {{ original_price }}
+        </li>
+        <li>
+          Discount : {{ discount }}%
+        </li>
+        <li>
+          Last updated at: {{ product.prices.last.created_at|naturaltime }}
+        </li>
+      </ul>
+      <p>description : {{ product.description }}</p>
+      <p>Brand : {{ product.brand.name }}</p>
+      <p>category : {{ product.category }}</p>
+        
+      <div>
         <ul>
-          <li>
-            Orignal Price : {{ original_price }}
-          </li>
-          <li>
-            Discount : {{ discount }}%
-          </li>
-          <li>
-            Last updated at: {{ product.prices.last.created_at|naturaltime }}
-          </li>
+          {% for spec in product.num_spec.all%}
+            <li>{{ spec.spec.name }}: {{ spec.value }}  {{ spec.spec.unit }}</li>
+          {% endfor %}
         </ul>
-        <p>description : {{ product.description }}</p>
-        <p>Brand : {{ product.brand.name }}</p>
-        <p>category : {{ product.category }}</p>
+      </div>
     </div>
 
   
