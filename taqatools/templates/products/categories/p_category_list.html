@@ -27,16 +27,20 @@
     </div>
   </div>
   <br><br>
-
-    {% for category in categories %}
-        <a href="{% url 'p_category_profile' category.slug %}" class="text-dark text-decoration-none">
-            <div class="shadow p-3 mb-5 bg-white rounded">
-                <h3>
-                    {{ category.name  }}
-                </h3>
-                <p>description : {{ category.description }}</p>
-                <a href="{% url 'update_p_category' category.slug %}" class="btn btn-primary">Update</a>
-            </div>
-        </a>
-    {% endfor %}
+  <div class="container">
+    <div class="row ">
+      {% for category in categories %}
+        <div class="col">
+          <a href="{% url 'p_category_profile' category.slug %}" class="text-dark text-decoration-none">
+              <div class="shadow p-3 mb-5 bg-white rounded">
+                  <h3>
+                      {{ category.name  }}
+                  </h3>
+                  <p>description : {{ category.description }}</p>
+              </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

@@ -120,6 +120,7 @@ def add_product(request):
                     spec_form = BoolSpecForm(request.POST)
                     spec_value = spec_form.save(commit=False)
                     if request.POST.get(spec.name):
+                        print(request.POST.get(spec.name))
                         spec_value.value = True
                     else:
                         spec_value.value = False

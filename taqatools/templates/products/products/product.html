@@ -87,6 +87,12 @@
           {% for spec in product.num_spec.all%}
             <li>{{ spec.spec.name }}: {{ spec.value }}  {{ spec.spec.unit }}</li>
           {% endfor %}
+          {% for spec in product.txt_spec.all%}
+            <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+          {% endfor %}
+          {% for spec in product.bool_spec.all%}
+            <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+          {% endfor %}
         </ul>
       </div>
     </div>

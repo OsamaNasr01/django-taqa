@@ -4,29 +4,7 @@
 
 {% block content %}
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-spec-modal">
-  Add Spec
-</button>
 
-<div class="modal fade" id="add-spec-modal" tabindex="-1" aria-labelledby="add-spec-modal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="add-spec-modal">+ Add spec</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{% url 'add_spec' %}" method="post" name="add_spec_form">
-          {% csrf_token %}
-          {{ spec_form.as_p }}
-          <input type="hidden" name="category_id" value="{{ category.id }}">
-          <button type="submit" class="btn btn-primary">+ Add spec</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-category-modal">
     Update 
   </button>
@@ -77,10 +55,48 @@
       </div>
     </div>
   </div>
+    <br><br>
+    
+    <div class="modal fade" id="add-spec-modal" tabindex="-1" aria-labelledby="add-spec-modal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add-spec-modal">+ Add spec</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'add_spec' %}" method="post" name="add_spec_form">
+              {% csrf_token %}
+              {{ spec_form.as_p }}
+              <input type="hidden" name="category_id" value="{{ category.id }}">
+              <button type="submit" class="btn btn-primary">+ Add spec</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <h3>
+            <!-- {{member.first_name}} {{ member.last_name }} -->
+            {{ category.name  }}
+        </h3>
+        <p>description : {{ category.description }}</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-spec-modal">
+          Add Spec
+        </button>
+        <p>Specifications:</p>
+        
+        {% for spec in category.specs.all %}
+          <ul>
+            <li>{{ spec.name }} {% if not spec.unit == None %} {{ spec.unit }} {% endif %}</li>
+          </ul>
+        {% endfor %}
+    </div>
   
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-category-modal">
       Add sub Category
-    </button>
+    </button><br><br>
 
     <div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true">
       <div class="modal-dialog">
@@ -101,35 +117,29 @@
         </div>
       </div>
     </div>
-    <br><br>
-        
-    <div class="shadow p-3 mb-5 bg-white rounded">
-        <h3>
-            <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ category.name  }}
-        </h3>
-        <p>description : {{ category.description }}</p>
-        <p>Specifications:</p>
-        
-        {% for spec in category.specs.all %}
-          <ul>
-            <li>{{ spec.name }} {% if not spec.unit == None %} {{ spec.unit }} {% endif %}</li>
-          </ul>
-        {% endfor %}
-    </div>
-    {% for sub in sub_categories %}
-        <a href="{% url 'p_category_profile' sub.slug %}" class="text-dark text-decoration-none">
+    <div class="container">
+      <div class="row">
+        {% if sub_categories  %}
+        {% for sub in sub_categories %}
+        <div class="col">
+          <a href="{% url 'p_category_profile' sub.slug %}" class="text-dark text-decoration-none">
             <div class="shadow p-3 mb-5 bg-white rounded">
-                
-                <div>
-                    
-                <h6>{{ sub.name }}</h6>
-                <p>description : {{ sub.description }}</p>
-                </div>
-                
+              <div>
+              <h6>{{ sub.name }}</h6>
+              <p>description : {{ sub.description }}</p>
+              </div>
+              
             </div>
-        </a>
-    {% endfor %}
+          </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col shadow p-3 mb-5 bg-white rounded ">
+          <h6>There is no sub categories in {{category.name}}</h6>
+        </div>
+        {% endif %}
+      </div>
+    </div>
 
 
 
