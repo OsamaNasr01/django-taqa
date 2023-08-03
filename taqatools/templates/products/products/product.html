@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %} {{product.name}} {% endblock %}
+
+{% block content %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-product-modal">
+    Update 
+  </button>
+
+  <div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="update-product-modal">Update</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'update_product' product.slug %}" method="post" name="update-product_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
+    Delete
+  </button>
+  <br><br>
+  
+  <!-- delete-product-modal.html -->
+  
+  <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-product-modal-label">Delete Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this product?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form action="{% url 'delete_product' product.slug %}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+            <button type="submit" class="btn btn-danger" id="confirm-delete-product">Confirm Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <h3>
+            <!-- {{member.first_name}} {{ member.last_name }} -->
+            {{ product.name  }}
+        </h3>
+        <h6>
+          Price : {{ price }}
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
+            Update Price
+          </button>
+        </h6>
+        <ul>
+          <li>
+            Orignal Price : {{ original_price }}
+          </li>
+          <li>
+            Discount : {{ discount }}%
+          </li>
+          <li>
+            Last updated at: {{ product.prices.last.created_at|naturaltime }}
+          </li>
+        </ul>
+        <p>description : {{ product.description }}</p>
+        <p>Brand : {{ product.brand.name }}</p>
+        <p>category : {{ product.category }}</p>
+    </div>
+
+  
+    <div class="modal fade" id="update-price-modal" tabindex="-1" aria-labelledby="update-price-modal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update-price-modal">Update</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'update_price' product.slug %}" method="post" name="update-price_form">
+              {% csrf_token %}
+              {{ price_form.as_p }}
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+{% endblock %}
+

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %} {{brand.name}} {% endblock %}
+
+{% block content %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-brand-modal">
+    Update 
+  </button>
+
+  <div class="modal fade" id="update-brand-modal" tabindex="-1" aria-labelledby="update-brand-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="update-brand-modal">Update</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'update_brand' brand.slug %}" method="post" name="update-brand_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-brand-modal">
+    Delete
+  </button>
+  <br><br>
+  
+  <!-- delete-brand-modal.html -->
+  
+  <div class="modal fade" id="delete-brand-modal" tabindex="-1" aria-labelledby="delete-brand-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-brand-modal-label">Delete brand</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this brand?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form action="{% url 'delete_brand' brand.slug %}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+            <button type="submit" class="btn btn-danger" id="confirm-delete-brand">Confirm Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <h3>
+            <!-- {{member.first_name}} {{ member.last_name }} -->
+            {{ brand.name  }}
+        </h3>
+        <p>description : {{ brand.description }}</p>
+        <p>country : {{ brand.country }}</p>
+        <p>Categories : </p>
+        {% for category in brand.category.all %}
+            <ul>
+                <li>
+                    {{ category }}
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}
+

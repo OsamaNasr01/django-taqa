@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} List of Companies {% endblock %}
+
+{% block content %}
+    {% for company in companies %}
+        <a href="{% url 'co_profile' company.slug %}" class="text-dark text-decoration-none">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3>
+                    <!-- {{member.first_name}} {{ member.last_name }} -->
+                    {{ company.name  }}
+                </h3>
+                <p>description : {{ company.description }}</p>
+                <p>phone : {{ company.phone }}</p>
+                <p>email : {{ company.email }}</p>
+                <p>website : {{ company.website }}</p>
+                <p>address : {{ company.address }}</p>
+                {% if company.owner.first_name %}
+                    <p>owner : {{ company.owner.first_name }} {{ company.owner.last_name }}</p>
+                {% else %}
+                    <p>owner : {{ company.owner.username }}</p>
+                {% endif %}
+                <p>Categories : </p>
+                {% for category in company.category.all %}
+                    <ul>
+                        <li>
+                            {{ category }}
+                        </li>
+                    </ul>
+                {% endfor %}
+                <a href="{% url 'update_company' company.slug %}" class="btn btn-primary">Update</a>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

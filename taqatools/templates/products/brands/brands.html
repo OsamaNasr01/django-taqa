@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} Brands {% endblock %}
+
+{% block content %}
+    
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-brand-modal">
+    Add Brand
+  </button>
+
+  <div class="modal fade" id="add-brand-modal" tabindex="-1" aria-labelledby="add-brand-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add-brand-modal">+ Add Brand</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'add_brand' %}" method="post" name="add_brand_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">+ Add Brand</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+
+    {% for brand in brands %}
+        <a href="{% url 'brand_profile' brand.slug %}" class="text-dark text-decoration-none">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3>
+                    {{ brand.name  }}
+                </h3>
+                <p>description : {{ brand.description }}</p>
+                <p>country : {{ brand.country }}</p>
+                <p>Categories : </p>
+                {% for category in brand.category.all %}
+                    <ul>
+                        <li>
+                            {{ category }}
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Add Company Category {% endblock %}
+{% block content %}
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <h3>
+    Add Company Category
+  </h3>
+  <br>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+{% endblock %}

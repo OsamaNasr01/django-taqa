@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    {% for user in users %}
+        <a href="{% url 'user_profile' user.username %}" class="text-dark text-decoration-none">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3>
+                    <!-- {{member.first_name}} {{ member.last_name }} -->
+                    {{ user.first_name  }} {{user.last_name}}
+                </h3>
+                <p>Email : {{ user.email }}</p>
+                <p>Username @{{user.username }}</p>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

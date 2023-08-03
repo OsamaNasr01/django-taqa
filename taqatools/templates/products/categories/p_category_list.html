@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} List of Companies {% endblock %}
+
+{% block content %}
+    
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-co-category-modal">
+    Add Category
+  </button>
+
+  <div class="modal fade" id="add-co-category-modal" tabindex="-1" aria-labelledby="add-co-category-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add-co-category-modal">+ Add Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'add_p_category' %}" method="post" name="add_co_category_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">+ Add Category</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+
+    {% for category in categories %}
+        <a href="{% url 'p_category_profile' category.slug %}" class="text-dark text-decoration-none">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3>
+                    {{ category.name  }}
+                </h3>
+                <p>description : {{ category.description }}</p>
+                <a href="{% url 'update_p_category' category.slug %}" class="btn btn-primary">Update</a>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div>
+  <h3>
+    Welcome to TAQA TOOLS home page
+  </h3>
+</div>
+<div>
+  <a href="{% url 'co_category_list' %}">
+    <div>
+      <h3>Companies</h3>
+    </div>
+  </a>
+  <br>
+  <a href="{% url 'p_category_list' %}">
+    <div>
+      <h3>Products</h3>
+    </div>
+  </a>
+</div>
+
+
+
+
+{% endblock %}
