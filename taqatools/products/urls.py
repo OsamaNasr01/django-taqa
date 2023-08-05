@@ -24,5 +24,7 @@ urlpatterns = [
     path('product/price/update/<slug:slug>/', views.update_price, name='update_price'),
     # Specs routes
     path('product/specs/add/', views.add_spec, name='add_spec'),
+    path('product/specs/update/<int:id>', views.update_spec, name='update_spec'),
+    path('product/specs/delete/<int:id>', views.delete_spec, name='delete_spec'),
 
 ]

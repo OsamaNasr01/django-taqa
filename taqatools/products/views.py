@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Category, Product, Brand, Price
+from .models import Category, Product, Brand, Price, Spec
 from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, NumSpecForm, TxtSpecForm, BoolSpecForm
 from django.contrib import messages
 
@@ -272,3 +272,28 @@ def add_spec(request):
             return p_category_profile(request, category.slug)
 
 
+def update_spec(request, id):
+    spec = get_object_or_404(Spec, id=id)
+    if request.method == 'POST':
+        form = SpecForm(request.POST, instance=spec)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('The Specification has been Updateded Successfully!'))
+            return p_category_profile(request, spec.category.slug)
+        else:
+            errors = form.errors
+            error_message = errors.as_text().split(':')[0]
+            messages.error(request, ('There Was An Error adding the Brand' + error_message))
+            return render(request, 'products/specs/update_spec.html', {'form' : form, 'errors': errors})
+    else:
+        form = SpecForm(instance = spec)
+        return render(request, 'products/specs/update_spec.html', {'form': form})
+    
+def delete_spec(request, id):
+    spec = get_object_or_404(Spec, id=id)
+    category_slug = spec.category.slug
+    if request.method == 'POST':
+        spec.delete()
+        messages.success(request, ('The specification has been Deleted Successfully!'))
+        return p_category_profile(request, category_slug)
+    

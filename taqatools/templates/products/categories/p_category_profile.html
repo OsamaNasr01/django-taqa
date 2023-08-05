@@ -28,13 +28,15 @@
     </div>
   </div>
   
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+    data-bs-target="#delete-category-modal">
     Delete
   </button>
   
   <!-- delete-category-modal.html -->
   
-  <div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="delete-category-modal-label" aria-hidden="true">
+  <div class="modal fade" id="delete-category-modal" tabindex="-1" 
+    aria-labelledby="delete-category-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -56,7 +58,8 @@
   </div>
     <br><br>
     
-    <div class="modal fade" id="add-spec-modal" tabindex="-1" aria-labelledby="add-spec-modal" aria-hidden="true">
+    <div class="modal fade" id="add-spec-modal" tabindex="-1" 
+      aria-labelledby="add-spec-modal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -81,23 +84,38 @@
             {{ category.name  }}
         </h3>
         <p>description : {{ category.description }}</p>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-spec-modal">
+        <button type="button" class="btn btn-primary" 
+          data-bs-toggle="modal" data-bs-target="#add-spec-modal">
           Add Spec
         </button>
         <p>Specifications:</p>
         
         {% for spec in category.specs.all %}
-          <ul>
+        <ul>
+          <div class="row">
+            <div class = "col-2">
             <li>{{ spec.name }} {% if not spec.unit == None %} {{ spec.unit }} {% endif %}</li>
-          </ul>
+            </div>
+            <div class="btn-group col-2">
+              <a href="{% url 'update_spec' spec.id %}" class="btn btn-primary btn-sm">Update</a>
+              <form action="{% url 'delete_spec' spec.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit"  class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+          </div>
+        </ul>
+
         {% endfor %}
     </div>
   
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-category-modal">
+    <button type="button" class="btn btn-primary" 
+      data-bs-toggle="modal" data-bs-target="#add-category-modal">
       Add sub Category
     </button><br><br>
 
-    <div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true">
+    <div class="modal fade" id="add-category-modal" tabindex="-1" 
+      aria-labelledby="add-category-modal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -142,11 +160,13 @@
 
 
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product-modal">
+    <button type="button" class="btn btn-primary" 
+      data-bs-toggle="modal" data-bs-target="#add-product-modal">
       Add Product
     </button>
   
-    <div class="modal fade" id="add-product-modal" tabindex="-1" aria-labelledby="add-product-modal" aria-hidden="true">
+    <div class="modal fade" id="add-product-modal" tabindex="-1" 
+      aria-labelledby="add-product-modal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -163,15 +183,19 @@
               {% for spec in category.specs.all %}
                 {% if spec.type == 2 %}
                   <label for="{{spec.name}}">{{ spec.name }}</label>
-                  <input type="text" name="{{ spec.name }}" class="form-control" id="{{spec.name}}" placeholder="Enter {{ spec.name }}">
+                  <input type="text" name="{{ spec.name }}" class="form-control" 
+                    id="{{spec.name}}" placeholder="Enter {{ spec.name }}">
                   <small id="{{spec.name}}Help" class="form-text text-muted"></small><br>
                 {% elif spec.type == 1 %}
                   <label for="{{spec.name}}">{{ spec.name }}</label>
-                  <input type="number" name="{{ spec.name }}" class="form-control" id="{{spec.name}}" placeholder="Enter {{ spec.name }}">
-                  <small id="{{spec.name}}Help" class="form-text text-muted">{{ spec.unit }}.</small><br><br>
+                  <input type="number" name="{{ spec.name }}" class="form-control" 
+                    id="{{spec.name}}" placeholder="Enter {{ spec.name }}">
+                  <small id="{{spec.name}}Help" class="form-text text-muted">{{ spec.unit }}.</small>
+                  <br><br>
                 {% elif spec.type == 3 %}
                   <label for="{{spec.name}}">{{ spec.name }}</label>
-                  <input type="checkbox" name="{{ spec.name }}" class="form-check-input" id="{{spec.name}}"><br><br>
+                  <input type="checkbox" name="{{ spec.name }}" class="form-check-input" 
+                    id="{{spec.name}}"><br><br>
                 {% endif %}
               {% endfor %}
               <input type="hidden" name="category_id" value="{{ category.id }}">
