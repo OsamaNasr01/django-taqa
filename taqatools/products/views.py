@@ -162,6 +162,21 @@ def update_product(request, slug):
         form = AddProductForm(request.POST, instance=productt)
         if form.is_valid():
             form.save()
+            for spec in productt.num_spec.all():
+                spec_form = NumSpecForm(instance = spec)
+                spec_value = spec_form.save(commit=False)
+                spec_value.value = request.POST.get(spec.spec.name)
+                spec_value.save()
+            for spec in productt.txt_spec.all():
+                spec_form = TxtSpecForm(instance = spec)
+                spec_value = spec_form.save(commit=False)
+                spec_value.value = request.POST.get(spec.spec.name)
+                spec_value.save()
+            for spec in productt.bool_spec.all():
+                spec_form = BoolSpecForm(instance = spec)
+                spec_value = spec_form.save(commit=False)
+                spec_value.value = request.POST.get(spec.spec.name)
+                spec_value.save()
             messages.success(request, ('The Product Category has been Updated Successfully!'))
             return product(request, productt.slug)
     else:
