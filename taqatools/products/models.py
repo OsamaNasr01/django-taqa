@@ -131,13 +131,16 @@ class NumSpecs(models.Model):
     value = models.FloatField()
     product = models.ForeignKey(Product, related_name='num_spec', on_delete=models.CASCADE)
     spec = models.ForeignKey(Spec, related_name='num_spec', on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField(null=True)
 
 class TxtSpecs(models.Model):
     value = models.CharField(max_length=100)
     product = models.ForeignKey(Product, related_name='txt_spec', on_delete=models.CASCADE)
     spec = models.ForeignKey(Spec, related_name='txt_spec', on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField(null=True)
 
 class BoolSpecs(models.Model):
     value = models.BooleanField(default=False)
     product = models.ForeignKey(Product,  related_name='bool_spec', on_delete=models.CASCADE)
     spec = models.ForeignKey(Spec, related_name='bool_spec', on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField(null=True)

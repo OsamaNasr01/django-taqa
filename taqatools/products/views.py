@@ -140,6 +140,7 @@ def add_product(request):
     
 def product(request, slug):
     product = get_object_or_404(Product, slug=slug)
+    specs = Spec.objects.filter(category = product.category)
     original_price = product.prices.last().value
     discount  = product.prices.last().discount
     price = (original_price * (100 - discount ))/100
@@ -152,6 +153,7 @@ def product(request, slug):
         'price': price,
         'original_price': original_price,
         'discount' : discount,
+        'specs' : specs,
         }
     return render(request, 'products/products/product.html', context)
 
@@ -312,3 +314,5 @@ def delete_spec(request, id):
         messages.success(request, ('The specification has been Deleted Successfully!'))
         return p_category_profile(request, category_slug)
     
+def order_spec(request):
+    pass

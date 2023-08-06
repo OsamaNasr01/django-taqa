@@ -34,7 +34,7 @@
               <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
               <input type="number" name="{{ spec.spec.name }}" class="form-control" 
                 id="{{spec.spec.name}}" value="{{spec.value}}">
-              <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.unit }}.</small>
+              <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.spec.unit }}</small><br>
             {% endfor %}
             {% for spec in product.bool_spec.all %}
               <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
@@ -144,7 +144,6 @@
         </div>
       </div>
     </div>
-  
   
 {% endblock %}
 
