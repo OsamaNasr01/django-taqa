@@ -24,4 +24,7 @@ def add_h1(request):
     data_form.value = value
     data_form.save()
     print(name)
-    return HttpResponse('hello world')
+    count  = Invoice.objects.all().count()
+    print(count)
+    success = f'the form has been submitted for {name} successfully, total ({count})'
+    return HttpResponse(success)
