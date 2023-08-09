@@ -28,3 +28,5 @@ def add_h1(request):
     print(count)
     success = f'the form has been submitted for {name} successfully, total ({count})'
     return HttpResponse(success)
+
+# test to repo synch
