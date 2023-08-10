@@ -13,9 +13,9 @@
     <input type="number" class="form-control" id="value" >
   </div><br>
     
-    <button class="btn btn-primary" id="post">Add H1</button>
+    <button class="btn btn-primary"  id="post">Add H1</button>
+<div id="output"></div>
 
-<h1 id="output"></h1>
 {% endblock %}
 
 
@@ -23,17 +23,46 @@
   <script>
     const name = document.getElementById('name')
     const value = document.getElementById('value')
+    const url = '/invoice/add_h1/'
     const csrfToken = '{{csrf_token}}';
+    {% comment %} const request = new request(url, {
+      headers : {
+        'X-CSRFToken': csrfToken,
+      },
+      body : {
+        'name' : name.value,
+        'value' : value.value
+      }
+    }) {% endcomment %}
+
+    {% comment %} async function getdata() {
+      const response = await fetch(request)
+      const data = await response.json()
+      console.log(data)
+    } {% endcomment %}
+
     document.getElementById('post').onclick = () => {
       const  requestObj = new XMLHttpRequest()
       requestObj.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           console.log(this.responseText)
           const resTxt = this.responseText
-          h.innerHTML= resTxt
+          const backData = JSON.parse(resTxt);
+          console.log(backData)
+          const div = document.getElementById('output')
+          p = document.createElement('p')
+          y = document.createElement('p')
+          z = document.createElement('p')
+          p.innerHTML = backData.name
+          y.innerHTML = backData.value
+          z.innerHTML = backData.id
+          div.appendChild(p)
+          div.appendChild(y)
+          div.appendChild(z)
+          name.value = ""
+          value.value = ""
         }
       }
-      let h = document.getElementById('output')
       requestObj.open("POST", '/invoice/add_h1/')
       requestObj.setRequestHeader("X-CSRFToken", csrfToken)
       const formdata = new FormData()

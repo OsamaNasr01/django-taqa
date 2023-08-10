@@ -24,9 +24,15 @@ def add_h1(request):
     data_form.value = value
     data_form.save()
     print(name)
-    count  = Invoice.objects.all().count()
-    print(count)
+    count  = Invoice.objects.last()
+    xxx = {
+        'name': count.name,
+        'value':count.value,
+        'id' : count.id
+    }
+    xx = json.dumps(xxx)
+    print(xx)
     success = f'the form has been submitted for {name} successfully, total ({count})'
-    return HttpResponse(success)
+    return HttpResponse(xx)
 
 # test to repo synch
