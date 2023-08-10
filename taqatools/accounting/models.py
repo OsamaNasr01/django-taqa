@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from products.models import Product
+from products.models import Product, Category
 
 # Create your models here.
 
@@ -12,7 +12,7 @@ class PurchaseInvoice(models.Model):
     value = models.PositiveIntegerField()
     
     
-class PurchaseInvoiceItems(models.Model):
+class PurchaseInvoiceItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='purchase')
     invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
@@ -25,7 +25,7 @@ class SaleInvoice(models.Model):
     value = models.PositiveIntegerField()
     
     
-class SaleInvoiceItems(models.Model):
+class SaleInvoiceItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sale')
     invoice = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
@@ -44,3 +44,21 @@ class Depit(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     value = models.PositiveIntegerField()
     
+
+class TermCondition(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(max_length=1000)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='terms')
+    
+class Offer(models.Model):
+    description = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='offer')
+    created_at = models.DateTimeField(auto_now=True)
+    value = models.PositiveIntegerField()
+    
+    
+class OfferItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='offer')
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='items')
+    q = models.PositiveSmallIntegerField()
+    price = models.FloatField()
