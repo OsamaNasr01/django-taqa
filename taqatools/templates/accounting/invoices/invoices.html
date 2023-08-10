@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %}
 
 {% block title %} Invoices {% endblock %}
 
@@ -25,21 +25,6 @@
     const value = document.getElementById('value')
     const url = '/invoice/add_h1/'
     const csrfToken = '{{csrf_token}}';
-    {% comment %} const request = new request(url, {
-      headers : {
-        'X-CSRFToken': csrfToken,
-      },
-      body : {
-        'name' : name.value,
-        'value' : value.value
-      }
-    }) {% endcomment %}
-
-    {% comment %} async function getdata() {
-      const response = await fetch(request)
-      const data = await response.json()
-      console.log(data)
-    } {% endcomment %}
 
     document.getElementById('post').onclick = () => {
       const  requestObj = new XMLHttpRequest()
@@ -73,4 +58,4 @@
     }
 
   </script>
-{% endblock %}
+{% endblock %} {% endcomment %}
