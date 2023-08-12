@@ -146,7 +146,11 @@
     </div>
     <div>
       <p id="messege"></p>
+      {% if in_cart %}
+      <button class="btn btn-danger" id="add_to_cart">Remove from Cart</button>
+      {% else %}
       <button class="btn btn-primary" id="add_to_cart">Add to Cart</button>
+      {% endif %}
     </div>
     
 
@@ -188,9 +192,11 @@
         console.log(csrftoken)
         if (btn.className === "btn btn-danger") {
           btn.className = "btn btn-primary"
+          btn.innerHTML = "Add To Cart"
         } else {
           if (btn.className === "btn btn-primary") {
             btn.className = "btn btn-danger"
+            btn.innerHTML = "Remove from Cart"
           }
         }
       }

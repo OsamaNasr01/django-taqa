@@ -146,6 +146,7 @@ def product(request, slug):
     price = (original_price * (100 - discount ))/100
     form = AddProductForm(instance = product)
     price_form = PriceForm(instance = product.prices.last())
+    in_cart = product.cart.filter(user=request.user)
     context = {
         'product' : product,
         'form' : form,
@@ -154,6 +155,7 @@ def product(request, slug):
         'original_price': original_price,
         'discount' : discount,
         'specs' : specs,
+        'in_cart': in_cart
         }
     return render(request, 'products/products/product.html', context)
 
