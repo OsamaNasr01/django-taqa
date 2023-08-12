@@ -57,3 +57,7 @@ def add_product_cart(request):
             json_data= json.dumps(return_data)
             return HttpResponse(json_data, content_type= "application/json")
             
+
+def cart(request):
+    items = CartItem.objects.filter(user=request.user)
+    return render(request, 'accounting/invoices/cart.html', {'items': items})

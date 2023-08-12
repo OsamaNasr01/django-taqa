@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Add Sale Invoice {% endblock %}
+{% block content %}
+
+    <div class="container">
+        <h3>Cart Items</h3>
+    </div>
+    <ul>
+        {% for item in items %}
+        <li><a href="{% url 'product' item.product.slug %}">{{item.product.name}}</a></li>
+        {% endfor %}
+    </ul>
+    
+
+{% endblock %}
