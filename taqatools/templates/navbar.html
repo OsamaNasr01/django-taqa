@@ -12,6 +12,7 @@
               <a class="nav-link" href="{% url 'companies' %}">Companies</a>
               <a class="nav-link" href="{% url 'p_category_list' %}">Products</a>
               <a class="nav-link" href="{% url 'brands' %}">Brands</a>
+              <a class="nav-link" href="" id="cart-navbar">Cart ({{user.cartitems.count}})</a>
           
                 {% if user.is_authenticated %}
                     {% if  user.first_name  %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from .forms import PurchaseInvoiceForm, CartItemForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
+from .models import CartItem
 import json
 
 # Create your views here.
@@ -29,12 +30,18 @@ def add_product_cart(request):
     price = Price.objects.filter(product=product_id).last().value
     user = request.user
     form = CartItemForm()
-    x= form.save(commit=False)
-    x.product = product
-    x.user = user
-    x.q = 1
-    x.price = price
-    x.save()
+    item= form.save(commit=False)
+    item.product = product
+    item.user = user
+    item.q = 1
+    item.price = price
+    item.save()
     print(user)
-    return HttpResponse('ok')
+    return_data = {
+        'cart_items': CartItem.objects.filter(user=user).count(),
+        'message' : f'{product.name} is added successfuly to the Cart',
+    }
+    json_data= json.dumps(return_data)
+    print(json_data)
+    return HttpResponse(json_data, content_type= "application/json")
     

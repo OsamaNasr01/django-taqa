@@ -144,7 +144,11 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" id="add_to_cart">Add to Cart</button>
+    <div>
+      <p id="messege"></p>
+      <button class="btn btn-primary" id="add_to_cart">Add to Cart</button>
+    </div>
+    
 
     <script>
       const btn = document.getElementById('add_to_cart')
@@ -164,13 +168,19 @@
           },
           'body': data,
         })
-        .then((response) => {
+        .then(response => {
           if (response.ok) {
-            alert('Product added to cart')
-            console.log(data)
+            return response.json()
           } else {
             console.log(response)
           }
+        })
+        .then(data => {
+          console.log(data['cart_items'])
+          const navbar_cart = document.getElementById('cart-navbar')
+          const message = document.getElementById('messege')
+          message.innerText = data['message']
+          navbar_cart.innerText = 'Cart (' + data['cart_items'] + ')'
         })
         .catch((error) => {
           console.log(error)
