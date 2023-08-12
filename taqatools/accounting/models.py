@@ -66,5 +66,5 @@ class OfferItem(models.Model):
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='cart')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cartitems')
-    q = models.PositiveSmallIntegerField()
+    q = models.PositiveSmallIntegerField(default=1)
     price = models.FloatField()
