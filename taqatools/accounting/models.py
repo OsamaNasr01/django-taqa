@@ -62,3 +62,9 @@ class OfferItem(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField()
+    
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='cart')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cartitems')
+    q = models.PositiveSmallIntegerField()
+    price = models.FloatField()
