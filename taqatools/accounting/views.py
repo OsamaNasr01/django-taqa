@@ -78,3 +78,30 @@ def cart(request):
     json_data = json.dumps(data)
     print(json_data)
     return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
+
+
+def delete_cart_item(request):
+    data = json.loads(request.body)
+    item_id = data['item_id']
+    item = CartItem.objects.get(id=item_id)
+    if request.method == 'POST':
+        item.delete()
+        items = CartItem.objects.filter(user=request.user)
+        i=0
+        data = {}
+        for item in items:
+            i+=1
+            x= {
+                'name': item.product.name,
+                'price': item.product.prices.last().value * (100 - item.product.prices.last().discount)/100 ,
+                'no': item.q,
+                'total':  item.product.prices.last().value * (100 - item.product.prices.last().discount) *item.q /100,
+                'id': item.id,
+                'slug': item.product.slug,
+            }
+            data[i] = x
+            
+        json_data = json.dumps(data)
+        # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
+        return HttpResponse(json_data, content_type= "application/json")
+    
