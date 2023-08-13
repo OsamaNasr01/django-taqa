@@ -30,13 +30,14 @@ def add_product_cart(request):
     product = Product.objects.get(id=product_id)
     price = Price.objects.filter(product=product_id).last().value
     user = request.user
+    no = int(data['no'])    
     in_cart = product.cart.filter(user=request.user)
     if not in_cart:
         form = CartItemForm()
         item= form.save(commit=False)
         item.product = product
         item.user = user
-        item.q = 1
+        item.q = int(no)
         item.price = price
         item.save()
         print(user)
@@ -102,6 +103,18 @@ def delete_cart_item(request):
             data[i] = x
             
         json_data = json.dumps(data)
+        # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
+        return HttpResponse(json_data, content_type= "application/json")
+
+def update_cart_item(request):
+    data = json.loads(request.body)
+    item_id = data['item_id']
+    new_q = data['new_q']
+    item = CartItem.objects.get(id=item_id)
+    if request.method == 'POST':
+        item.q = new_q
+        item.save()
+        json_data = json.dumps({'ok':'ok'})
         # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
         return HttpResponse(json_data, content_type= "application/json")
     

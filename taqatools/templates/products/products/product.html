@@ -146,6 +146,7 @@
     </div>
     <div>
       <p id="messege"></p>
+      <input type="number" class="form-control" id="no" value="1">
       {% if in_cart %}
       <button class="btn btn-danger" id="add_to_cart">Remove from Cart</button>
       {% else %}
@@ -159,11 +160,13 @@
       const product_id = document.getElementById('product_id').value
       const csrftoken =  document.querySelector('[name="csrfmiddlewaretoken"]').value;
       const url = '/accounting/add-product-to-cart/'
-      const data = JSON.stringify({
-        'product_id': product_id,
-        'action': 'add'
-      })
       btn.onclick = () => {
+        const no = document.getElementById('no').value
+        const data = JSON.stringify({
+          'product_id': product_id,
+          'no': no,
+        })
+        console.log(data)
         fetch(url, {
           'method' : 'POST',
           'headers' : {

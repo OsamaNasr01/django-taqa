@@ -53,6 +53,16 @@
                     table_row.appendChild(td)
                 } else if ( key === 'slug') {
 
+                } else if ( key === 'no') {    
+                    const no_input = document.createElement('input')
+                    no_input.setAttribute('type', 'number')
+                    no_input.setAttribute('class', 'form-control')
+                    no_input.setAttribute('onchange', `change_item_q(${item_data['id']})`)
+                    no_input.value = item_data[key]
+                    no_input.id = `input_${item_data['id']}`
+                    td.appendChild(no_input)
+                    table_row.appendChild(td)
+
                 } else {
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
@@ -62,7 +72,6 @@
         }
 
         function del_item(id) {
-            console.log(id)
             const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
             console.log(csrftoken)
 
@@ -91,6 +100,39 @@
                 console.log(Object.keys(data).length)
                 const navbar_cart = document.getElementById('cart-navbar')
                 navbar_cart.innerText = `Cart (${Object.keys(data).length})`
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+
+        function change_item_q(id) {
+            const new_q = document.getElementById(`input_${id}`).value
+            console.log(`${id} => ${new_q}`)
+            const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+            const url = '/cart/update_cart_item/'
+
+            const data = JSON.stringify({
+                'item_id': id,
+                'new_q': new_q
+            })
+            console.log(data)
+            fetch(url, {
+                'method' : 'POST',
+                'headers' : {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                'body': data,
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                console.log(response)
+                }
+            })
+            .then(data => {
             })
             .catch((error) => {
                 console.log(error)
