@@ -18,18 +18,24 @@
             <th>Delete</th>
         </tr>
     </table>
+    <div>
+        <h5 id="cart_total"></h5>
+    </div>
 
 
     <script>
         const json_data = document.getElementById('json_data').value
-        data  = JSON.parse(json_data)
-        console.log(data)
+        const data  = JSON.parse(json_data)
+        const items = data['items']
+        console.log(data['items'])
         const cart_items_table = document.getElementById('cart_items')
         const table_head = document.getElementById('table_head')
-        for (var item in data) {
-            const item_data = data[item]
+        const cart_total = document.getElementById('cart_total')
+        cart_total.innerText = data['total']
+        for (var item in items) {
+            const item_data = items[item]
             const table_row = document.createElement('tr')
-            table_row.setAttribute('id', data[item].id)
+            table_row.setAttribute('id', items[item].id)
             const td_f = document.createElement('td')
             td_f.innerText = item
             table_row.appendChild(td_f)
@@ -53,6 +59,16 @@
                     table_row.appendChild(td)
                 } else if ( key === 'slug') {
 
+                } else if ( key === 'price') {
+                    td.setAttribute('id', `price_${item_data['id']}`)
+                    td.innerText = item_data[key]
+                    table_row.appendChild(td)
+
+
+                } else if (key === 'total') {
+                    td.setAttribute('id', `total_${item_data['id']}`)
+                    td.innerText = item_data[key]
+                    table_row.appendChild(td)
                 } else if ( key === 'no') {    
                     const no_input = document.createElement('input')
                     no_input.setAttribute('type', 'number')
@@ -133,6 +149,10 @@
                 }
             })
             .then(data => {
+                const item_total = document.getElementById(`total_${id}`)
+                const item_price = document.getElementById(`price_${id}`).innerText
+                item_total.innerText = `${new_q*item_price}`
+                cart_total.innerText = data['total']
             })
             .catch((error) => {
                 console.log(error)

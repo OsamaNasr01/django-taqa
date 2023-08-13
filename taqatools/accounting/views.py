@@ -63,18 +63,27 @@ def add_product_cart(request):
 def cart(request):
     items = CartItem.objects.filter(user=request.user)
     i=0
-    data = {}
+    data={}
+    total = 0
+    data_items = {}
     for item in items:
+        discount_price = item.product.prices.last().value * (100 - item.product.prices.last().discount)/100
+        no =  item.q
+        item_total = discount_price * no
+        total +=  item_total
         i+=1
         x= {
             'name': item.product.name,
-            'price': item.product.prices.last().value * (100 - item.product.prices.last().discount)/100 ,
-            'no': item.q,
-            'total':  item.product.prices.last().value * (100 - item.product.prices.last().discount) *item.q /100,
+            'price': discount_price,
+            'no': no,
+            'total':  item_total,
             'id': item.id,
             'slug': item.product.slug,
+            
         }
-        data[i] = x
+        data_items[i] = x
+    data['total'] = total
+    data['items'] = data_items
         
     json_data = json.dumps(data)
     print(json_data)
@@ -89,18 +98,27 @@ def delete_cart_item(request):
         item.delete()
         items = CartItem.objects.filter(user=request.user)
         i=0
-        data = {}
+        total = 0
+        data={}
+        data_items = {}
         for item in items:
+            discount_price = item.product.prices.last().value * (100 - item.product.prices.last().discount)/100
+            no =  item.q
+            item_total = discount_price * no
+            total +=  item_total
             i+=1
             x= {
                 'name': item.product.name,
-                'price': item.product.prices.last().value * (100 - item.product.prices.last().discount)/100 ,
-                'no': item.q,
-                'total':  item.product.prices.last().value * (100 - item.product.prices.last().discount) *item.q /100,
+                'price': discount_price,
+                'no': no,
+                'total':  item_total,
                 'id': item.id,
                 'slug': item.product.slug,
+                
             }
-            data[i] = x
+            data_items[i] = x
+        data['total'] = total
+        data['items'] = data_items
             
         json_data = json.dumps(data)
         # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
@@ -114,7 +132,16 @@ def update_cart_item(request):
     if request.method == 'POST':
         item.q = new_q
         item.save()
-        json_data = json.dumps({'ok':'ok'})
+        items = CartItem.objects.filter(user=request.user)
+        total = 0
+        for item in items:
+            discount_price = item.product.prices.last().value * (100 - item.product.prices.last().discount)/100
+            no =  item.q
+            item_total = discount_price * no
+            total +=  item_total
+        data['total'] = total
+        
+        json_data = json.dumps(data)
         # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
         return HttpResponse(json_data, content_type= "application/json")
     
