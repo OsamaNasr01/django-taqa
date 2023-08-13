@@ -147,6 +147,7 @@ def product(request, slug):
     form = AddProductForm(instance = product)
     price_form = PriceForm(instance = product.prices.last())
     in_cart = product.cart.filter(user=request.user)
+    no_in_cart = product.cart.get(user=request.user).q
     context = {
         'product' : product,
         'form' : form,
@@ -156,6 +157,7 @@ def product(request, slug):
         'discount' : discount,
         'specs' : specs,
         'in_cart': in_cart,
+        'no_in_cart': no_in_cart,
         }
     return render(request, 'products/products/product.html', context)
 
