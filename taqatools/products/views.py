@@ -155,7 +155,7 @@ def product(request, slug):
         'original_price': original_price,
         'discount' : discount,
         'specs' : specs,
-        'in_cart': in_cart
+        'in_cart': in_cart,
         }
     return render(request, 'products/products/product.html', context)
 

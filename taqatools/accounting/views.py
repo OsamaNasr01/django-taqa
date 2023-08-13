@@ -4,6 +4,7 @@ from products.models import Product, Price
 from django.contrib.auth.models import User
 from .models import CartItem
 import json
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -60,4 +61,20 @@ def add_product_cart(request):
 
 def cart(request):
     items = CartItem.objects.filter(user=request.user)
-    return render(request, 'accounting/invoices/cart.html', {'items': items})
+    i=0
+    data = {}
+    for item in items:
+        i+=1
+        x= {
+            'name': item.product.name,
+            'price': item.product.prices.last().value * (100 - item.product.prices.last().discount)/100 ,
+            'no': item.q,
+            'total':  item.product.prices.last().value * (100 - item.product.prices.last().discount) *item.q /100,
+            'id': item.id,
+            'slug': item.product.slug,
+        }
+        data[i] = x
+        
+    json_data = json.dumps(data)
+    print(json_data)
+    return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
