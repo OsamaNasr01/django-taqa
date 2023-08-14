@@ -35,8 +35,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{% url 'add_offer' %}" method="post" name="price-offer_form">
+                    <form action="{% url 'add_offer' %}" id="offer_form" method="post" name="price-offer_form">
                         {% csrf_token %}
+                        <input type="hidden" id="hidden_username" name="username">
+                        <input type="hidden" id="hidden_total" name="total_value">
                         <div class="form-group mb-4" id="name_input">
                             <label for="search" class="form-label">Search:</label>
                             <input type="text" list="user-list" id="search" name="search" placeholder="Enter User name" class="form-control">
@@ -224,6 +226,7 @@
                 .then(data => {
                     for (var user in data) {
                         const op = document.createElement('option')
+                        op.setAttribute('onclick', `set_username(${user})`)
                         op.innerText = data[user]
                         user_list.appendChild(op)
                     }
