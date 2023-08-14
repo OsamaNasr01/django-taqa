@@ -147,7 +147,10 @@ def product(request, slug):
     form = AddProductForm(instance = product)
     price_form = PriceForm(instance = product.prices.last())
     in_cart = product.cart.filter(user=request.user)
-    no_in_cart = product.cart.get(user=request.user).q
+    if in_cart:
+        no_in_cart = product.cart.get(user=request.user).q
+    else:
+        no_in_cart =0
     context = {
         'product' : product,
         'form' : form,
