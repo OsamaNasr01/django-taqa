@@ -115,7 +115,8 @@
             .then(data => {
                 console.log(Object.keys(data).length)
                 const navbar_cart = document.getElementById('cart-navbar')
-                navbar_cart.innerText = `Cart (${Object.keys(data).length})`
+                navbar_cart.innerText = `Cart (${Object.keys(data['items']).length})`
+                cart_total.innerText = data['total']
             })
             .catch((error) => {
                 console.log(error)
