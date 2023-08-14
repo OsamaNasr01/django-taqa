@@ -1,10 +1,12 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from .forms import PurchaseInvoiceForm, CartItemForm
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
 from .models import CartItem
 import json
 from django.http import JsonResponse
+from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 
@@ -62,6 +64,7 @@ def add_product_cart(request):
 
 def cart(request):
     items = CartItem.objects.filter(user=request.user)
+    offer_form = OfferForm()
     i=0
     data={}
     total = 0
@@ -87,7 +90,10 @@ def cart(request):
         
     json_data = json.dumps(data)
     print(json_data)
-    return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
+    return render(request, 'accounting/invoices/cart.html', {
+        'json_data': json_data,
+        'form' :offer_form,
+        })
 
 
 def delete_cart_item(request):
@@ -144,4 +150,30 @@ def update_cart_item(request):
         json_data = json.dumps(data)
         # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
         return HttpResponse(json_data, content_type= "application/json")
+
+def add_offer(request):
+    if request.method == 'POST':
+        form = OfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('The offer has been created Successfully!'))
+            return redirect('home')
+        else:
+            errors = form.errors
+            error_message = errors.as_text().split(':')[0]
+            messages.error(request, ('There Was An Error creating the offer' + error_message))
+            return redirect('home')
+    else:
+        form = OfferForm()
+        return render(request, 'accounting/invoices/cart.html', {'form' : form})
     
+    
+def search_users(request):
+    request_data = json.loads(request.body)
+    query = request_data['query']
+    data = {}
+    users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+    for user in users:
+        data[user.username] = f'{user.first_name} {user.last_name}'
+    json_data = json.dumps(data)
+    return HttpResponse(json_data, content_type= "application/json")

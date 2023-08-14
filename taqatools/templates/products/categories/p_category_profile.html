@@ -149,7 +149,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="{% url 'add_p_category' %}" method="post" name="add_category_form">
+            <form action="{% url 'add_p_category' %}" method="post" name="add_category_form" id="cat_form">
               {% csrf_token %}
               {{ category_form.as_p }}
               <input type="hidden" name="category_id" value="{{ category.id }}">
@@ -244,5 +244,11 @@
             </div>
         </a>
     {% endfor %}
+
+
+    <script>
+      const form = document.getElementById('cat_form')
+      console.log(form)
+    </script>
 {% endblock %}
 

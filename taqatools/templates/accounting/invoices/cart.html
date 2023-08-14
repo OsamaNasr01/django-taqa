@@ -22,6 +22,38 @@
         <h5 id="cart_total"></h5>
     </div>
 
+    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+    Price Offer</button>
+
+    <div class="modal fade" id="price-offer-modal" tabindex="-1" aria-labelledby="price-offer-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="price-offer-modal">Update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'add_offer' %}" method="post" name="price-offer_form">
+                        {% csrf_token %}
+                        <div class="form-group mb-4" id="name_input">
+                            <label for="search" class="form-label">Search:</label>
+                            <input type="text" list="user-list" id="search" name="search" placeholder="Enter User name" class="form-control">
+                            <datalist id="user-list">
+                            </datalist>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="description" class="form-label">Description:</label>
+                            <input type="text" id="description" name="description" placeholder="Enter a brief description of the offer" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         const json_data = document.getElementById('json_data').value
@@ -52,9 +84,11 @@
                     delete_item.setAttribute('onclick', `del_item(${item_data[key]})`)
                     delete_item.setAttribute('class', 'btn')
                     delete_item.classList.add('btn-danger')
+                    delete_item.classList.add('btn-sm')
                     delete_item.innerText = 'delete'
                     delete_item.id = 'delete_item'
                     delete_item.setAttribute('name', `${item_data[key]}`)
+                    td.setAttribute('style', 'width:10%')
                     td.appendChild(delete_item)
                     table_row.appendChild(td)
                 } else if ( key === 'slug') {
@@ -63,8 +97,6 @@
                     td.setAttribute('id', `price_${item_data['id']}`)
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
-
-
                 } else if (key === 'total') {
                     td.setAttribute('id', `total_${item_data['id']}`)
                     td.innerText = item_data[key]
@@ -72,6 +104,7 @@
                 } else if ( key === 'no') {    
                     const no_input = document.createElement('input')
                     no_input.setAttribute('type', 'number')
+                    td.setAttribute('style', 'width:15%')
                     no_input.setAttribute('class', 'form-control')
                     no_input.setAttribute('onchange', `change_item_q(${item_data['id']})`)
                     no_input.value = item_data[key]
@@ -125,7 +158,6 @@
 
         function change_item_q(id) {
             const new_q = document.getElementById(`input_${id}`).value
-            console.log(`${id} => ${new_q}`)
             const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
             const url = '/cart/update_cart_item/'
 
@@ -159,6 +191,49 @@
                 console.log(error)
             })
         }
+
+
+        
+        const search_box = document.getElementById('search')
+        search_box.addEventListener('input', function() {
+            const query = search_box.value
+            const user_list = document.getElementById('user-list')
+            user_list.innerHTML = ""
+            if (query !== '' ) {
+                const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+                const url = '/cart/search-users/'
+                const data = JSON.stringify({
+                    'query': query,
+                })
+                console.log(data)
+                fetch(url, {
+                    'method' : 'POST',
+                    'headers' : {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    'body': data,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                    console.log(response)
+                    }
+                })
+                .then(data => {
+                    for (var user in data) {
+                        const op = document.createElement('option')
+                        op.innerText = data[user]
+                        user_list.appendChild(op)
+                    }
+                })
+                .catch((error) => {
+                })
+
+            }
+        })
+
     </script>
 
 
