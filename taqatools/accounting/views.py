@@ -187,3 +187,19 @@ def search_users(request):
         data[user.username] = f'{user.first_name} {user.last_name} {user.username}'
     json_data = json.dumps(data)
     return HttpResponse(json_data, content_type= "application/json")
+
+def offers(request):
+    offers = Offer.objects.all()
+    return render(request, 'accounting/offers/offers.html', {'offers':offers})
+
+
+def offer_profile(request, id):
+    offer = Offer.objects.get(id=id)
+    total = {}
+    for item in offer.items.all():
+        total[f'total_{item.id}'] = item.price*item.q
+        
+    return render(request, 'accounting/offers/offer_profile.html', {
+        'offer':offer,
+        'total':json.dumps(total)
+        })
