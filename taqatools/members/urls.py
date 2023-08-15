@@ -9,7 +9,6 @@ urlpatterns = [
     path('login/', views.login_user, name = 'login'),
     path('logout/', views.logout_user, name = 'logout'),
     path('members/<slug:username>/', views.user_profile, name = 'user_profile'),
-    path('members/<slug:username>/offers', views.user_offers, name = 'user_offers'),
     path('members/', views.users, name = 'users'),
     # deal with companies add/read/update/delete
     path('company/add/', views.add_company, name = 'add_company'),

@@ -193,9 +193,3 @@ def co_category_profile(request, slug):
         }
     return render(request, 'members/company_category/co_category_profile.html', context)
 
-def user_offers(request, username):
-    user = get_object_or_404(User, username=username)
-    context = {'user':user}
-    return render(request, 'members/user_offers.html', context)
-
-    

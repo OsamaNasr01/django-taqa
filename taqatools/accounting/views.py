@@ -203,3 +203,10 @@ def offer_profile(request, id):
         'offer':offer,
         'total':json.dumps(total)
         })
+    
+def user_offers(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/offers/user_offers.html', context)
+
+    

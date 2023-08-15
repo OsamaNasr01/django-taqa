@@ -13,5 +13,6 @@ urlpatterns = [
     path('cart/search-users/', views.search_users, name='search_users'),
     path('accounting/offers/', views.offers, name='offers'),
     path('accounting/offer/<int:id>', views.offer_profile, name='offer_profile'),
+    path('members/<slug:username>/offers', views.user_offers, name = 'user_offers'),
     
 ]
