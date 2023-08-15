@@ -22,8 +22,12 @@
         </div>
     
         
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        <button type="button" onclick="add('offer')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
         Price Offer</button>
+        <button type="button" onclick="add('sale')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        Sale invoice</button>
+        <button type="button" onclick="add('purchase')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        Purchase invoice</button>
     
         <div class="modal fade" id="price-offer-modal" tabindex="-1" aria-labelledby="price-offer-modal" aria-hidden="true">
             <div class="modal-dialog">
@@ -247,13 +251,20 @@
             const cart_total_value = cart_total.innerText
             console.log(cart_total_value)
             const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
-            console.log(csrftoken)
-            const url = '/cart/add-offer/'
+
+            if (offer_form.name === 'offer_form') {
+                var url = '/cart/add-offer/'
+            } else if (offer_form.name === 'sale_form') {
+                var url = '/cart/add-sale/'
+            } else if (offer_form.name === 'purchase_form') {
+                var url = '/cart/add-purchase/'
+            }
             const data = JSON.stringify({
                 'user_name': username,
                 'description' : description,
                 'cart_total_value' : cart_total_value,
             })
+            console.log(url)
             fetch(url, {
                 'method' : 'POST',
                 'headers' : {
@@ -285,6 +296,12 @@
 
 
         })
+
+
+        function add(type) {
+            const offer_form = document.getElementById('offer_form')
+            offer_form.name = `${type}_form`
+        }
 
     </script>
 

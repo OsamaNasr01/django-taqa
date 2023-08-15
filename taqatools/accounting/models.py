@@ -9,7 +9,7 @@ class PurchaseInvoice(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='purchase')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.PositiveIntegerField()
+    value = models.FloatField()
     
     
 class PurchaseInvoiceItem(models.Model):
@@ -22,7 +22,7 @@ class SaleInvoice(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sale')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.PositiveIntegerField()
+    value = models.FloatField()
     
     
 class SaleInvoiceItem(models.Model):
@@ -35,14 +35,14 @@ class Credit(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='credit')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.PositiveIntegerField()
+    value = models.FloatField()
     
     
 class Depit(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='depit')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.PositiveIntegerField()
+    value = models.FloatField()
     
 
 class TermCondition(models.Model):
@@ -54,7 +54,7 @@ class Offer(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='offer')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.PositiveIntegerField()
+    value = models.FloatField()
     
     
 class OfferItem(models.Model):

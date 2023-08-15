@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm,OfferItemForm
+from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm, OfferItemForm, SaleItemForm, SaleForm
+from .forms import PurchaseInvoice, PurchaseForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
-from .models import CartItem, Offer
+from .models import CartItem, Offer, SaleInvoice,PurchaseInvoice
 import json
 from django.http import JsonResponse
 from django.contrib import messages
@@ -209,4 +210,53 @@ def user_offers(request, username):
     context = {'user':user}
     return render(request, 'accounting/offers/user_offers.html', context)
 
+def add_sale(request):
+    data = json.loads(request.body)
+    if request.method == 'POST':
+        form = SaleForm()
+        invoice  = form.save(commit=False)
+        username = data['user_name']
+        user = User.objects.get(username = username)
+        invoice.user = user
+        invoice.description = data['description']
+        invoice.value = data['cart_total_value']
+        cart_items = CartItem.objects.filter(user = request.user)
+        invoice.save()
+        for item in cart_items:
+            item_form = SaleItemForm()
+            sale_item= item_form.save(commit=False)
+            sale_item.product = item.product
+            sale_item.invoice = SaleInvoice.objects.last()
+            sale_item.q = item.q
+            sale_item.price = item.price
+            sale_item.save()
+            cart_item = CartItem.objects.get(id = item.id)
+            cart_item.delete()
+        messages.success(request, ('The invoice has been created Successfully!'))
+        return HttpResponse({'ok':"ok"})
     
+    
+def add_purchase(request):
+    data = json.loads(request.body)
+    if request.method == 'POST':
+        form = PurchaseForm()
+        invoice  = form.save(commit=False)
+        username = data['user_name']
+        user = User.objects.get(username = username)
+        invoice.user = user
+        invoice.description = data['description']
+        invoice.value = data['cart_total_value']
+        cart_items = CartItem.objects.filter(user = request.user)
+        invoice.save()
+        for item in cart_items:
+            item_form = PurchaseInvoiceForm()
+            purchase_item= item_form.save(commit=False)
+            purchase_item.product = item.product
+            purchase_item.invoice = PurchaseInvoice.objects.last()
+            purchase_item.q = item.q
+            purchase_item.price = item.price
+            purchase_item.save()
+            cart_item = CartItem.objects.get(id = item.id)
+            cart_item.delete()
+        messages.success(request, ('The invoice has been created Successfully!'))
+        return HttpResponse({'ok':"ok"})
