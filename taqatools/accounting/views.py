@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm
+from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm,OfferItemForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
-from .models import CartItem
+from .models import CartItem, Offer
 import json
 from django.http import JsonResponse
 from django.contrib import messages
@@ -162,9 +162,18 @@ def add_offer(request):
         offer.user = user
         offer.description = data['description']
         offer.value = data['cart_total_value']
+        cart_items = CartItem.objects.filter(user = request.user)
         offer.save()
+        for item in cart_items:
+            item_form = OfferItemForm()
+            offer_item= item_form.save(commit=False)
+            offer_item.product = item.product
+            offer_item.offer = Offer.objects.last()
+            offer_item.q = item.q
+            offer_item.price = item.price
+            offer_item.save()
         messages.success(request, ('The offer has been created Successfully!'))
-        return HttpResponse('ok')
+        return HttpResponse({'ok':"ok"})
     
     
 def search_users(request):

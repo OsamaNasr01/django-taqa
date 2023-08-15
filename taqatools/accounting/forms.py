@@ -1,5 +1,5 @@
 from django import forms
-from .models import PurchaseInvoice, CartItem, Offer
+from .models import PurchaseInvoice, CartItem, Offer, OfferItem
 
 
 
@@ -33,3 +33,15 @@ class OfferForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['user'].widget.attrs.update({'class': 'form-control'})    
+        
+
+class OfferItemForm(forms.ModelForm):
+
+    class Meta:
+        model = OfferItem
+        fields = ('product','offer', 'q', 'price')
+
+    
+
+
+
