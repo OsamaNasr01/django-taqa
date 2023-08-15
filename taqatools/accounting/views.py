@@ -152,20 +152,19 @@ def update_cart_item(request):
         return HttpResponse(json_data, content_type= "application/json")
 
 def add_offer(request):
+    data = json.loads(request.body)
     if request.method == 'POST':
-        form = OfferForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, ('The offer has been created Successfully!'))
-            return redirect('home')
-        else:
-            errors = form.errors
-            error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error creating the offer' + error_message))
-            return redirect('home')
-    else:
         form = OfferForm()
-        return render(request, 'accounting/invoices/cart.html', {'form' : form})
+        offer  = form.save(commit=False)
+        print(data)
+        username = data['user_name']
+        user = User.objects.get(username = username)
+        offer.user = user
+        offer.description = data['description']
+        offer.value = data['cart_total_value']
+        offer.save()
+        messages.success(request, ('The offer has been created Successfully!'))
+        return HttpResponse('ok')
     
     
 def search_users(request):
@@ -174,6 +173,6 @@ def search_users(request):
     data = {}
     users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
     for user in users:
-        data[user.username] = f'{user.first_name} {user.last_name}'
+        data[user.username] = f'{user.first_name} {user.last_name} {user.username}'
     json_data = json.dumps(data)
     return HttpResponse(json_data, content_type= "application/json")

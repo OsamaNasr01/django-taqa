@@ -37,8 +37,6 @@
                 <div class="modal-body">
                     <form action="{% url 'add_offer' %}" id="offer_form" method="post" name="price-offer_form">
                         {% csrf_token %}
-                        <input type="hidden" id="hidden_username" name="username">
-                        <input type="hidden" id="hidden_total" name="total_value">
                         <div class="form-group mb-4" id="name_input">
                             <label for="search" class="form-label">Search:</label>
                             <input type="text" list="user-list" id="search" name="search" placeholder="Enter User name" class="form-control">
@@ -49,7 +47,7 @@
                             <label for="description" class="form-label">Description:</label>
                             <input type="text" id="description" name="description" placeholder="Enter a brief description of the offer" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="offer_submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -226,7 +224,6 @@
                 .then(data => {
                     for (var user in data) {
                         const op = document.createElement('option')
-                        op.setAttribute('onclick', `set_username(${user})`)
                         op.innerText = data[user]
                         user_list.appendChild(op)
                     }
@@ -235,6 +232,51 @@
                 })
 
             }
+        })
+
+
+        const offer_submit = document.getElementById('offer_submit')
+        offer_submit.addEventListener('click', function (e) {
+            e.preventDefault()
+            const full_name = search_box.value
+            const user_name = full_name.split(' ')
+            const username = user_name.pop()
+            console.log(username)
+            const description = document.getElementById('description').value
+            const cart_total_value = cart_total.innerText
+            console.log(cart_total_value)
+            const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+            console.log(csrftoken)
+            const url = '/cart/add-offer/'
+            const data = JSON.stringify({
+                'user_name': username,
+                'description' : description,
+                'cart_total_value' : cart_total_value,
+            })
+            fetch(url, {
+                'method' : 'POST',
+                'headers' : {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                'body': data,
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(response)
+                    return response.json()
+                } else {
+                console.log(response)
+                }
+            })
+            .then(data => {
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+
+
         })
 
     </script>
