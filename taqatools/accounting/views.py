@@ -263,3 +263,27 @@ def add_purchase(request):
             cart_item.delete()
         messages.success(request, ('The invoice has been created Successfully!'))
         return HttpResponse({'ok':"ok"})
+    
+    
+def sale_profile(request, id):
+    invoice = SaleInvoice.objects.get(id=id)
+    total = {}
+    for item in invoice.items.all():
+        total[f'total_{item.id}'] = item.price*item.q
+        
+    return render(request, 'accounting/sales/sale_profile.html', {
+        'invoice':invoice,
+        'total':json.dumps(total)
+        })
+    
+
+def sales(request):
+    invoices = SaleInvoice.objects.all()
+    return render(request, 'accounting/sales/sales.html', {'invoices':invoices})
+
+
+    
+def user_sales(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/sales/user_sales.html', context)

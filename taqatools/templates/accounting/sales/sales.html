@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Accounting Control Panel {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <h1>List of all Sales invoices</h1>
+            {% for invoice in invoices %}
+                <a href="{% url 'sale_profile' invoice.id %}" class="text-dark text-decoration-none">
+                    <div class="shadow p-3 mb-5 bg-white rounded">
+                        <h3>{{ invoice.description }}</h3>
+                        <p>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</p>
+                        <p>{{ invoice.value }}</p>
+                        <p>{{ invoice.created_at|naturaltime  }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+
+    </div>
+    
+
+{% endblock %}

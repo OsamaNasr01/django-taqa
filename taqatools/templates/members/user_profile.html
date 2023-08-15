@@ -20,4 +20,12 @@
             </div>
         </a>
     {% endif %}
+
+    {% if user.sale.all %}
+        <a href="{% url 'user_sales'  user.username %}">
+            <div>
+                <h3>You have ordered {{ user.sale.all.count }} invoices</h3>
+            </div>
+        </a>
+    {% endif %}
 {% endblock %}

@@ -18,5 +18,9 @@ urlpatterns = [
     path('cart/add-sale/', views.add_sale, name='add_sale'),
     path('cart/add-purchase/', views.add_purchase, name='add_purchase'),
     
+    path('accounting/sale/<int:id>/', views.sale_profile, name='sale_profile'),
+    path('accounting/sales/', views.sales, name='sales'),
+    path('members/<slug:username>/sales', views.user_sales, name = 'user_sales'),
+    
     
 ]
