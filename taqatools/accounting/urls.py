@@ -22,5 +22,10 @@ urlpatterns = [
     path('accounting/sales/', views.sales, name='sales'),
     path('members/<slug:username>/sales', views.user_sales, name = 'user_sales'),
     
+    path('accounting/purchase/<int:id>/', views.purchase_profile, name='purchase_profile'),
+    path('accounting/purchases/', views.purchases, name='purchases'),
+    path('members/<slug:username>/purchases', views.user_purchases, name = 'user_purchases'),
+    
+    
     
 ]

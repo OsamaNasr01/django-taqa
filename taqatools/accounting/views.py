@@ -287,3 +287,27 @@ def user_sales(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user':user}
     return render(request, 'accounting/sales/user_sales.html', context)
+
+    
+def purchase_profile(request, id):
+    invoice = PurchaseInvoice.objects.get(id=id)
+    total = {}
+    for item in invoice.items.all():
+        total[f'total_{item.id}'] = item.price*item.q
+        
+    return render(request, 'accounting/purchases/purchase_profile.html', {
+        'invoice':invoice,
+        'total':json.dumps(total)
+        })
+    
+
+def purchases(request):
+    invoices = PurchaseInvoice.objects.all()
+    return render(request, 'accounting/purchases/purchases.html', {'invoices':invoices})
+
+
+    
+def user_purchases(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/purchases/user_purchases.html', context)

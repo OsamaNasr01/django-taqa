@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} Purchase invoice {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ invoice.description }}</h1>
+            <p>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</p>
+            <p>{{ invoice.value }}</p>
+            <p>{{ invoice.created_at|naturaltime  }}</p>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered table-hover" id="cart_items">
+                <tr id="table_head">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>NO</th>
+                    <th>Total</th>
+                </tr>
+                {% for item in invoice.items.all %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.q }}</td>
+                        <td id="total_{{item.id}}" ></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <input type="hidden" id="total_data" value="{{total}}">
+
+    <script>
+        const total_e = document.getElementById('total_data').value
+        const total_data =JSON.parse(total_e) 
+
+        function total() {
+            for (var id in total_data) {
+                document.getElementById(id).innerText = total_data[id]
+            }
+        }
+        document.addEventListener("DOMContentLoaded", total())
+    </script>
+
+
+{% endblock %}
+

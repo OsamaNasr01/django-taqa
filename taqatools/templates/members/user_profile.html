@@ -28,4 +28,13 @@
             </div>
         </a>
     {% endif %}
+
+
+    {% if user.purchase.all %}
+        <a href="{% url 'user_purchases'  user.username %}">
+            <div>
+                <h3>You have delivered {{ user.purchase.all.count }} invoices</h3>
+            </div>
+        </a>
+    {% endif %}
 {% endblock %}
