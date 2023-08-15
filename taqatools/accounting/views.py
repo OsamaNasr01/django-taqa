@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm, OfferItemForm, SaleItemForm, SaleForm
-from .forms import PurchaseInvoice, PurchaseForm
+from .forms import PurchaseItemForm, PurchaseForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
 from .models import CartItem, Offer, SaleInvoice,PurchaseInvoice
@@ -220,6 +220,7 @@ def add_sale(request):
         invoice.user = user
         invoice.description = data['description']
         invoice.value = data['cart_total_value']
+        print(invoice.value)
         cart_items = CartItem.objects.filter(user = request.user)
         invoice.save()
         for item in cart_items:
@@ -242,14 +243,16 @@ def add_purchase(request):
         form = PurchaseForm()
         invoice  = form.save(commit=False)
         username = data['user_name']
+        print(username)
         user = User.objects.get(username = username)
         invoice.user = user
         invoice.description = data['description']
+        print(data['cart_total_value'])
         invoice.value = data['cart_total_value']
         cart_items = CartItem.objects.filter(user = request.user)
         invoice.save()
         for item in cart_items:
-            item_form = PurchaseInvoiceForm()
+            item_form = PurchaseItemForm()
             purchase_item= item_form.save(commit=False)
             purchase_item.product = item.product
             purchase_item.invoice = PurchaseInvoice.objects.last()
