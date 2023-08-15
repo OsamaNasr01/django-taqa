@@ -30,7 +30,7 @@ def add_product_cart(request):
     data = json.loads(request.body)
     product_id = data['product_id']
     product = Product.objects.get(id=product_id)
-    price = Price.objects.filter(product=product_id).last().value
+    price = Price.objects.filter(product=product_id).last().value *(100 - Price.objects.filter(product=product_id).last().discount)/100
     user = request.user
     no = int(data['no'])    
     in_cart = product.cart.filter(user=request.user)
@@ -70,14 +70,14 @@ def cart(request):
     total = 0
     data_items = {}
     for item in items:
-        discount_price = item.product.prices.last().value * (100 - item.product.prices.last().discount)/100
+        price = item.price
         no =  item.q
-        item_total = discount_price * no
+        item_total = price * no
         total +=  item_total
         i+=1
         x= {
             'name': item.product.name,
-            'price': discount_price,
+            'price': price,
             'no': no,
             'total':  item_total,
             'id': item.id,
