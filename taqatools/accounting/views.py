@@ -141,9 +141,9 @@ def update_cart_item(request):
         items = CartItem.objects.filter(user=request.user)
         total = 0
         for item in items:
-            discount_price = item.product.prices.last().value * (100 - item.product.prices.last().discount)/100
+            price = item.price
             no =  item.q
-            item_total = discount_price * no
+            item_total = price * no
             total +=  item_total
         data['total'] = total
         
@@ -172,6 +172,8 @@ def add_offer(request):
             offer_item.q = item.q
             offer_item.price = item.price
             offer_item.save()
+            cart_item = CartItem.objects.get(id = item.id)
+            cart_item.delete()
         messages.success(request, ('The offer has been created Successfully!'))
         return HttpResponse({'ok':"ok"})
     
