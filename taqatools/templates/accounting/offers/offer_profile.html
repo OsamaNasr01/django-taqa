@@ -24,9 +24,9 @@
                     <tr>
                         <td>{{ item.id }}</td>
                         <td>{{ item.product.name }}</td>
-                        <td id="price_">{{ item.price }}</td>
-                        <td id="q_">{{ item.q }}</td>
-                        <td id="total_{{item.id}}" value="total(total_{{item.id}})"></td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.q }}</td>
+                        <td id="total_{{item.id}}" ></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -37,7 +37,6 @@
     <script>
         const total_e = document.getElementById('total_data').value
         const total_data =JSON.parse(total_e) 
-        console.log(total_data)
 
         function total() {
             for (var id in total_data) {

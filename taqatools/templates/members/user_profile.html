@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %} {{user.username}} {% endblock %}
 
@@ -11,4 +12,13 @@
         <p>Email : {{ user.email }}</p>
         <p>Username @{{user.username }}</p>
     </div>
+
+    {% if user.offer.all %}
+        <a href="{% url 'user_offers'  user.username %}">
+            <div>
+                <h3>You have requested {{ user.offer.all.count }} offers</h3>
+            </div>
+        </a>
+      
+    {% endif %}
 {% endblock %}
