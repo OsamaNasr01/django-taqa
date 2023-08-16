@@ -324,14 +324,14 @@ def payment_profile(request, id):
         'payment':payment,
         'form': form,
         })
-    
+
 
 def payments(request):
     payments = Credit.objects.all()
     return render(request, 'accounting/payments/payments.html', {'payments':payments})
 
 
-    
+
 def user_payments(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user':user}
@@ -354,7 +354,7 @@ def add_payment(request, username):
             error_message = errors.as_text().split(':')[0]
             messages.error(request, ('There Was An Error ' + error_message))
             return user_profile(request, username)
-        
+
 
 def payment_update(request, id):
     payment  = get_object_or_404(Credit, id=id)
@@ -364,14 +364,16 @@ def payment_update(request, id):
             form.save()
             messages.success(request, ('The Payment has been Updated Successfully!'))
             return payment_profile(request, id)
-        
+
+
+
 def payment_delete(request, id):
     payment = get_object_or_404(Credit, id=id)
     if request.method == 'POST':
         payment.delete()
         messages.success(request, ('The payment has been Deleted Successfully!'))
         return redirect('payments')
-    
+
 
 
 
@@ -394,13 +396,34 @@ def add_receipt(request, username):
             return user_profile(request, username)
         
         
-    
-     
+
+def receipt_update(request, id):
+    receipt  = get_object_or_404(Depit, id=id)
+    if request.method == 'POST':
+        form = DepitForm(request.POST, instance = receipt)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('The Receipt has been Updated Successfully!'))
+            return receipt_profile(request, id)
+
+
+
+def receipt_delete(request, id):
+    receipt = get_object_or_404(Depit, id=id)
+    if request.method == 'POST':
+        receipt.delete()
+        messages.success(request, ('The Receipt has been Deleted Successfully!'))
+        return redirect('receipts')
+
     
 def receipt_profile(request, id):
     receipt = Depit.objects.get(id=id)
+    form = DepitForm(instance=receipt)
         
-    return render(request, 'accounting/receipts/receipt_profile.html', {'receipt':receipt})
+    return render(request, 'accounting/receipts/receipt_profile.html', {
+        'receipt':receipt,
+        'form':form,
+        })
     
 
 def receipts(request):
