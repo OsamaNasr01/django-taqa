@@ -4,6 +4,35 @@
 
 {% load humanize %}
 
+
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-purchase-modal">
+    Delete
+</button>
+<br><br>
+
+<!-- delete-purchase-modal.html -->
+
+<div class="modal fade" id="delete-purchase-modal" tabindex="-1" aria-labelledby="delete-purchase-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="delete-purchase-modal-label">Delete purchase Invoice</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        Are you sure you want to delete this Invoice?
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="{% url 'purchase_delete' invoice.id %}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+            <button type="submit" class="btn btn-danger" id="confirm-delete-sale">Confirm Delete</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ invoice.description }}</h1>

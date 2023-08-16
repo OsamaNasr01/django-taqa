@@ -4,6 +4,34 @@
 
 {% load humanize %}
 
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-offer-modal">
+        Delete
+    </button>
+    <br><br>
+
+    <!-- delete-offer-modal.html -->
+
+    <div class="modal fade" id="delete-offer-modal" tabindex="-1" aria-labelledby="delete-offer-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="delete-offer-modal-label">Delete offer Invoice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Are you sure you want to delete this Offer?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="{% url 'offer_delete' offer.id %}" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger" id="confirm-delete-offer">Confirm Delete</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ offer.description }}</h1>
