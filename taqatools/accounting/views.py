@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm, OfferItemForm, SaleItemForm, SaleForm
-from .forms import PurchaseItemForm, PurchaseForm
+from .forms import PurchaseItemForm, PurchaseForm,CreditForm, DepitForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
 from .models import CartItem, Offer, SaleInvoice,PurchaseInvoice
@@ -8,6 +8,7 @@ import json
 from django.http import JsonResponse
 from django.contrib import messages
 from django.db.models import Q
+from members.views import user_profile
 
 # Create your views here.
 
@@ -311,3 +312,41 @@ def user_purchases(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user':user}
     return render(request, 'accounting/purchases/user_purchases.html', context)
+
+def add_payment(request, username):
+    if request.method == 'POST':
+        form = CreditForm(request.POST)
+        user = User.objects.get(username=username)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.description = request.POST['description']
+            payment.value = request.POST['value']
+            payment.user = user
+            payment.save()
+            messages.success(request, ('The Payment has been Added Successfully!'))
+            return user_profile(request, username)
+        else:
+            errors = form.errors
+            error_message = errors.as_text().split(':')[0]
+            messages.error(request, ('There Was An Error ' + error_message))
+            return user_profile(request, username)
+
+
+
+def add_receipt(request, username):
+    if request.method == 'POST':
+        form = DepitForm(request.POST)
+        user = User.objects.get(username=username)
+        if form.is_valid():
+            receipt = form.save(commit=False)
+            receipt.description = request.POST['description']
+            receipt.value = request.POST['value']
+            receipt.user = user
+            receipt.save()
+            messages.success(request, ('The Receipt has been Added Successfully!'))
+            return user_profile(request, username)
+        else:
+            errors = form.errors
+            error_message = errors.as_text().split(':')[0]
+            messages.error(request, ('There Was An Error ' + error_message))
+            return user_profile(request, username)

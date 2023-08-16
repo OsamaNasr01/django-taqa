@@ -12,6 +12,50 @@
         <p>Email : {{ user.email }}</p>
         <p>Username @{{user.username }}</p>
     </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
+        Add Payment
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-receipt-modal">
+        Add Receipt
+    </button>
+    
+    
+    <div class="modal fade" id="add-pyment-modal" tabindex="-1" aria-labelledby="add-pyment-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-pyment-modal">Add Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'add_payment' user.username %}" method="post" name="add-pyment_form">
+                        {% csrf_token %}
+                        {{ pay_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="add-receipt-modal" tabindex="-1" aria-labelledby="add-receipt-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-receipt-modal">Add Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'add_receipt' user.username %}" method="post" name="add-receipt_form">
+                        {% csrf_token %}
+                        {{ receive_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><br><br>
 
     {% if user.offer.all %}
         <a href="{% url 'user_offers'  user.username %}">

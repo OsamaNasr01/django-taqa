@@ -22,11 +22,11 @@
         </div>
     
         
-        <button type="button" onclick="add('offer')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        <button type="button"  onclick="add('offer')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
         Price Offer</button>
-        <button type="button" onclick="add('sale')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        <button type="button"  onclick="add('sale')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
         Sale invoice</button>
-        <button type="button" onclick="add('purchase')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
+        <button type="button"  onclick="add('purchase')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#price-offer-modal"> 
         Purchase invoice</button>
     
         <div class="modal fade" id="price-offer-modal" tabindex="-1" aria-labelledby="price-offer-modal" aria-hidden="true">
@@ -103,7 +103,7 @@
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
                 } else if (key === 'total') {
-                    td.setAttribute('id', `total_${item_data['id'].toFixed(2)}`)
+                    td.setAttribute('id', `total_${item_data['id'].toFixed}`)
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
                 } else if ( key === 'no') {    
@@ -303,6 +303,7 @@
             offer_form.name = `${type}_form`
         }
 
+        
     </script>
 
 

@@ -26,6 +26,9 @@ urlpatterns = [
     path('accounting/purchases/', views.purchases, name='purchases'),
     path('members/<slug:username>/purchases', views.user_purchases, name = 'user_purchases'),
     
+    path('accounting/<slug:username>/add-payment/', views.add_payment, name = 'add_payment'),
+    path('accounting/<slug:username>/add-receipt/', views.add_receipt, name = 'add_receipt'),
+    
     
     
 ]

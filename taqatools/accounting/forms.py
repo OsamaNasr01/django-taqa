@@ -1,6 +1,6 @@
 from django import forms
 from .models import PurchaseInvoice, CartItem, Offer, OfferItem, SaleInvoice, SaleInvoiceItem
-from .models import PurchaseInvoice, PurchaseInvoiceItem
+from .models import PurchaseInvoice, PurchaseInvoiceItem, Depit, Credit
 
 
 class PurchaseInvoiceForm(forms.ModelForm):
@@ -84,5 +84,27 @@ class PurchaseItemForm(forms.ModelForm):
         model = PurchaseInvoiceItem
         fields = ('product','invoice', 'q', 'price')
 
-    
 
+class DepitForm(forms.ModelForm):
+
+    class Meta:
+        model = Depit
+        fields = ('description', 'value')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['value'].widget.attrs.update({'class': 'form-control'})    
+
+
+
+class CreditForm(forms.ModelForm):
+
+    class Meta:
+        model = Credit
+        fields = ('description', 'value')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['value'].widget.attrs.update({'class': 'form-control'})   

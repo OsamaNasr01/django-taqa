@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm
 from django.contrib.auth.models import User
 from .models import Company, CoCategory
+from accounting.forms import DepitForm, CreditForm
 
 def login_user(request):
     if request.method == 'POST':
@@ -58,7 +59,13 @@ def home(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user':user}
+    pay_form = DepitForm()
+    receive_form = CreditForm()
+    context = {
+        'user':user,
+        'pay_form': pay_form,
+        'receive_form': receive_form
+        }
     return render(request, 'members/user_profile.html', context)
 
 def users(request):
