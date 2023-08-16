@@ -11,7 +11,7 @@
                     <div class="shadow p-3 mb-5 bg-white rounded">
                         <h3>{{ offer.description }}</h3>
                         <p>{{ offer.user.first_name }} {{ offer.user.last_name }}</p>
-                        <p>{{ offer.value }}</p>
+                        <p>{{ offer.value|floatformat:2|intcomma }}</p>
                         <p>{{ offer.created_at|naturaltime  }}</p>
                     </div>
                 </a>

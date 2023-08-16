@@ -8,7 +8,7 @@
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ invoice.description }}</h1>
             <p>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</p>
-            <p>{{ invoice.value }}</p>
+            <p>{{ invoice.value|floatformat:2|intcomma }}</p>
             <p>{{ invoice.created_at|naturaltime  }}</p>
         </div>
         <div>
@@ -24,11 +24,20 @@
                     <tr>
                         <td>{{ item.id }}</td>
                         <td>{{ item.product.name }}</td>
-                        <td>{{ item.price }}</td>
-                        <td>{{ item.q }}</td>
+                        <td>{{ item.price|floatformat:2|intcomma }}</td>
+                        <td>{{ item.q|intcomma }}</td>
                         <td id="total_{{item.id}}" ></td>
                     </tr>
                 {% endfor %}
+                <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ invoice.value|floatformat:2|intcomma }}</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -40,7 +49,7 @@
 
         function total() {
             for (var id in total_data) {
-                document.getElementById(id).innerText = total_data[id]
+                document.getElementById(id).innerText = total_data[id].toLocaleString ({minimumFractionDigits: 2})
             }
         }
         document.addEventListener("DOMContentLoaded", total())
