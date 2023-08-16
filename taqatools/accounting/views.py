@@ -211,6 +211,33 @@ def user_offers(request, username):
     context = {'user':user}
     return render(request, 'accounting/offers/user_offers.html', context)
 
+
+    
+def sale_profile(request, id):
+    invoice = SaleInvoice.objects.get(id=id)
+    form = SaleForm(instance=invoice)
+    total = {}
+    for item in invoice.items.all():
+        total[f'total_{item.id}'] = item.price*item.q
+        
+    return render(request, 'accounting/sales/sale_profile.html', {
+        'invoice':invoice,
+        'total':json.dumps(total),
+        'form':form
+        })
+    
+
+def sales(request):
+    invoices = SaleInvoice.objects.all()
+    return render(request, 'accounting/sales/sales.html', {'invoices':invoices})
+
+
+    
+def user_sales(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/sales/user_sales.html', context)
+
 def add_sale(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -236,6 +263,26 @@ def add_sale(request):
             cart_item.delete()
         messages.success(request, ('The invoice has been created Successfully!'))
         return HttpResponse({'ok':"ok"})
+    
+
+def sale_update(request, id):
+    invoice  = get_object_or_404(SaleInvoice, id=id)
+    if request.method == 'POST':
+        form = SaleForm(request.POST, instance = invoice)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('The Invoice has been Updated Successfully!'))
+            return sale_profile(request, id)    
+
+def sale_delete(request, id):
+    invoice = get_object_or_404(SaleInvoice, id=id)
+    if request.method == 'POST':
+        invoice.delete()
+        messages.success(request, ('The Invoice has been Deleted Successfully!'))
+        return redirect('sales')
+
+
+
     
     
 def add_purchase(request):
@@ -265,29 +312,7 @@ def add_purchase(request):
         messages.success(request, ('The invoice has been created Successfully!'))
         return HttpResponse({'ok':"ok"})
     
-    
-def sale_profile(request, id):
-    invoice = SaleInvoice.objects.get(id=id)
-    total = {}
-    for item in invoice.items.all():
-        total[f'total_{item.id}'] = item.price*item.q
-        
-    return render(request, 'accounting/sales/sale_profile.html', {
-        'invoice':invoice,
-        'total':json.dumps(total)
-        })
-    
 
-def sales(request):
-    invoices = SaleInvoice.objects.all()
-    return render(request, 'accounting/sales/sales.html', {'invoices':invoices})
-
-
-    
-def user_sales(request, username):
-    user = get_object_or_404(User, username=username)
-    context = {'user':user}
-    return render(request, 'accounting/sales/user_sales.html', context)
 
     
 def purchase_profile(request, id):

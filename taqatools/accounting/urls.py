@@ -19,6 +19,8 @@ urlpatterns = [
     path('cart/add-purchase/', views.add_purchase, name='add_purchase'),
     
     path('accounting/sale/<int:id>/', views.sale_profile, name='sale_profile'),
+    path('accounting/sale/<int:id>/update', views.sale_update, name='sale_update'),
+    path('accounting/sale/<int:id>/delete', views.sale_delete, name='sale_delete'),
     path('accounting/sales/', views.sales, name='sales'),
     path('members/<slug:username>/sales', views.user_sales, name = 'user_sales'),
     

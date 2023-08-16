@@ -4,6 +4,89 @@
 
 {% load humanize %}
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-sale-modal">
+        Update
+    </button>
+
+    <div class="modal fade" id="update-sale-modal" tabindex="-1" aria-labelledby="update-sale-modal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="update-sale-modal">Member name: {{ invoice.user.first_name }} {{ sale.user.last_name }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+            <form action="{% url 'sale_update' invoice.id %}" method="post" name="update-sale_form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div>
+                    <table class="table table-striped table-bordered table-hover" id="cart_items">
+                        <tr id="table_head">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>NO</th>
+                            <th>Total</th>
+                        </tr>
+                        {% for item in invoice.items.all %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.price|floatformat:2|intcomma }}</td>
+                                <td>{{ item.q|intcomma }}</td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                        <tfoot>
+                            <tr>
+                                <td>#</td>
+                                <td>Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ invoice.value|floatformat:2|intcomma }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-sale-modal">
+        Delete
+    </button>
+    <br><br>
+
+    <!-- delete-sale-modal.html -->
+
+    <div class="modal fade" id="delete-sale-modal" tabindex="-1" aria-labelledby="delete-sale-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="delete-sale-modal-label">Delete Sale Invoice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Are you sure you want to delete this Invoice?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="{% url 'sale_delete' invoice.id %}" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger" id="confirm-delete-sale">Confirm Delete</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ invoice.description }}</h1>
