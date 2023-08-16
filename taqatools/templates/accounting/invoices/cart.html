@@ -103,7 +103,7 @@
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
                 } else if (key === 'total') {
-                    td.setAttribute('id', `total_${item_data['id']}`)
+                    td.setAttribute('id', `total_${item_data['id'].toFixed(2)}`)
                     td.innerText = item_data[key]
                     table_row.appendChild(td)
                 } else if ( key === 'no') {    

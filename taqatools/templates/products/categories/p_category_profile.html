@@ -90,10 +90,10 @@
         <ul>
           {% for spec in category.specs.all %}
           <div class="row">
-            <div class="col-8">
+            <div class="col-7">
               <li>{{ spec.name }} {% if not spec.unit == None %} {{ spec.unit }} {% endif %}</li>
             </div>
-            <div class="col-4 rm-6">
+            <div class="col-5">
               <div class="btn-group">
                 <a href="{% url 'update_spec' spec.id %}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
                   Update
