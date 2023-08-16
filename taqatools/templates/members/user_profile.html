@@ -11,6 +11,7 @@
         </h3>
         <p>Email : {{ user.email }}</p>
         <p>Username @{{user.username }}</p>
+        <h1>{{ balanse|floatformat:2|intcomma }}</h1>
     </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
         Add Payment
@@ -78,6 +79,24 @@
         <a href="{% url 'user_purchases'  user.username %}">
             <div>
                 <h3>You have delivered {{ user.purchase.all.count }} invoices</h3>
+            </div>
+        </a>
+    {% endif %}
+
+    
+    {% if user.credit.all %}
+        <a href="{% url 'user_purchases'  user.username %}">
+            <div>
+                <h3>You have delivered {{ user.credit.all.count }} Payment</h3>
+            </div>
+        </a>
+    {% endif %}
+
+    
+    {% if user.depit.all %}
+        <a href="{% url 'user_purchases'  user.username %}">
+            <div>
+                <h3>You have delivered {{ user.depit.all.count }} Receipt</h3>
             </div>
         </a>
     {% endif %}

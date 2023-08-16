@@ -59,12 +59,31 @@ def home(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
+    sales = user.sale.all()
+    sales_value = 0
+    for sale in sales:
+        sales_value += sale.value
+    purchases = user.purchase.all()
+    purchases_value = 0
+    for purchase in purchases:
+        purchases_value += purchase.value
+    credits = user.credit.all()
+    credits_value = 0
+    for credit in credits:
+        credits_value += credit.value
+    depits = user.depit.all()
+    depits_value = 0
+    for depit in depits:
+        depits_value += depit.value
+        
+    balanse = -sales_value+purchases_value-credits_value+depits_value
     pay_form = DepitForm()
     receive_form = CreditForm()
     context = {
         'user':user,
         'pay_form': pay_form,
-        'receive_form': receive_form
+        'receive_form': receive_form,
+        'balanse':balanse
         }
     return render(request, 'members/user_profile.html', context)
 
