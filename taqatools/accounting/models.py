@@ -24,6 +24,10 @@ class SaleInvoice(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField()
     
+    @property
+    def total_value(self):
+        return sum((item.price*item.q) for item in self.items.all() )
+    
     
 class SaleInvoiceItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sale')

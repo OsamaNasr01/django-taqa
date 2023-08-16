@@ -6,6 +6,7 @@
 
     <div class="container">
         <h1>List of all Sales invoices</h1>
+        <h3>Total Sales {{ invoices.all.value.sum }}</h3>
             {% for invoice in invoices %}
                 <a href="{% url 'sale_profile' invoice.id %}" class="text-dark text-decoration-none">
                     <div class="shadow p-3 mb-5 bg-white rounded">
