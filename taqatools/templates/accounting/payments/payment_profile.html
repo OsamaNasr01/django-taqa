@@ -3,6 +3,56 @@
 {% block content %}
 
 {% load humanize %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-payment-modal">
+        Update
+    </button>
+
+    <div class="modal fade" id="update-payment-modal" tabindex="-1" aria-labelledby="update-payment-modal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="update-payment-modal">Member name: {{ payment.user.first_name }} {{ payment.user.last_name }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+            <form action="{% url 'payment_update' payment.id %}" method="post" name="update-payment_form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-payment-modal">
+        Delete
+    </button>
+    <br><br>
+    
+    <!-- delete-payment-modal.html -->
+    
+    <div class="modal fade" id="delete-payment-modal" tabindex="-1" aria-labelledby="delete-payment-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="delete-payment-modal-label">Delete Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Are you sure you want to delete this payment?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="{% url 'payment_delete' payment.id %}" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger" id="confirm-delete-payment">Confirm Delete</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">

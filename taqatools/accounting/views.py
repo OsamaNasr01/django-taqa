@@ -313,6 +313,30 @@ def user_purchases(request, username):
     context = {'user':user}
     return render(request, 'accounting/purchases/user_purchases.html', context)
 
+
+
+
+def payment_profile(request, id):
+    payment = Credit.objects.get(id=id)
+    form = CreditForm(instance=payment)
+        
+    return render(request, 'accounting/payments/payment_profile.html', {
+        'payment':payment,
+        'form': form,
+        })
+    
+
+def payments(request):
+    payments = Credit.objects.all()
+    return render(request, 'accounting/payments/payments.html', {'payments':payments})
+
+
+    
+def user_payments(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/payments/user_payments.html', context)
+
 def add_payment(request, username):
     if request.method == 'POST':
         form = CreditForm(request.POST)
@@ -330,6 +354,24 @@ def add_payment(request, username):
             error_message = errors.as_text().split(':')[0]
             messages.error(request, ('There Was An Error ' + error_message))
             return user_profile(request, username)
+        
+
+def payment_update(request, id):
+    payment  = get_object_or_404(Credit, id=id)
+    if request.method == 'POST':
+        form = CreditForm(request.POST, instance = payment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('The Payment has been Updated Successfully!'))
+            return payment_profile(request, id)
+        
+def payment_delete(request, id):
+    payment = get_object_or_404(Credit, id=id)
+    if request.method == 'POST':
+        payment.delete()
+        messages.success(request, ('The payment has been Deleted Successfully!'))
+        return redirect('payments')
+    
 
 
 
@@ -353,22 +395,6 @@ def add_receipt(request, username):
         
         
     
-def payment_profile(request, id):
-    payment = Credit.objects.get(id=id)
-        
-    return render(request, 'accounting/payments/payment_profile.html', {'payment':payment})
-    
-
-def payments(request):
-    payments = Credit.objects.all()
-    return render(request, 'accounting/payments/payments.html', {'payments':payments})
-
-
-    
-def user_payments(request, username):
-    user = get_object_or_404(User, username=username)
-    context = {'user':user}
-    return render(request, 'accounting/payments/user_payments.html', context)
      
     
 def receipt_profile(request, id):

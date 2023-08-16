@@ -30,6 +30,8 @@ urlpatterns = [
     path('accounting/<slug:username>/add-receipt/', views.add_receipt, name = 'add_receipt'),
     
     path('accounting/payment/<int:id>/', views.payment_profile, name='payment_profile'),
+    path('accounting/payment/<int:id>/update', views.payment_update, name='payment_update'),
+    path('accounting/payment/<int:id>/delete', views.payment_delete, name='payment_delete'),
     path('accounting/payments/', views.payments, name='payments'),
     path('members/<slug:username>/payments', views.user_payments, name = 'user_payments'),
     
