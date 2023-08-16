@@ -85,7 +85,7 @@
 
     
     {% if user.credit.all %}
-        <a href="{% url 'user_purchases'  user.username %}">
+        <a href="{% url 'user_payments'  user.username %}">
             <div>
                 <h3>You have delivered {{ user.credit.all.count }} Payment</h3>
             </div>
@@ -94,7 +94,7 @@
 
     
     {% if user.depit.all %}
-        <a href="{% url 'user_purchases'  user.username %}">
+        <a href="{% url 'user_receipts'  user.username %}">
             <div>
                 <h3>You have delivered {{ user.depit.all.count }} Receipt</h3>
             </div>

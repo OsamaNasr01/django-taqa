@@ -29,6 +29,12 @@ urlpatterns = [
     path('accounting/<slug:username>/add-payment/', views.add_payment, name = 'add_payment'),
     path('accounting/<slug:username>/add-receipt/', views.add_receipt, name = 'add_receipt'),
     
+    path('accounting/payment/<int:id>/', views.payment_profile, name='payment_profile'),
+    path('accounting/payments/', views.payments, name='payments'),
+    path('members/<slug:username>/payments', views.user_payments, name = 'user_payments'),
     
+    path('accounting/receipt/<int:id>/', views.receipt_profile, name='receipt_profile'),
+    path('accounting/receipts/', views.receipts, name='receipts'),
+    path('members/<slug:username>/receipts', views.user_receipts, name = 'user_receipts'),
     
 ]

@@ -3,7 +3,7 @@ from .forms import PurchaseInvoiceForm, CartItemForm, OfferForm, OfferItemForm, 
 from .forms import PurchaseItemForm, PurchaseForm,CreditForm, DepitForm
 from products.models import Product, Price
 from django.contrib.auth.models import User
-from .models import CartItem, Offer, SaleInvoice,PurchaseInvoice
+from .models import CartItem, Offer, SaleInvoice,PurchaseInvoice, Credit, Depit
 import json
 from django.http import JsonResponse
 from django.contrib import messages
@@ -350,3 +350,40 @@ def add_receipt(request, username):
             error_message = errors.as_text().split(':')[0]
             messages.error(request, ('There Was An Error ' + error_message))
             return user_profile(request, username)
+        
+        
+    
+def payment_profile(request, id):
+    payment = Credit.objects.get(id=id)
+        
+    return render(request, 'accounting/payments/payment_profile.html', {'payment':payment})
+    
+
+def payments(request):
+    payments = Credit.objects.all()
+    return render(request, 'accounting/payments/payments.html', {'payments':payments})
+
+
+    
+def user_payments(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/payments/user_payments.html', context)
+     
+    
+def receipt_profile(request, id):
+    receipt = Depit.objects.get(id=id)
+        
+    return render(request, 'accounting/receipts/receipt_profile.html', {'receipt':receipt})
+    
+
+def receipts(request):
+    receipts = Depit.objects.all()
+    return render(request, 'accounting/receipts/receipts.html', {'receipts':receipts})
+
+
+    
+def user_receipts(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user':user}
+    return render(request, 'accounting/receipts/user_receipts.html', context)

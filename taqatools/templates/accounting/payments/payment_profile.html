@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Payment {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ payment.description }}</h1>
+            <p>{{ payment.user.first_name }} {{ payment.user.last_name }}</p>
+            <p>{{ payment.value|floatformat:2|intcomma }}</p>
+            <p>{{ payment.created_at|naturaltime  }}</p>
+        </div>
+    <input type="hidden" id="total_data" value="{{total}}">
+
+
+{% endblock %}
+

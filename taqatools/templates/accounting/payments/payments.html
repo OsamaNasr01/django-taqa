@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Accounting Control Panel {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <h1>List of all Payments</h1>
+            {% for payment in payments %}
+                <a href="{% url 'payment_profile' payment.id %}" class="text-dark text-decoration-none">
+                    <div class="shadow p-3 mb-5 bg-white rounded">
+                        <h3>{{ payment.description }}</h3>
+                        <p>{{ payment.user.first_name }} {{ payment.user.last_name }}</p>
+                        <p>{{ payment.value|floatformat:2|intcomma }}</p>
+                        <p>{{ payment.created_at|naturaltime  }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %} {{user.username}} {% endblock %}
+
+{% block content %}
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <h3>
+            <!-- {{member.first_name}} {{ member.last_name }} -->
+            {{ user.first_name  }} {{user.last_name}}
+        </h3>
+        <p>Email : {{ user.email }}</p>
+        <p>Username @{{user.username }}</p>
+    </div>
+
+
+    <div>
+        {% for payment in user.credit.all %}
+            <a href="{% url 'payment_profile' payment.id %}" class="text-dark text-decoration-none">
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                    <h3>{{ payment.description }}</h3>
+                    <p>{{ payment.value|floatformat:2|intcomma }}</p>
+                    <p>{{ payment.created_at|naturaltime  }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

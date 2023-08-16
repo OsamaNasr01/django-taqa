@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} Receipt {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ receipt.description }}</h1>
+            <p>{{ receipt.user.first_name }} {{ receipt.user.last_name }}</p>
+            <p>{{ receipt.value|floatformat:2|intcomma }}</p>
+            <p>{{ receipt.created_at|naturaltime  }}</p>
+        </div>
+
+
+{% endblock %}
+

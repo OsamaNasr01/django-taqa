@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Receipts {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+    <div class="container">
+        <h1>List of all Receipts</h1>
+            {% for receipt in receipts %}
+                <a href="{% url 'receipt_profile' receipt.id %}" class="text-dark text-decoration-none">
+                    <div class="shadow p-3 mb-5 bg-white rounded">
+                        <h3>{{ receipt.description }}</h3>
+                        <p>{{ receipt.user.first_name }} {{ receipt.user.last_name }}</p>
+                        <p>{{ receipt.value|floatformat:2|intcomma }}</p>
+                        <p>{{ receipt.created_at|naturaltime  }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+
+    </div>
+    
+
+{% endblock %}
