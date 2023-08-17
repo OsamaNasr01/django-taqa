@@ -94,8 +94,3 @@ class CartItem(models.Model):
     def item_value(self):
         return self.price * self.q
     
-class Cart(models.Model):
-    @property
-    def total_value(self):
-        return sum((item.price*item.q) for item in self.items.all() )
-    
