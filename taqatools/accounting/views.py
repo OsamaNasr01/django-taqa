@@ -273,8 +273,6 @@ def add_sale(request):
         user = User.objects.get(username=username)
         invoice.user = user
         invoice.description = data['description']
-        invoice.value = data['cart_total_value']
-        print(invoice.value)
         cart_items = CartItem.objects.filter(user=request.user)
         invoice.save()
         for item in cart_items:
@@ -322,8 +320,6 @@ def add_purchase(request):
         user = User.objects.get(username=username)
         invoice.user = user
         invoice.description = data['description']
-        print(data['cart_total_value'])
-        invoice.value = data['cart_total_value']
         cart_items = CartItem.objects.filter(user=request.user)
         invoice.save()
         for item in cart_items:

@@ -206,7 +206,7 @@
                   <br><br>
                 {% elif spec.type == 3 %}
                   <label for="{{spec.name}}">{{ spec.name }}</label>
-                  <input type="checkbox" name="{{ spec.name }}" class="form-check-input" 
+                  <input type="checkbox"  onchange="dosomething(id)" name="{{ spec.name }}" class="form-check-input" 
                     id="{{spec.name}}"><br><br>
                 {% endif %}
               {% endfor %}
@@ -231,6 +231,13 @@
             </div>
         </a>
     {% endfor %}
+
+    <script>
+      function dosomething (z) {
+        var checkbox = document.getElementById(z).checked
+        console.log(checkbox)
+      }
+    </script>
 
 
 {% endblock %}
