@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from sitestats.models import Site
 
 # Create your models here.
 
@@ -54,6 +55,7 @@ class Category(models.Model):
     description = models.TextField(max_length=500)
     parent_id = models.PositiveIntegerField(null=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
+    count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
 
     def __str__(self):
         return self.name
@@ -64,6 +66,8 @@ class Category(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Category, self).save(*args, **kwargs)
+        self.count.categories += 1
+        self.count.save()
 
 
 
@@ -73,6 +77,7 @@ class Brand(models.Model):
     description = models.TextField(max_length=500)
     category = models.ManyToManyField(Category, related_name='brands')
     slug = models.SlugField(max_length=150, blank=True, unique=True)
+    count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
 
     def __str__(self):
         return self.name
@@ -83,6 +88,8 @@ class Brand(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Brand, self).save(*args, **kwargs)
+        self.count.brands += 1
+        self.count.save()
 
 
 
@@ -93,6 +100,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
+    count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
 
     def __str__(self):
         return self.name
@@ -103,6 +111,8 @@ class Product(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Product, self).save(*args, **kwargs)
+        self.count.products += 1
+        self.count.save()
 
 
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
 from django.utils.text import slugify
+from sitestats.models import Site
 
 
 def arabic_to_english_slug(text):
@@ -74,6 +75,7 @@ class Company(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
     category = models.ManyToManyField(CoCategory, related_name='companies')
     slug = models.SlugField(max_length=150, blank=True)
+    count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
 
     def __str__(self):
         return self.name
@@ -84,3 +86,5 @@ class Company(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Company, self).save(*args, **kwargs)
+        self.count.companies += 1
+        self.count.save()

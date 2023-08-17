@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class site(models.Model):
+class Site(models.Model):
     users = models.PositiveIntegerField(default=0)
     companies = models.PositiveIntegerField(default=0)
     categories = models.PositiveIntegerField(default=0)
