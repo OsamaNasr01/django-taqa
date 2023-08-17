@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -6,6 +6,7 @@ from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm
 from django.contrib.auth.models import User
 from .models import Company, CoCategory
 from accounting.forms import DepitForm, CreditForm
+import json
 
 def login_user(request):
     if request.method == 'POST':
@@ -142,19 +143,22 @@ def co_list(request):
 
 def add_co_category(request):
     if request.method == 'POST':
-        form = AddCoCategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, ('The Category has been Added Successfully!'))
-            return redirect('add_company')
-        else:
-            errors = form.errors
-            error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the category' + error_message))
-            return render(request, 'members/add_co_category.html', {'form' : form, 'errors': errors})
-    else:
         form = AddCoCategoryForm()
-        return render(request, 'members/add_co_category.html', {'form' : form})
+        data = json.loads(request.body)
+        print(data)
+        category = form.save(commit=False)
+        category.name = data['name']
+        category.description = data['description']
+        category.save()
+        print(category)
+        json_data = json.dumps({
+            'category' : {
+                'name': category.name,
+                'id' : category.id
+            }
+        })
+        messages.success(request, ('The Category has been Added Successfully!'))
+        return HttpResponse(json_data, content_type="application/json")
     
 
 def update_co_category(request, slug):

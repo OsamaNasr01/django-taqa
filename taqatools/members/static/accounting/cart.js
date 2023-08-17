@@ -200,7 +200,6 @@ offer_submit.addEventListener('click', function (e) {
     const data = JSON.stringify({
         'user_name': username,
         'description' : description,
-        'cart_total_value' : cart_total_value,
     })
     console.log(data)
     fetch(url, {
