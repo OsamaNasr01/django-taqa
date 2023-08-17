@@ -6,7 +6,7 @@ console.log(data['items'])
 const cart_items_table = document.getElementById('cart_items')
 const table_head = document.getElementById('table_head')
 const cart_total = document.getElementById('cart_total')
-cart_total.innerText = data['total']
+cart_total.innerText = data['total'].toLocaleString ({minimumFractionDigits: 2})
 for (var item in items) {
     const item_data = items[item]
     const table_row = document.createElement('tr')
@@ -38,11 +38,11 @@ for (var item in items) {
 
         } else if ( key === 'price') {
             td.setAttribute('id', `price_${item_data['id']}`)
-            td.innerText = item_data[key]
+            td.innerText = item_data[key].toLocaleString ({minimumFractionDigits: 2})
             table_row.appendChild(td)
         } else if (key === 'total') {
             td.setAttribute('id', `total_${item_data['id'].toFixed}`)
-            td.innerText = item_data[key]
+            td.innerText = item_data[key].toLocaleString ({minimumFractionDigits: 2})
             table_row.appendChild(td)
         } else if ( key === 'no') {    
             const no_input = document.createElement('input')

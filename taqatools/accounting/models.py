@@ -10,7 +10,6 @@ class PurchaseInvoice(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='purchase')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.FloatField()
     @property
     def total_value(self):
         return sum((item.price*item.q) for item in self.items.all() )
@@ -30,7 +29,6 @@ class SaleInvoice(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sale')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.FloatField()
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
     @property
     def total_value(self):
@@ -75,7 +73,6 @@ class Offer(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='offer')
     created_at = models.DateTimeField(auto_now=True)
-    value = models.FloatField()
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
     @property
     def total_value(self):

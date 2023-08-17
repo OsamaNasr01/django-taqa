@@ -56,7 +56,7 @@
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.price|floatformat:2|intcomma }}</td>
                         <td>{{ item.q|intcomma }}</td>
-                        <td id="total_{{item.id}}" ></td>
+                        <td>{{ item.item_value|floatformat:2|intcomma }}</td>
                     </tr>
                 {% endfor %}
                 <tfoot>
@@ -65,7 +65,7 @@
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td>{{ offer.value|floatformat:2|intcomma }}</td>
+                        <td>{{ offer.total_value|floatformat:2|intcomma }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -73,7 +73,7 @@
     </div>
     <input type="hidden" id="total_data" value="{{total}}">
 
-    <script src="{% static 'accounting/offer_profile.js' %}"></script>
+    <!-- <script src="{% static 'accounting/offer_profile.js' %}"></script> -->
 
 
 {% endblock %}

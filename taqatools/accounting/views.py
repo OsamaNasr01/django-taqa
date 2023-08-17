@@ -170,7 +170,6 @@ def add_offer(request):
         user = User.objects.get(username=username)
         offer.user = user
         offer.description = data['description']
-        offer.value = data['cart_total_value']
         cart_items = CartItem.objects.filter(user=request.user)
         offer.save()
         for item in cart_items:
@@ -247,13 +246,9 @@ def user_offers(request, username):
 def sale_profile(request, id):
     invoice = SaleInvoice.objects.get(id=id)
     form = SaleForm(instance=invoice)
-    total = {}
-    for item in invoice.items.all():
-        total[f'total_{item.id}'] = item.price*item.q
 
     return render(request, 'accounting/sales/sale_profile.html', {
         'invoice': invoice,
-        'total': json.dumps(total),
         'form': form
     })
 

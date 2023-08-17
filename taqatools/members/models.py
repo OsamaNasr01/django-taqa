@@ -88,3 +88,12 @@ class Company(models.Model):
         super(Company, self).save(*args, **kwargs)
         self.count.companies += 1
         self.count.save()
+
+def balance(self):
+    sales = sum(invoice.total_value for invoice in self.sale.all())
+    purchases = sum(invoice.total_value for invoice in self.purchase.all())
+    payments = sum(payment.value for payment in self.credit.all())
+    receipts = sum(receipt.value for receipt in self.depit.all())
+    return -sales+purchases-payments+receipts
+
+User.add_to_class('balance', balance)
