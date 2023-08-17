@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Sale invoice {% endblock %}
 {% block content %}
 
@@ -126,17 +127,7 @@
     </div>
     <input type="hidden" id="total_data" value="{{total}}">
 
-    <script>
-        const total_e = document.getElementById('total_data').value
-        const total_data =JSON.parse(total_e) 
-
-        function total() {
-            for (var id in total_data) {
-                document.getElementById(id).innerText = total_data[id].toLocaleString ({minimumFractionDigits: 2})
-            }
-        }
-        document.addEventListener("DOMContentLoaded", total())
-    </script>
+    <script src="{% static 'accounting/sale_profile.js' %}"></script>
 
 
 {% endblock %}
