@@ -10,6 +10,9 @@ class PurchaseInvoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='purchase')
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField()
+    @property
+    def total_value(self):
+        return sum((item.price*item.q) for item in self.items.all() )
     
     
 class PurchaseInvoiceItem(models.Model):
@@ -17,13 +20,16 @@ class PurchaseInvoiceItem(models.Model):
     invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField()
+    @property
+    def item_value(self):
+        return self.price * self.q
+    
     
 class SaleInvoice(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sale')
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField()
-    
     @property
     def total_value(self):
         return sum((item.price*item.q) for item in self.items.all() )
@@ -34,6 +40,10 @@ class SaleInvoiceItem(models.Model):
     invoice = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField()
+    @property
+    def item_value(self):
+        return self.price * self.q
+    
     
 class Credit(models.Model):
     description = models.CharField(max_length=255)
@@ -54,11 +64,15 @@ class TermCondition(models.Model):
     description = models.TextField(max_length=1000)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='terms')
     
+    
 class Offer(models.Model):
     description = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='offer')
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField()
+    @property
+    def total_value(self):
+        return sum((item.price*item.q) for item in self.items.all() )
     
     
 class OfferItem(models.Model):
@@ -66,9 +80,22 @@ class OfferItem(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField()
+    @property
+    def item_value(self):
+        return self.price * self.q
     
+        
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='cart')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cartitems')
     q = models.PositiveBigIntegerField(default=1)
     price = models.FloatField()
+    @property
+    def item_value(self):
+        return self.price * self.q
+    
+class Cart(models.Model):
+    @property
+    def total_value(self):
+        return sum((item.price*item.q) for item in self.items.all() )
+    
