@@ -36,7 +36,7 @@ class SaleInvoice(models.Model):
     def total_value(self):
         return sum((item.price*item.q) for item in self.items.all() )
     def save(self, *args, **kwargs):
-        super(Category, self).save(*args, **kwargs)
+        super(SaleInvoice, self).save(*args, **kwargs)
         self.count.sales += 1
         self.count.save()
     
@@ -81,7 +81,7 @@ class Offer(models.Model):
     def total_value(self):
         return sum((item.price*item.q) for item in self.items.all() )
     def save(self, *args, **kwargs):
-        super(Category, self).save(*args, **kwargs)
+        super(Offer, self).save(*args, **kwargs)
         self.count.offers += 1
         self.count.save()
     
