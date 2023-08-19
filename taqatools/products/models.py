@@ -68,6 +68,12 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
         self.count.categories += 1
         self.count.save()
+        
+    
+    def delete(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        self.count.categories -= 1
+        self.count.save()
 
 
 
@@ -89,6 +95,12 @@ class Brand(models.Model):
             self.slug = arabic_to_english_slug(self.name)
         super(Brand, self).save(*args, **kwargs)
         self.count.brands += 1
+        self.count.save()
+        
+    
+    def delete(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        self.count.brands -= 1
         self.count.save()
 
 
@@ -112,6 +124,12 @@ class Product(models.Model):
             self.slug = arabic_to_english_slug(self.name)
         super(Product, self).save(*args, **kwargs)
         self.count.products += 1
+        self.count.save()
+        
+    
+    def delete(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        self.count.products -= 1
         self.count.save()
 
 

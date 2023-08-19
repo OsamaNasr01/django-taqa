@@ -37,6 +37,12 @@ class SaleInvoice(models.Model):
         super(SaleInvoice, self).save(*args, **kwargs)
         self.count.sales += 1
         self.count.save()
+        
+    
+    def delete(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        self.count.sales -= 1
+        self.count.save()
     
     
 class SaleInvoiceItem(models.Model):
@@ -80,6 +86,12 @@ class Offer(models.Model):
     def save(self, *args, **kwargs):
         super(Offer, self).save(*args, **kwargs)
         self.count.offers += 1
+        self.count.save()
+        
+    
+    def delete(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        self.count.offers -= 1
         self.count.save()
     
     

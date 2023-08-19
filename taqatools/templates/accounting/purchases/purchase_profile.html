@@ -52,7 +52,7 @@
                 </tr>
                 {% for item in invoice.items.all %}
                     <tr>
-                        <td>{{ item.id }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.price|floatformat:2|intcomma }}</td>
                         <td>{{ item.q|intcomma }}</td>
