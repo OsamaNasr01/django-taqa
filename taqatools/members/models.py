@@ -97,3 +97,26 @@ def balance(self):
     return -sales+purchases-payments+receipts
 
 User.add_to_class('balance', balance)
+
+
+
+class Details(models.Model):
+    sales_no = models.PositiveSmallIntegerField(default=0)
+    sales_value = models.FloatField(default=0)
+    purchases_no = models.PositiveSmallIntegerField(default=0)
+    purchases_value = models.FloatField(default=0)
+    offers_no = models.PositiveSmallIntegerField(default=0)
+    offers_value = models.FloatField(default=0)
+    payments_no = models.PositiveSmallIntegerField(default=0)
+    payments_value = models.FloatField(default=0)
+    receipts_no = models.PositiveSmallIntegerField(default=0)
+    receipts_value = models.FloatField(default=0)
+    @property
+    def balance(self):
+        return -self.sales_value + self.purchases_value - self.payments_value + self.receipts_value
+    
+        
+
+class Account(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    details = models.OneToOneField(Details, on_delete=models.CASCADE)

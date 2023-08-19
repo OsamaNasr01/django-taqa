@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm
+from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm
 from django.contrib.auth.models import User
-from .models import Company, CoCategory
+from .models import Company, CoCategory, Details,Account
 from accounting.forms import DepitForm, CreditForm
 import json
 
@@ -41,6 +41,9 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username = username, password = password)
+            details=  Details.objects.create()
+            account = Account.objects.create(user=user, details= details)
+            print(account)
             login(request, user)
             messages.success(request, ('You Registred Successfully'))
             return redirect('home')
