@@ -19,7 +19,8 @@
             <a href="{% url 'offer_profile' offer.id %}" class="text-dark text-decoration-none">
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <h3>{{ offer.description }}</h3>
-                    <p>{{ offer.value|floatformat:2|intcomma }}</p>
+                    <h5>Value: {{ offer.total_value|floatformat:2|intcomma }}</h5>
+                    <h5>{{ offer.items.all.count|intcomma }} item{{offer.items.all.count|pluralize}} included</h5>
                     <p>{{ offer.created_at|naturaltime  }}</p>
                 </div>
             </a>

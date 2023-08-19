@@ -19,7 +19,8 @@
             <a href="{% url 'purchase_profile' invoice.id %}" class="text-dark text-decoration-none">
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <h3>{{ invoice.description }}</h3>
-                    <p>{{ invoice.value|floatformat:2|intcomma }}</p>
+                    <h5>Value: {{ invoice.total_value|floatformat:2|intcomma }}</h5>
+                    <h5>{{ invoice.items.all.count|intcomma }} item{{invoice.items.all.count|pluralize}} included</h5>
                     <p>{{ invoice.created_at|naturaltime  }}</p>
                 </div>
             </a>
