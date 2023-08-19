@@ -293,7 +293,8 @@
           }
       })
       .then(data => {
-
+        console.log(data)
+        add_bran_op(data)
       })
       .catch((error) => {
           console.log(error)
@@ -307,6 +308,16 @@
       document.getElementById('brand_description').value = ""
       document.getElementById('brand_modal_close').click()
       setTimeout(document.getElementById('product_modal').click(),10)
+
+    }
+
+    function add_bran_op (data) {
+      const select = document.getElementById('id_brand')
+      const new_brand = document.createElement('option')
+      new_brand.value = data['brand_id']
+      new_brand.innerText = data['brand_name']
+      new_brand.selected = true
+      select.appendChild(new_brand)
 
     }
 
