@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} {{category.name}} {% endblock %}
 
 {% block content %}
@@ -170,9 +170,33 @@
       </div>
     </div>
 
+    <button type="button"  id="brand_modal" class="btn btn-primary " 
+    data-bs-toggle="modal" data-bs-target="#add-brand-modal">
+    Add brand
+    </button>
+  
+    <div class="modal fade" id="add-brand-modal" tabindex="-1" 
+      aria-labelledby="add-brand-modal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add-brand-modal">+ Add brand</h5>
+            <button type="button" id="brand_modal_close" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'add_brand' %}" method="post" name="add_brand_form">
+              {% csrf_token %}
+              {{ brand_form.as_p }}
+              <button type="submit" id="brand_submit" class="btn btn-primary">+ Add brand</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
-    <button type="button" class="btn btn-primary" 
+    <button type="button" id="product_modal" class="btn btn-primary" 
       data-bs-toggle="modal" data-bs-target="#add-product-modal">
       Add Product
     </button>
@@ -183,13 +207,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="add-product-modal">+ Add Product</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn-close" id="product_modal_close" data-bs-dismiss="modal" aria-label="Close">
             </button>
           </div>
           <div class="modal-body">
             <form action="{% url 'add_product' %}" method="post" name="add_product_form">
               {% csrf_token %}
               {{ form.as_p }}
+              <button class="btn btn-primary mb-3" onclick="new_brand()">New Brand</button>
               {{ price_form.as_p }}
               <hr>
               {% for spec in category.specs.all %}
@@ -231,13 +256,61 @@
             </div>
         </a>
     {% endfor %}
+  <script>
 
-    <script>
-      function dosomething (z) {
-        var checkbox = document.getElementById(z).checked
-        console.log(checkbox)
-      }
-    </script>
+    function new_brand() {
+      document.getElementById('product_modal_close').click()
+      setTimeout(document.getElementById('brand_modal').click(),10)
+    }
+    const brand_submit = document.getElementById('brand_submit')
+    brand_submit.addEventListener('click', function(e) {
+      e.preventDefault()
+      url = '/product/brand/add/'
+      const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+
+      const data = JSON.stringify({
+        'name': document.getElementById('brand_name').value,
+        'country': document.getElementById('brand_country').value,
+        'description' : document.getElementById('brand_description').value,
+        'category': document.getElementById('brand_category').value,
+      })
+      console.log(data)
+      fetch(url, {
+          'method' : 'POST',
+          'headers' : {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': csrftoken,
+          },
+          'body': data,
+      })
+      .then(response => {
+          if (response.ok) {
+            back2_product()
+            console.log(response)
+            return response.json()
+          } else {
+          console.log(response)
+          }
+      })
+      .then(data => {
+
+      })
+      .catch((error) => {
+          console.log(error)
+      })
+    })
+
+
+    function back2_product () {
+      document.getElementById('brand_name').value =""
+      document.getElementById('brand_country').value = ""
+      document.getElementById('brand_description').value = ""
+      document.getElementById('brand_modal_close').click()
+      setTimeout(document.getElementById('product_modal').click(),10)
+
+    }
+
+  </script>
 
 
 {% endblock %}

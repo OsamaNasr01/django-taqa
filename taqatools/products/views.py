@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404, HttpResponse
 from .models import Category, Product, Brand, Price, Spec
 from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, NumSpecForm, TxtSpecForm, BoolSpecForm
 from django.contrib import messages
+import json
+from django.core.serializers import serialize
 
 # Create your views here.
 
@@ -45,6 +47,7 @@ def p_category_profile(request, slug):
     sub_categories = Category.objects.filter(parent_id = category.id)
     form = AddProductForm()
     price_form = PriceForm()
+    brand_form = BrandForm()
     category_form = AddCategoryForm()
     update_category_form = AddCategoryForm(instance = category)
     spec_form = SpecForm()
@@ -57,6 +60,7 @@ def p_category_profile(request, slug):
         'category_form': category_form,
         'update_category_form': update_category_form,
         'spec_form' : spec_form,
+        'brand_form': brand_form,
         }
     return render(request, 'products/categories/p_category_profile.html', context)
 
@@ -214,19 +218,20 @@ def brands(request):
 
 def add_brand(request):
     if request.method == 'POST':
-        form = BrandForm(request.POST)
-        if form.is_valid():
-            brand = form.save()
-            messages.success(request, ('The Brand has been Added Successfully!'))
-            return brand_profile(request, brand.slug)
-        else:
-            errors = form.errors
-            error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the Brand' + error_message))
-            return render(request, 'products/brands/add_brand.html', {'form' : form, 'errors': errors})
-    else:
         form = BrandForm()
-        return render(request, 'products/brands/add_brand.html', {'form' : form})
+        brand = form.save(commit=False)
+        data = json.loads(request.body)
+        brand.name = data['name']
+        brand.country = data['country']
+        brand.description = data['description']
+        brand.save()
+        brand.category.add(data['category'])
+        json_data = json.dumps({
+            'brand_name': brand.name,
+            'brand_id': brand.id
+        })
+        messages.success(request, ('The Brand has been Added Successfully!'))
+        return HttpResponse(json_data, content_type="application/json")
     
 
 def brand_profile(request, slug):

@@ -42,6 +42,10 @@ class BrandForm(forms.ModelForm):
         self.fields['country'].widget.attrs.update({'class': 'form-control'})
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['category'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'id': 'brand_name'})
+        self.fields['country'].widget.attrs.update({'id': 'brand_country'})
+        self.fields['description'].widget.attrs.update({'id': 'brand_description'})
+        self.fields['category'].widget.attrs.update({'id': 'brand_category'})
 
 
 

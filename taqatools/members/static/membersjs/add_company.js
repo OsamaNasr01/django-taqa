@@ -1,4 +1,6 @@
 
+
+  
 window.addEventListener('load', add_c_option())
 
 function add_c_option() {
@@ -23,16 +25,18 @@ function remove_c_option() {
 const category_submit = document.getElementById('category_submit')
 category_submit.addEventListener('click', function (e) {
   e.preventDefault()
-  var input_name = document.getElementById('input_name').value
-  var input_description = document.getElementById('input_description').value
+  var input_name = document.getElementById('input_name')
+  var input_description = document.getElementById('input_description')
   const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
   const url = '/company/category/add/'
 
   const data = JSON.stringify({
-      'name': input_name,
-      'description': input_description,
+      'name': input_name.value,
+      'description': input_description.value,
   })
   console.log(data)
+  input_description.value = ""
+  input_name.value = ""
   fetch(url, {
       'method' : 'POST',
       'headers' : {
@@ -43,8 +47,6 @@ category_submit.addEventListener('click', function (e) {
   })
   .then(response => {
       if (response.ok) {
-        input_name= ""
-        input_description= ""
         document.getElementById('modal_close').click()
          return response.json()
       } else {
@@ -67,3 +69,5 @@ category_submit.addEventListener('click', function (e) {
       console.log(error)
   })
 })
+
+
