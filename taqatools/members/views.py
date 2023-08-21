@@ -41,9 +41,6 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username = username, password = password)
-            details=  Details.objects.create()
-            account = Account.objects.create(user=user, details= details)
-            print(account)
             login(request, user)
             messages.success(request, ('You Registred Successfully'))
             return redirect('home')
