@@ -11,6 +11,7 @@
         </h3>
         <p>Email : {{ user.email }}</p>
         <p>Username @{{user.username }}</p>
+        <h1>{{ user.account.details.offers_value|floatformat:2|intcomma }}</h1>
     </div>
 
 
