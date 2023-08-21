@@ -136,6 +136,10 @@
     </div>
     <div class="row">
       <div class="col-12">
+        <p>Stock: {{ product.inventory.stock }} {{ product.name }}{{ product.inventory.stock|pluralize }}</p>
+        <p>Stock: {{ product.inventory.sales }} {{ product.name }}{{ product.inventory.sales|pluralize }} sales</p>
+      </div>
+      <div class="col-12">
         <p id="messege"></p>
       </div>
         {% if in_cart %}

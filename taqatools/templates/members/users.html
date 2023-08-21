@@ -4,6 +4,11 @@
 
 {% block content %}
     {% for user in users %}
+        <button class="btn btn-danger" onclick="username('{{user.username}}')" >delete</button>
+        <button type="button" id="modal_button" hidden class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-user-modal">
+        Delete
+        </button>
+
         <a href="{% url 'user_profile' user.username %}" class="text-dark text-decoration-none">
             <div class="shadow p-3 mb-5 bg-white rounded">
                 <h3>
@@ -15,4 +20,42 @@
             </div>
         </a>
     {% endfor %}
+
+
+    
+  <br><br>
+  
+  <!-- delete-user-modal.html -->
+  
+  <div class="modal fade" id="delete-user-modal" tabindex="-1" aria-labelledby="delete-user-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-user-modal-label">Delete user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this user?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form id="user_del_form" action="" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+            <button type="submit"  class="btn btn-danger" id="confirm-delete-user">Confirm Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function username(username) {
+        const form = document.getElementById('user_del_form')
+        form.setAttribute('action', `/members/${username}/delete/`)
+        const modal_open = document.getElementById('modal_button')
+        modal_open.click()
+    }
+
+  </script>
 {% endblock %}

@@ -54,6 +54,11 @@ def register_user(request):
         return render(request, 'members/register.html', {'form' : form})
 
 
+def user_delete(request, username):
+    if request.method == 'POST':
+        user = User.objects.get(username=username)
+        user.delete()
+        return users(request)
 
 def home(request):
     return render(request, 'home.html', {})

@@ -120,6 +120,7 @@ function change_item_q(id) {
         if (response.ok) {
             return response.json()
         } else {
+            
         }
     })
     .then(data => {

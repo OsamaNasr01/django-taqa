@@ -329,7 +329,7 @@ def add_purchase(request):
             cart_item.delete()
         messages.success(
             request, ('The invoice has been created Successfully!'))
-        return HttpResponse({'ok': "ok"})
+        return HttpResponse(json.dumps({'ok': "ok"}))
 
 
 def purchase_update(request, id):
