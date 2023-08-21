@@ -144,15 +144,10 @@ def update_cart_item(request):
     new_q = data['new_q']
     item = CartItem.objects.get(id=item_id)
     if request.method == 'POST':
-        item.q = new_q
+        item.q = int(new_q)
         item.save()
-        items = CartItem.objects.filter(user=request.user)
-        total = 0
-        for item in items:
-            price = item.price
-            no = item.q
-            item_total = price * no
-            total += item_total
+        data['item_total'] =item.item_value
+        total = sum(item.item_value for item in CartItem.objects.filter(user=request.user))
         data['total'] = total
 
         json_data = json.dumps(data)

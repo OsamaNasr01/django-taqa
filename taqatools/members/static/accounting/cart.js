@@ -41,7 +41,7 @@ for (var item in items) {
             td.innerText = item_data[key].toLocaleString ({minimumFractionDigits: 2})
             table_row.appendChild(td)
         } else if (key === 'total') {
-            td.setAttribute('id', `total_${item_data['id'].toFixed}`)
+            td.setAttribute('id', `total_${item_data['id']}`)
             td.innerText = item_data[key].toLocaleString ({minimumFractionDigits: 2})
             table_row.appendChild(td)
         } else if ( key === 'no') {    
@@ -98,7 +98,7 @@ function del_item(id) {
         console.log(error)
     })
 }
-
+ 
 function change_item_q(id) {
     const new_q = document.getElementById(`input_${id}`).value
     const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
@@ -125,10 +125,11 @@ function change_item_q(id) {
         }
     })
     .then(data => {
+        console.log(data)
         const item_total = document.getElementById(`total_${id}`)
         const item_price = document.getElementById(`price_${id}`).innerText
-        item_total.innerText = `${new_q*item_price}`
-        cart_total.innerText = data['total']
+        item_total.innerText = data['item_total'].toLocaleString ({minimumFractionDigits: 2})
+        cart_total.innerText = data['total'].toLocaleString ({minimumFractionDigits: 2})
     })
     .catch((error) => {
         console.log(error)
