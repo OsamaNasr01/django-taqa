@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} Login {% endblock %}
 
 {% block content %}
@@ -49,13 +49,5 @@
   </div>
 
 
-  <script>
-    function username(username) {
-        const form = document.getElementById('user_del_form')
-        form.setAttribute('action', `/members/${username}/delete/`)
-        const modal_open = document.getElementById('modal_button')
-        modal_open.click()
-    }
-
-  </script>
+  <script src="{% static '/membersjs/user_delete.js' %}"></script>
 {% endblock %}
