@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.db.models import Q
 from members.views import user_profile
+from django.core.serializers import serialize
+from django.forms.models import model_to_dict
 
 # Create your views here.
 
@@ -149,9 +151,7 @@ def update_cart_item(request):
         data['item_total'] =item.item_value
         total = sum(item.item_value for item in CartItem.objects.filter(user=request.user))
         data['total'] = total
-
         json_data = json.dumps(data)
-        # return render(request, 'accounting/invoices/cart.html', {'json_data': json_data})
         return HttpResponse(json_data, content_type="application/json")
 
 

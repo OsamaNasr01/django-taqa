@@ -108,7 +108,6 @@ function change_item_q(id) {
         'item_id': id,
         'new_q': new_q
     })
-    console.log(data)
     fetch(url, {
         'method' : 'POST',
         'headers' : {
@@ -121,11 +120,9 @@ function change_item_q(id) {
         if (response.ok) {
             return response.json()
         } else {
-        console.log(response)
         }
     })
     .then(data => {
-        console.log(data)
         const item_total = document.getElementById(`total_${id}`)
         const item_price = document.getElementById(`price_${id}`).innerText
         item_total.innerText = data['item_total'].toLocaleString ({minimumFractionDigits: 2})
