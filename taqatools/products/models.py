@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from sitestats.models import Site
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -123,15 +125,27 @@ class Product(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Product, self).save(*args, **kwargs)
-        self.count.products += 1
-        self.count.save()
-        
     
-    def delete(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        self.count.products -= 1
-        self.count.save()
+    
+@receiver(post_save, sender =  Product)
+def update_details(sender, instance, created, **kwargs):
+    if created:
+        instance.count.products += 1
+        instance.count.save()
+        Inventory.objects.create(product=instance)
+    
+@receiver(post_delete, sender =  Product)
+def update_details(sender, instance,  **kwargs):
+        instance.count.products -= 1
+        instance.count.save()
+        Inventory.objects.create(product=instance)
 
+    
+    
+class Inventory(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    stock = models.PositiveBigIntegerField(default=0)
+    sales = models.PositiveBigIntegerField(default=0)
 
 
 
