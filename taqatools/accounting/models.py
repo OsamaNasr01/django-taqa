@@ -43,11 +43,17 @@ def update_details(sender, instance, created, **kwargs):
     if created:
         instance.invoice.user.account.details.purchases_value += instance.item_value
         instance.invoice.user.account.details.save()
+        instance.product.inventory.stock += instance.q
+        instance.product.inventory.purchases += instance.q
+        instance.product.inventory.save()
     
 @receiver(post_delete, sender =  PurchaseInvoiceItem)
 def update_details(sender, instance,  **kwargs):
     instance.invoice.user.account.details.purchases_value -= instance.item_value
     instance.invoice.user.account.details.save()
+    instance.product.inventory.stock -= instance.q
+    instance.product.inventory.purchases -= instance.q
+    instance.product.inventory.save()
 
     
 class SaleInvoice(models.Model):
@@ -89,11 +95,17 @@ def update_details(sender, instance, created, **kwargs):
     if created:
         instance.invoice.user.account.details.sales_value += instance.item_value
         instance.invoice.user.account.details.save()
+        instance.product.inventory.stock -= instance.q
+        instance.product.inventory.sales += instance.q
+        instance.product.inventory.save()
     
 @receiver(post_delete, sender =  SaleInvoiceItem)
 def update_details(sender, instance,  **kwargs):
     instance.invoice.user.account.details.sales_value -= instance.item_value
     instance.invoice.user.account.details.save()
+    instance.product.inventory.stock += instance.q
+    instance.product.inventory.sales -= instance.q
+    instance.product.inventory.save()
 
     
 class Credit(models.Model):

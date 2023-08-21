@@ -145,6 +145,7 @@ def update_details(sender, instance,  **kwargs):
 class Inventory(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
     stock = models.PositiveBigIntegerField(default=0)
+    purchases = models.PositiveBigIntegerField(default=0)
     sales = models.PositiveBigIntegerField(default=0)
 
 
