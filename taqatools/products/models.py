@@ -68,14 +68,30 @@ class Category(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Category, self).save(*args, **kwargs)
-        self.count.categories += 1
-        self.count.save()
+    #     self.count.categories += 1
+    #     self.count.save()
         
     
-    def delete(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        self.count.categories -= 1
-        self.count.save()
+    # def delete(self, *args, **kwargs):
+    #     super(Product, self).save(*args, **kwargs)
+    #     self.count.categories -= 1
+    #     self.count.save()
+    
+    
+@receiver(post_save, sender =  Category)
+def update_details(sender, instance, created, **kwargs):
+    if created:
+        site = Site.objects.get(id=1)
+        site.categories +=1
+        site.save()
+    
+@receiver(post_delete, sender =  Category)
+def update_details(sender, instance,  **kwargs):
+        site = Site.objects.get(id=1)
+        site.categories -=1
+        site.save()
+        # del_inv  = Inventory.objects.get(product=instance)
+        # del_inv.delete()
 
 
 
@@ -130,16 +146,18 @@ class Product(models.Model):
 @receiver(post_save, sender =  Product)
 def update_details(sender, instance, created, **kwargs):
     if created:
-        instance.count.products += 1
-        instance.count.save()
+        site = Site.objects.get(id=1)
+        site.products +=1
+        site.save()
         Inventory.objects.create(product=instance)
     
 @receiver(post_delete, sender =  Product)
 def update_details(sender, instance,  **kwargs):
-        instance.count.products -= 1
-        instance.count.save()
-        Inventory.objects.create(product=instance)
-
+        site = Site.objects.get(id=1)
+        site.products -=1
+        site.save()
+        # del_inv  = Inventory.objects.get(product=instance)
+        # del_inv.delete()
     
     
 class Inventory(models.Model):
