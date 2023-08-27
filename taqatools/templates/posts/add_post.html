@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} New Post Form {% endblock %}
+
+{% block content %}
+
+
+    <h1>New Post form</h1>
+
+    <form action="" method="POST" class="container">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">Content:</label>
+          <textarea id="content" name="content" rows="10" cols="50" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category:</label>
+          <select id="category" name="category" class="form-select">
+            {% for category in categories %}
+                <option value="{{category.name}}">{{category.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <input type="submit"  value="Create Post" class="btn btn-primary">
+        </div>
+      </form>
+      <button id="post_submit" class="btn btn-primary">Create Post</button>
+
+
+      <script>
+        const post_submit = document.getElementById('post_submit')
+        post_submit.addEventListener('click', function (e) {
+            e.preventDefault
+            url = '/posts/add-post/'
+            const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+        
+            const data = JSON.stringify({
+              'title': document.getElementById('title').value,
+              'content': document.getElementById('content').value,
+              'category' : document.getElementById('category').value,
+            })
+            console.log(data)
+            fetch(url, {
+                'method' : 'POST',
+                'headers' : {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                'body': data,
+            })
+            .then(response => {
+                if (response.ok) {
+                  console.log(response)
+                  return response.json()
+                } else {
+                console.log(response)
+                }
+            })
+            .then(data => {
+              console.log(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        })
+      </script>
+
+
+
+      
+      
+{% endblock %}
