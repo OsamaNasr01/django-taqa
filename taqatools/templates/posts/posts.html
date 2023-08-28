@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %} Posts {% endblock %}
 
 {% block content %}
@@ -7,4 +7,16 @@
     <a href="{% url 'add_post' %}" class="btn btn-primary">Add new Post</a>
 
     <h1>Posts</h1>
+    {% for post in posts %}
+        <a href="" class="text-dark text-decoration-none">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <div>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.created_at|naturaltime }}</p>
+                    <p>{{ post.auther.first_name }}</p>
+                    <p>{{ post.content }}</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
 {% endblock %}

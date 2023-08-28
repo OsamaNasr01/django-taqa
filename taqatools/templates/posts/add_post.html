@@ -23,7 +23,7 @@
           <label for="category" class="form-label">Category:</label>
           <select id="category" name="category" class="form-select">
             {% for category in categories %}
-                <option value="{{category.name}}">{{category.name}}</option>
+                <option value="{{category.id}}">{{category.name}}</option>
             {% endfor %}
           </select>
         </div>
@@ -38,7 +38,7 @@
         const post_submit = document.getElementById('post_submit')
         post_submit.addEventListener('click', function (e) {
             e.preventDefault
-            url = '/posts/add-post/'
+            url = '/posts/add-post'
             const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
         
             const data = JSON.stringify({
@@ -46,7 +46,6 @@
               'content': document.getElementById('content').value,
               'category' : document.getElementById('category').value,
             })
-            console.log(data)
             fetch(url, {
                 'method' : 'POST',
                 'headers' : {

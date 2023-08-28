@@ -5,7 +5,10 @@ import json
 
 # Create your views here.
 def posts(request):
-    return render(request, 'posts/posts.html', {})
+    posts = Post.objects.all()
+    return render(request, 'posts/posts.html', {
+        'posts' : posts,
+    })
 
 
 
@@ -17,7 +20,8 @@ def add_post(request):
         new_post = Post.objects.create(
             title = data['title'],
             content = data['content'],
-            category = data['category']
+            auther = request.user,
+            category = Category.objects.get(id=data['category']) 
         )
         new_post.save
         json_data = json.dumps({'ok':'ok'})
