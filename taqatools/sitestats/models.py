@@ -11,4 +11,5 @@ class Site(models.Model):
     brands = models.PositiveIntegerField(default=0)
     sales = models.PositiveIntegerField(default=0)
     offers = models.PositiveIntegerField(default=0)
+    posts = models.PositiveIntegerField(default=0)
     pageview = models.PositiveIntegerField(default=0)

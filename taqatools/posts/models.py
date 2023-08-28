@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from products.models import Category
 from django.utils.text import slugify
+from sitestats.models import Site
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -44,6 +47,7 @@ def arabic_to_english_slug(text):
         'ؤ': 'o',
         'ة': 'h',
         'ى': 'a',
+        '/':'-',
         # Add more mappings here
     }
     # Create a new string that replaces the Arabic characters with their corresponding English characters
@@ -76,3 +80,20 @@ class Post(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.title)
         super(Post, self).save(*args, **kwargs)
+        
+        
+
+@receiver(post_save, sender =  Post)
+def update_details(sender, instance, created, **kwargs):
+    if created:
+        site = Site.objects.get(id=1)
+        site.posts +=1
+        site.save()
+    
+@receiver(post_delete, sender =  Post)
+def update_details(sender, instance,  **kwargs):
+        site = Site.objects.get(id=1)
+        site.posts -=1
+        site.save()
+        # del_inv  = Inventory.objects.get(product=instance)
+        # del_inv.delete()
