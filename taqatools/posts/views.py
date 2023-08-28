@@ -34,6 +34,8 @@ def add_post(request):
     
 def post_view(request, slug):
     post = Post.objects.get(slug=slug)
+    category_posts = Post.objects.filter(category = post.category).exclude(id= post.id)
     return render(request, 'posts/post.html', {
         'post': post,
+        'category_posts': category_posts,
     })

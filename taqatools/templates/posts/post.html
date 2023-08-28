@@ -5,10 +5,28 @@
 {% block content %}
             <div class="shadow p-3 mb-5 bg-white rounded">
                 <div>
-                    <h1>{{ post.title }}</h1>
+                    <h1>{{ post.title }}</h1><p>{{ post.category }}</p>
                     <p>{{ post.created_at|naturaltime }}</p>
                     <p>{{ post.auther.first_name }}</p>
                     <p>{{ post.content }}</p>
                 </div>
             </div>
+
+            
+            {% if category_posts %}
+                {% for post in category_posts %}
+                    <a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
+                        <div class="shadow p-3 mb-5 bg-white rounded">
+                            <div>
+                                <h3>{{ post.title }}</h3>
+                                <p>{{ post.created_at|naturaltime }}</p>
+                                <p>{{ post.auther.first_name }}</p>
+                                <p>{{ post.content }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <h3>There is no more Posts in {{ post.category }} category to view</h3>
+            {% endif %}
 {% endblock %}

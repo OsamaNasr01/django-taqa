@@ -72,7 +72,7 @@ class Post(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.title)
         if not self.slug:
-            self.slug = arabic_to_english_slug(self.name)
+            self.slug = arabic_to_english_slug(self.title)
         super(Post, self).save(*args, **kwargs)
