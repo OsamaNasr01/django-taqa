@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <div>
+                    <h1>{{ post.title }}</h1>
+                    <p>{{ post.created_at|naturaltime }}</p>
+                    <p>{{ post.auther.first_name }}</p>
+                    <p>{{ post.content }}</p>
+                </div>
+            </div>
+{% endblock %}

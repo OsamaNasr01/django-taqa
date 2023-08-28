@@ -29,3 +29,11 @@ def add_post(request):
     else:
         categories  = Category.objects.all()
         return render(request, 'posts/add_post.html', {'categories': categories})
+    
+    
+    
+def post_view(request, slug):
+    post = Post.objects.get(slug=slug)
+    return render(request, 'posts/post.html', {
+        'post': post,
+    })
