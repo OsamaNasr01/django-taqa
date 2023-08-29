@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-
+{% load static  %}
 {% block title %} New Post Form {% endblock %}
 
 {% block content %}
 
 
-    <h1>New Post form</h1>
+    <h1 id="messege_id">New Post form</h1>
 
-    <form action="" method="POST" class="container">
+    <form action="" method="POST" id="form_id" class="container">
         {% csrf_token %}
         <div class="row mb-3">
           <div class="col-md-12">
@@ -28,48 +28,13 @@
           </select>
         </div>
         <div class="mb-3">
-          <input type="submit"  value="Create Post" class="btn btn-primary">
+          <input type="submit" hidden value="Create Post" class="btn btn-primary">
         </div>
       </form>
       <button id="post_submit" class="btn btn-primary">Create Post</button>
 
 
-      <script>
-        const post_submit = document.getElementById('post_submit')
-        post_submit.addEventListener('click', function (e) {
-            e.preventDefault
-            url = '/posts/add-post'
-            const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
-        
-            const data = JSON.stringify({
-              'title': document.getElementById('title').value,
-              'content': document.getElementById('content').value,
-              'category' : document.getElementById('category').value,
-            })
-            fetch(url, {
-                'method' : 'POST',
-                'headers' : {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                'body': data,
-            })
-            .then(response => {
-                if (response.ok) {
-                  console.log(response)
-                  return response.json()
-                } else {
-                console.log(response)
-                }
-            })
-            .then(data => {
-              console.log(data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        })
-      </script>
+      <script src="{% static 'posts/add_post.js' %}"></script>
 
 
 

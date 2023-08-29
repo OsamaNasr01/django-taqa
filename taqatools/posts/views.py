@@ -24,7 +24,7 @@ def add_post(request):
             category = Category.objects.get(id=data['category']) 
         )
         new_post.save
-        json_data = json.dumps({'ok':'ok'})
+        json_data = json.dumps({'messege':'The post is submitted successfully'})
         return HttpResponse(json_data, content_type="application/json")
     else:
         categories  = Category.objects.all()
