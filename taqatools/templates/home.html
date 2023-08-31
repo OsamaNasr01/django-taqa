@@ -81,39 +81,27 @@
                 <h1>Auifer water wells</h1>
                 <p>Lorem ipsum dolor sit amet.</p>
                 <a href="#"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                    >Shop Now <img src="{% static 'images/arrow.svg' %}" alt=""
                 /></a>
             </div>
             <div class="category">
                 <h1>Solar energy</h1>
                 <p>Lorem ipsum dolor sit amet.</p>
                 <a href="#"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                    >Shop Now <img src="{% static 'images/arrow.svg' %}" alt=""
                 /></a>
             </div>
         </div>
         <div class="left">
+            {% for category in categories %}
             <div class="category">
-                <h1>Electric power control</h1>
-                <p>Lorem ipsum dolor sit amet.</p>
+                <h1>{{category.name}}</h1>
+                <p>{{category.description}}</p>
                 <a href="#"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                    >Shop Now <img src="{% static 'images/arrow.svg' %}" alt=""
                 /></a>
             </div>
-            <div class="category">
-                <h1>Tansk</h1>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <a href="#"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
-                /></a>
-            </div>
-            <div class="category">
-                <h1>Agricultural equipment</h1>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <a href="#"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
-                /></a>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -125,26 +113,24 @@
         <a href="#">See All</a>
     </div>
     <div class="content">
-        <a href="#" class="card">
+        {% for product in products %}
+        <a href="{% url 'product' product.slug %}" class="card">
             <div class="images">
-                <img src="static/images/img1.jpg" alt="" />
+                <img src="{% static 'images/img1.jpg' %}" alt="" />
             </div>
             <div class="text">
-                <span>Auifer water wells</span>
-                <h4>Submersible motor</h4>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eius, accusamus. Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Eius, accusamus.
-                </p>
+                <span>{{product.category}}</span>
+                <h4>{{product.name}}</h4>
+                <p>{{product.description}}</p>
             </div>
             <div class="order">
-                <p class="price">20.5$</p>
+                <p class="price">{{product.price}}</p>
                 <form action="https://twitter.com/">
                     <button type="submit">Buy Now</button>
                 </form>
             </div>
         </a>
+        {% endfor %}
         <a href="#" class="card">
             <div class="images">
                 <img src="static/images/mig2.webp" alt="" />

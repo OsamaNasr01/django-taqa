@@ -141,6 +141,10 @@ class Product(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Product, self).save(*args, **kwargs)
+        
+    @property
+    def price(self):
+        return self.prices.last().value*(100 - self.prices.last().discount)/100
     
     
 @receiver(post_save, sender =  Product)
