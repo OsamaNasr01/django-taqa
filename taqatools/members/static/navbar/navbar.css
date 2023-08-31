@@ -1,0 +1,256 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Averta CY";
+}
+body.active {
+    height: 100vh;
+    overflow: hidden;
+}
+nav {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    overflow: hidden;
+    z-index: 1;
+}
+nav a.logo {
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 0 30px 0 0;
+}
+nav .navlinks,
+nav .register {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+nav .navlinks ul,
+nav .register ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: unset;
+    padding-left: unset;
+}
+nav .navlinks ul li,
+nav .register ul li {
+    display: inline-block;
+    margin: none;
+}
+nav .navlinks ul li.none {
+    display: none;
+}
+nav .navlinks ul li i {
+    display: none;
+}
+nav .navlinks ul li a,
+nav .register ul li a {
+    display: inline-block;
+    padding: 5px 20px;
+    transform: translateY(2.5px);
+    color: black;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+nav .register ul li:nth-child(2) a {
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+}
+nav .register ul li:nth-child(2) a:hover {
+    border: 1px solid black;
+    color: white;
+    background: black;
+    box-shadow: 0 0 20px #ddd;
+}
+nav .humberger {
+    position: relative;
+    display: none;
+    min-height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+}
+nav .humberger::before {
+    content: "";
+    height: 2px;
+    width: 80%;
+    margin: 2px;
+    background: black;
+    transition: 0.5s margin, 0.5s transform, 0.5s position;
+}
+nav .humberger::after {
+    content: "";
+    height: 2px;
+    width: 80%;
+    margin: 2px;
+    background: black;
+    transition: 0.5s margin, 0.5s transform, 0.5s position;
+}
+nav .humberger.active::before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    transform: rotate(45deg);
+    width: 80%;
+    margin: 0;
+    background: black;
+}
+nav .humberger.active::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 80%;
+    margin: 0;
+    transform: rotate(-45deg);
+    background: black;
+}
+@media screen and (max-width: 1400px) {
+    nav {
+        min-height: 70px;
+        padding: 0px 20px;
+    }
+    nav a.logo {
+        font-size: 17px;
+    }
+    nav .navlinks ul li a,
+    nav .register ul li a {
+        font-size: 13px;
+    }
+}
+@media screen and (max-width: 1050px) {
+    nav {
+        position: absolute;
+        overflow: visible;
+        z-index: 2;
+    }
+    nav a.logo {
+        z-index: 3;
+    }
+    nav .navlinks {
+        position: fixed;
+        top: 0;
+        right: -200%;
+        background: white;
+        min-height: 100vh;
+        width: 70%;
+        overflow: visible;
+        transition: 1s ease right;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    nav .navlinks.active {
+        position: fixed;
+        top: 0;
+        right: 0%;
+        background: white;
+        min-height: 100vh;
+        width: 70%;
+        overflow: visible;
+        box-shadow: 0 0 200px #171717;
+    }
+    nav .navlinks ul {
+        width: 100%;
+        align-items: start;
+        flex-direction: column;
+        overflow: visible;
+    }
+    nav .navlinks ul li,
+    nav .navlinks ul li.none {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        overflow: visible;
+    }
+    nav hr {
+        width: 80%;
+        margin: 30px auto;
+    }
+    nav .navlinks ul li i {
+        left: 70px;
+        position: absolute;
+        display: block;
+        font-size: 30px;
+        transform: translateY(0px);
+    }
+    nav .navlinks ul li a {
+        display: inline-block;
+        width: 100%;
+        padding: 15px 100px;
+        margin: 0 40px;
+        font-size: 20px;
+        border-radius: 15px;
+        transform: unset;
+        transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+    }
+    nav .navlinks ul li a:hover {
+        background: #323232;
+        color: white;
+        box-shadow: 0 0 30px #dbdbdb;
+    }
+    nav .register {
+        display: none;
+    }
+    nav .humberger {
+        display: flex;
+        z-index: 3;
+    }
+}
+@media screen and (max-width: 700px) {
+    nav .navlinks.active {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    nav .navlinks ul li {
+        margin: 0px;
+    }
+}
+@media screen and (max-width: 412px) {
+    nav hr {
+        width: 80%;
+        margin: 10px auto;
+    }
+    nav .navlinks ul li a {
+        padding: 15px 77px;
+        margin: 0 20px;
+        font-size: 15px;
+    }
+    nav .navlinks ul li i {
+        left: 50px;
+        position: absolute;
+        display: block;
+        font-size: 25px;
+        transform: translateY(0px);
+    }
+}
+@media screen and (max-width: 330px) {
+    nav .navlinks ul li a {
+        padding: 15px 77px;
+        margin: 0 20px;
+        font-size: 15px;
+    }
+    nav .navlinks ul li i {
+        left: 50px;
+        position: absolute;
+        display: block;
+        font-size: 25px;
+        transform: translateY(0px);
+    }
+}

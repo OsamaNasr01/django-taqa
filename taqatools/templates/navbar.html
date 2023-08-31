@@ -1,38 +1,119 @@
+{% load static %}
 
-  <div class="container">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">TAQATOOLS</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-              <a class="nav-link" href="{% url 'users' %}">Members</a>
-              <a class="nav-link" href="{% url 'p_category_list' %}">Products</a>
-              <a class="nav-link" href="{% url 'brands' %}">Brands</a>
-              <a class="nav-link" href="{% url 'cart' %}" id="cart-navbar">Cart ({{user.cartitems.count}})</a>
-          
-                {% if user.is_authenticated %}
-                    {% if  user.first_name  %}
-                      <a class="nav-link" href="{% url 'user_profile' user.username %}">Hello {{ user.first_name }}!</a>
-                    {% else %}
-                      <a class="nav-link" href="{% url 'user_profile' user.username %}">Hello {{ user.username }}!</a>
-                    {% endif %}
-                    {% if not user.companies.exists %}
-                    <a class="nav-link" href="{% url 'add_company' %}">Add Company</a>
-                    {% endif %}
-                    
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                {% endif %}
-              
-            </div>
-          </div>
-        </div>
-      </nav>
-  </div>
-  <br>
+<link rel="stylesheet" href="{% static 'navbar/navbar.css' %}">
+
+<nav>
+    <a aria-current="page" href="{% url 'home' %}" class="logo">TAQATOOLS</a>
+    <div class="navlinks">
+        <ul>
+            <li>
+                <a aria-current="page" href="{% url 'home' %}"
+                    ><i class="bx bx-home"></i> Home</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'companies' %}"
+                    ><i class="bx bxs-city"></i> Companies</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'p_category_list' %}"
+                    ><i class="bx bxs-carousel"></i> Products</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'brands' %}"
+                    ><i class="bx bx-badge-check"></i> Brands</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'cart' %}" id="cart-navbar"
+                    ><i class="bx bx-cart-alt"></i> Cart
+                    ({{user.cartitems.count}})</a
+                >
+            </li>
+            <hr />
+            {% if user.is_authenticated %} {% if user.first_name %}
+            <li class="none">
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.first_name }}!</a
+                >
+            </li>
+            {% else %}
+            <li class="none">
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.username }}!</a
+                >
+            </li>
+            {% endif %} {% if not user.companies.exists %}
+            <li class="none">
+                <a href="{% url 'add_company' %}">Add Company</a>
+            </li>
+            {% endif %}
+
+            <li class="none">
+                <a href="{% url 'logout' %}"
+                    ><i class="bx bx-log-out"></i> Logout</a
+                >
+            </li>
+            {% else %}
+            <li class="none">
+                <a href="{% url 'register' %}"
+                    ><i class="bx bx-registered"></i> Register</a
+                >
+            </li>
+            <li class="none">
+                <a href="{% url 'login' %}"
+                    ><i class="bx bx-log-in"></i> Login</a
+                >
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="register">
+        <ul>
+            {% if user.is_authenticated %} {% if user.first_name %}
+            <li>
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.first_name }}!</a
+                >
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.username }}!</a
+                >
+            </li>
+            {% endif %} {% if not user.companies.exists %}
+            <li>
+                <a href="{% url 'add_company' %}">Add Company</a>
+            </li>
+            {% endif %}
+
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'register' %}">Register</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="humberger"></div>
+</nav>
+
+<script>
+    let humberger = document.querySelector(".humberger");
+    let navlinks = document.querySelector(".navlinks");
+    let body = document.querySelector("body");
+
+    humberger.onclick = function () {
+        humberger.classList.toggle("active");
+        navlinks.classList.toggle("active");
+        body.classList.toggle("active");
+    };
+</script>
