@@ -4,7 +4,6 @@ from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecFo
 from django.contrib import messages
 import json
 from django.core.serializers import serialize
-from googletrans import Translator
 
 # Create your views here.
 
