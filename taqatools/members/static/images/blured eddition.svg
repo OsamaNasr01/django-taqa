@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1903" height="702" viewBox="0 0 1903 702">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="1903" height="702" transform="translate(9 378)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_1" data-name="Mask Group 1" transform="translate(-9 -378)" clip-path="url(#clip-path)">
+    <g id="Ellipse_5" data-name="Ellipse 5" transform="translate(0 378)" fill="#0b2e4e" stroke="#707070" stroke-width="1">
+      <ellipse cx="960" cy="811.5" rx="960" ry="811.5" stroke="none"/>
+      <ellipse cx="960" cy="811.5" rx="959.5" ry="811" fill="none"/>
+    </g>
+    <g id="Ellipse_4" data-name="Ellipse 4" transform="translate(-37 540)" fill="#004446" stroke="#707070" stroke-width="1">
+      <ellipse cx="1003" cy="811.5" rx="1003" ry="811.5" stroke="none"/>
+      <ellipse cx="1003" cy="811.5" rx="1002.5" ry="811" fill="none"/>
+    </g>
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(-154 695)" fill="#ff4f00" stroke="#707070" stroke-width="1">
+      <ellipse cx="1103.5" cy="811.5" rx="1103.5" ry="811.5" stroke="none"/>
+      <ellipse cx="1103.5" cy="811.5" rx="1103" ry="811" fill="none"/>
+    </g>
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(-335 831)" fill="#fff" stroke="#707070" stroke-width="1">
+      <ellipse cx="1272" cy="811.5" rx="1272" ry="811.5" stroke="none"/>
+      <ellipse cx="1272" cy="811.5" rx="1271.5" ry="811" fill="none"/>
+    </g>
+    <g id="Ellipse_1" data-name="Ellipse 1" transform="translate(-809 954)" stroke="#707070" stroke-width="1">
+      <ellipse cx="1752.5" cy="811.5" rx="1752.5" ry="811.5" stroke="none"/>
+      <ellipse cx="1752.5" cy="811.5" rx="1752" ry="811" fill="none"/>
+    </g>
+  </g>
+</svg>

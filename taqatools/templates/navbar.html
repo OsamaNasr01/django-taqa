@@ -1,38 +1,373 @@
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        list-style: none;
+        font-family: "Averta CY";
+    }
+    body.active {
+        height: 100vh;
+        overflow: hidden;
+    }
+    nav {
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    nav a.logo {
+        color: black;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bolder;
+        font-size: 20px;
+        margin: 0 30px 0 0;
+    }
+    nav .navlinks,
+    nav .register {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    nav .navlinks ul,
+    nav .register ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: unset;
+        padding-left: unset;
+    }
+    nav .navlinks ul li,
+    nav .register ul li {
+        display: inline-block;
+        margin: none;
+    }
+    nav .navlinks ul li.none {
+        display: none;
+    }
+    nav .navlinks ul li i {
+        display: none;
+    }
+    nav .navlinks ul li a,
+    nav .register ul li a {
+        display: inline-block;
+        padding: 5px 20px;
+        transform: translateY(2.5px);
+        color: black;
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+    nav .register ul li:nth-child(2) a {
+        border: 1px solid black;
+        border-radius: 10px;
+        transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+    }
+    nav .register ul li:nth-child(2) a:hover {
+        border: 1px solid black;
+        color: white;
+        background: black;
+        box-shadow: 0 0 20px #ddd;
+    }
+    nav .humberger {
+        position: relative;
+        display: none;
+        min-height: 30px;
+        width: 30px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+        user-select: none;
+        overflow: hidden;
+    }
+    nav .humberger::before {
+        content: "";
+        height: 2px;
+        width: 80%;
+        margin: 2px;
+        background: black;
+        transition: 0.5s margin, 0.5s transform, 0.5s position;
+    }
+    nav .humberger::after {
+        content: "";
+        height: 2px;
+        width: 80%;
+        margin: 2px;
+        background: black;
+        transition: 0.5s margin, 0.5s transform, 0.5s position;
+    }
+    nav .humberger.active::before {
+        content: "";
+        position: absolute;
+        height: 2px;
+        transform: rotate(45deg);
+        width: 80%;
+        margin: 0;
+        background: black;
+    }
+    nav .humberger.active::after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 80%;
+        margin: 0;
+        transform: rotate(-45deg);
+        background: black;
+    }
+    @media screen and (max-width: 1400px) {
+        nav {
+            min-height: 70px;
+            padding: 0px 20px;
+        }
+        nav a.logo {
+            font-size: 17px;
+        }
+        nav .navlinks ul li a,
+        nav .register ul li a {
+            font-size: 13px;
+        }
+    }
+    @media screen and (max-width: 1050px) {
+        nav {
+            position: absolute;
+            overflow: visible;
+            z-index: 2;
+        }
+        nav a.logo {
+            z-index: 3;
+        }
+        nav .navlinks {
+            position: fixed;
+            top: 0;
+            right: -200%;
+            background: white;
+            min-height: 100vh;
+            width: 70%;
+            overflow: visible;
+            transition: 1s ease right;
+            animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        nav .navlinks.active {
+            position: fixed;
+            top: 0;
+            right: 0%;
+            background: white;
+            min-height: 100vh;
+            width: 70%;
+            overflow: visible;
+            box-shadow: 0 0 200px #171717;
+        }
+        nav .navlinks ul {
+            width: 100%;
+            align-items: start;
+            flex-direction: column;
+            overflow: visible;
+        }
+        nav .navlinks ul li,
+        nav .navlinks ul li.none {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            overflow: visible;
+        }
+        nav hr {
+            width: 80%;
+            margin: 30px auto;
+        }
+        nav .navlinks ul li i {
+            left: 70px;
+            position: absolute;
+            display: block;
+            font-size: 30px;
+            transform: translateY(0px);
+        }
+        nav .navlinks ul li a {
+            display: inline-block;
+            width: 100%;
+            padding: 15px 100px;
+            margin: 0 40px;
+            font-size: 20px;
+            border-radius: 15px;
+            transform: unset;
+            transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+        }
+        nav .navlinks ul li a:hover {
+            background: #323232;
+            color: white;
+            box-shadow: 0 0 30px #dbdbdb;
+        }
+        nav .register {
+            display: none;
+        }
+        nav .humberger {
+            display: flex;
+            z-index: 3;
+        }
+    }
+    @media screen and (max-width: 700px) {
+        nav .navlinks.active {
+            width: 100%;
+        }
+    }
+    @media screen and (max-width: 500px) {
+        nav .navlinks ul li {
+            margin: 0px;
+        }
+    }
+    @media screen and (max-width: 412px) {
+        nav hr {
+            width: 80%;
+            margin: 10px auto;
+        }
+        nav .navlinks ul li a {
+            padding: 15px 77px;
+            margin: 0 20px;
+            font-size: 15px;
+        }
+        nav .navlinks ul li i {
+            left: 50px;
+            position: absolute;
+            display: block;
+            font-size: 25px;
+            transform: translateY(0px);
+        }
+    }
+    @media screen and (max-width: 330px) {
+        nav .navlinks ul li a {
+            padding: 15px 77px;
+            margin: 0 20px;
+            font-size: 15px;
+        }
+        nav .navlinks ul li i {
+            left: 50px;
+            position: absolute;
+            display: block;
+            font-size: 25px;
+            transform: translateY(0px);
+        }
+    }
+</style>
 
-  <div class="container">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">TAQATOOLS</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-              <a class="nav-link" href="{% url 'users' %}">Members</a>
-              <a class="nav-link" href="{% url 'p_category_list' %}">Products</a>
-              <a class="nav-link" href="{% url 'brands' %}">Brands</a>
-              <a class="nav-link" href="{% url 'cart' %}" id="cart-navbar">Cart ({{user.cartitems.count}})</a>
-          
-                {% if user.is_authenticated %}
-                    {% if  user.first_name  %}
-                      <a class="nav-link" href="{% url 'user_profile' user.username %}">Hello {{ user.first_name }}!</a>
-                    {% else %}
-                      <a class="nav-link" href="{% url 'user_profile' user.username %}">Hello {{ user.username }}!</a>
-                    {% endif %}
-                    {% if not user.companies.exists %}
-                    <a class="nav-link" href="{% url 'add_company' %}">Add Company</a>
-                    {% endif %}
-                    
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                {% endif %}
-              
-            </div>
-          </div>
-        </div>
-      </nav>
-  </div>
-  <br>
+<nav>
+    <a aria-current="page" href="{% url 'home' %}" class="logo">TAQATOOLS</a>
+    <div class="navlinks">
+        <ul>
+            <li>
+                <a aria-current="page" href="{% url 'home' %}"
+                    ><i class="bx bx-home"></i> Home</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'companies' %}"
+                    ><i class="bx bxs-city"></i> Companies</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'p_category_list' %}"
+                    ><i class="bx bxs-carousel"></i> Products</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'brands' %}"
+                    ><i class="bx bx-badge-check"></i> Brands</a
+                >
+            </li>
+            <li>
+                <a href="{% url 'cart' %}" id="cart-navbar"
+                    ><i class="bx bx-cart-alt"></i> Cart
+                    ({{user.cartitems.count}})</a
+                >
+            </li>
+            <hr />
+            {% if user.is_authenticated %} {% if user.first_name %}
+            <li class="none">
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.first_name }}!</a
+                >
+            </li>
+            {% else %}
+            <li class="none">
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.username }}!</a
+                >
+            </li>
+            {% endif %} {% if not user.companies.exists %}
+            <li class="none">
+                <a href="{% url 'add_company' %}">Add Company</a>
+            </li>
+            {% endif %}
+
+            <li class="none">
+                <a href="{% url 'logout' %}"
+                    ><i class="bx bx-log-out"></i> Logout</a
+                >
+            </li>
+            {% else %}
+            <li class="none">
+                <a href="{% url 'register' %}"
+                    ><i class="bx bx-registered"></i> Register</a
+                >
+            </li>
+            <li class="none">
+                <a href="{% url 'login' %}"
+                    ><i class="bx bx-log-in"></i> Login</a
+                >
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="register">
+        <ul>
+            {% if user.is_authenticated %} {% if user.first_name %}
+            <li>
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.first_name }}!</a
+                >
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'user_profile' user.username %}"
+                    >Hello {{ user.username }}!</a
+                >
+            </li>
+            {% endif %} {% if not user.companies.exists %}
+            <li>
+                <a href="{% url 'add_company' %}">Add Company</a>
+            </li>
+            {% endif %}
+
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'register' %}">Register</a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="humberger"></div>
+</nav>
+
+<script>
+    let humberger = document.querySelector(".humberger");
+    let navlinks = document.querySelector(".navlinks");
+    let body = document.querySelector("body");
+
+    humberger.onclick = function () {
+        humberger.classList.toggle("active");
+        navlinks.classList.toggle("active");
+        body.classList.toggle("active");
+    };
+</script>

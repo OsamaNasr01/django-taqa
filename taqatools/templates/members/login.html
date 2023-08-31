@@ -1,34 +1,63 @@
 {% extends 'base.html' %}
-
+<!-- comment  -->
 {% block title %} Login {% endblock %}
-
+<!-- comment  -->
 {% block content %}
-
+<!-- comment  -->
+<style>
+    * {
+        padding: 00;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body {
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+    }
+    nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .container {
+        max-width: unset;
+        padding: unset;
+        margin: unset;
+        margin-top: unset;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .container br {
+        display: none;
+    }
+    form {
+        border: 1px solid red;
+        min-height: 500px;
+        width: 400px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+</style>
 {% if user.is_authenticated %}
-
-  <h3>{{ user.first_name }}! You Are Already Logged in!</h3><br>
-  <a href="{% url 'logout' %}">Logout</a>
+<h3>{{ user.first_name }}! You Are Already Logged in!</h3>
+<br />
+<a href="{% url 'logout' %}">Logout</a>
 {% else %}
-  <form method="post">
+<form method="post" autocomplete="off">
     {% csrf_token %}
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <div>
-        <h3>
-          Login
-        </h3>
-      </div>
-      <br>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Username</label>
-        <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" name="password">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
-{% endif %}
-{% endblock %}
+    <h1>Login</h1>
+    <input type="text" name="username" placeholder="Enter your name" autocomplete="off" />
+    <input type="password" name="password" placeholder="Enter your password" />
+    <button type="submit" class="LoginBtn">Login</button>
+</form>
+{% endif %} {% endblock %}
