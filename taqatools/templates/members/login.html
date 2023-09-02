@@ -1,24 +1,40 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block mycss %}
-<link rel="stylesheet" href="{% static 'membersjs/login.css' %}">
-{% endblock mycss %}
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<link rel="stylesheet" href="{% static 'membersjs/login.css' %}" />
+{% endblock mycss %} {% block title %} Login {% endblock %} {% block content %}
+{% if user.is_authenticated %}
+<h3>{{ user.first_name }}! You Are Already Logged in!</h3>
+<br />
+<a href="{% url 'logout' %}">Logout</a>
+{% else %}
+<style>
+    nav a.logo {
+        color: white;
+    }
+    nav .navlinks,
+    nav .register {
+        display: none;
+    }
+</style>
+<div class="left">
+    <img class="right-image" src="{% static 'images/left.jpg' %}" alt="" />
+</div>
+<div class="right">
+    <h1>
+        to explore more <br />
+        sign up
+    </h1>
+    <form method="post">
+        {% csrf_token %}
 
-
-{% block title %} Login {% endblock %}
-
-{% block content %}
-    {% if user.is_authenticated %}
-        <h3>{{ user.first_name }}! You Are Already Logged in!</h3>
-        <br />
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <form method="post" autocomplete="off">
-            {% csrf_token %}
-            <h1>Login</h1>
-            <input type="text" name="username" placeholder="Enter your name" autocomplete="off" />
-            <input type="password" name="password" placeholder="Enter your password" />
-            <button type="submit" class="LoginBtn">Login</button>
-        </form>
-    {% endif %}
-{% endblock %}
+        <input type="text" name="username" placeholder="You Email" />
+        <input
+            type="password"
+            name="password"
+            placeholder="You Password"
+            required
+        />
+        <button>sign up</button>
+    </form>
+    <a href="./signin.html">you don't have account?, create one</a>
+</div>
+{% endif %} {% endblock %}
