@@ -131,6 +131,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.name

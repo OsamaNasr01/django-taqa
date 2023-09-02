@@ -92,7 +92,7 @@ def delete_p_category(request, slug):
 
 def add_product(request):
     if request.method == 'POST':
-        form = AddProductForm(request.POST)
+        form = AddProductForm(request.POST, request.FILES)
         price_form = PriceForm(request.POST)
         if form.is_valid() and price_form.is_valid():
             productt = form.save(commit=False)
