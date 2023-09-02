@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from sitestats.models import Site
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -131,7 +132,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
 
     def __str__(self):
         return self.name
