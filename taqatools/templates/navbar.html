@@ -1,6 +1,15 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'navbar/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'navbar/navbar.css' %}" />
+<style>
+    * .alert-dismissible {
+        position: absolute;
+        top: 100px;
+        transform: translatex(-50%);
+        left: 50%;
+        box-shadow: 0 0 20px #dbdbdb;
+    }
+</style>
 
 <nav>
     <a aria-current="page" href="{% url 'home' %}" class="logo">TAQATOOLS</a>

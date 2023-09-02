@@ -206,23 +206,23 @@
     background: linear-gradient(to top, black, #0000);
 }
 .categories .content .left .category:nth-child(1) {
-    background: url("static/images/power control.jpg") no-repeat;
+    background: url("../images/power control.jpg") no-repeat;
     background-size: cover;
 }
 .categories .content .left .category:nth-child(2) {
-    background: url("static/images/tanks.jpg") no-repeat;
+    background: url("../images/tanks.jpg") no-repeat;
     background-size: cover;
 }
 .categories .content .left .category:nth-child(3) {
-    background: url("static/images/equipments.jpeg") no-repeat;
+    background: url("../images/equipments.jpeg") no-repeat;
     background-size: cover;
 }
 .categories .content .right .category:nth-child(1) {
-    background: url("static/images/abar.jpg") no-repeat;
+    background: url("../images/abar.jpg") no-repeat;
     background-size: cover;
 }
 .categories .content .right .category:nth-child(2) {
-    background: url("static/images/solar energy.jpg") no-repeat;
+    background: url("../images/solar energy.jpg") no-repeat;
     background-size: cover;
 }
 .categories .content .left .category h1,

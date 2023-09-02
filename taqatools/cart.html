@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="cart.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="cart">
+            <div class="main-content">
+                <div class="products">
+                    <div class="header">
+                        <h2>Cart</h2>
+                        <button>Clear all</button>
+                    </div>
+                    <div class="content">
+                        <div class="head">
+                            <p>Product</p>
+                            <p>Count</p>
+                            <p>Price</p>
+                            <p>Clear</p>
+                        </div>
+                        <div class="card">
+                            <div class="details">
+                                <div class="image">
+                                    <img
+                                        src="./members/static/images/tanks.jpg"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="text">
+                                    <h2>Product name</h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Commodi, doloremque.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="count">
+                                <button class="negative"><p>-</p></button>
+                                <div class="counter">1</div>
+                                <button class="plus"><p>+</p></button>
+                            </div>
+                            <div class="price"><h2>150$</h2></div>
+                            <div class="clear">x</div>
+                        </div>
+                        <div class="card">
+                            <div class="details">
+                                <div class="image">
+                                    <img
+                                        src="./members/static/images/tanks.jpg"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="text">
+                                    <h2>Product name</h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Commodi, doloremque.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="count">
+                                <button class="negative"><p>-</p></button>
+                                <div class="counter">1</div>
+                                <button class="plus"><p>+</p></button>
+                            </div>
+                            <div class="price"><h2>150$</h2></div>
+                            <div class="clear">x</div>
+                        </div>
+                        <div class="card">
+                            <div class="details">
+                                <div class="image">
+                                    <img
+                                        src="./members/static/images/tanks.jpg"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="text">
+                                    <h2>Product name</h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Commodi, doloremque.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="count">
+                                <button class="negative"><p>-</p></button>
+                                <div class="counter">1</div>
+                                <button class="plus"><p>+</p></button>
+                            </div>
+                            <div class="price"><h2>150$</h2></div>
+                            <div class="clear">x</div>
+                        </div>
+                        <div class="card">
+                            <div class="details">
+                                <div class="image">
+                                    <img
+                                        src="./members/static/images/tanks.jpg"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="text">
+                                    <h2>Product name</h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Commodi, doloremque.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="count">
+                                <button class="negative"><p>-</p></button>
+                                <div class="counter">1</div>
+                                <button class="plus"><p>+</p></button>
+                            </div>
+                            <div class="price"><h2>150$</h2></div>
+                            <div class="clear">x</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout">
+                    <div>
+                        <h4>Items count</h4>
+                        <p>5</p>
+                    </div>
+                        <div>
+                            <h4>Subtotal</h4>
+                            <p>31255$</p>
+                        </div>
+                    <div>
+                        <h4>Discound</h4>
+                        <p>00.0$</p>
+                    </div>
+                    <div>
+                        <h4>Total</h4>
+                        <p>31255$</p>
+                    </div>
+                    <button>Continue to checkout</button>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        let negative = document.querySelector(".negative");
+        let plus = document.querySelector(".plus");
+        let counter = 1;
+        let mainCount = document.querySelector(".counter");
+
+        plus.onclick = function (e) {
+            e.preventDefault();
+            mainCount.innerHTML = ++counter;
+        };
+        negative.onclick = function (e) {
+            if (counter > 1) {
+                e.preventDefault();
+                mainCount.innerHTML = --counter;
+            }
+        };
+    </script>
+</html>
