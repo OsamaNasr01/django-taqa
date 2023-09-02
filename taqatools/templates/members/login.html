@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block mycss %}
 <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" />
-{% endblock mycss %} {% block title %} Login {% endblock %} {% block content %}
+{% endblock mycss %} {% block title %} Login {% endblock %} 
+{% block content %}
 {% if user.is_authenticated %}
 <h3>{{ user.first_name }}! You Are Already Logged in!</h3>
 <br />
@@ -35,6 +36,6 @@
         />
         <button>sign up</button>
     </form>
-    <a href="./signin.html">you don't have account?, create one</a>
+    <a href="{% url 'register' %}">you don't have account?, create one</a>
 </div>
 {% endif %} {% endblock %}

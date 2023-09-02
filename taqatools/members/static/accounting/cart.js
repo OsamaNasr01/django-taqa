@@ -9,7 +9,7 @@ const cart_total = document.getElementById('cart_total')
 cart_total.innerText = data['total'].toLocaleString ({minimumFractionDigits: 2})
 for (var item in items) {
     const item_data = items[item]
-    const table_row = document.createElement('tr')
+    const table_row = document.createElement('tr') 
     table_row.setAttribute('id', items[item].id)
     const td_f = document.createElement('td')
     td_f.innerText = item

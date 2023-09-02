@@ -101,6 +101,7 @@ def cart(request):
     return render(request, 'accounting/invoices/cart.html', {
         'json_data': json_data,
         'form': offer_form,
+        'items':items,
     })
 
 

@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm
 from django.contrib.auth.models import User
 from .models import Company, CoCategory, Details, Account
-from products.models import Category, Product
+from products.models import Category, Product, Brand
 from accounting.forms import DepitForm, CreditForm
 import json
 
@@ -64,9 +64,11 @@ def user_delete(request, username):
 def home(request):
     categories = Category.objects.all()
     products = Product.objects.all()
+    brands = Brand.objects.all()
     return render(request, 'home.html', {
         'categories' : categories,
         'products': products,
+        'brands': brands,
     })
 
 def user_profile(request, username):
