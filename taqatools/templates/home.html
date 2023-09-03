@@ -69,7 +69,7 @@
         {% for product in products %}
         <a href="{% url 'product' product.slug %}" class="card">
             <div class="images">
-                <img src="{{product.image}}" alt="" />
+                <img src="/{{product.image}}" alt="" />
             </div>
             <div class="text">
                 <span>{{product.category}}</span>

@@ -5,31 +5,15 @@
 <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" />
 {% block content %}
 
-<div class="left">
-    <img class="right-image" src="{% static 'images/left.jpg' %}" alt="" />
-</div>
-<div class="right">
-    <h1>
-        to explore more <br />
-        sign up
-    </h1>
-    <form method="post">
-        <input type="text" name="phone-num" placeholder="WhatsApp number" />
-        <input type="text" name="Frist-name" placeholder="Frist name" />
-        <input type="text" name="Last-name" placeholder="Last name" />
-        <input type="email" name="email" placeholder="Enter your email" />
-        <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-        />
-        <input
-            type="password"
-            name="password-confirmtion"
-            placeholder="Confirm your password"
-        />
-        <button>register</button>
-    </form>
-    <a href="./signin.html">already have one? Login</a>
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <h3>
+    Register
+  </h3>
+  <br>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
 {% endblock %}
