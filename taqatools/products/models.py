@@ -113,14 +113,21 @@ class Brand(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.name)
         super(Brand, self).save(*args, **kwargs)
-        self.count.brands += 1
-        self.count.save()
-        
     
-    def delete(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        self.count.brands -= 1
-        self.count.save()
+        
+        
+@receiver(post_save, sender =  Brand)
+def update_details(sender, instance, created, **kwargs):
+    if created:
+        site = Site.objects.get(id=1)
+        site.brands +=1
+        site.save()
+    
+@receiver(post_delete, sender =  Brand)
+def update_details(sender, instance,  **kwargs):
+        site = Site.objects.get(id=1)
+        site.brands -=1
+        site.save()
 
 
 
