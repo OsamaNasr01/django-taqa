@@ -100,7 +100,7 @@
             {% for brand in brands %}
             <a href="{% url 'brand_profile' brand.slug %}" class="card">
                 <div class="image">
-                    <img src="{% static 'images/vansan.webp' %}" alt="" />
+                    <img src="{{brand.image}}" alt="" />
                 </div>
                 <div class="text">
                     <h4>{{brand.name}}</h4>

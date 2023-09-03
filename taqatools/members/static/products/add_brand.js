@@ -9,20 +9,22 @@ function new_brand() {
     url = '/product/brand/add/'
     const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
 
-    const data = JSON.stringify({
-      'name': document.getElementById('brand_name').value,
-      'country': document.getElementById('brand_country').value,
-      'description' : document.getElementById('brand_description').value,
-      'category': document.getElementById('brand_category').value,
-    })
-    console.log(data)
+    let image_file = document.getElementById('brand_image').files[0]
+
+    let form_data = new FormData()
+    form_data.append('name', document.getElementById('brand_name').value)
+    form_data.append('country', document.getElementById('brand_country').value)
+    form_data.append('description', document.getElementById('brand_description').value)
+    form_data.append('category', document.getElementById('brand_category').value)
+    form_data.append('image', image_file)
+    console.log(form_data)
     fetch(url, {
         'method' : 'POST',
         'headers' : {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             'X-CSRFToken': csrftoken,
         },
-        'body': data,
+        'body': form_data,
     })
     .then(response => {
         if (response.ok) {

@@ -220,12 +220,12 @@ def add_brand(request):
     if request.method == 'POST':
         form = BrandForm()
         brand = form.save(commit=False)
-        data = json.loads(request.body)
-        brand.name = data['name']
-        brand.country = data['country']
-        brand.description = data['description']
+        brand.name = request.body.get('name')
+        brand.country =request.body.get('country')
+        brand.description = request.body.get('description')
+        brand.image = request.FILES.get('image')
         brand.save()
-        brand.category.add(data['category'])
+        brand.category.add(request.body.get('category'))
         json_data = json.dumps({
             'brand_name': brand.name,
             'brand_id': brand.id
