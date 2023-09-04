@@ -5,20 +5,59 @@
 
 {% block content %}
     <div class="shadow p-3 mb-5 bg-white rounded">
+        <div>
+            {% if user.account.image %}
+            <img src="/{{user.account.image}}" alt="">
+            {% else %}
+            <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" height="300" width="300">
+            {% endif %}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
+                update
+            </button>
+
+        </div>
         <h3>
             <!-- {{member.first_name}} {{ member.last_name }} -->
             {{ user.first_name  }} {{user.last_name}}
         </h3>
         <p>Email : {{ user.email }}</p>
         <p>Username @{{user.username }}</p>
-        <h1>{{ user.account.details.balance|floatformat:2|intcomma }}</h1>
+        <h1>{{ user.balance|floatformat:2|intcomma }}</h1>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
         Add Payment
     </button>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-receipt-modal">
         Add Receipt
     </button>
+
+    <div class="modal fade" id="update-picture-modal" tabindex="-1" aria-labelledby="update-picture-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-picture-modal">Update Picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        {% if user.account.image %}
+                        <img src="/{{user.account.image}}" alt="">
+                        {% else %}
+                        <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" height="300" width="300">
+                        {% endif %}
+                    </div>
+                    <br>
+                    <form enctype="multipart/form-data" action="{% url 'update_picture' user.username %}" method="post" name="add-pyment_form">
+                        {% csrf_token %}
+                        <input type="file" name="image" id="">
+                        <br><br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
     <div class="modal fade" id="add-pyment-modal" tabindex="-1" aria-labelledby="add-pyment-modal" aria-hidden="true">

@@ -134,3 +134,4 @@ class Details(models.Model):
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     details = models.OneToOneField(Details, on_delete=models.CASCADE)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)

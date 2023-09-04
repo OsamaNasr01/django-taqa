@@ -87,6 +87,15 @@ def users(request):
     return render(request, 'members/users.html', context)
 
 
+def update_picture(request, username):
+    user = get_object_or_404(User, username=username)
+    account = Account.objects.get(user= user)
+    account.image = request.FILES.get('image')
+    account.save()
+    return user_profile(request, user.username)
+    
+
+
 
 def add_company(request):
     if request.method == 'POST':
