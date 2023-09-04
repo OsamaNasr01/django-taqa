@@ -16,7 +16,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{% url 'update_company' company.slug %}" method="post" name="update-company_form">
+          <form enctype="multipart/form-data" action="{% url 'update_company' company.slug %}" method="post" name="update-company_form">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Update</button>
@@ -55,6 +55,9 @@
   </div>
   
     <div class="shadow p-3 mb-5 bg-white rounded">
+      <div>
+          <img src="/{{company.image}}" alt="">
+      </div>
         <h3>
             <!-- {{member.first_name}} {{ member.last_name }} -->
             {{ company.name  }}

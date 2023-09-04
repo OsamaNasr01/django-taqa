@@ -25,12 +25,13 @@ class AddCompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('name', 'description', 'phone', 'email', 'website', 'address', 'category')
+        fields = ('name', 'description', 'image', 'phone', 'email', 'website', 'address', 'category')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['image'].widget.attrs.update({'class': 'form-control'})
         self.fields['phone'].widget.attrs.update({'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
         self.fields['website'].widget.attrs.update({'class': 'form-control'})

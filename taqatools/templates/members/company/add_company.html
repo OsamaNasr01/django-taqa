@@ -8,7 +8,7 @@
     Add Company 
   </h3>
   <br>
-  <form action="" method="post">
+  <form id="company_form" enctype="multipart/form-data" action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Add Company</button>

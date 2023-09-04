@@ -94,6 +94,7 @@ def add_company(request):
         if form.is_valid():
             company = form.save(commit=False)
             company.owner = request.user
+            company.image = request.FILES.get('image')
             company.save()
             messages.success(request, ('The Company has been Added Successfully!'))
             return redirect('companies')
@@ -114,7 +115,7 @@ def add_company(request):
 def update_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
     if request.method == 'POST':
-        form = AddCompanyForm(request.POST, instance=company)
+        form = AddCompanyForm(request.POST, request.FILES, instance=company)
         if form.is_valid():
             form.save()
             messages.success(request, ('The Company has been Updated Successfully!'))

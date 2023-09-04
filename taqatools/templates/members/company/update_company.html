@@ -7,7 +7,7 @@
     Update {{ company.name }} Company 
   </h3>
   <br>
-  <form method="post">
+  <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Submit</button>

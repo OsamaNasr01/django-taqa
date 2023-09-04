@@ -4,6 +4,8 @@ from django.utils.text import slugify
 from sitestats.models import Site
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django_resized import ResizedImageField
+
 
 
 def arabic_to_english_slug(text):
@@ -78,6 +80,7 @@ class Company(models.Model):
     category = models.ManyToManyField(CoCategory, related_name='companies')
     slug = models.SlugField(max_length=150, blank=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
 
     def __str__(self):
         return self.name
@@ -125,9 +128,6 @@ class Details(models.Model):
     payments_value = models.FloatField(default=0)
     receipts_no = models.PositiveSmallIntegerField(default=0)
     receipts_value = models.FloatField(default=0)
-    @property
-    def balance(self):
-        return -self.sales_value + self.purchases_value - self.payments_value + self.receipts_value
     
         
 
