@@ -172,7 +172,7 @@ def product(request, slug):
 def update_product(request, slug):
     productt  = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
-        form = AddProductForm(request.POST, instance=productt)
+        form = AddProductForm(request.POST, request.FILES, instance=productt,)
         if form.is_valid():
             form.save()
             for spec in productt.num_spec.all():
@@ -219,13 +219,14 @@ def brands(request):
 def add_brand(request):
     if request.method == 'POST':
         form = BrandForm()
+        print(request)
         brand = form.save(commit=False)
-        brand.name = request.body.get('name')
-        brand.country =request.body.get('country')
-        brand.description = request.body.get('description')
+        brand.name = request.FILES.get('name')
+        brand.country =request.FILES.get('country')
+        brand.description = request.FILES.get('description')
         brand.image = request.FILES.get('image')
         brand.save()
-        brand.category.add(request.body.get('category'))
+        brand.category.add(request.FILES.get('category'))
         json_data = json.dumps({
             'brand_name': brand.name,
             'brand_id': brand.id

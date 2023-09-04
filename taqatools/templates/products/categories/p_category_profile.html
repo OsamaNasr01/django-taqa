@@ -185,7 +185,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form enctype="multipart/form-data" action="{% url 'add_brand' %}" method="post" name="add_brand_form">
+            <form id="brand_form" enctype="multipart/form-data" action="" method="post" name="add_brand_form">
               {% csrf_token %}
               {{ brand_form.as_p }}
               <button type="submit" id="brand_submit" class="btn btn-primary">+ Add brand</button>
