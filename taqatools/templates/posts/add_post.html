@@ -7,29 +7,11 @@
 
 <h1 id="messege_id">New Post form</h1>
 
-<form action="" method="POST" id="form_id" class="container">
+<form enctype="multipart/form-data" action="" method="POST" id="form_id" class="container">
   {% csrf_token %}
-  <div class="row mb-3">
-    <div class="col-md-12">
-      <label for="title" class="form-label">Title:</label>
-      <input type="text" id="title" name="title" class="form-control" required>
-    </div>
-  </div>
-  <div class="mb-3">
-    <label for="content" class="form-label">Content:</label>
-    <textarea id="content" name="content" rows="10" cols="50" class="form-control" required></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="category" class="form-label">Category:</label>
-    <select id="category" name="category" class="form-select">
-      {% for category in categories %}
-      <option value="{{category.id}}">{{category.name}}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div class="mb-3">
-    <input type="submit" hidden value="Create Post" class="btn btn-primary">
-  </div>
+  {{ post_form.media }}
+  {{ post_form.as_p }}
+  <input type="submit">
 </form>
 <button id="post_submit" class="btn btn-primary">Create Post</button>
 <div id="editor"></div>

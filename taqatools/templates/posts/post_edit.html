@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block title %} Edit {{ post.title }} {% endblock %}
+
+{% block content %}
+
+
+    <h1 id="messege_id">Edit {{ post.title }}</h1>
+
+    <form enctype="multipart/form-data" action="" method="POST" id="form_id" class="container">
+        {% csrf_token %}
+        {{ post_form.media }}
+        {{ post_form.as_p }}
+        <input class="btn btn-primary" type="submit">
+    </form>
+{% endblock %}

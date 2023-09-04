@@ -47,11 +47,11 @@
     <div class="content">
         <div class="left">
             {% for category in categories %}
-            <div class="category">
+            <div class="category" style="background: '{{category.image}}';">
                 <h1>{{ category.name }}</h1>
                 <p>{{category.description}}</p>
                 <a href="{% url 'p_category_profile' category.slug %}"
-                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                    >Shop Now <img src="{{category.image}}" alt=""
                 /></a>
             </div>
             {% endfor %}

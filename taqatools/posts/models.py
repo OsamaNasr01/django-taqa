@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from sitestats.models import Site
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -64,7 +65,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = RichTextField()
     auther = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)
