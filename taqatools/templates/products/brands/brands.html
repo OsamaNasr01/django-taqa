@@ -68,6 +68,9 @@
         <button class="btn btn-primary btn-sm" >Update</button>
         <a href="{% url 'brand_profile' brand.slug %}" class="text-dark text-decoration-none">
             <div class="shadow p-3 mb-5 bg-white rounded">
+              <div>
+                <img src="/{{brand.image}}" alt="" >
+              </div>
               <h3>
                   {{ brand.name  }}
               </h3>
