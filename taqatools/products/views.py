@@ -19,7 +19,7 @@ def p_category_list(request):
 
 def add_p_category(request):
     if request.method == 'POST':
-        form = AddCategoryForm(request.POST)
+        form = AddCategoryForm(request.POST, request.FILES)
         if form.is_valid():
             category = form.save(commit=False)
             if request.POST.get('category_id'):
@@ -28,6 +28,7 @@ def add_p_category(request):
                 category.parent_id = parent_category.id
             else:
                 category.parent_id = 0
+            category.image = request.FILES.get('image')
             category.save()
             messages.success(request, ('The Category has been Added Successfully!'))
             return p_category_profile(request, category.slug)
@@ -69,9 +70,11 @@ def p_category_profile(request, slug):
 def update_p_category(request, slug):
     category  = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
-        form = AddCategoryForm(request.POST, instance=category)
+        form = AddCategoryForm(request.POST, request.FILES, instance=category)
         if form.is_valid():
-            form.save()
+            cat = form.save(commit=False)
+            cat.image = request.FILES.get('image')
+            cat.save()
             messages.success(request, ('The Company Category has been Updated Successfully!'))
             return p_category_profile(request, category.slug)
     else:

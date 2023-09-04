@@ -59,6 +59,8 @@ class Category(models.Model):
     parent_id = models.PositiveIntegerField(null=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
+
 
     def __str__(self):
         return self.name
