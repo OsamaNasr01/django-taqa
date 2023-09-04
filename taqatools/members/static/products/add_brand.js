@@ -3,17 +3,17 @@ function new_brand() {
     document.getElementById('product_modal_close').click()
     setTimeout(document.getElementById('brand_modal').click(),10)
   }
-var brand_form = document.getElementById('brand_form')
+const brand_form = document.getElementById('brand_form')
 brand_form.addEventListener('submit', function(e) {
   e.preventDefault();
   url = '/product/brand/add/'
-  var form_data = new FormData(brand_form)
-  console.log(form_data)
+  console.log(document.getElementById('brand_name').value)
+  const form_data = new FormData(brand_form)
+  console.log(brand_form)
+  console.log(form_data.get('name'))
+  console.log(form_data.get('image'))
   fetch(url, {
       'method' : 'POST',
-      'headers' :{
-        'Content-Type': 'multipart/form-data'
-      },
       'body': form_data,
   })
   .then(response => {

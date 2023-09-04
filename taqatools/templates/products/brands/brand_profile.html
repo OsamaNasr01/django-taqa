@@ -16,7 +16,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{% url 'update_brand' brand.slug %}" method="post" name="update-brand_form">
+          <form enctype="multipart/form-data" action="{% url 'update_brand' brand.slug %}" method="post" name="update-brand_form">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Update</button>

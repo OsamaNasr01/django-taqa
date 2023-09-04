@@ -219,14 +219,13 @@ def brands(request):
 def add_brand(request):
     if request.method == 'POST':
         form = BrandForm()
-        print(request)
         brand = form.save(commit=False)
-        brand.name = request.FILES.get('name')
-        brand.country =request.FILES.get('country')
-        brand.description = request.FILES.get('description')
+        brand.name = request.POST.get('name')
+        brand.country =request.POST.get('country')
+        brand.description = request.POST.get('description')
         brand.image = request.FILES.get('image')
         brand.save()
-        brand.category.add(request.FILES.get('category'))
+        brand.category.add(request.POST.get('category'))
         json_data = json.dumps({
             'brand_name': brand.name,
             'brand_id': brand.id
@@ -247,7 +246,7 @@ def brand_profile(request, slug):
 def update_brand(request, slug):
     brand  = get_object_or_404(Brand, slug=slug)
     if request.method == 'POST':
-        form = BrandForm(request.POST, instance=brand)
+        form = BrandForm(request.POST, request.FILES, instance=brand)
         if form.is_valid():
             form.save()
             messages.success(request, ('The Brand Category has been Updated Successfully!'))
