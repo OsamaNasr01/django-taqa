@@ -6,6 +6,7 @@ from sitestats.models import Site
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
+import readtime 
 
 # Create your models here.
 
@@ -81,6 +82,10 @@ class Post(models.Model):
         if not self.slug:
             self.slug = arabic_to_english_slug(self.title)
         super(Post, self).save(*args, **kwargs)
+    
+    @property
+    def timeToRead(self):
+        return readtime.of_text(self.content)
         
         
 

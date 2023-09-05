@@ -13,9 +13,10 @@
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <div>
                         <h3>{{ post.title }}</h3>
+                        <p>{{ post.timeToRead }}</p>
                         <p>{{ post.created_at|naturaltime }}</p>
                         <p>{{ post.auther.first_name }}</p>
-                        <p>{{ post.content }}</p>
+                        <p>{{ post.content|safe }}</p>
                     </div>
                 </div>
             </a>
