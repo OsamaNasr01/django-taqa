@@ -6,7 +6,9 @@
             <div class="shadow p-3 mb-5 bg-white rounded">
                 <div>
                     <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">Edit</a>
-                    <h1>{{ post.title }}</h1><p>{{ post.category }}</p>
+                    <h1>{{ post.title }}</h1>
+                    <p>{{ post.timeToRead }}</p>
+                    <p>{{ post.category }}</p>
                     <p>{{ post.created_at|naturaltime }}</p>
                     <p>{{ post.auther.first_name }}</p>
                     <p>{{ post.content|safe }}</p>
@@ -20,6 +22,7 @@
                         <div class="shadow p-3 mb-5 bg-white rounded">
                             <div>
                                 <h3>{{ post.title }}</h3>
+                                <p>{{ post.timeToRead }}</p>
                                 <p>{{ post.created_at|naturaltime }}</p>
                                 <p>{{ post.auther.first_name }}</p>
                                 <p>{{ post.content|safe }}</p>

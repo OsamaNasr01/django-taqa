@@ -15,20 +15,13 @@ def posts(request):
 
 def add_post(request):
     if request.method == 'POST':
-        new_post = Post.objects.create(
-            title = request.POST.get('title'),
-            content = request.POST.get('content'),
-            auther = request.user,
-            category = Category.objects.get(id=request.POST.get('category')) 
-        )
-        new_post.save
-        json_data = json.dumps({'messege':'The post is submitted successfully'})
-        return HttpResponse(json_data, content_type="application/json")
+        form = PostForm(request.POST)
+        new_post = form.save(commit=False)
+        new_post.save()
+        return post_view(request, new_post.slug)
     else:
         post_form = PostForm()
-        categories  = Category.objects.all()
         return render(request, 'posts/add_post.html', {
-            'categories': categories,
             'post_form':post_form,
             })
     

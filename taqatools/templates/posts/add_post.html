@@ -5,17 +5,12 @@
 {% block content %}
 
 
-<h1 id="messege_id">New Post form</h1>
+  <h1 id="messege_id">New Post form</h1>
 
-<form enctype="multipart/form-data" action="" method="POST" id="form_id" class="container">
-  {% csrf_token %}
-  {{ post_form.media }}
-  {{ post_form.as_p }}
-  <input type="submit">
-</form>
-<button id="post_submit" class="btn btn-primary">Create Post</button>
-<div id="editor"></div>
-
-
-<script src="{% static 'posts/add_post.js' %}"></script>
+  <form enctype="multipart/form-data" action="{% url 'add_post' %}" method="POST" id="form_id" class="container">
+    {% csrf_token %}
+    {{ post_form.media }}
+    {{ post_form.as_p }}
+    <input type="submit" class="btn btn-primary">
+  </form>
 {% endblock %}
