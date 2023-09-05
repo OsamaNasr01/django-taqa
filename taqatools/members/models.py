@@ -103,6 +103,10 @@ def balance(self):
 
 User.add_to_class('balance', balance)
 
+def full_name(self):
+    return f'{self.first_name} {self.last_name}'
+
+User.add_to_class('full_name', full_name)
 
 @receiver(post_save, sender=User)
 def user_account_details(sender, instance, created, **kwargs):
