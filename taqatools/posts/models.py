@@ -85,7 +85,7 @@ class Post(models.Model):
     
     @property
     def timeToRead(self):
-        return readtime.of_text(self.content)
+        return readtime.of_html(self.content, wpm=150)
         
         
 
