@@ -58,7 +58,7 @@ def register_user(request):
 def user_delete(request, username):
     if request.method == 'POST':
         user = User.objects.get(username=username)
-        if user == request.user:
+        if user == request.user or request.user.is_staff:
             user.delete()
             return users(request)
         else:
@@ -76,7 +76,7 @@ def home(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    if user == request.user:
+    if user == request.user or request.user.is_staff:
         pay_form = DepitForm()
         receive_form = CreditForm()
         context = {
