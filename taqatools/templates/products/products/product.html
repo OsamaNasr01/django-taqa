@@ -6,164 +6,183 @@
 
 {% block content %}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-product-modal">
-    Update
-  </button>
+  Update
+</button>
 
-  <div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="update-product-modal">Update</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          </button>
-        </div>
-        <div class="modal-body">
-          <form enctype="multipart/form-data" action="{% url 'update_product' product.slug %}" method="post" name="update-product_form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% for spec in product.txt_spec.all %}
-              <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-              <input type="text" name="{{ spec.spec.name }}" class="form-control" 
-                id="{{spec.spec.name}}" value="{{spec.value}}">
-              <small id="{{spec.spec.name}}Help" class="form-text text-muted"></small>
-            {% endfor %}
-            {% for spec in product.num_spec.all %}
-              <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-              <input type="number" name="{{ spec.spec.name }}" class="form-control" 
-                id="{{spec.spec.name}}" value="{{spec.value}}">
-              <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.spec.unit }}</small><br>
-            {% endfor %}
-            {% for spec in product.bool_spec.all %}
-              <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-              <input type="checkbox" name="{{ spec.spec.name }}" class="form-check-input" 
-                id="{{spec.spec.name}}" value="{{spec.value}}">
-            {% endfor %}
-            <br><br>
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
-    Delete
-  </button>
-  <br><br>
-  
-  <!-- delete-product-modal.html -->
-  
-  <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="delete-product-modal-label">Delete Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you want to delete this product?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <form action="{% url 'delete_product' product.slug %}" method="POST">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-            <button type="submit" class="btn btn-danger" id="confirm-delete-product">Confirm Delete</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <div class="images">
-        <img src="/{{product.image}}"  width="300" height="300">
-      </div>
-      
-      <h3>
-          <!-- {{member.first_name}} {{ member.last_name }} -->
-          {{ product.name  }}
-      </h3>
-      <h6>
-        Price : {{ price }}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
-          Update
+<div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="update-product-modal">Update</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
-      </h6>
-      <ul>
-        <li>
-          Orignal Price : {{ original_price }}
-        </li>
-        <li>
-          Discount : {{ discount }}%
-        </li>
-        <li>
-          Last updated at: {{ product.prices.last.created_at|naturaltime }}
-        </li>
-      </ul>
-      <p>description : {{ product.description }}</p>
-      <p>Brand : {{ product.brand.name }}</p>
-      <p>category : {{ product.category }}</p>
-      <input type="hidden" value="{{product.id}}" id="product_id">
-      <div>
-        <ul>
-          {% for spec in product.num_spec.all%}
-            <li>{{ spec.spec.name }}: {{ spec.value }}  {{ spec.spec.unit }}</li>
+      </div>
+      <div class="modal-body">
+        <form enctype="multipart/form-data" action="{% url 'update_product' product.slug %}" method="post"
+          name="update-product_form">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {% for spec in product.txt_spec.all %}
+          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+          <input type="text" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
+            value="{{spec.value}}">
+          <small id="{{spec.spec.name}}Help" class="form-text text-muted"></small>
           {% endfor %}
-          {% for spec in product.txt_spec.all%}
-            <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+          {% for spec in product.num_spec.all %}
+          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+          <input type="number" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
+            value="{{spec.value}}">
+          <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.spec.unit }}</small><br>
           {% endfor %}
-          {% for spec in product.bool_spec.all%}
-            <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+          {% for spec in product.bool_spec.all %}
+          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+          <input type="checkbox" name="{{ spec.spec.name }}" class="form-check-input" id="{{spec.spec.name}}"
+            value="{{spec.value}}">
           {% endfor %}
-        </ul>
+          <br><br>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
 
-  
-    <div class="modal fade" id="update-price-modal" tabindex="-1" aria-labelledby="update-price-modal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="update-price-modal">Update</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="{% url 'update_price' product.slug %}" method="post" name="update-price_form">
-              {% csrf_token %}
-              {{ price_form.as_p }}
-              <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <p>Stock: {{ product.inventory.stock }} {{ product.name }}{{ product.inventory.stock|pluralize }}</p>
-        <p>Total Sales: {{ product.inventory.sales }} {{ product.name }}{{ product.inventory.sales|pluralize }} sales</p>
-      </div>
-      <div class="col-12">
-        <p id="messege"></p>
-      </div>
-        {% if in_cart %}
-          <div class="col-6">
-            <input type="number" class="form-control" id="no" value="{{no_in_cart}}">
-          </div>
-          <div class="col-6">
-            <button style="width: 100%;" class="btn btn-danger" id="add_to_cart">Remove from Cart</button>
-          </div>
-        {% else %}
-          <div class="col-6">
-            <input type="number" class="form-control" id="no" value="1">
-          </div>
-          <div class="col-6">
-            <button style="width: 100%;" class="btn btn-primary" id="add_to_cart">Add to Cart</button>
-          </div>
-      {% endif %}
-    </div>
-    
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
+  Delete
+</button>
+<br><br>
 
-    <script src="{% static 'products/product.js' %}"></script>
-  
+<!-- delete-product-modal.html -->
+
+<div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delete-product-modal-label">Delete Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this product?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="{% url 'delete_product' product.slug %}" method="POST">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+          <button type="submit" class="btn btn-danger" id="confirm-delete-product">Confirm Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <div class="images">
+    <img src="/{{product.image}}" width="300" height="300">
+  </div>
+
+  <h3>
+    <!-- {{member.first_name}} {{ member.last_name }} -->
+    {{ product.name  }}
+  </h3>
+  <h6>
+    Price : {{ price }}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
+      Update
+    </button>
+  </h6>
+  <ul>
+    <li>
+      Orignal Price : {{ original_price }}
+    </li>
+    <li>
+      Discount : {{ discount }}%
+    </li>
+    <li>
+      Last updated at: {{ product.prices.last.created_at|naturaltime }}
+    </li>
+  </ul>
+  <p>description : {{ product.description }}</p>
+  <p>Brand : {{ product.brand.name }}</p>
+  <p>category : {{ product.category }}</p>
+  <input type="hidden" value="{{product.id}}" id="product_id">
+  <div>
+    <ul>
+      {% for spec in product.num_spec.all%}
+      <li>{{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}</li>
+      {% endfor %}
+      {% for spec in product.txt_spec.all%}
+      <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+      {% endfor %}
+      {% for spec in product.bool_spec.all%}
+      <li>{{ spec.spec.name }}: {{ spec.value }} </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+<div class="modal fade" id="update-price-modal" tabindex="-1" aria-labelledby="update-price-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="update-price-modal">Update</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'update_price' product.slug %}" method="post" name="update-price_form">
+          {% csrf_token %}
+          {{ price_form.as_p }}
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <p>Stock: {{ product.inventory.stock }} {{ product.name }}{{ product.inventory.stock|pluralize }}</p>
+    <p>Total Sales: {{ product.inventory.sales }} {{ product.name }}{{ product.inventory.sales|pluralize }} sales</p>
+  </div>
+  <div class="col-12">
+    <p id="messege"></p>
+  </div>
+  {% if in_cart %}
+  <div class="col-6">
+    <input type="number" class="form-control" id="no" value="{{no_in_cart}}">
+  </div>
+  <div class="col-6">
+    <button style="width: 100%;" class="btn btn-danger" id="add_to_cart">Remove from Cart</button>
+  </div>
+  {% else %}
+  <div class="col-6">
+    <input type="number" class="form-control" id="no" value="1">
+  </div>
+  <div class="col-6">
+    <button style="width: 100%;" class="btn btn-primary" id="add_to_cart">Add to Cart</button>
+  </div>
+  {% endif %}
+</div>
+<br><br>
+{% if product.category.posts.count %}
+<h3>Read also</h3>
+{% for post in product.category.posts.all %}
+<a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
+  <div class="shadow p-3 mb-5 bg-white rounded">
+    <div>
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.timeToRead }}</p>
+      <p>{{ post.auther.full_name }}</p>
+      <p>{{ post.content|safe|truncatewords:50 }} read more</p>
+    </div>
+  </div>
+</a>
+{% endfor %}
+{% endif %}
+
+
+<script src="{% static 'products/product.js' %}"></script>
+
 {% endblock %}

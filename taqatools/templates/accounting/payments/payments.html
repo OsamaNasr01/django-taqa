@@ -10,7 +10,7 @@
                 <a href="{% url 'payment_profile' payment.id %}" class="text-dark text-decoration-none">
                     <div class="shadow p-3 mb-5 bg-white rounded">
                         <h3>{{ payment.description }}</h3>
-                        <p>{{ payment.user.first_name }} {{ payment.user.last_name }}</p>
+                        <p>{{ payment.user.full_name }}</p>
                         <p>{{ payment.value|floatformat:2|intcomma }}</p>
                         <p>{{ payment.created_at|naturaltime  }}</p>
                     </div>

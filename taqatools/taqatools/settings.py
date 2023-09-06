@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'posts',
     'ckeditor',
     'ckeditor_uploader',
-    'django_truncate'
 ]
 
 MIDDLEWARE = [

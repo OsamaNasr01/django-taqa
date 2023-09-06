@@ -20,6 +20,7 @@
 
 
 {% if category_posts %}
+<h3>Read also</h3>
 {% for post in category_posts %}
 <a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
     <div class="shadow p-3 mb-5 bg-white rounded">
@@ -32,9 +33,24 @@
     </div>
 </a>
 {% endfor %}
-{% else %}
-<h3>There is no more Posts in {{ post.category }} category to view</h3>
 {% endif %}
+
+
+{% if category_products %}
+<h3>Buy now</h3>
+{% for product in category_products %}
+<a href="{% url 'product' product.slug %}" class="text-dark text-decoration-none">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <div>
+            <img src="/{{product.image}}" alt="">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endif %}
+
 
 <!-- delete-post-modal.html -->
 

@@ -70,7 +70,7 @@ class Post(models.Model):
     auther = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='posts')
     slug = models.SlugField(unique=True, max_length=255, null=True)
     
     def __str__(self):

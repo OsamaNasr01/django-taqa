@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse,get_object_or_404
-from products.models import Category
+from products.models import Category, Product
 from .models import Post
 import json
 from .forms import PostForm
@@ -30,10 +30,12 @@ def add_post(request):
     
 def post_view(request, slug):
     post = Post.objects.get(slug=slug)
+    category_products = Product.objects.filter(category = post.category)
     category_posts = Post.objects.filter(category = post.category).exclude(id= post.id)
     return render(request, 'posts/post.html', {
         'post': post,
         'category_posts': category_posts,
+        'category_products': category_products,
     })
     
     
