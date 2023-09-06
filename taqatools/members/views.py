@@ -58,8 +58,11 @@ def register_user(request):
 def user_delete(request, username):
     if request.method == 'POST':
         user = User.objects.get(username=username)
-        user.delete()
-        return users(request)
+        if user == request.user:
+            user.delete()
+            return users(request)
+        else:
+            return render(request, 'members/not_auth.html', {})
 
 def home(request):
     categories = Category.objects.all()
@@ -73,14 +76,17 @@ def home(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    pay_form = DepitForm()
-    receive_form = CreditForm()
-    context = {
-        'user':user,
-        'pay_form': pay_form,
-        'receive_form': receive_form,
-        }
-    return render(request, 'members/user_profile.html', context)
+    if user == request.user:
+        pay_form = DepitForm()
+        receive_form = CreditForm()
+        context = {
+            'user':user,
+            'pay_form': pay_form,
+            'receive_form': receive_form,
+            }
+        return render(request, 'members/user_profile.html', context)
+    else:
+        return render(request, 'members/not_auth.html', {})
 
 def users(request):
     context = {'users': User.objects.all()}

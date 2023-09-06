@@ -96,7 +96,11 @@
             </div>
         </div>
     </div><br><br>
-
+    {% if user.cartitems.count %}
+        <a href="{% url 'cart' %}">you have {{ user.cartitems.count }} items in cart</a>
+    {% else %}
+        <p>Your cart is empty</p>
+    {% endif %}
     {% if user.account.details.offers_no %}
         <a href="{% url 'user_offers'  user.username %}">
             <div>
