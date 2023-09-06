@@ -26,9 +26,8 @@
         <div>
             <h3>{{ post.title }}</h3>
             <p>{{ post.timeToRead }}</p>
-            <p>{{ post.created_at|naturaltime }}</p>
             <p>{{ post.auther.full_name }}</p>
-            <p>{{ post.content|safe }}</p>
+            <p>{{ post.content|safe|truncatewords:50 }} read more</p>
         </div>
     </div>
 </a>

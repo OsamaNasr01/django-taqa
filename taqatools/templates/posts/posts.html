@@ -22,7 +22,7 @@
                         <p>{{ post.timeToRead }}</p>
                         <p>{{ post.created_at|naturaltime }}</p>
                         <p>{{ post.auther.full_name }}</p>
-                        <p>{{ post.content|safe }}</p>
+                        <p>{{ post.content|safe|truncatewords:100 }} read more</p>
                     </div>
                 </div>
             </a>
