@@ -14,7 +14,7 @@ def posts(request):
 
 
 
-@login_required  
+@login_required(login_url='login')
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -41,7 +41,7 @@ def post_view(request, slug):
     })
     
 
-@login_required      
+@login_required(login_url='login') 
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
@@ -57,7 +57,7 @@ def post_edit(request, slug):
             })
         
 
-@login_required(login_url='login')    
+@login_required(login_url='login')
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
