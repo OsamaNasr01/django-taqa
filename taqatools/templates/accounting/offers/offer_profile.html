@@ -36,7 +36,7 @@
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ offer.description }}</h1>
-            <p>{{ offer.user.first_name }} {{ offer.user.last_name }}</p>
+            <p>{{ offer.member.full_name }}</p>
             <p>{{ offer.value|floatformat:2|intcomma }}</p>
             <p>{{ offer.created_at|naturaltime  }}</p>
         </div>

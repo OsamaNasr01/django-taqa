@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %} {{user.username}} {% endblock %}
+{% block title %} {{member.username}} {% endblock %}
 
 {% block content %}
     <div class="shadow p-3 mb-5 bg-white rounded">
         <div>
-            {% if user.account.image %}
-            <img src="/{{user.account.image}}" alt="">
+            {% if member.account.image %}
+            <img src="/{{member.account.image}}" alt="">
             {% else %}
             <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" height="300" width="300">
             {% endif %}
@@ -18,11 +18,11 @@
         </div>
         <h3>
             <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ user.first_name  }} {{user.last_name}}
+            {{ member.full_name  }}
         </h3>
-        <p>Email : {{ user.email }}</p>
-        <p>Username @{{user.username }}</p>
-        <h1>{{ user.balance|floatformat:2|intcomma }}</h1>
+        <p>Email : {{ member.email }}</p>
+        <p>Username @{{member.username }}</p>
+        <h1>{{ member.balance|floatformat:2|intcomma }}</h1>
     </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
         Add Payment
@@ -96,50 +96,50 @@
             </div>
         </div>
     </div><br><br>
-    {% if user.cartitems.count %}
-        <a href="{% url 'cart' %}">you have {{ user.cartitems.count }} items in cart</a>
+    {% if member.cartitems.count %}
+        <a href="{% url 'cart' %}">you have {{ member.cartitems.count }} items in cart</a>
     {% else %}
         <p>Your cart is empty</p>
     {% endif %}
-    {% if user.account.details.offers_no %}
-        <a href="{% url 'user_offers'  user.username %}">
+    {% if member.account.details.offers_no %}
+        <a href="{% url 'user_offers'  member.username %}">
             <div>
-                <h3>You have requested {{ user.account.details.offers_no }} offer{{ user.account.details.offers_no|pluralize}}.</h3>
+                <h3>You have requested {{ member.account.details.offers_no }} offer{{ user.account.details.offers_no|pluralize}}.</h3>
             </div>
         </a>
     {% endif %}
 
-    {% if user.account.details.sales_no %}
-        <a href="{% url 'user_sales'  user.username %}">
+    {% if member.account.details.sales_no %}
+        <a href="{% url 'user_sales'  member.username %}">
             <div>
-                <h3>You have ordered {{ user.account.details.sales_no }} invoice{{ user.account.details.sales_no|pluralize}}.</h3>
+                <h3>You have ordered {{ member.account.details.sales_no }} invoice{{ member.account.details.sales_no|pluralize}}.</h3>
             </div>
         </a>
     {% endif %}
 
 
-    {% if user.account.details.purchases_no %}
-        <a href="{% url 'user_purchases'  user.username %}">
+    {% if member.account.details.purchases_no %}
+        <a href="{% url 'user_purchases'  member.username %}">
             <div>
-                <h3>You have delivered {{ user.account.details.purchases_no }} invoice{{ user.account.details.purchases_no|pluralize}}.</h3>
-            </div>
-        </a>
-    {% endif %}
-
-    
-    {% if user.account.details.payments_no %}
-        <a href="{% url 'user_payments'  user.username %}">
-            <div>
-                <h3>You have delivered {{ user.account.details.payments_no }} Payment{{ user.account.details.payments_no|pluralize}}.</h3>
+                <h3>You have delivered {{ member.account.details.purchases_no }} invoice{{ member.account.details.purchases_no|pluralize}}.</h3>
             </div>
         </a>
     {% endif %}
 
     
-    {% if user.account.details.receipts_no %}
-        <a href="{% url 'user_receipts'  user.username %}">
+    {% if member.account.details.payments_no %}
+        <a href="{% url 'user_payments'  member.username %}">
             <div>
-                <h3>You have delivered {{ user.account.details.receipts_no }} Receipt{{ user.account.details.receipts_no|pluralize}}.</h3>
+                <h3>You have delivered {{ member.account.details.payments_no }} Payment{{ member.account.details.payments_no|pluralize}}.</h3>
+            </div>
+        </a>
+    {% endif %}
+
+    
+    {% if member.account.details.receipts_no %}
+        <a href="{% url 'user_receipts'  member.username %}">
+            <div>
+                <h3>You have delivered {{ member.account.details.receipts_no }} Receipt{{ member.account.details.receipts_no|pluralize}}.</h3>
             </div>
         </a>
     {% endif %}

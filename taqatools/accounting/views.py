@@ -227,7 +227,7 @@ def offer_profile(request, id):
 @login_required(login_url='login')
 def user_offers(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    context = {'member': user}
     return render(request, 'accounting/offers/user_offers.html', context)
 
 
@@ -251,7 +251,7 @@ def sales(request):
 @login_required(login_url='login')
 def user_sales(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    context = {'member': user}
     return render(request, 'accounting/sales/user_sales.html', context)
 
 
@@ -376,7 +376,7 @@ def purchases(request):
 @login_required(login_url='login')
 def user_purchases(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    context = {'member': user}
     return render(request, 'accounting/purchases/user_purchases.html', context)
 
 
@@ -400,7 +400,7 @@ def payments(request):
 @login_required(login_url='login')
 def user_payments(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    context = {'member': user}
     return render(request, 'accounting/payments/user_payments.html', context)
 
 
@@ -510,7 +510,7 @@ def receipts(request):
 @login_required(login_url='login')
 def user_receipts(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    context = {'member': user}
     return render(request, 'accounting/receipts/user_receipts.html', context)
 
 

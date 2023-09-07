@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %} {{user.username}} {% endblock %}
+{% block title %} {{member.username}} {% endblock %}
 
 {% block content %}
     <div class="shadow p-3 mb-5 bg-white rounded">
         <h3>
             <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ user.first_name  }} {{user.last_name}}
+            {{ member.full_name  }} 
         </h3>
-        <p>Email : {{ user.email }}</p>
-        <p>Username @{{user.username }}</p>
-        <h1>{{ user.account.details.purchases_value|floatformat:2|intcomma }}</h1>
+        <p>Email : {{ member.email }}</p>
+        <p>Username @{{member.username }}</p>
+        <h1>{{ member.account.details.purchases_value|floatformat:2|intcomma }}</h1>
     </div>
 
 
     <div>
-        {% for invoice in user.purchase.all %}
+        {% for invoice in member.purchase.all %}
             <a href="{% url 'purchase_profile' invoice.id %}" class="text-dark text-decoration-none">
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <h3>{{ invoice.description }}</h3>

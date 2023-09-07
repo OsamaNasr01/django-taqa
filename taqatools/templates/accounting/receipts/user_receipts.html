@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %} {{user.username}} {% endblock %}
+{% block title %} {{member.username}} {% endblock %}
 
 {% block content %}
     <div class="shadow p-3 mb-5 bg-white rounded">
         <h3>
             <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ user.first_name  }} {{user.last_name}}
+            {{ member.full_name  }}
         </h3>
-        <p>Email : {{ user.email }}</p>
-        <p>Username @{{user.username }}</p>
-        <h1>{{ user.account.details.receipts_value|floatformat:2|intcomma }}</h1>
+        <p>Email : {{ member.email }}</p>
+        <p>Username @{{member.username }}</p>
+        <h1>{{ member.account.details.receipts_value|floatformat:2|intcomma }}</h1>
     </div>
 
 
     <div>
-        {% for receipt in user.depit.all %}
+        {% for receipt in member.depit.all %}
             <a href="{% url 'receipt_profile' receipt.id %}" class="text-dark text-decoration-none">
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <h3>{{ receipt.description }}</h3>

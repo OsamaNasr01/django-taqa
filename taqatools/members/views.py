@@ -83,7 +83,7 @@ def user_profile(request, username):
         pay_form = DepitForm()
         receive_form = CreditForm()
         context = {
-            'user':user,
+            'member':user,
             'pay_form': pay_form,
             'receive_form': receive_form,
             }

@@ -14,7 +14,10 @@ class PurchaseInvoice(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     @property
     def total_value(self):
-        return sum((item.item_value) for item in self.items.all() )
+        return sum((item.item_value) for item in self.items.all())
+    @property
+    def member(self):
+        return self.user
     
 @receiver(post_save, sender =  PurchaseInvoice)
 def update_details(sender, instance, created, **kwargs):
@@ -64,6 +67,9 @@ class SaleInvoice(models.Model):
     @property
     def total_value(self):
         return sum((item.item_value) for item in self.items.all() )
+    @property
+    def member(self):
+        return self.user
     
 @receiver(post_save, sender =  SaleInvoice)
 def update_details(sender, instance, created, **kwargs):
@@ -113,6 +119,9 @@ class Credit(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='credit')
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField(default=0)
+    @property
+    def member(self):
+        return self.user
     
 @receiver(post_save, sender =  Credit)
 def update_details(sender, instance, created, **kwargs):
@@ -133,6 +142,9 @@ class Depit(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='depit')
     created_at = models.DateTimeField(auto_now=True)
     value = models.FloatField(default=0)
+    @property
+    def member(self):
+        return self.user
     
 @receiver(post_save, sender =  Depit)
 def update_details(sender, instance, created, **kwargs):
@@ -163,6 +175,9 @@ class Offer(models.Model):
     @property
     def total_value(self):
         return sum((item.item_value) for item in self.items.all() )
+    @property
+    def member(self):
+        return self.user
     
 @receiver(post_save, sender =  Offer)
 def update_details(sender, instance, created, **kwargs):
@@ -205,4 +220,7 @@ class CartItem(models.Model):
     @property
     def item_value(self):
         return self.price * self.q
+    @property
+    def member(self):
+        return self.user
     

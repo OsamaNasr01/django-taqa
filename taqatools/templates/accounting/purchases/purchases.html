@@ -10,7 +10,7 @@
                 <a href="{% url 'purchase_profile' invoice.id %}" class="text-dark text-decoration-none">
                     <div class="shadow p-3 mb-5 bg-white rounded">
                         <h3>{{ invoice.description }}</h3>
-                        <p>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</p>
+                        <p>{{ invoice.member.full_name }}</p>
                         <p>{{ invoice.value|floatformat:2|intcomma }}</p>
                         <p>{{ invoice.created_at|naturaltime  }}</p>
                     </div>

@@ -91,7 +91,7 @@
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <h1>{{ invoice.description }}</h1>
-            <p>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</p>
+            <p>{{ invoice.member.full_name }}</p>
             <p>{{ invoice.value|floatformat:2|intcomma }}</p>
             <p>{{ invoice.created_at|naturaltime  }}</p>
         </div>

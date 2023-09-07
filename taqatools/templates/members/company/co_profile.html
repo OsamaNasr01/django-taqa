@@ -67,7 +67,7 @@
         <p>email : {{ company.email }}</p>
         <p>website : {{ company.website }}</p>
         <p>address : {{ company.address }}</p>
-        {% if company.owner.first_name %}
+        {% if company.owner.full_name %}
             <p>owner : {{ company.owner.first_name }} {{ company.owner.last_name }}</p>
         {% else %}
             <p>owner : {{ company.owner.username }}</p>
