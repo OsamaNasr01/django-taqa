@@ -15,59 +15,61 @@
     <a aria-current="page" href="{% url 'home' %}" class="logo">TAQATOOLS</a>
     <div class="navlinks">
         <ul>
-            <li>
-                <a aria-current="page" href="{% url 'home' %}"
-                    ><i class="bx bx-home"></i> Home</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'members' %}"
-                    ><i class="bx bx-user"></i> Members</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'companies' %}"
-                    ><i class="bx bxs-city"></i> Companies</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'p_category_list' %}"
-                    ><i class="bx bx-basket"></i> Products</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'brands' %}"
-                    ><i class="bx bx-badge-check"></i> Brands</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'posts' %}"
-                    ><i class="bx bx-news"></i> Posts</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'cart' %}" id="cart-navbar"
-                    ><i class="bx bx-cart-alt"></i> Cart
-                    ({{user.cartitems.count}})</a
-                >
-            </li>
-            <hr />
-            {% if user.is_authenticated %} {% if user.first_name %}
-            <li class="none">
-                <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.first_name }}!</a
-                >
-            </li>
-            {% else %}
-            <li class="none">
-                <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.username }}!</a
-                >
-            </li>
-            {% endif %} {% if not user.companies.exists %}
-            <li class="none">
-                <a href="{% url 'add_company' %}">Add Company</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li>
+                    <a aria-current="page" href="{% url 'home' %}"
+                        ><i class="bx bx-home"></i> Home</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'members' %}"
+                        ><i class="bx bx-user"></i> Members</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'companies' %}"
+                        ><i class="bx bxs-city"></i> Companies</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'p_category_list' %}"
+                        ><i class="bx bx-basket"></i> Products</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'brands' %}"
+                        ><i class="bx bx-badge-check"></i> Brands</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'posts' %}"
+                        ><i class="bx bx-news"></i> Posts</a
+                    >
+                </li>
+                <li>
+                    <a href="{% url 'cart' %}" id="cart-navbar"
+                        ><i class="bx bx-cart-alt"></i> Cart
+                        ({{user.cartitems.count}})</a
+                    >
+                </li>
+                <hr />
+                {% if user.is_authenticated %} {% if user.first_name %}
+                <li class="none">
+                    <a href="{% url 'user_profile' user.username %}"
+                        >Hello {{ user.first_name }}!</a
+                    >
+                </li>
+                {% else %}
+                <li class="none">
+                    <a href="{% url 'user_profile' user.username %}"
+                        >Hello {{ user.username }}!</a
+                    >
+                </li>
+                {% endif %} {% if not user.companies.exists %}
+                <li class="none">
+                    <a href="{% url 'add_company' %}">Add Company</a>
+                </li>
+                {% endif %}
             {% endif %}
 
             <li class="none">

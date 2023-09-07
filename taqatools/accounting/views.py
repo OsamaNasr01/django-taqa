@@ -9,29 +9,12 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.db.models import Q
 from members.views import user_profile
-from django.core.serializers import serialize
-from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
-def accounting(request):
-    return render(request, 'accounting/invoices/accounting_panel.html', {})
-
-
-def add_s_invoice(request):
-    if request.method == 'POST':
-        invoice_form = PurchaseInvoiceForm(request.POST)
-        return render(request, 'accounting/invoices/add_s_invoice.html', {
-            'invoice_form': invoice_form,
-        })
-    else:
-        invoice_form = PurchaseInvoiceForm()
-        return render(request, 'accounting/invoices/add_s_invoice.html', {
-            'invoice_form': invoice_form,
-        })
-
-
+@login_required(login_url='login')
 def add_product_cart(request):
     data = json.loads(request.body)
     product_id = data['product_id']
@@ -70,6 +53,7 @@ def add_product_cart(request):
             return HttpResponse(json_data, content_type="application/json")
 
 
+@login_required(login_url='login')
 def cart(request):
     items = CartItem.objects.filter(user=request.user)
     offer_form = OfferForm()
@@ -105,6 +89,7 @@ def cart(request):
     })
 
 
+@login_required(login_url='login')
 def delete_cart_item(request):
     data = json.loads(request.body)
     item_id = data['item_id']
@@ -141,6 +126,7 @@ def delete_cart_item(request):
         return HttpResponse(json_data, content_type="application/json")
 
 
+@login_required(login_url='login')
 def update_cart_item(request):
     data = json.loads(request.body)
     item_id = data['item_id']
@@ -156,6 +142,7 @@ def update_cart_item(request):
         return HttpResponse(json_data, content_type="application/json")
 
 
+@login_required(login_url='login')
 def add_offer(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -183,6 +170,7 @@ def add_offer(request):
 
 
 
+@login_required(login_url='login')
 def offer_update(request, id):
     offer = get_object_or_404(SaleInvoice, id=id)
     if request.method == 'POST':
@@ -194,6 +182,7 @@ def offer_update(request, id):
             return offer_profile(request, id)
 
 
+@login_required(login_url='login')
 def offer_delete(request, id):
     offer = get_object_or_404(Offer, id=id)
     if request.method == 'POST':
@@ -216,11 +205,13 @@ def search_users(request):
     return HttpResponse(json_data, content_type="application/json")
 
 
+@login_required(login_url='login')
 def offers(request):
     offers = Offer.objects.all()
     return render(request, 'accounting/offers/offers.html', {'offers': offers})
 
 
+@login_required(login_url='login')
 def offer_profile(request, id):
     offer = Offer.objects.get(id=id)
     total = {}
@@ -233,12 +224,14 @@ def offer_profile(request, id):
     })
 
 
+@login_required(login_url='login')
 def user_offers(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
     return render(request, 'accounting/offers/user_offers.html', context)
 
 
+@login_required(login_url='login')
 def sale_profile(request, id):
     invoice = SaleInvoice.objects.get(id=id)
     form = SaleForm(instance=invoice)
@@ -249,17 +242,20 @@ def sale_profile(request, id):
     })
 
 
+@login_required(login_url='login')
 def sales(request):
     invoices = SaleInvoice.objects.all()
     return render(request, 'accounting/sales/sales.html', {'invoices': invoices})
 
 
+@login_required(login_url='login')
 def user_sales(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
     return render(request, 'accounting/sales/user_sales.html', context)
 
 
+@login_required(login_url='login')
 def add_sale(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -286,6 +282,7 @@ def add_sale(request):
         return HttpResponse({'ok': "ok"})
 
 
+@login_required(login_url='login')
 def sale_update(request, id):
     invoice = get_object_or_404(SaleInvoice, id=id)
     if request.method == 'POST':
@@ -297,6 +294,7 @@ def sale_update(request, id):
             return sale_profile(request, id)
 
 
+@login_required(login_url='login')
 def sale_delete(request, id):
     invoice = get_object_or_404(SaleInvoice, id=id)
     if request.method == 'POST':
@@ -306,6 +304,7 @@ def sale_delete(request, id):
         return redirect('sales')
 
 
+@login_required(login_url='login')
 def add_purchase(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -333,6 +332,7 @@ def add_purchase(request):
         return HttpResponse(json.dumps({'ok': "ok"}))
 
 
+@login_required(login_url='login')
 def purchase_update(request, id):
     invoice = get_object_or_404(PurchaseInvoice, id=id)
     if request.method == 'POST':
@@ -344,6 +344,7 @@ def purchase_update(request, id):
             return purchase_profile(request, id)
 
 
+@login_required(login_url='login')
 def purchase_delete(request, id):
     invoice = get_object_or_404(PurchaseInvoice, id=id)
     if request.method == 'POST':
@@ -353,6 +354,7 @@ def purchase_delete(request, id):
         return redirect('purchases')
 
 
+@login_required(login_url='login')
 def purchase_profile(request, id):
     invoice = PurchaseInvoice.objects.get(id=id)
     total = {}
@@ -365,17 +367,20 @@ def purchase_profile(request, id):
     })
 
 
+@login_required(login_url='login')
 def purchases(request):
     invoices = PurchaseInvoice.objects.all()
     return render(request, 'accounting/purchases/purchases.html', {'invoices': invoices})
 
 
+@login_required(login_url='login')
 def user_purchases(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
     return render(request, 'accounting/purchases/user_purchases.html', context)
 
 
+@login_required(login_url='login')
 def payment_profile(request, id):
     payment = Credit.objects.get(id=id)
     form = CreditForm(instance=payment)
@@ -386,17 +391,20 @@ def payment_profile(request, id):
     })
 
 
+@login_required(login_url='login')
 def payments(request):
     payments = Credit.objects.all()
     return render(request, 'accounting/payments/payments.html', {'payments': payments})
 
 
+@login_required(login_url='login')
 def user_payments(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
     return render(request, 'accounting/payments/user_payments.html', context)
 
 
+@login_required(login_url='login')
 def add_payment(request, username):
     if request.method == 'POST':
         form = CreditForm(request.POST)
@@ -417,6 +425,7 @@ def add_payment(request, username):
             return user_profile(request, username)
 
 
+@login_required(login_url='login')
 def payment_update(request, id):
     payment = get_object_or_404(Credit, id=id)
     if request.method == 'POST':
@@ -428,6 +437,7 @@ def payment_update(request, id):
             return payment_profile(request, id)
 
 
+@login_required(login_url='login')
 def payment_delete(request, id):
     payment = get_object_or_404(Credit, id=id)
     if request.method == 'POST':
@@ -437,6 +447,7 @@ def payment_delete(request, id):
         return redirect('payments')
 
 
+@login_required(login_url='login')
 def add_receipt(request, username):
     if request.method == 'POST':
         form = DepitForm(request.POST)
@@ -457,6 +468,7 @@ def add_receipt(request, username):
             return user_profile(request, username)
 
 
+@login_required(login_url='login')
 def receipt_update(request, id):
     receipt = get_object_or_404(Depit, id=id)
     if request.method == 'POST':
@@ -468,6 +480,7 @@ def receipt_update(request, id):
             return receipt_profile(request, id)
 
 
+@login_required(login_url='login')
 def receipt_delete(request, id):
     receipt = get_object_or_404(Depit, id=id)
     if request.method == 'POST':
@@ -477,6 +490,7 @@ def receipt_delete(request, id):
         return redirect('receipts')
 
 
+@login_required(login_url='login')
 def receipt_profile(request, id):
     receipt = Depit.objects.get(id=id)
     form = DepitForm(instance=receipt)
@@ -487,12 +501,16 @@ def receipt_profile(request, id):
     })
 
 
+@login_required(login_url='login')
 def receipts(request):
     receipts = Depit.objects.all()
     return render(request, 'accounting/receipts/receipts.html', {'receipts': receipts})
 
 
+@login_required(login_url='login')
 def user_receipts(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
     return render(request, 'accounting/receipts/user_receipts.html', context)
+
+

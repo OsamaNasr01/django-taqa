@@ -24,7 +24,7 @@
         to explore more <br />
         sign up
     </h1>
-    <form method="post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
 
         <input type="text" name="username" placeholder="You Email" />
@@ -34,7 +34,7 @@
             placeholder="You Password"
             required
         />
-        <button>sign up</button>
+        <button>sign in</button>
     </form>
     <a href="{% url 'register' %}">you don't have account?, create one</a>
 </div>

@@ -4,6 +4,7 @@ from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecFo
 from django.contrib import messages
 import json
 from django.core.serializers import serialize
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -17,6 +18,7 @@ def p_category_list(request):
 
 
 
+@login_required(login_url='login')
 def add_p_category(request):
     if request.method == 'POST':
         form = AddCategoryForm(request.POST, request.FILES)
@@ -67,6 +69,7 @@ def p_category_profile(request, slug):
 
 
 
+@login_required(login_url='login')
 def update_p_category(request, slug):
     category  = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
@@ -85,6 +88,7 @@ def update_p_category(request, slug):
         })
 
 
+@login_required(login_url='login')
 def delete_p_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
@@ -93,6 +97,7 @@ def delete_p_category(request, slug):
         return redirect('p_category_list')
 
 
+@login_required(login_url='login')
 def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)
@@ -172,6 +177,7 @@ def product(request, slug):
     return render(request, 'products/products/product.html', context)
 
 
+@login_required(login_url='login')
 def update_product(request, slug):
     productt  = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
@@ -203,6 +209,7 @@ def update_product(request, slug):
         })
 
 
+@login_required(login_url='login')
 def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
@@ -219,6 +226,7 @@ def brands(request):
     })
 
 
+@login_required(login_url='login')
 def add_brand(request):
     if request.method == 'POST':
         form = BrandForm()
@@ -246,6 +254,7 @@ def brand_profile(request, slug):
     })
 
 
+@login_required(login_url='login')
 def update_brand(request, slug):
     brand  = get_object_or_404(Brand, slug=slug)
     if request.method == 'POST':
@@ -262,6 +271,7 @@ def update_brand(request, slug):
         })
 
 
+@login_required(login_url='login')
 def delete_brand(request, slug):
     brand = get_object_or_404(Brand, slug=slug)
     if request.method == 'POST':
@@ -270,6 +280,7 @@ def delete_brand(request, slug):
         return redirect('brands')
     
 
+@login_required(login_url='login')
 def update_price(request, slug):
     if request.method == 'POST':
         form = PriceForm(request.POST)
@@ -286,6 +297,7 @@ def update_price(request, slug):
             messages.error(request, ('There Was An Error adding the Brand' + error_message))
             return render(request, 'products/brands/add_brand.html', {'form' : form, 'errors': errors})
 
+@login_required(login_url='login')
 def add_spec(request):
     if request.method == 'POST':
         form = SpecForm(request.POST)
@@ -304,6 +316,7 @@ def add_spec(request):
             return p_category_profile(request, category.slug)
 
 
+@login_required(login_url='login')
 def update_spec(request, id):
     spec = get_object_or_404(Spec, id=id)
     if request.method == 'POST':
@@ -321,6 +334,7 @@ def update_spec(request, id):
         form = SpecForm(instance = spec)
         return render(request, 'products/specs/update_spec.html', {'form': form})
     
+@login_required(login_url='login')
 def delete_spec(request, id):
     spec = get_object_or_404(Spec, id=id)
     category_slug = spec.category.slug

@@ -8,6 +8,7 @@ from .models import Company, CoCategory, Details, Account
 from products.models import Category, Product, Brand
 from accounting.forms import DepitForm, CreditForm
 import json
+from django.contrib.auth.decorators import login_required
 
 def login_user(request):
     if request.method == 'POST':
@@ -18,7 +19,7 @@ def login_user(request):
             login(request, user)
             # Redirect to a success page.
             messages.success(request, ('You Logged in Successfully'))
-            return redirect('users')
+            return redirect('home')
         else:
             # Return an 'invalid login' error message.
             messages.success(request, ('There Was An Error Logging in'))
@@ -27,7 +28,7 @@ def login_user(request):
         return render(request, 'members/login.html', {})
     
 
-    
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     messages.success(request, ('You Logged Out!'))
@@ -55,6 +56,7 @@ def register_user(request):
         return render(request, 'members/register.html', {'form' : form})
 
 
+@login_required(login_url='login')
 def user_delete(request, username):
     if request.method == 'POST':
         user = User.objects.get(username=username)
@@ -74,6 +76,7 @@ def home(request):
         'brands': brands,
     })
 
+@login_required(login_url='login')
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
     if user == request.user or request.user.is_staff:
@@ -88,11 +91,13 @@ def user_profile(request, username):
     else:
         return render(request, 'members/not_auth.html', {})
 
+@login_required(login_url='login')
 def users(request):
     context = {'users': User.objects.all()}
     return render(request, 'members/users.html', context)
 
 
+@login_required(login_url='login')
 def update_picture(request, username):
     user = get_object_or_404(User, username=username)
     account = Account.objects.get(user= user)
@@ -103,6 +108,7 @@ def update_picture(request, username):
 
 
 
+@login_required(login_url='login')
 def add_company(request):
     if request.method == 'POST':
         form = AddCompanyForm(request.POST)
@@ -127,6 +133,7 @@ def add_company(request):
             })
     
 
+@login_required(login_url='login')
 def update_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
     if request.method == 'POST':
@@ -142,6 +149,7 @@ def update_company(request, slug):
 
 
 
+@login_required(login_url='login')
 def delete_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
     if request.method == 'POST':
@@ -153,6 +161,7 @@ def delete_company(request, slug):
 
 
 
+@login_required(login_url='login')
 def co_profile(request, slug):
     company = get_object_or_404(Company, slug=slug)
     form = AddCompanyForm(instance = company)
@@ -164,12 +173,14 @@ def co_profile(request, slug):
 
 
 
+@login_required(login_url='login')
 def co_list(request):
     context = {'companies': Company.objects.all()}
     return render(request, 'members/company/co_list.html', context)
 
 
 
+@login_required(login_url='login')
 def add_co_category(request):
     if request.method == 'POST':
         form = AddCoCategoryForm()
@@ -190,6 +201,7 @@ def add_co_category(request):
         return HttpResponse(json_data, content_type="application/json")
     
 
+@login_required(login_url='login')
 def update_co_category(request, slug):
     category  = get_object_or_404(CoCategory, slug=slug)
     if request.method == 'POST':
@@ -206,6 +218,7 @@ def update_co_category(request, slug):
         })
 
 
+@login_required(login_url='login')
 def delete_co_category(request, slug):
     category = get_object_or_404(CoCategory, slug=slug)
     if request.method == 'POST':
@@ -214,6 +227,7 @@ def delete_co_category(request, slug):
         return redirect('co_category_list')
     
 
+@login_required(login_url='login')
 def co_category_list(request):
     context = {
         'categories': CoCategory.objects.all(),
@@ -222,6 +236,7 @@ def co_category_list(request):
     return render(request, 'members/company_category/co_category_list.html', context)
 
 
+@login_required(login_url='login')
 def co_category_profile(request, slug):
     category = get_object_or_404(CoCategory, slug=slug)
     companies = Company.objects.filter(category = category)

@@ -3,6 +3,7 @@ from products.models import Category, Product
 from .models import Post
 import json
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def posts(request):
@@ -13,6 +14,7 @@ def posts(request):
 
 
 
+@login_required  
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -38,7 +40,8 @@ def post_view(request, slug):
         'category_products': category_products,
     })
     
-    
+
+@login_required      
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
@@ -53,7 +56,8 @@ def post_edit(request, slug):
             'post':post,
             })
         
-  
+
+@login_required(login_url='login')    
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
