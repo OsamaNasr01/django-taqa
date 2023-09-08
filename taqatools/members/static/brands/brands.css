@@ -1,42 +1,56 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "averta cy";
+.container{
+    overflow: hidden;
+    padding: 100px 0 0 0;
+    margin: 0 auto;
+    margin-top: unset;
 }
-.brands {
-    min-height: 100vh;
-    width: 100%;
-    width: 1330px;
-    padding: 100px 0;
-    margin: 0px auto;
-}
-.brands .header {
-    min-height: 20vh;
-    width: 100%;
+.header{
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 200px;
     text-align: center;
 }
-.brands .header h1 {
-    font-size: 50px;
-    font-weight: lighter;
-}
-.brands .content {
-    min-height: 5vh;
+.content{
     width: 100%;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
 }
-.content .image {
-    margin: 20px;
+.content .image{
+    height: 100px;
+    width: auto;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.content img {
+.content .image img{
     height: auto;
     width: 100px;
     filter: grayscale(1);
+}
+@media screen and (max-width: 750px){
+    .content .image{
+        height: 50px;
+    }
+    .content .image img{
+        height: auto;
+        width: 50px;
+        filter: grayscale(1);
+    }
+}
+@media screen and (max-height: 1300px){
+    .container{
+        padding: 50px 0 0 0;
+    }
+    .header{
+        min-height: 200px;
+    }
+}
+@media screen and (max-height: 600px){
+    .header{
+        min-height: 100px;
+    }
 }
