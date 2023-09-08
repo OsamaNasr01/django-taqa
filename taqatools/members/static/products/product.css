@@ -1,0 +1,350 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Averta CY";
+}
+.container {
+    padding: 200px 0 0 0;
+    max-width: 1330px;
+}
+.product {
+    position: relative;
+    min-height: 500px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    text-transform: capitalize;
+}
+.product .image {
+    padding: 20px;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product .image img{
+    object-fit: cover;
+    height: auto;
+    width: 90%;
+}
+.product .text {
+    padding: 30px;
+}
+.product .text p {
+    margin-bottom: unset;
+    margin: 10px 0;
+    font-size: 20px;
+}
+.product .text ul,
+.product .text ol {
+    padding-left: 10px;
+}
+.product .text h6 {
+    font-size: 30px;
+    margin-bottom: unset;
+}
+.product .text h6 span {
+    font-size: 20px;
+    margin-bottom: unset;
+    color: #ddd;
+    text-decoration: line-through;
+}
+.product .text .discount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 60px;
+    width: 60px;
+    color: white;
+    background: #e2dacf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 0 20px;
+}
+.row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-control {
+    color: black;
+    background-color: white;
+}
+.form-control:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+}
+.btn-primary {
+    margin: 10px 0;
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #000;
+    --bs-btn-border-color: #000;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #212121;
+    --bs-btn-hover-border-color: #212121;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #111;
+    --bs-btn-active-border-color: #111;
+}
+button#add_to_cart{
+    margin: 10px 0;
+}
+
+
+.categories {
+min-height: 100vh;
+width: 1330px;
+margin: 0px auto;
+padding: 100px 0;
+overflow: unset;
+overflow: visible;
+}
+.categories .main-content {
+overflow: visible;
+}
+.categories .main-header {
+min-height: 20vh;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.categories .main-header h1 {
+text-align: center;
+font-size: 50px;
+}
+.categories .category {
+width: 100%;
+margin-bottom: 100px;
+overflow: visible;
+}
+.categories .category .content {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr;
+overflow: visible;
+}
+.categories .category .content .card {
+margin: 10px;
+min-height: 400px;
+display: grid;
+grid-template-rows: 50% 20% 1fr;
+border-radius: 20px;
+text-decoration: none;
+box-shadow: 0 0px 50px #efefef;
+transition: 0.5s ease box-shadow, 0.5s transform;
+border: none;
+}
+.categories .category .content .card:hover {
+box-shadow: 0 0px 100px #818181;
+transform: scale(1.02);
+}
+.categories .category .content .card .image{
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.categories .category .content .card .image img{height: auto;
+width: 50%;
+}
+.categories .category .content .card .text {
+padding: 0px 20px;
+display: flex;
+justify-content: center;
+flex-direction: column;
+}
+.categories .category .content .card .text h4 {
+margin-bottom: unset;
+}
+.categories .category .content .card .order {
+position: relative;
+padding: 0 20px;
+display: flex;
+justify-content: center;
+flex-direction: column;
+}
+.categories .category .content .card .order p {
+position: relative;
+font-size: 20px;
+padding: 0 0 5px 0;
+}
+.categories .category .content .card .order p::before {
+content: "556$";
+position: absolute;
+top: 0;
+right: 0;
+color: #a4a4a4;
+text-decoration: line-through;
+}
+.categories .category .content .card .order button {
+width: 100%;
+padding: 0.5rem 0;
+border-radius: 10px;
+background: #0000;
+border: 2px solid black;
+transition: 0.5s background, 0.5s color;
+}
+.categories .category .content .card:hover .order button {
+background: #000;
+color: white;
+}
+.categories .category .content .card:hover .order button:hover {
+background: #0000;
+color: black;
+}
+.categories .category .tolist {
+min-height: 100px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.categories .category .tolist a {
+border: 2px solid black;
+padding: 0.7rem 3rem;
+border-radius: 20px;
+color: black;
+text-decoration: none;
+transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+}
+.categories .category .tolist a:hover {
+color: white;
+background: black;
+box-shadow: 0 0 40px #ddd;
+}
+@media screen and (max-width: 1480px) {
+.categories {
+    width: 1280px;
+}
+}
+@media screen and (max-width: 1430px) {
+.categories {
+    width: 1200px;
+}
+.categories .main-header {
+    min-height: 15vh;
+}
+.categories .main-header h1 {
+    font-size: 40px;
+}
+.categories .main-content .category .header h2 {
+    font-size: 30px;
+}
+.categories .main-content .category .content .card {
+    min-height: 370px;
+}
+.categories .main-content .category .content .text h4 {
+    font-size: 20px;
+}
+.categories .category .content .card .order p {
+    font-size: 18px;
+}
+.categories .category .content .card .order button {
+    padding: 0.3rem 0;
+    font-size: 15px;
+}
+.categories .category .tolist a {
+    padding: 0.5rem 2rem;
+    border-radius: 12px;
+    font-size: 15px;
+}
+}
+@media screen and (max-width: 1300px) {
+.categories {
+    width: 870px;
+}
+.categories .main-header h1 {
+    font-size: 30px;
+}
+.categories .main-content .category .header h2 {
+    font-size: 20px;
+}
+.categories .main-content .category .header p {
+    font-size: 15px;
+}
+.categories .main-content .category .content {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.categories .main-content .category .content .card {
+    min-height: 330px;
+}
+.categories .main-content .category .content .text h4 {
+    font-size: 15px;
+}
+.categories .category .content .card .order p {
+    font-size: 15px;
+}
+.categories .category .content .card .order button {
+    padding: 0.3rem 0;
+    font-size: 12px;
+}
+.categories .category .tolist a {
+    padding: 0.5rem 2rem;
+    border-radius: 12px;
+    font-size: 13px;
+}
+}
+@media screen and (max-width: 1280px) {
+.categories {
+    width: 825px;
+}
+.categories .main-header h1 {
+    font-size: 30px;
+    padding: 30px 0;
+}
+.categories .main-content .category .header {
+    padding: 30px 0;
+}
+.categories .main-content .category .header h2 {
+    font-size: 25px;
+}
+.categories .main-content .category .header p {
+    font-size: 15px;
+}
+.categories .main-content .category .content {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.categories .main-content .category .content .card {
+    min-height: 330px;
+}
+.categories .main-content .category .content .text h4 {
+    font-size: 15px;
+}
+.categories .category .content .card .order p {
+    font-size: 15px;
+}
+.categories .category .content .card .order button {
+    padding: 0.3rem 0;
+    font-size: 12px;
+}
+}
+@media screen and (max-width: 880px) {
+.categories {
+    width: 560px;
+}
+.categories .main-content .category .content {
+    grid-template-columns: 1fr 1fr;
+}
+}
+@media screen and (max-width: 600px) {
+.categories {
+    width: 100%;
+    padding: 100px 20px;
+}
+.categories .main-header h1 {
+    font-size: 5.5vw;
+    padding: 30px 0;
+}
+.categories .main-content .category .content {
+    grid-template-columns: 1fr;
+    width: 260px;
+    margin: 0 auto;
+}
+.categories .main-content .category .header p {
+    font-size: 10px;
+}
+}
