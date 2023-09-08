@@ -1,187 +1,768 @@
 {% extends 'base.html' %}
+<!-- comment -->
 {% load static %}
+<!-- comment -->
 {% load humanize %}
-
+<!-- comment -->
 {% block title %} {{product.name}} {% endblock %}
-
+<!-- comment -->
 {% block content %}
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Averta CY";
+    }
+    .container {
+        padding: 200px 0 0 0;
+        max-width: 1330px;
+    }
+    .product {
+        position: relative;
+        min-height: 500px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30% 1fr;
+        text-transform: capitalize;
+    }
+    .product .image {
+        padding: 20px;
+        border: 1px solid red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product .image img{
+        object-fit: cover;
+        height: auto;
+        width: 90%;
+    }
+    .product .text {
+        padding: 30px;
+    }
+    .product .text p {
+        margin-bottom: unset;
+        margin: 10px 0;
+        font-size: 20px;
+    }
+    .product .text ul,
+    .product .text ol {
+        padding-left: 10px;
+    }
+    .product .text h6 {
+        font-size: 30px;
+        margin-bottom: unset;
+    }
+    .product .text h6 span {
+        font-size: 20px;
+        margin-bottom: unset;
+        color: #ddd;
+        text-decoration: line-through;
+    }
+    .product .text .discount {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-height: 60px;
+        width: 60px;
+        color: white;
+        background: #e2dacf;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 0 0 20px;
+    }
+    .row {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .form-control {
+        color: black;
+        background-color: white;
+    }
+    .form-control:focus {
+        border-color: #000;
+        box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+    }
+    .btn-primary {
+        margin: 10px 0;
+        --bs-btn-color: #fff;
+        --bs-btn-bg: #000;
+        --bs-btn-border-color: #000;
+        --bs-btn-hover-color: #fff;
+        --bs-btn-hover-bg: #212121;
+        --bs-btn-hover-border-color: #212121;
+        --bs-btn-focus-shadow-rgb: 49, 132, 253;
+        --bs-btn-active-color: #fff;
+        --bs-btn-active-bg: #111;
+        --bs-btn-active-border-color: #111;
+    }
+    button#add_to_cart{
+        margin: 10px 0;
+    }
+
+
+    .categories {
+    min-height: 100vh;
+    width: 1330px;
+    margin: 0px auto;
+    padding: 100px 0;
+    overflow: unset;
+    overflow: visible;
+}
+.categories .main-content {
+    overflow: visible;
+}
+.categories .main-header {
+    min-height: 20vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.categories .main-header h1 {
+    text-align: center;
+    font-size: 50px;
+}
+.categories .category {
+    width: 100%;
+    margin-bottom: 100px;
+    overflow: visible;
+}
+.categories .category .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    overflow: visible;
+}
+.categories .category .content .card {
+    margin: 10px;
+    min-height: 400px;
+    display: grid;
+    grid-template-rows: 50% 20% 1fr;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 0px 50px #efefef;
+    transition: 0.5s ease box-shadow, 0.5s transform;
+    border: none;
+}
+.categories .category .content .card:hover {
+    box-shadow: 0 0px 100px #818181;
+    transform: scale(1.02);
+}
+.categories .category .content .card .image{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.categories .category .content .card .image img{height: auto;
+    width: 50%;
+}
+.categories .category .content .card .text {
+    padding: 0px 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.categories .category .content .card .text h4 {
+    margin-bottom: unset;
+}
+.categories .category .content .card .order {
+    position: relative;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.categories .category .content .card .order p {
+    position: relative;
+    font-size: 20px;
+    padding: 0 0 5px 0;
+}
+.categories .category .content .card .order p::before {
+    content: "556$";
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #a4a4a4;
+    text-decoration: line-through;
+}
+.categories .category .content .card .order button {
+    width: 100%;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+    background: #0000;
+    border: 2px solid black;
+    transition: 0.5s background, 0.5s color;
+}
+.categories .category .content .card:hover .order button {
+    background: #000;
+    color: white;
+}
+.categories .category .content .card:hover .order button:hover {
+    background: #0000;
+    color: black;
+}
+.categories .category .tolist {
+    min-height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.categories .category .tolist a {
+    border: 2px solid black;
+    padding: 0.7rem 3rem;
+    border-radius: 20px;
+    color: black;
+    text-decoration: none;
+    transition: 0.5s background, 0.5s color, 0.5s box-shadow;
+}
+.categories .category .tolist a:hover {
+    color: white;
+    background: black;
+    box-shadow: 0 0 40px #ddd;
+}
+@media screen and (max-width: 1480px) {
+    .categories {
+        width: 1280px;
+    }
+}
+@media screen and (max-width: 1430px) {
+    .categories {
+        width: 1200px;
+    }
+    .categories .main-header {
+        min-height: 15vh;
+    }
+    .categories .main-header h1 {
+        font-size: 40px;
+    }
+    .categories .main-content .category .header h2 {
+        font-size: 30px;
+    }
+    .categories .main-content .category .content .card {
+        min-height: 370px;
+    }
+    .categories .main-content .category .content .text h4 {
+        font-size: 20px;
+    }
+    .categories .category .content .card .order p {
+        font-size: 18px;
+    }
+    .categories .category .content .card .order button {
+        padding: 0.3rem 0;
+        font-size: 15px;
+    }
+    .categories .category .tolist a {
+        padding: 0.5rem 2rem;
+        border-radius: 12px;
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 1300px) {
+    .categories {
+        width: 870px;
+    }
+    .categories .main-header h1 {
+        font-size: 30px;
+    }
+    .categories .main-content .category .header h2 {
+        font-size: 20px;
+    }
+    .categories .main-content .category .header p {
+        font-size: 15px;
+    }
+    .categories .main-content .category .content {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .categories .main-content .category .content .card {
+        min-height: 330px;
+    }
+    .categories .main-content .category .content .text h4 {
+        font-size: 15px;
+    }
+    .categories .category .content .card .order p {
+        font-size: 15px;
+    }
+    .categories .category .content .card .order button {
+        padding: 0.3rem 0;
+        font-size: 12px;
+    }
+    .categories .category .tolist a {
+        padding: 0.5rem 2rem;
+        border-radius: 12px;
+        font-size: 13px;
+    }
+}
+@media screen and (max-width: 1280px) {
+    .categories {
+        width: 825px;
+    }
+    .categories .main-header h1 {
+        font-size: 30px;
+        padding: 30px 0;
+    }
+    .categories .main-content .category .header {
+        padding: 30px 0;
+    }
+    .categories .main-content .category .header h2 {
+        font-size: 25px;
+    }
+    .categories .main-content .category .header p {
+        font-size: 15px;
+    }
+    .categories .main-content .category .content {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .categories .main-content .category .content .card {
+        min-height: 330px;
+    }
+    .categories .main-content .category .content .text h4 {
+        font-size: 15px;
+    }
+    .categories .category .content .card .order p {
+        font-size: 15px;
+    }
+    .categories .category .content .card .order button {
+        padding: 0.3rem 0;
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 880px) {
+    .categories {
+        width: 560px;
+    }
+    .categories .main-content .category .content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 600px) {
+    .categories {
+        width: 100%;
+        padding: 100px 20px;
+    }
+    .categories .main-header h1 {
+        font-size: 5.5vw;
+        padding: 30px 0;
+    }
+    .categories .main-content .category .content {
+        grid-template-columns: 1fr;
+        width: 260px;
+        margin: 0 auto;
+    }
+    .categories .main-content .category .header p {
+        font-size: 10px;
+    }
+}
+
+
+</style>
+
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-product-modal">
-  Update
-</button>
-
-<div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="update-product-modal">Update</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
-      </div>
-      <div class="modal-body">
-        <form enctype="multipart/form-data" action="{% url 'update_product' product.slug %}" method="post"
-          name="update-product_form">
-          {% csrf_token %}
-          {{ form.as_p }}
-          {% for spec in product.txt_spec.all %}
-          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-          <input type="text" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
-            value="{{spec.value}}">
-          <small id="{{spec.spec.name}}Help" class="form-text text-muted"></small>
-          {% endfor %}
-          {% for spec in product.num_spec.all %}
-          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-          <input type="number" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
-            value="{{spec.value}}">
-          <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.spec.unit }}</small><br>
-          {% endfor %}
-          {% for spec in product.bool_spec.all %}
-          <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-          <input type="checkbox" name="{{ spec.spec.name }}" class="form-check-input" id="{{spec.spec.name}}"
-            value="{{spec.value}}">
-          {% endfor %}
-          <br><br>
-          <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
-  Delete
-</button>
-<br><br>
-
-<!-- delete-product-modal.html -->
-
-<div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="delete-product-modal-label">Delete Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this product?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form action="{% url 'delete_product' product.slug %}" method="POST">
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-          <button type="submit" class="btn btn-danger" id="confirm-delete-product">Confirm Delete</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="shadow p-3 mb-5 bg-white rounded">
-  <div class="images">
-    <img src="/{{product.image}}" width="300" height="300">
-  </div>
-
-  <h3>
-    <!-- {{member.first_name}} {{ member.last_name }} -->
-    {{ product.name  }}
-  </h3>
-  <h6>
-    Price : {{ price }}
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-price-modal">
-      Update
+    Update
     </button>
-  </h6>
-  <ul>
-    <li>
-      Orignal Price : {{ original_price }}
-    </li>
-    <li>
-      Discount : {{ discount }}%
-    </li>
-    <li>
-      Last updated at: {{ product.prices.last.created_at|naturaltime }}
-    </li>
-  </ul>
-  <p>description : {{ product.description }}</p>
-  <p>Brand : {{ product.brand.name }}</p>
-  <p>category : {{ product.category }}</p>
-  <input type="hidden" value="{{product.id}}" id="product_id">
-  <div>
-    <ul>
-      {% for spec in product.num_spec.all%}
-      <li>{{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}</li>
-      {% endfor %}
-      {% for spec in product.txt_spec.all%}
-      <li>{{ spec.spec.name }}: {{ spec.value }} </li>
-      {% endfor %}
-      {% for spec in product.bool_spec.all%}
-      <li>{{ spec.spec.name }}: {{ spec.value }} </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
 
-
-<div class="modal fade" id="update-price-modal" tabindex="-1" aria-labelledby="update-price-modal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="update-price-modal">Update</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{% url 'update_price' product.slug %}" method="post" name="update-price_form">
-          {% csrf_token %}
-          {{ price_form.as_p }}
-          <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-      </div>
+    <div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="update-product-modal">Update</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+            <form action="{% url 'update_product' product.slug %}" method="post" name="update-product_form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% for spec in product.txt_spec.all %}
+                <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                <input type="text" name="{{ spec.spec.name }}" class="form-control" 
+                    id="{{spec.spec.name}}" value="{{spec.value}}">
+                <small id="{{spec.spec.name}}Help" class="form-text text-muted"></small>
+                {% endfor %}
+                {% for spec in product.num_spec.all %}
+                <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                <input type="number" name="{{ spec.spec.name }}" class="form-control" 
+                    id="{{spec.spec.name}}" value="{{spec.value}}">
+                <small id="{{spec.spec.name}}Help" class="form-text text-muted">{{ spec.spec.unit }}</small><br>
+                {% endfor %}
+                {% for spec in product.bool_spec.all %}
+                <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                <input type="checkbox" name="{{ spec.spec.name }}" class="form-check-input" 
+                    id="{{spec.spec.name}}" value="{{spec.value}}">
+                {% endfor %}
+                <br><br>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            </div>
+        </div>
+        </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12">
-    <p>Stock: {{ product.inventory.stock }} {{ product.name }}{{ product.inventory.stock|pluralize }}</p>
-    <p>Total Sales: {{ product.inventory.sales }} {{ product.name }}{{ product.inventory.sales|pluralize }} sales</p>
-  </div>
-  <div class="col-12">
-    <p id="messege"></p>
-  </div>
-  {% if in_cart %}
-  <div class="col-6">
-    <input type="number" class="form-control" id="no" value="{{no_in_cart}}">
-  </div>
-  <div class="col-6">
-    <button style="width: 100%;" class="btn btn-danger" id="add_to_cart">Remove from Cart</button>
-  </div>
-  {% else %}
-  <div class="col-6">
-    <input type="number" class="form-control" id="no" value="1">
-  </div>
-  <div class="col-6">
-    <button style="width: 100%;" class="btn btn-primary" id="add_to_cart">Add to Cart</button>
-  </div>
-  {% endif %}
-</div>
-<br><br>
-{% if product.category.posts.count %}
-<h3>Read also</h3>
-{% for post in product.category.posts.all %}
-<a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
-  <div class="shadow p-3 mb-5 bg-white rounded">
-    <div>
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.timeToRead }}</p>
-      <p>{{ post.auther.full_name }}</p>
-      <p>{{ post.content|safe|truncatewords:50 }} read more</p>
+    
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
+        Delete
+    </button>
+    
+    <!-- delete-product-modal.html -->
+    
+    <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="delete-product-modal-label">Delete Product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Are you sure you want to delete this product?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="{% url 'delete_product' product.slug %}" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger" id="confirm-delete-product">Confirm Delete</button>
+            </form>
+            </div>
+        </div>
+        </div>
     </div>
-  </div>
-</a>
-{% endfor %}
-{% endif %}
 
+
+<div class="product">
+    <div class="image">
+        <img src="/{{product.image}}">
+    </div>
+    <div class="text">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>Brand : {{ product.brand.name }}</p>
+        <p>category : {{ product.category }}</p>
+        <input type="hidden" value="{{product.id}}" id="product_id" />
+        <div>
+            <ul>
+                {% for spec in product.num_spec.all%}
+                <li>
+                    {{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}
+                </li>
+                {% endfor %} {% for spec in product.txt_spec.all%}
+                <li>{{ spec.spec.name }}: {{ spec.value }}</li>
+                {% endfor %} {% for spec in product.bool_spec.all%}
+                <li>{{ spec.spec.name }}: {{ spec.value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <h6>{{ price }} EGP <span>{{ original_price }} EGP</span></h6>
+        <ul>
+            <li class="discount">-{{ discount }}%</li>
+        </ul>
+        <div class="row">
+            <div class="col-12">
+                <p id="messege"></p>
+            </div>
+            {% if in_cart %}
+            <input
+                type="number"
+                class="form-control"
+                id="no"
+                value="{{no_in_cart}}"
+            />
+            <button style="width: 100%" class="btn btn-danger" id="add_to_cart">
+                Remove from Cart
+            </button>
+            {% else %}
+            <input type="number" class="form-control" id="no" value="1" />
+            <button
+                style="width: 100%"
+                class="btn btn-primary"
+                id="add_to_cart"
+            >
+                Add to Cart
+            </button>
+            {% endif %}
+        </div>
+        Last updated at: {{ product.prices.last.created_at|naturaltime}}
+    </div>
+</div>
+
+<div
+    style="margin: 10px 0"
+    class="modal fade"
+    id="update-price-modal"
+    tabindex="-1"
+    aria-labelledby="update-price-modal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update-price-modal">Update</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form
+                    action="{% url 'update_price' product.slug %}"
+                    method="post"
+                    name="update-price_form"
+                >
+                    {% csrf_token %} {{ price_form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="categories">
+    <div class="main-header">
+        <h1>
+            Let's See more <br />
+            From Our Products
+        </h1>
+    </div>
+    <div class="main-content">
+    <div class="category">
+        <div class="content">
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image">
+                    <img src="{% static 'images/img1.jpg' %}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>Submersible motor</h4>
+                </div>
+                <div class="order">
+                    <p>552$</p>
+                    <form action="www.twitter.com">
+                        <button>Buy Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tolist">
+            <a href="#">See All List</a>
+        </div>
+    </div>
+</div>
 
 <script src="{% static 'products/product.js' %}"></script>
 

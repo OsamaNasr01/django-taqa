@@ -1,38 +1,121 @@
 {% extends 'base.html' %}
-
+<!-- comment  -->
 {% block title %} List of Companies {% endblock %}
-
+<!-- comment  -->
 {% block content %}
-    {% for company in companies %}
-        <a href="{% url 'co_profile' company.slug %}" class="text-dark text-decoration-none">
-            <div class="shadow p-3 mb-5 bg-white rounded">
-                <div>
-                    <img src="/{{company.image}}" alt="">
-                </div>
-                <h3>
-                    <!-- {{member.first_name}} {{ member.last_name }} -->
-                    {{ company.name  }}
-                </h3>
-                <p>description : {{ company.description }}</p>
-                <p>phone : {{ company.phone }}</p>
-                <p>email : {{ company.email }}</p>
-                <p>website : {{ company.website }}</p>
-                <p>address : {{ company.address }}</p>
-                {% if company.owner.first_name %}
-                    <p>owner : {{ company.owner.first_name }} {{ company.owner.last_name }}</p>
-                {% else %}
-                    <p>owner : {{ company.owner.username }}</p>
-                {% endif %}
-                <p>Categories : </p>
-                {% for category in company.category.all %}
-                    <ul>
-                        <li>
-                            {{ category }}
-                        </li>
-                    </ul>
-                {% endfor %}
-                <a href="{% url 'update_company' company.slug %}" class="btn btn-primary">Update</a>
-            </div>
-        </a>
-    {% endfor %}
+
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Averta CY";
+    }
+    .container {
+        padding: 20vh 0 0 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+    header {
+        position: absolute;
+        top: 100px;
+        left: 0;
+        min-height: 10vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    a {
+        margin: 10px;
+    }
+    .card {
+        min-height: 250px;
+        width: 100%;
+        margin: 20px 0;
+        transition: 0.5s ease box-shadow;
+    }
+    .card:hover {
+        box-shadow: 0 0 50px #dbdbdb;
+    }
+    .card .image {
+        border-bottom: 1px solid #ddd;
+        min-height: 170px;
+        width: 100%;
+        padding: 10px;
+    }
+    .card .text {
+        min-height: calc(250px - 170px);
+        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .card .text h4 {
+        font-size: 20px;
+        margin-bottom: unset;
+    }
+    .card .text p {
+        margin-bottom: unset;
+    }
+</style>
+<header>
+    <h1>Companies</h1>
+</header>
+{% for company in companies %}
+
+<a
+    id="main-card"
+    href="{% url 'co_profile' company.slug %}"
+    class="text-dark text-decoration-none"
+>
+    <div class="card">
+        <div class="image">
+            <img src="static/kurlar.webp" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{ company.name }}</h4>
+            <p>{{ company.phone }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="image">
+            <img src="static/kurlar.webp" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{ company.name }}</h4>
+            <p>{{ company.phone }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="image">
+            <img src="static/kurlar.webp" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{ company.name }}</h4>
+            <p>{{ company.phone }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="image">
+            <img src="static/kurlar.webp" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{ company.name }}</h4>
+            <p>{{ company.phone }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="image">
+            <img src="static/kurlar.webp" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{ company.name }}</h4>
+            <p>{{ company.phone }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+<!-- comment  -->
 {% endblock %}
