@@ -7,7 +7,6 @@
 .brands {
     min-height: 100vh;
     width: 100%;
-    border: 1px solid red;
     width: 1330px;
     padding: 100px 0;
     margin: 0px auto;
@@ -15,7 +14,6 @@
 .brands .header {
     min-height: 20vh;
     width: 100%;
-    border: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
