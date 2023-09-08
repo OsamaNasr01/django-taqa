@@ -4,7 +4,6 @@
 <!-- comment  -->
 {% block content %}
 
-
 <style>
     * {
         padding: 0;
@@ -27,7 +26,7 @@
         align-items: center;
         justify-content: center;
     }
-    a {
+    a#main-card {
         margin: 10px;
     }
     .card {
@@ -58,6 +57,66 @@
     }
     .card .text p {
         margin-bottom: unset;
+    }
+    @media screen and (max-width: 1460px) {
+        .container {
+            max-width: 940px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+    }
+    @media screen and (max-width: 1000px) {
+        .container {
+            max-width: 640px;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    @media screen and (max-width: 700px) {
+        .container {
+            max-width: 430px;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    @media screen and (max-width: 500px) {
+        .container {
+            max-width: 300px;
+            grid-template-columns: 1fr 1fr;
+        }
+        a#main-card {
+            margin: 5px;
+        }
+        .card {
+            min-height: 180px;
+            margin: 10px 0;
+        }
+        .card .image {
+            min-height: 130px;
+        }
+        .card .text {
+            min-height: calc(180px - 130px);
+            padding: 0 10px;
+        }
+        .card .text h4 {
+            font-size: 15px;
+        }
+        .card .text p {
+            font-size: 10px;
+        }
+    }
+    @media screen and (max-height: 760px) {
+        .container {
+            padding: 30vh 0 0 0;
+        }
+        header {
+            min-height: 20vh;
+        }
+    }
+    @media screen and (max-height: 600px) {
+        .container {
+            padding: 40vh 0 0 0;
+        }
+        header {
+            min-height: 20vh;
+        }
     }
 </style>
 <header>

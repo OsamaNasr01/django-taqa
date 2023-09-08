@@ -29,6 +29,9 @@ nav a.logo {
     font-size: 20px;
     margin: 0 30px 0 0;
 }
+nav .navlinks{
+    transform: translateX(50px);
+}
 nav .navlinks,
 nav .register {
     display: flex;
