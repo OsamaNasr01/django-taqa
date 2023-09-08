@@ -13,3 +13,11 @@ class Site(models.Model):
     offers = models.PositiveIntegerField(default=0)
     posts = models.PositiveIntegerField(default=0)
     pageview = models.PositiveIntegerField(default=0)
+    
+    
+    
+class Static(models.Model):
+    mission = models.TextField()
+    vision = models.TextField()
+    privacy = models.TextField()
+    return_policy = models.TextField()
