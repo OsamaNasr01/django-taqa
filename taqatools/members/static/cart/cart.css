@@ -2,179 +2,88 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "averta cy";
+    font-family: "Averta cy";
 }
-
-.cart {
-    min-height: 100vh;
-    width: 1500px;
-    margin: 0 auto;
-    padding: 100px 0 0 0;
+.container {
+    padding: 100px 0;
 }
-.cart .main-content {
-    min-height: 10vh;
+.table {
+    --bs-table-striped-color: var(--bs-body-color);
+    --bs-table-striped-bg: rgba(0, 0, 0, 0);
+    --bs-table-active-color: var(--bs-body-color);
+    --bs-table-active-bg: rgba(0, 0, 0, 0);
+    --bs-table-hover-color: var(--bs-body-color);
+    --bs-table-hover-bg: rgba(0, 0, 0, 0);
     width: 100%;
-    display: grid;
-    grid-template-columns: 75% 1fr;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    border-color: var(--bs-table-border-color);
 }
-.cart .main-content .products {
-    border: 2px solid #ddd;
-    margin: 10px;
-    border-radius: 30px;
-    padding: 20px;
-    overflow: hidden;
+.table-bordered > :not(caption) > * {
+    border-width: 0px;
 }
-.cart .main-content .products .header {
-    min-height: 100px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.cart .main-content .products .header button {
-    background: none;
+tr,
+th {
     border: none;
-    outline: none;
+}
+tr:not(#table_head) td {
+    padding: 15px;
+    transform: translateY(20px);
+}
+td a {
+    text-decoration: none;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-bg-type: #0000;
+}
+.form-control {
+    border: 0px;
+}
+.form-control:focus {
+    box-shadow: 0 0 0px black;
+}
+.table-bordered > :not(caption) > * > * {
+    border-width: 0px;
+}
+#delete_item {
     color: red;
-    cursor: pointer;
 }
-.cart .main-content .products .content {
-    min-height: 200px;
-}
-.cart .main-content .products .content .head {
-    display: grid;
-    grid-template-columns: 50% 20% 20% 1fr;
-    margin: 10px;
-}
-.cart .main-content .products .content .card {
-    min-height: 150px;
-    width: 100%;
-    border: 2px solid #ddd;
-    border-radius: 30px;
-    padding: 10px;
-    margin: 10px 0;
-    display: grid;
-    grid-template-columns: 50% 20% 20% 1fr;
-}
-.cart .main-content .products .content .card div {
-    overflow: hidden;
-}
-.cart .main-content .products .content .card .details {
-    display: grid;
-    grid-template-columns: 170px 1fr;
-}
-.cart .main-content .products .content .card .details .image {
-    overflow: hidden;
-    height: 150px;
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    margin: 0 10px 0 0;
-}
-.cart .main-content .products .content .card .details .image img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-.cart .main-content .products .content .card .details .text {
-    padding: 0 10px 0 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.cart .main-content .products .content .card .details .text h2 {
-    font-size: 25px;
-    margin: 0 0 10px 0;
-}
-.cart .main-content .products .content .card .details .text p {
-    font-size: 15px;
-}
-.cart .main-content .products .content .card .count {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.cart .main-content .products .content .card .count .counter {
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    font-size: 20px;
-}
-.cart .main-content .products .content .card button {
-    width: 40px;
-    height: 40px;
-    background: #fff;
-    color: black;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    border-radius: 1000px;
-    cursor: pointer;
-}
-.cart .main-content .products .content .card button:active {
-    border: 1px solid #000;
-}
-.cart .main-content .products .content .card button p {
-    transform: translateY(-2px);
-    margin-bottom: unset;
-}
-.cart .main-content .products .content .card .price {
-    display: flex;
-    align-items: center;
-}
-.cart .main-content .products .content .card .price h2{
-    font-weight: lighter;
-}
-.cart .main-content .products .content .card .clear {
-    font-size: 30px;
-    color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cart .main-content .checkout {
-    height: 300px;
-    margin: 10px;
-    padding: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 30px;
-    border: 2px solid #ddd;
-}
-.cart .main-content .checkout div{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.cart .main-content .checkout div h4,
-.cart .main-content .checkout div p{
-    color: #8d8d8d;
-    font-weight: lighter;
-    font-size: 15px;
-}
-.cart .main-content .checkout div:nth-child(4) h4,
-.cart .main-content .checkout div:nth-child(4) p{
-    color: #000;
-    font-size: 20px;
-    font-weight: bolder;
-}
-.cart .main-content .checkout button{
-    width: 100%;
-    font-size: 15px;
+#delete_item:hover {
     color: white;
-    background: black;
-    border: 1px solid black;
-    padding: 0.7rem ;
-    margin: 10px 0;
+}
+#delete_item:active {
+    color: white;
+}
+#cart_total {
+    position: relative;
+    padding: 20px;
+}
+#cart_total::before {
+    content: "Total Price Is:";
+    padding: 0 10px 0 0;
+    color: black;
+}
+#cart_total::after {
+    content: "EGP";
+    padding: 0 0 0 10px;
+    color: black;
+}
+.btn-primary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #0000;
+    --bs-btn-border-color: #000;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #000;
+    --bs-btn-hover-border-color: #000;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #000;
+    --bs-btn-active-border-color: #000;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #000;
+    --bs-btn-disabled-border-color: #000;
+    padding: 0.5rem 3rem;
     border-radius: 10px;
+    margin: 10px 10px 10px 0;
 }

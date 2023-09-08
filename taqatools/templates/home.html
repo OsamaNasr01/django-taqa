@@ -45,16 +45,44 @@
         <h1>Our Categories</h1>
     </div>
     <div class="content">
-        <div class="left">
-            {% for category in categories %}
-            <div class="category" style="background: '{{category.image}}';">
-                <h1>{{ category.name }}</h1>
-                <p>{{category.description}}</p>
-                <a href="{% url 'p_category_profile' category.slug %}"
-                    >Shop Now <img src="{{category.image}}" alt=""
+        <div class="right">
+            <div class="category">
+                <h1>Auifer water wells</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <a href="#"
+                    >Shop Now <img src="/static/images/arrow.svg" alt=""
                 /></a>
             </div>
-            {% endfor %}
+            <div class="category">
+                <h1>Solar energy</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <a href="#"
+                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                /></a>
+            </div>
+        </div>
+        <div class="left">
+            <div class="category">
+                <h1>Electric power control</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <a href="#"
+                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                /></a>
+            </div>
+            <div class="category">
+                <h1>Tansk</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <a href="#"
+                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                /></a>
+            </div>
+            <div class="category">
+                <h1>Agricultural equipment</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <a href="#"
+                    >Shop Now <img src="/static/images/arrow.svg" alt=""
+                /></a>
+            </div>
         </div>
     </div>
 </div>
@@ -97,17 +125,47 @@
     </div>
     <div class="content">
         <div class="cards">
-            {% for brand in brands %}
-            <a href="{% url 'brand_profile' brand.slug %}" class="card">
+            <a href="#" class="card">
                 <div class="image">
-                    <img src="{{brand.image}}" alt="" />
+                    <img src="static/images/vansan.webp" alt="" />
                 </div>
                 <div class="text">
-                    <h4>{{brand.name}}</h4>
+                    <h4>Vansan</h4>
                 </div>
             </a>
-            {% endfor %}
-            <a href="{% url 'brands' %}" class="card">
+            <a href="#" class="card">
+                <div class="image">
+                    <img src="static/images/kurlar.webp" alt="" />
+                </div>
+                <div class="text">
+                    <h4>kurlar</h4>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <div class="image">
+                    <img src="static/images/power.webp" alt="" />
+                </div>
+                <div class="text">
+                    <h4>power</h4>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <div class="image">
+                    <img src="static/images/gold.webp" alt="" />
+                </div>
+                <div class="text">
+                    <h4>gold</h4>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <div class="image">
+                    <img src="static/images/frecom.webp" alt="" />
+                </div>
+                <div class="text">
+                    <h4>frecom</h4>
+                </div>
+            </a>
+            <a href="#" class="card">
                 <div class="text">
                     <img src="/static/images/arrow.svg" alt="" />
                     <h5>All Companies</h5>
