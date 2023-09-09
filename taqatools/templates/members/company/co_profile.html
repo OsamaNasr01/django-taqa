@@ -1,85 +1,835 @@
 {% extends 'base.html' %}
-
+<!-- comment -->
 {% block title %} {{company.name}} {% endblock %}
-
+<!-- comment -->
 {% block content %}
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-company-modal">
-    Update 
-  </button>
 
-  <div class="modal fade" id="update-company-modal" tabindex="-1" aria-labelledby="update-company-modal" aria-hidden="true">
+<button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#update-company-modal"
+>
+    Update
+</button>
+
+<div
+    class="modal fade"
+    id="update-company-modal"
+    tabindex="-1"
+    aria-labelledby="update-company-modal"
+    aria-hidden="true"
+>
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="update-company-modal">Update</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update-company-modal">Update</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form
+                    enctype="multipart/form-data"
+                    action="{% url 'update_company' company.slug %}"
+                    method="post"
+                    name="update-company_form"
+                >
+                    {% csrf_token %} {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form enctype="multipart/form-data" action="{% url 'update_company' company.slug %}" method="post" name="update-company_form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-company-modal">
+</div>
+
+<button
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#delete-company-modal"
+>
     Delete
-  </button>
-  <br><br>
-  
-  <!-- delete-company-modal.html -->
-  
-  <div class="modal fade" id="delete-company-modal" tabindex="-1" aria-labelledby="delete-company-modal-label" aria-hidden="true">
+</button>
+<br /><br />
+
+<!-- delete-company-modal.html -->
+
+<div
+    class="modal fade"
+    id="delete-company-modal"
+    tabindex="-1"
+    aria-labelledby="delete-company-modal-label"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="delete-company-modal-label">Delete Company</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-company-modal-label">
+                    Delete Company
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Company?
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Cancel
+                </button>
+                <form
+                    action="{% url 'delete_company' company.slug %}"
+                    method="POST"
+                >
+                    <input
+                        type="hidden"
+                        name="csrfmiddlewaretoken"
+                        value="{{ csrf_token }}"
+                    />
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                        id="confirm-delete-company"
+                    >
+                        Confirm Delete
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          Are you sure you want to delete this Company?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <form action="{% url 'delete_company' company.slug %}" method="POST">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-            <button type="submit" class="btn btn-danger" id="confirm-delete-company">Confirm Delete</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-  
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <div>
-          <img src="/{{company.image}}" alt="">
-      </div>
-        <h3>
-            <!-- {{member.first_name}} {{ member.last_name }} -->
-            {{ company.name  }}
-        </h3>
-        <p>description : {{ company.description }}</p>
-        <p>phone : {{ company.phone }}</p>
-        <p>email : {{ company.email }}</p>
-        <p>website : {{ company.website }}</p>
-        <p>address : {{ company.address }}</p>
-        {% if company.owner.full_name %}
-            <p>owner : {{ company.owner.first_name }} {{ company.owner.last_name }}</p>
-        {% else %}
+</div>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Averta CY";
+    }
+    .container {
+        border: 1px solid red;
+        padding: 100px 20px 0 20px;
+    }
+    .comany-content {
+        min-height: 500px;
+        border: 1px solid red;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        margin: 0 0 100px 0;
+    }
+    .comany-content .image {
+        min-height: 100%;
+        width: 100%;
+        padding: 20px;
+        border: 1px solid red;
+    }
+    .comany-content .image img {
+        border: 1px solid red;
+        height: 100%;
+        width: 100%;
+    }
+    .comany-content .text {
+        min-height: 100%;
+        width: 100%;
+        padding: 20px;
+        border: 1px solid red;
+    }
+    .comany-content .text .head {
+        border: 1px solid red;
+        padding: 20px 0 50px 0;
+    }
+    .comany-content .text .head h1 {
+        text-transform: capitalize;
+    }
+    .comany-content .text .body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1px solid red;
+    }
+    p {
+        margin-bottom: unset;
+        padding: 10px 0;
+        font-size: 20px;
+        text-transform: capitalize;
+        border: 1px solid red;
+    }
+</style>
+
+<div class="comany-content">
+    <div class="image">
+        <img src="/{{company.image}}" alt="" />
+    </div>
+    <div class="text">
+        <div class="head">
+            <h1>{{ company.name }}</h1>
+            <p>description : {{ company.description }}</p>
+        </div>
+        <div class="body">
+            <p>phone : {{ company.phone }}</p>
+            <p>email : {{ company.email }}</p>
+            <p>website : {{ company.website }}</p>
+            <p>address : {{ company.address }}</p>
+            {% if company.owner.full_name %}
+            <p>
+                owner : {{ company.owner.first_name }}
+                <!-- comment -->
+                {{company.owner.last_name }}
+            </p>
+            {% else %}
             <p>owner : {{ company.owner.username }}</p>
-        {% endif %}
-        <p>Categories : </p>
+            {% endif %}
+        </div>
+        <p>Categories :</p>
         {% for category in company.category.all %}
-            <ul>
-                <li>
-                    {{ category }}
-                </li>
-            </ul>
+        <ul>
+            <li>{{ category }}</li>
+        </ul>
         {% endfor %}
     </div>
-{% endblock %}
+</div>
 
+<style>
+    .cards {
+        min-height: 100px;
+        width: 100%;
+        border: 1px solid black;
+    }
+    .cards .header {
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 200px;
+    }
+    .cards .content {
+        border: 1px solid blue;
+        min-height: 400px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .cards .content .card {
+        margin: 10px;
+        min-height: 400px;
+        display: grid;
+        grid-template-rows: 50% 20% 1fr;
+        border-radius: 20px;
+        text-decoration: none;
+        box-shadow: 0 0px 50px #efefef;
+        transition: 0.5s ease box-shadow, 0.5s transform;
+        border: none;
+    }
+    .cards .content .card:hover {
+        box-shadow: 0 0px 100px #818181;
+        transform: scale(1.02);
+    }
+    .cards .content .card .image {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cards .content .card .image img {
+        height: auto;
+        width: 50%;
+    }
+    .cards .content .card .text {
+        padding: 0px 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .cards .content .card .text h4 {
+        margin-bottom: unset;
+    }
+    .cards .content .card .order {
+        position: relative;
+        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .cards .content .card .order p {
+        position: relative;
+        font-size: 20px;
+        padding: 0 0 5px 0;
+    }
+    .cards .content .card .order p::before {
+        content: "556$";
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #a4a4a4;
+        text-decoration: line-through;
+    }
+    .cards .content .card .order button {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-radius: 10px;
+        background: #0000;
+        border: 2px solid black;
+        transition: 0.5s background, 0.5s color;
+    }
+    .cards .content .card:hover .order button {
+        background: #000;
+        color: white;
+    }
+    .cards .content .card:hover .order button:hover {
+        background: #0000;
+        color: black;
+    }
+</style>
+<!-- Products For This Company -->
+<div class="cards">
+    <div class="header">
+        <h1>
+            Products For <br />
+            This company
+        </h1>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="text">
+                <h4>Submersible motor</h4>
+            </div>
+            <div class="order">
+                <p>552$</p>
+                <form action="www.twitter.com">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
