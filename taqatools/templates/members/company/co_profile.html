@@ -121,12 +121,10 @@
         font-family: "Averta CY";
     }
     .container {
-        border: 1px solid red;
         padding: 100px 20px 0 20px;
     }
     .comany-content {
         min-height: 500px;
-        border: 1px solid red;
         display: grid;
         grid-template-columns: 350px 1fr;
         margin: 0 0 100px 0;
@@ -135,21 +133,18 @@
         min-height: 100%;
         width: 100%;
         padding: 20px;
-        border: 1px solid red;
     }
     .comany-content .image img {
-        border: 1px solid red;
         height: 100%;
         width: 100%;
+        border: 1px solid red;
     }
     .comany-content .text {
         min-height: 100%;
         width: 100%;
         padding: 20px;
-        border: 1px solid red;
     }
     .comany-content .text .head {
-        border: 1px solid red;
         padding: 20px 0 50px 0;
     }
     .comany-content .text .head h1 {
@@ -158,58 +153,18 @@
     .comany-content .text .body {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        border: 1px solid red;
     }
     p {
         margin-bottom: unset;
         padding: 10px 0;
         font-size: 20px;
         text-transform: capitalize;
-        border: 1px solid red;
     }
-</style>
-
-<div class="comany-content">
-    <div class="image">
-        <img src="/{{company.image}}" alt="" />
-    </div>
-    <div class="text">
-        <div class="head">
-            <h1>{{ company.name }}</h1>
-            <p>description : {{ company.description }}</p>
-        </div>
-        <div class="body">
-            <p>phone : {{ company.phone }}</p>
-            <p>email : {{ company.email }}</p>
-            <p>website : {{ company.website }}</p>
-            <p>address : {{ company.address }}</p>
-            {% if company.owner.full_name %}
-            <p>
-                owner : {{ company.owner.first_name }}
-                <!-- comment -->
-                {{company.owner.last_name }}
-            </p>
-            {% else %}
-            <p>owner : {{ company.owner.username }}</p>
-            {% endif %}
-        </div>
-        <p>Categories :</p>
-        {% for category in company.category.all %}
-        <ul>
-            <li>{{ category }}</li>
-        </ul>
-        {% endfor %}
-    </div>
-</div>
-
-<style>
     .cards {
         min-height: 100px;
         width: 100%;
-        border: 1px solid black;
     }
     .cards .header {
-        border: 1px solid black;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -217,7 +172,6 @@
         min-height: 200px;
     }
     .cards .content {
-        border: 1px solid blue;
         min-height: 400px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -292,7 +246,189 @@
         background: #0000;
         color: black;
     }
+
+    @media screen and (max-width: 1500px) {
+        p {
+            font-size: 18px;
+        }
+        li {
+            font-size: 15px;
+        }
+        .cards .content .card {
+            min-height: 370px;
+        }
+        .card .text h4 {
+            font-size: 20px;
+        }
+        .cards .content .card .order button {
+            padding: 0.3rem 0;
+            font-size: 15px;
+        }
+        .cards .content .card .order p {
+            font-size: 18px;
+        }
+    }
+    @media screen and (max-width: 1400px) {
+        p {
+            font-size: 15px;
+        }
+        li {
+            font-size: 12px;
+        }
+        .cards .content {
+            width: 800px;
+            margin: 0 auto;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .cards .content .card {
+            min-height: 330px;
+        }
+        .card .text h4 {
+            font-size: 15px;
+        }
+        .cards .content .card .order button {
+            padding: 0.3rem 0;
+            font-size: 12px;
+        }
+        .cards .content .card .order p {
+            font-size: 15px;
+        }
+    }
+    @media screen and (max-width: 1200px) {
+        .btn-primary,
+        .btn {
+            font-size: 12px;
+        }
+        .comany-content {
+            min-height: 420px;
+        }
+        .comany-content .text {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .comany-content .text .head {
+            padding: 0;
+        }
+        .comany-content .text .head h1 {
+            font-size: 30px;
+        }
+        .comany-content .text .body {
+            grid-template-columns: 1fr;
+        }
+        p {
+            font-size: 15px;
+        }
+        li {
+            font-size: 12px;
+        }
+        .cards .header {
+            min-height: 150px;
+        }
+        .cards .header h1 {
+            font-size: 30px;
+        }
+        .cards .content {
+            width: 800px;
+            margin: 0 auto;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .cards .content .card {
+            min-height: 330px;
+        }
+        .card .text h4 {
+            font-size: 15px;
+        }
+        .cards .content .card .order button {
+            padding: 0.3rem 0;
+            font-size: 12px;
+        }
+        .cards .content .card .order p {
+            font-size: 15px;
+        }
+    }
+    @media screen and (max-width: 990px) {
+        .container {
+            max-width: 600px;
+        }
+        .comany-content {
+            min-height: 500px;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 400px 1fr;
+            margin: 0 0 100px 0;
+        }
+        .cards .content {
+            width: unset;
+            margin: 0 auto;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    @media screen and (max-width: 580px) {
+        .container {
+            max-width: 600px;
+        }
+        .comany-content {
+            min-height: 500px;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 40vh 1fr;
+            margin: 0 0 30px 0;
+        }
+        .comany-content .image {
+            padding: 0px;
+        }
+        .comany-content .text {
+            padding: 30px 0px;
+        }
+        .cards .header {
+            min-height: 120px;
+        }
+        .cards .header h1 {
+            font-size: 20px;
+        }
+        .cards .content {
+            grid-template-columns: 1fr;
+        }
+        .cards .content .card {
+            margin: 10px auto;
+            width: 255px;
+        }
+    }
 </style>
+
+<div class="comany-content">
+    <div class="image">
+        <img src="/{{company.image}}" alt="" />
+    </div>
+    <div class="text">
+        <div class="head">
+            <h1>{{ company.name }}</h1>
+            <p>description : {{ company.description }}</p>
+        </div>
+        <div class="body">
+            <p>phone : {{ company.phone }}</p>
+            <p>email : {{ company.email }}</p>
+            <p>website : {{ company.website }}</p>
+            <p>address : {{ company.address }}</p>
+            {% if company.owner.full_name %}
+            <p>
+                owner : {{ company.owner.first_name }}
+                <!-- comment -->
+                {{company.owner.last_name }}
+            </p>
+            {% else %}
+            <p>owner : {{ company.owner.username }}</p>
+            {% endif %}
+        </div>
+        <p>Categories :</p>
+        {% for category in company.category.all %}
+        <ul>
+            <li>{{ category }}</li>
+        </ul>
+        {% endfor %}
+    </div>
+</div>
 <!-- Products For This Company -->
 <div class="cards">
     <div class="header">
