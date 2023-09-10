@@ -37,26 +37,6 @@
   </div>
 </div>
 <br><br>
-<div class="container">
-  <div class="row ">
-    {% for category in categories %}
-      <div class="col">
-        <div>
-            <img src="/{{category.image}}" alt="">
-        </div>
-        <a href="{% url 'p_category_profile' category.slug %}" class="text-dark text-decoration-none">
-            <div class="shadow p-3 mb-5 bg-white rounded">
-                <h3>
-                    {{ category.name  }}
-                </h3>
-                <p>description : {{ category.description }}</p>
-            </div>
-        </a>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
 <!-- code  -->
 <div class="categories">
     <div class="main-header">
@@ -66,356 +46,37 @@
         </h1>
     </div>
     <div class="main-content">
+        {% for category in categories %}
         <div class="category">
             <div class="header">
-                <h2>Auifer water wells</h2>
+                <h2>{{category.name}}</h2>
                 <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Molestiae, doloremque.
+                    {{category.description}}
                 </p>
             </div>
             <div class="content">
+                {% for product in category.products.all %}
                 <div class="card">
                     <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
+                        <img src="{{product.image.url}}" alt="" />
                     </div>
                     <div class="text">
-                        <h4>Submersible motor</h4>
+                        <h4>{{product.name}}</h4>
                     </div>
                     <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
+                        <p>{{product.price}}</p>
+                        <form action="{% url 'product' product.slug %}">
                             <button>Buy Now</button>
                         </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="tolist">
-                <a href="#">See All List</a>
+                <a href="{% url 'p_category_profile'  category.slug %}">See All List</a>
             </div>
         </div>
-        <div class="category">
-            <div class="header">
-                <h2>Solar Energy</h2>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Molestiae, doloremque.
-                </p>
-            </div>
-            <div class="content">
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="tolist">
-                <a href="#">See All List</a>
-            </div>
-        </div>
-        <div class="category">
-            <div class="header">
-                <h2>Agricultural equipment</h2>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Molestiae, doloremque.
-                </p>
-            </div>
-            <div class="content">
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="tolist">
-                <a href="#">See All List</a>
-            </div>
-        </div>
-        <div class="category">
-            <div class="header">
-                <h2>Electric power control</h2>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Molestiae, doloremque.
-                </p>
-            </div>
-            <div class="content">
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="tolist">
-                <a href="#">See All List</a>
-            </div>
-        </div>
-        <div class="category">
-            <div class="header">
-                <h2>Auifer water wells</h2>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Molestiae, doloremque.
-                </p>
-            </div>
-            <div class="content">
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="{% static 'images/img1.jpg' %}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>Submersible motor</h4>
-                    </div>
-                    <div class="order">
-                        <p>552$</p>
-                        <form action="www.twitter.com">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="tolist">
-                <a href="#">See All List</a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 <!-- code  -->
