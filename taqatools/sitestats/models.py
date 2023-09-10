@@ -17,7 +17,8 @@ class Site(models.Model):
     
     
 class Static(models.Model):
-    mission = models.TextField()
-    vision = models.TextField()
-    privacy = models.TextField()
-    return_policy = models.TextField()
+    about = models.TextField(null=True)
+    mission = models.TextField(null=True)
+    vision = models.TextField(null=True)
+    privacy = models.TextField(null=True)
+    return_policy = models.TextField(null=True)
