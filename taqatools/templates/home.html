@@ -4,25 +4,7 @@
 <!-- this is a command line  -->
 {% block content%}
 
-<!-- <div class="section-one">
-    <div class="text">
-        <div class="content">
-            <h1>
-                Build your own future <br />
-                with TAQATOOLS services
-            </h1>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                est error laboriosam voluptatibus dicta molestiae doloremque
-                consectetur vitae, repellat reiciendis?
-            </p>
-            <a href="#">About us</a>
-        </div>
-    </div>
-    <div class="image">
-        <img src="/static/images/mainImage.jpg" alt="" />
-    </div>
-</div> -->
+
 <div class="home">
     <div class="content">
         <h1>
@@ -113,16 +95,17 @@
     <div class="content">
         <div class="cards">
             {% for brand in brands %}
+            <!-- comment -->
                 {% if forloop.counter <= 5 %}
                     <a href="{% url 'brand_profile' brand.slug %}" class="card">
                         <div class="image">
-                            <img src="{{brand.image.url}}" alt="" />
                         </div>
                         <div class="text">
                             <h4>{{brand.name}}</h4>
                         </div>
                     </a>
                 {% endif %}
+                <!-- comment -->
             {% endfor %}
             <a href="{% url 'brands' %}" class="card">
                 <div class="text">
