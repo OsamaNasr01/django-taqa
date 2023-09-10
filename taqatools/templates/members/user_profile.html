@@ -1,89 +1,22 @@
 {% extends 'base.html' %}
 <!-- comment  -->
 {% load humanize %}
+{% load static %}
 <!-- comment  -->
 {% block title %} {{member.username}} {% endblock %}
 <!-- comment  -->
 {% block content %}
-
-<style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: "Averta CY";
-    }
-    .container {
-        border: 1px solid red;
-        padding: 100px 20px 0px 20px;
-    }
-    .main-content {
-        border: 1px solid red;
-        display: flex;
-    }
-    .main-content .image{
-        border: 1px solid red;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-    .main-content .image button{
-        border: none;
-        background: none;
-    }
-    .main-content .image img{
-        height: 300px;
-        width: 300px;
-        object-fit: cover;
-    }
-    .main-content .text {
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-    .main-content .text h3,
-    .main-content .text h4 {
-        position: relative;
-        font-size: 40px;
-    }
-    .main-content .text h4::after {
-        content: " EGP";
-        font-size: calc(40px - 50%);
-    }
-    .main-content .text p {
-        margin-bottom: unset;
-        padding: 5px 0;
-        font-size: 20px;
-    }
-    .main-content .text .cart-items {
-        font-size: 16px;
-        color: black;
-        margin: 10px 0 10px 0;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'membersjs/user_profile.css' %}">
 
 <div class="main-content">
     <div class="image">
         {% if member.account.image %}
-        <button
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#update-picture-modal"
-        >
+        <button type="button" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
             <img src="/{{member.account.image}}" alt="" />
         </button>
         {% else %}
-        <button
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#update-picture-modal"
-        >
-            <img
-                src="/images/1__ARzR7F_fff_KI14yMKBzw.png"
-                alt=""
-            />
+        <button type="button" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
+            <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" />
         </button>
         {% endif %}
     </div>
@@ -93,73 +26,42 @@
         <p>Username @{{member.username }}</p>
         <h4>{{ member.balance|floatformat:2|intcomma }}</h4>
         {% if member.cartitems.count %}
-        <a class="cart-items" href="{% url 'cart' %}"
-            >You have {{ member.cartitems.count }} items in cart</a
-        >
+        <a class="cart-items" href="{% url 'cart' %}">You have {{ member.cartitems.count }} items in cart</a>
         {% else %}
         <p class="cart-items">Your cart is empty</p>
         {% endif %}
         <div>
-            <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#add-pyment-modal"
-            >
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
                 Add Payment
             </button>
-            <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#add-receipt-modal"
-            >
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-receipt-modal">
                 Add Receipt
             </button>
         </div>
     </div>
 </div>
 
-<div
-    class="modal fade"
-    id="update-picture-modal"
-    tabindex="-1"
-    aria-labelledby="update-picture-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="update-picture-modal" tabindex="-1" aria-labelledby="update-picture-modal"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="update-picture-modal">
                     Update Picture
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div>
                     {% if user.account.image %}
                     <img src="/{{user.account.image}}" alt="" />
                     {% else %}
-                    <img
-                        src="/images/1__ARzR7F_fff_KI14yMKBzw.png"
-                        alt=""
-                        height="300"
-                        width="300"
-                    />
+                    <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" height="300" width="300" />
                     {% endif %}
                 </div>
                 <br />
-                <form
-                    enctype="multipart/form-data"
-                    action="{% url 'update_picture' user.username %}"
-                    method="post"
-                    name="add-pyment_form"
-                >
+                <form enctype="multipart/form-data" action="{% url 'update_picture' user.username %}" method="post"
+                    name="add-pyment_form">
                     {% csrf_token %}
                     <input type="file" name="image" id="" />
                     <br /><br />
@@ -172,30 +74,15 @@
     </div>
 </div>
 
-<div
-    class="modal fade"
-    id="add-pyment-modal"
-    tabindex="-1"
-    aria-labelledby="add-pyment-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="add-pyment-modal" tabindex="-1" aria-labelledby="add-pyment-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-pyment-modal">Add Payment</h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    action="{% url 'add_payment' user.username %}"
-                    method="post"
-                    name="add-pyment_form"
-                >
+                <form action="{% url 'add_payment' user.username %}" method="post" name="add-pyment_form">
                     {% csrf_token %} {{ pay_form.as_p }}
                     <button type="submit" class="btn btn-primary">
                         Submit
@@ -205,30 +92,15 @@
         </div>
     </div>
 </div>
-<div
-    class="modal fade"
-    id="add-receipt-modal"
-    tabindex="-1"
-    aria-labelledby="add-receipt-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="add-receipt-modal" tabindex="-1" aria-labelledby="add-receipt-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-receipt-modal">Add Receipt</h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    action="{% url 'add_receipt' user.username %}"
-                    method="post"
-                    name="add-receipt_form"
-                >
+                <form action="{% url 'add_receipt' user.username %}" method="post" name="add-receipt_form">
                     {% csrf_token %} {{ receive_form.as_p }}
                     <button type="submit" class="btn btn-primary">
                         Submit
@@ -242,8 +114,7 @@
 <a href="{% url 'user_offers'  member.username %}">
     <div>
         <h3>
-            You have requested {{ member.account.details.offers_no }} offer{{
-            user.account.details.offers_no|pluralize}}.
+            You have requested {{ member.account.details.offers_no }} offer{{ user.account.details.offers_no|pluralize}}.
         </h3>
     </div>
 </a>
@@ -253,8 +124,7 @@
 <a href="{% url 'user_sales'  member.username %}">
     <div>
         <h3>
-            You have ordered {{ member.account.details.sales_no }} invoice{{
-            member.account.details.sales_no|pluralize}}.
+            You have ordered {{ member.account.details.sales_no }} invoice{{ member.account.details.sales_no|pluralize}}.
         </h3>
     </div>
 </a>

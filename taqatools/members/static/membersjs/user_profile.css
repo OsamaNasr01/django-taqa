@@ -1,0 +1,56 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Averta CY";
+}
+.container {
+    border: 1px solid red;
+    padding: 100px 20px 0px 20px;
+}
+.main-content {
+    border: 1px solid red;
+    display: flex;
+}
+.main-content .image{
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.main-content .image button{
+    border: none;
+    background: none;
+}
+.main-content .image img{
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+}
+.main-content .text {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.main-content .text h3,
+.main-content .text h4 {
+    position: relative;
+    font-size: 40px;
+}
+.main-content .text h4::after {
+    content: " EGP";
+    font-size: calc(40px - 50%);
+}
+.main-content .text p {
+    margin-bottom: unset;
+    padding: 5px 0;
+    font-size: 20px;
+}
+.main-content .text .cart-items {
+    font-size: 16px;
+    color: black;
+    margin: 10px 0 10px 0;
+}
