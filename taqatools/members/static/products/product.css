@@ -15,25 +15,21 @@
     display: grid;
     grid-template-columns: 30% 1fr;
     text-transform: capitalize;
-    border: 1px solid black;
 }
 .product .image {
     padding: 20px;
-    border: 1px solid red;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+    border: 1px solid #ddd;
 }
 .product .image img {
     object-fit: cover;
     height: auto;
     width: 90%;
-    border: 1px solid red;
 }
 .product .text {
     padding: 30px;
-    border: 1px solid black;
 }
 .product .text p {
     margin-bottom: unset;

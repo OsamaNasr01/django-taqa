@@ -56,7 +56,7 @@
             </div>
             <div class="content">
                 {% for product in category.products.all %}
-                <div class="card">
+                <a href="{% url 'product' product.slug %}" class="card">
                     <div class="image">
                         <img src="{{product.image.url}}" alt="" />
                     </div>
@@ -69,7 +69,7 @@
                             <button>Buy Now</button>
                         </form>
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </div>
             <div class="tolist">

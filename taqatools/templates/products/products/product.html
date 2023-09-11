@@ -9,7 +9,6 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'products/product.css' %}" />
-
 <button
     type="button"
     class="btn btn-primary"
@@ -162,8 +161,7 @@
 
 <div class="product">
     <div class="image">
-        <!-- <img src="/{{product.image}}"> -->
-        <img src="{% static 'images/img1.jpg' %}" alt="" />
+        <img src="/{{product.image}}">
     </div>
     <div class="text">
         <h1>{{ product.name }}</h1>
