@@ -15,22 +15,24 @@
     }
     .container {
         padding: 100px 20px 0px 20px;
-        border: 1px solid red;
+        /* border: 1px solid red; */
     }
     .main-category {
-        border: 1px solid red;
+        /* border: 1px solid red; */
+        margin-bottom: 100px;
     }
     .main-category .image {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         height: 400px;
         width: 100%;
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid #ddd;
     }
     .main-category .image img {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         height: auto;
         width: 100%;
         object-fit: cover;
@@ -334,14 +336,16 @@
 
 <style>
     .container .container {
-        border: 1px solid black;
+        /* border: 1px solid black; */
+        margin-bottom: 100px;
     }
     .container .container .container-container-content {
-        border: 1px solid black;
+        height: 350px;
+        /* border: 1px solid black; */
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
     }
-    .container .container .container-container-content a.card{
+    .container .container .container-container-content a.card {
         position: relative;
         margin: 10px;
         overflow: hidden;
@@ -349,47 +353,47 @@
         transition: 0.5s ease box-shadow, 0.5s transform;
         border: none;
     }
-    .container .container .container-container-content a.card:hover{
+    .container .container .container-container-content a.card:hover {
         box-shadow: 0 0px 100px #818181;
     }
-    .container .container .container-container-content a.card::after{
-        content: '';
+    .container .container .container-container-content a.card::after {
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
         width: 100%;
-        background: linear-gradient(to top, #000,#0000);
+        background: #00000086;
     }
-    .container .container .container-container-content a.card .image{
+    .container .container .container-container-content a.card .image {
         height: 100%;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: red;
+        /* background: red; */
     }
 
-    .container .container .container-container-content a.card .image img{
+    .container .container .container-container-content a.card .image img {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
-    .container .container .container-container-content a.card .text{
+    .container .container .container-container-content a.card .text {
         position: absolute;
         bottom: 0;
         left: 0;
-        min-height: 100px;
+        min-height: 100%;
         width: 100%;
         padding: 20px;
         display: flex;
+        align-items: center;
         justify-content: center;
         flex-direction: column;
         z-index: 1;
     }
     .container .container .container-container-content a.card .text h4,
-    .container .container .container-container-content a.card .text p
-    {
+    .container .container .container-container-content a.card .text p {
         margin-bottom: unset;
         color: white;
     }
@@ -403,11 +407,16 @@
             </div>
             <div class="text">
                 <h4>{{ sub.name }}</h4>
-                <p>description : {{ sub.description }}</p>
+                <p>{{ sub.description }}</p>
             </div>
         </a>
         {% endfor %} {% else %}
-        <div class="col shadow p-3 mb-5 bg-white rounded">
+        <div>
+            <style>
+                .container .container {
+                    display: none;
+                }
+            </style>
             <h6>There is no sub categories in {{category.name}}</h6>
         </div>
         {% endif %}
@@ -467,6 +476,7 @@
 </div>
 
 <button
+    style="margin: 20px"
     type="button"
     id="product_modal"
     class="btn btn-primary"
@@ -560,24 +570,121 @@
         </div>
     </div>
 </div>
-<br /><br />
-{% for product in products %}
-<a
-    href="{% url 'product' product.slug %}"
-    class="text-dark text-decoration-none"
->
-    <div class="shadow p-3 mb-5 bg-white rounded">
-        <div>
-            <div>
+
+<style>
+    .products {
+        /* border: 1px solid red; */
+        margin-bottom: 100px;
+    }
+    .products .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .products .content .product-card {
+        margin: 10px;
+        min-height: 400px;
+        display: grid;
+        grid-template-rows: 50% 20% 1fr;
+        border-radius: 20px;
+        text-decoration: none;
+        box-shadow: 0 0px 50px #efefef;
+        transition: 0.5s ease box-shadow, 0.5s transform;
+        border: none;
+        overflow: hidden;
+    }
+    .products .content .product-card:hover {
+        box-shadow: 0 0px 50px #818181;
+        transform: scale(1.02);
+    }
+    .products .content .product-card .image {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .products .content .product-card .image img {
+        height: auto;
+        width: 50%;
+    }
+    .products .content .product-card .text {
+        padding: 0px 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .products .content .product-card .text h4 {
+        margin-bottom: unset;
+        color: black;
+    }
+    .products .content .product-card .order {
+        position: relative;
+        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .products .content .product-card .order p {
+        position: relative;
+        font-size: 20px;
+        padding: 0 0 5px 0;
+        color: black;
+    }
+    .products .content .product-card .order p::before {
+        content: "556 EGB";
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #a4a4a4;
+        text-decoration: line-through;
+    }
+    .products .content .product-card .order button {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-radius: 10px;
+        background: #0000;
+        border: 2px solid black;
+        transition: 0.5s background, 0.5s color;
+    }
+    .products .content .product-card:hover .order button {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-radius: 10px;
+        background: #000;
+        border: 2px solid black;
+        color: white;
+        transition: 0.5s background, 0.5s color;
+    }
+    .products .content .product-card:hover .order button:hover {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-radius: 10px;
+        background: #0000;
+        border: 2px solid black;
+        color: black;
+        transition: 0.5s background, 0.5s color;
+    }
+</style>
+
+<div class="products">
+    <div class="content">
+        {% for product in products %}
+        <a href="{% url 'product' product.slug %}" class="product-card">
+            <div class="image">
                 <img src="/{{product.image}}" alt="" />
             </div>
-
-            <h6>{{ product.name }}</h6>
-            <p>description : {{ product.description }}</p>
-        </div>
+            <div class="text">
+                <h4>{{product.name}}</h4>
+            </div>
+            <div class="order">
+                <p>{{product.price}} EGB</p>
+                <form action="{% url 'product' product.slug %}">
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </a>
+        {% endfor %}
     </div>
-</a>
-{% endfor %}
+</div>
 
 <script src="{% static '/products/add_brand.js' %}"></script>
 
