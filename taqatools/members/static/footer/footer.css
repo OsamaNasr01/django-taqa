@@ -4,13 +4,6 @@
     margin: 0;
     box-sizing: border-box;
 }
-.container {
-    max-width: unset;
-    padding: unset;
-    margin: unset;
-    margin-top: unset;
-}
-
 footer {
     min-height: 500px;
     width: 100%;
