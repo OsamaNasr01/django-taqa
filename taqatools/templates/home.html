@@ -99,6 +99,7 @@
                 {% if forloop.counter <= 5 %}
                     <a href="{% url 'brand_profile' brand.slug %}" class="card">
                         <div class="image">
+                            <img src="{{brand.image.url}}" alt="">
                         </div>
                         <div class="text">
                             <h4>{{brand.name}}</h4>
