@@ -5,6 +5,7 @@ from django.contrib import messages
 import json
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
+from posts.models import Post
 
 # Create your views here.
 
@@ -173,6 +174,7 @@ def product(request, slug):
         'specs' : specs,
         'in_cart': in_cart,
         'no_in_cart': no_in_cart,
+        'posts': Post.objects.filter(category = product.category),
         }
     return render(request, 'products/products/product.html', context)
 
