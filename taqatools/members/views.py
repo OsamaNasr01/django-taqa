@@ -6,6 +6,7 @@ from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsF
 from django.contrib.auth.models import User
 from .models import Company, CoCategory, Details, Account
 from products.models import Category, Product, Brand
+from posts.models import Post
 from accounting.forms import DepitForm, CreditForm
 import json
 from django.contrib.auth.decorators import login_required
@@ -74,6 +75,7 @@ def home(request):
         'categories' : categories,
         'products': products,
         'brands': brands,
+        'posts': Post.objects.all()
     })
 
 @login_required(login_url='login')
