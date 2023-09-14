@@ -1,11 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block mycss %}
 <link rel="stylesheet" href="{% static 'home/home.css' %}" />
-{% endblock mycss %} {% block title %} Home {% endblock %}
-
-{% load humanize %}
+{% endblock mycss %} {% block title %} Home {% endblock %} {% load humanize %}
 <!-- this is a command line  -->
 {% block content%}
-
 
 <div class="home">
     <div class="content">
@@ -21,38 +18,41 @@
         <a href="{% url 'about' %}">About US</a>
     </div>
 </div>
-<!-- Home Section -->
 
 <div class="categories">
     <div class="header">
         <p>Categories</p>
-        <h1>Our Categories</h1>
+        <h2>Our Categories</h2>
     </div>
     <div class="content">
         <div class="right">
             {% for category in categories %}
-                {% if forloop.counter <= 2 %}
-                    <div class="category">
-                        <h1>{{category.name}}</h1>
-                        <p>{{category.description}}</p>
-                        <a href="{% url 'p_category_profile' category.slug %}"
-                            >Shop Now <img src="/static/images/arrow.svg" alt=""
-                        /></a>
-                    </div>
-                {% endif %}
+            <!-- comment  -->
+            {% if forloop.counter <= 2 %}
+            <div class="category">
+                <h3>{{category.name}}</h3>
+                <p>{{category.description}}</p>
+                <a href="{% url 'p_category_profile' category.slug %}"
+                    >Shop Now</a
+                >
+            </div>
+            {% endif %}
+            <!-- comment  -->
             {% endfor %}
         </div>
         <div class="left">
             {% for category in categories %}
-                {% if forloop.counter > 2 and forloop.counter <= 5 %}
-                    <div class="category">
-                        <h1>{{category.name}}</h1>
-                        <p>{{category.description}}</p>
-                        <a href="{% url 'p_category_profile' category.slug %}"
-                            >Shop Now <img src="/static/images/arrow.svg" alt=""
-                        /></a>
-                    </div>
-                {% endif %}
+            <!-- comment  -->
+            {% if forloop.counter > 2 and forloop.counter <= 5 %}
+            <div class="category">
+                <h3>{{category.name}}</h3>
+                <p>{{category.description}}</p>
+                <a href="{% url 'p_category_profile' category.slug %}"
+                    >Shop Now</a
+                >
+            </div>
+            {% endif %}
+            <!-- comment  -->
             {% endfor %}
         </div>
     </div>
@@ -61,7 +61,7 @@
 
 <div class="products">
     <div class="header">
-        <h1>Our Products</h1>
+        <h2>Our Products</h2>
         <a href="#">See All</a>
     </div>
     <div class="content">
@@ -73,10 +73,10 @@
             <div class="text">
                 <span>{{product.category}}</span>
                 <h4>{{product.name}}</h4>
-                <p>{{product.description}}</p>
+                <!-- <p>{{product.description}}</p> -->
             </div>
             <div class="order">
-                <p class="price">{{product.price}}</p>
+                <p class="price">{{product.price}} <span>EGP</span></p>
                 <form action="https://twitter.com/">
                     <button type="submit">Buy Now</button>
                 </form>
@@ -85,63 +85,68 @@
         {% endfor %}
     </div>
 </div>
+<!-- products Section -->
 
-
-<div class="container content">
-    <div class="row mx-5">
-        <div>
-            <h1>Read our Most recent posts </h1>
-        </div>
+<div class="post">
+    <div class="header">
+        <h2>
+            Read our Most <br />
+            recent posts
+        </h2>
+    </div>
+    <div class="content">
         {% for post in posts %}
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            
-            <a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
-                <div class="shadow p-3 mb-5 bg-white rounded">
-                    <div>
-                        <h3>{{ post.title }}</h3>
-                        <p>{{ post.timeToRead }}</p>
-                        <p>{{ post.created_at|naturaltime }}</p>
-                        <p>{{ post.auther.full_name }}</p>
-                        <p>{{ post.content|safe|truncatewords:100 }} read more</p>
-                    </div>
-                </div>
-            </a>
-        </div>
+        <form action="{% url 'post' post.slug %}">
+            <button>
+                <h4>{{ post.title }}</h4>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
+                    voluptatibus et molestias sit saepe blanditiis nihil
+                    delectus in. Quas laboriosam et deserunt accusantium
+                    voluptate aperiam ut suscipit optio maxime, rerum officia
+                    doloribus similique soluta dolor, modi, eaque enim id natus
+                    ab? Eligendi quod doloremque quos corrupti consequatur
+                    autem. Dicta, doloribus?
+                </p>
+            </button>
+        </form>
         {% endfor %}
     </div>
 </div>
-<!-- products Section -->
+<!-- post section  -->
 
 <div class="companies">
     <div class="header">
-        <h1>
+        <h2>
             Brands & <br />
             Companies
-        </h1>
+        </h2>
     </div>
     <div class="content">
-        <div class="cards">
-            {% for brand in brands %}
-            <!-- comment -->
-                {% if forloop.counter <= 5 %}
-                    <a href="{% url 'brand_profile' brand.slug %}" class="card">
-                        <div class="image">
-                            <img src="{{brand.image.url}}" alt="">
-                        </div>
-                        <div class="text">
-                            <h4>{{brand.name}}</h4>
-                        </div>
-                    </a>
-                {% endif %}
-                <!-- comment -->
-            {% endfor %}
-            <a href="{% url 'brands' %}" class="card">
-                <div class="text">
+        {% for brand in brands %}
+        <!-- comment -->
+        {% if forloop.counter <= 5 %}
+        <a href="{% url 'brand_profile' brand.slug %}" class="card">
+            <div class="image">
+                <img src="{{brand.image.url}}" alt="" />
+            </div>
+            <div class="text">
+                <h4>{{brand.name}}</h4>
+            </div>
+        </a>
+        {% endif %}
+        <!-- comment -->
+        {% endfor %}
+        <a href="{% url 'brands' %}" class="all rounded">
+            <div class="text">
+                <div class="image">
                     <img src="/static/images/arrow.svg" alt="" />
+                </div>
+                <div class="text">
                     <h5>All Companies</h5>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 </div>
 <!-- Companies Section -->

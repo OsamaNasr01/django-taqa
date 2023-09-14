@@ -42,10 +42,12 @@
             --bs-btn-disabled-bg: #000;
             --bs-btn-disabled-border-color: #fff;
         }
+        .container{
+            padding: 100px 0 0 0;
+        }
     </style>
     <body>
         {% include 'navbar.html' %}
-        <br><br><br><br>
         <div class="container">
             {% if messages %} {% for message in messages %}
             <div
