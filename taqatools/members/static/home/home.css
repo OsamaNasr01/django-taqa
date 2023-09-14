@@ -29,6 +29,9 @@ p {
 a {
     padding: var(--a--padding);
 }
+a.logo{
+    padding: unset;
+}
 .container {
     overflow: visible;
 }
@@ -540,9 +543,8 @@ a {
         --h4--size: 13px;
         --a--padding: 0.2rem 1.5rem;
     }
-
-    .waveImage::after {
-        top: 84vw;
+    .container {
+        padding: 100px 20px 0px 20px;
     }
 
     .home .content h1 {
