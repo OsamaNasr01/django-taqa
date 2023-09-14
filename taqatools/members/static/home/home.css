@@ -551,6 +551,9 @@ a {
     .home .content p {
         font-size: 14px;
     }
+    .home .content p br {
+        display: none;
+    }
     .home .content a {
         font-size: 13px;
     }
@@ -598,7 +601,10 @@ a {
         padding: 100px 20px 0 20px;
     }
     .home .content h1 {
-        font-size: 40px;
+        font-size: 35px;
+    }
+    .home .content h1 br {
+        display: none;
     }
     .home .content p {
         font-size: 14px;
@@ -639,5 +645,21 @@ a {
     .companies .content {
         min-height: 190px;
         grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 470px) {
+    .home .content h1 {
+        font-size: 30px;
+    }
+}
+@media screen and (max-width: 405px) {
+    .home {
+        min-height: 300px;
+    }
+    .home .content h1 {
+        font-size: 6vw;
+    }
+    .home .content p {
+        font-size: 11px;
     }
 }

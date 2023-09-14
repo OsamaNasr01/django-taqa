@@ -4,6 +4,25 @@
 <!-- this is a command line  -->
 {% block content%}
 
+<style>
+    @media screen and (max-width: 470px) {
+        .home .content h1 {
+            font-size: 30px;
+        }
+    }
+    @media screen and (max-width: 405px) {
+        .home {
+            min-height: 300px;
+        }
+        .home .content h1 {
+            font-size: 6vw;
+        }
+        .home .content p {
+            font-size: 11px;
+        }
+    }
+</style>
+
 <div class="home">
     <div class="content">
         <h1>
