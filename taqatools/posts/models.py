@@ -69,7 +69,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = RichTextField()
     auther = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='posts')
     slug = models.SlugField(unique=True, max_length=255, null=True)
