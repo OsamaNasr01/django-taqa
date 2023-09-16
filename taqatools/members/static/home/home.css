@@ -61,21 +61,21 @@ a.logo {
 /* home page  */
 
 /* .waveImage::after {
-    content: "";
-    position: absolute;
-    top: 39vw;
-    left: 0;
-    height: 600px;
-    width: 100%;
-    background: linear-gradient(to bottom, #e2dacf, #e2dacf, #0000);
-    border: 1px solid red;
+content: "";
+position: absolute;
+top: 39vw;
+left: 0;
+height: 600px;
+width: 100%;
+background: linear-gradient(to bottom, #e2dacf, #e2dacf, #0000);
+border: 1px solid red;
 }
 .waveImage .wave {
-    position: absolute;
-    top: 430px;
-    left: 0;
-    user-select: none;
-    box-shadow: 0 128px 100px #e2dacf;
+position: absolute;
+top: 430px;
+left: 0;
+user-select: none;
+box-shadow: 0 128px 100px #e2dacf;
 } */
 
 .header {
@@ -300,12 +300,15 @@ a.logo {
     grid-template-columns: 1fr 1fr;
 }
 .post .content form button {
-    min-height: 250px;
+    min-height: 600px;
     background: none;
     border: none;
     margin: 10px;
     padding: 30px;
     text-align: left;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
     border-radius: 20px;
     box-shadow: 0 0px 50px #efefef;
     transition: 0.5s ease box-shadow, 0.5s transform;
@@ -433,8 +436,11 @@ a.logo {
         font-size: 13px;
     }
 
-    .post .content form button .image{
+    .post .content form button .image {
         min-height: 250px;
+    }
+    .post .content form button {
+        min-height: 550px;
     }
 
     .companies .content {
@@ -498,6 +504,9 @@ a.logo {
         font-size: 10px;
     }
 
+    .post .content form button {
+        min-height: 510px;
+    }
     .post .content form button h4 {
         font-size: 18px;
         margin: 20px 0;
@@ -565,7 +574,7 @@ a.logo {
     .post .content form button p {
         font-size: 13px;
     }
-    .post .content form button .image{
+    .post .content form button .image {
         min-height: 200px;
     }
 
@@ -627,7 +636,7 @@ a.logo {
     .post .content form button p {
         font-size: 13px;
     }
-    .post .content form button .image{
+    .post .content form button .image {
         min-height: 50vw;
     }
 
@@ -699,6 +708,12 @@ a.logo {
     }
     .home .content h1 {
         font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .post .content form button {
+        min-height: 36vw;
     }
 }
 @media screen and (max-width: 405px) {
