@@ -76,7 +76,13 @@
                 <!-- <p>{{product.description}}</p> -->
             </div>
             <div class="order">
-                <p class="price">{{product.price}} <span>EGP</span></p>
+                <div class="prices">
+                    <p class="price">{{product.price}} <span>EGP</span></p>
+                    <div>
+                        <p>{{product.price}}</p>
+                        <span> EGP</span>
+                    </div>
+                </div>
                 <form action="https://twitter.com/">
                     <button type="submit">Buy Now</button>
                 </form>
@@ -98,8 +104,9 @@
         {% for post in posts %}
         <form action="{% url 'post' post.slug %}">
             <button>
+                <div class="image">put Image here</div>
                 <h4>{{ post.title }}</h4>
-                <h6>{{ post.timeToRead }}</h6>
+                <!-- <h6>{{ post.timeToRead }}</h6> -->
                 <p>{{ post.content|safe|truncatewords:50 }}</p>
             </button>
         </form>
