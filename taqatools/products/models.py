@@ -158,6 +158,14 @@ class Product(models.Model):
     def price(self):
         return self.prices.last().value*(100 - self.prices.last().discount)/100
     
+    @property
+    def discount(self):
+        return self.prices.last().discount
+    
+    @property
+    def o_price(self):
+        return self.prices.last().value
+    
     
 @receiver(post_save, sender =  Product)
 def update_details(sender, instance, created, **kwargs):

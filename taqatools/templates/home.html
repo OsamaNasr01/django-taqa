@@ -118,15 +118,8 @@
         <form action="{% url 'post' post.slug %}">
             <button>
                 <h4>{{ post.title }}</h4>
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-                    voluptatibus et molestias sit saepe blanditiis nihil
-                    delectus in. Quas laboriosam et deserunt accusantium
-                    voluptate aperiam ut suscipit optio maxime, rerum officia
-                    doloribus similique soluta dolor, modi, eaque enim id natus
-                    ab? Eligendi quod doloremque quos corrupti consequatur
-                    autem. Dicta, doloribus?
-                </p>
+                <h6>{{ post.timeToRead }}</h6>
+                <p>{{ post.content|safe|truncatewords:50 }}</p>
             </button>
         </form>
         {% endfor %}

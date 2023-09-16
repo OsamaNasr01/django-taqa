@@ -1,0 +1,41 @@
+
+.content {
+    padding: 30px 20px;
+    margin: 0 0 20px 0;
+}
+.content p:nth-child(1),
+.content p:nth-child(2),
+.content p:nth-child(3),
+.content p:nth-child(4) {
+    margin-bottom: unset;
+}
+.content h3 {
+    padding: 10px 0;
+}
+.content ul {
+    padding: 0px 10px;
+}
+.content a {
+    color: black;
+}
+.also {
+    border: none;
+    margin-bottom: 100px;
+}
+.also h3 {
+    padding: 20px;
+}
+.also .card {
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    box-shadow: 0 0 50px #efefef;
+    transition: .5s box-shadow;
+    border-radius: 20px;
+}
+.also .card:hover {
+    box-shadow: 0 0 50px #818181;
+}
+.also .card h3{
+    padding: 10px 0;
+}
