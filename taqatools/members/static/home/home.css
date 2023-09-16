@@ -468,7 +468,7 @@ a.logo {
     }
     .products .content .card .order p {
         position: relative;
-        font-size: 1px;
+        font-size: 13px;
         padding: 0 0 5px 0;
     }
     .products .content .card .order button {
