@@ -295,6 +295,10 @@ a.logo {
 .post {
     min-height: 200px;
 }
+.post .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 .post .content form button {
     min-height: 250px;
     background: none;
@@ -309,6 +313,19 @@ a.logo {
 .post .content form button:hover {
     box-shadow: 0 0px 100px #818181;
     transform: scale(1.01);
+}
+.post .content form button .image {
+    border: 1px solid #ddd;
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.post .content form button .image img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
 }
 .post .content form button h4 {
     font-size: 25px;
@@ -414,6 +431,10 @@ a.logo {
         width: 100%;
         padding: 0.3rem 0;
         font-size: 13px;
+    }
+
+    .post .content form button .image{
+        min-height: 250px;
     }
 
     .companies .content {
@@ -544,6 +565,9 @@ a.logo {
     .post .content form button p {
         font-size: 13px;
     }
+    .post .content form button .image{
+        min-height: 200px;
+    }
 
     .companies .content {
         min-height: 190px;
@@ -593,12 +617,18 @@ a.logo {
         min-height: 340px;
     }
 
+    .post .content {
+        grid-template-columns: 1fr;
+    }
     .post .content form button h4 {
         font-size: 18px;
         margin: 20px 0;
     }
     .post .content form button p {
         font-size: 13px;
+    }
+    .post .content form button .image{
+        min-height: 50vw;
     }
 
     .companies .content {
