@@ -21,7 +21,11 @@
     <p>{{ post.created_at|naturaltime }}</p>
     <p>{{ post.auther.full_name }}</p>
     <h3>{{ post.title }}</h3>
-    <div class="image"><img src="{{post.image.url}}" alt=""></div>
+    <div class="image">
+        {% if post.image %}
+        <img src="{{post.image.url}}" alt="">
+        {% endif %}
+    </div>
     <p>{{ post.content|safe }}</p>
 </div>
 
@@ -35,6 +39,7 @@
     </a>
     {% endfor %} {% endif %}
 </div>
+
 {% if category_products %}
 <h3>Buy now</h3>
 {% for product in category_products %}
