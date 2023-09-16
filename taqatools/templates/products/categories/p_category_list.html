@@ -1,42 +1,58 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block mycss %} 
-<link rel="stylesheet" href="{% static 'products/category_list.css' %}">
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<link rel="stylesheet" href="{% static 'products/category_list.css' %}" />
 {% endblock mycss %}
-
-
-
-
 
 <!-- comment -->
 {% block title %} List of Companies {% endblock %}
 <!-- comment -->
 {% block content %}
-    
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-co-category-modal">
-  Add Category
+
+<button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#add-co-category-modal"
+>
+    Add Category
 </button>
 
-<div class="modal fade" id="add-co-category-modal" tabindex="-1" aria-labelledby="add-co-category-modal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="add-co-category-modal">+ Add Category</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
-      </div>
-      <div class="modal-body">
-        <form enctype="multipart/form-data" action="{% url 'add_p_category' %}" method="post" name="add_co_category_form">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary">+ Add Category</button>
-        </form>
-      </div>
+<div
+    class="modal fade"
+    id="add-co-category-modal"
+    tabindex="-1"
+    aria-labelledby="add-co-category-modal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-co-category-modal">
+                    + Add Category
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form
+                    enctype="multipart/form-data"
+                    action="{% url 'add_p_category' %}"
+                    method="post"
+                    name="add_co_category_form"
+                >
+                    {% csrf_token %} {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        + Add Category
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-<br><br>
+<br /><br />
 <!-- code  -->
 <div class="categories">
     <div class="main-header">
@@ -50,9 +66,7 @@
         <div class="category">
             <div class="header">
                 <h2>{{category.name}}</h2>
-                <p>
-                    {{category.description}}
-                </p>
+                <p>{{category.description}}</p>
             </div>
             <div class="content">
                 {% for product in category.products.all %}
@@ -64,7 +78,13 @@
                         <h4>{{product.name}}</h4>
                     </div>
                     <div class="order">
-                        <p>{{product.price}}</p>
+                        <div class="prices">
+                            <p>{{product.price}} <span>EGP</span></p>
+                            <div>
+                                <p>{{product.price}}</p>
+                                <span>EGP</span>
+                            </div>
+                        </div>
                         <form action="{% url 'product' product.slug %}">
                             <button>Buy Now</button>
                         </form>
@@ -73,7 +93,9 @@
                 {% endfor %}
             </div>
             <div class="tolist">
-                <a href="{% url 'p_category_profile'  category.slug %}">See All List</a>
+                <a href="{% url 'p_category_profile'  category.slug %}"
+                    >See All List</a
+                >
             </div>
         </div>
         {% endfor %}
