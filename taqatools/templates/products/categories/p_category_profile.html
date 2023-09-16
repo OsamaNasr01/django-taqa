@@ -623,19 +623,36 @@
         justify-content: center;
         flex-direction: column;
     }
-    .products .content .product-card .order p {
+    .products .content .product-card .order .prices {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .products .content .product-card .order .prices p {
         position: relative;
-        font-size: 20px;
+        font-size: 17px;
         padding: 0 0 5px 0;
         color: black;
+        margin-bottom: unset;
+    }
+    .products .content .product-card .order .prices span {
+        font-size: 10px;
+    }
+    .products .content .product-card .order .prices div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .products .content .product-card .order .prices div p{
+        color: gray;
+        text-decoration: line-through;
+        transform: translateX(-3px);
+    }
+    .products .content .product-card .order .prices div span{
+        color: gray;
     }
     .products .content .product-card .order p::before {
-        content: "556 EGB";
-        position: absolute;
-        top: 0;
-        right: 0;
-        color: #a4a4a4;
-        text-decoration: line-through;
+        display: none;
     }
     .products .content .product-card .order button {
         width: 100%;
@@ -676,7 +693,13 @@
                 <h4>{{product.name}}</h4>
             </div>
             <div class="order">
-                <p>{{product.price}} EGB</p>
+                <div class="prices">
+                    <p>{{product.price}} <span>EGB</span></p>
+                    <div>
+                        <p>{{product.price}}</p>
+                        <span>EGB</span>
+                    </div>
+                </div>
                 <form action="{% url 'product' product.slug %}">
                     <button>Buy Now</button>
                 </form>
