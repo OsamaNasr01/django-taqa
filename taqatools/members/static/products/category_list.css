@@ -1,5 +1,3 @@
-
-    
 * {
     padding: 0;
     margin: 0;
@@ -86,13 +84,14 @@ h6 {
     box-shadow: 0 0px 100px #818181;
     transform: scale(1.02);
 }
-.categories .category .content .card .image{
+.categories .category .content .card .image {
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.categories .category .content .card .image img{height: auto;
+.categories .category .content .card .image img {
+    height: auto;
     width: 50%;
 }
 .categories .category .content .card .text {
@@ -111,18 +110,35 @@ h6 {
     justify-content: center;
     flex-direction: column;
 }
-.categories .category .content .card .order p {
+.categories .category .content .card .order .prices {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.categories .category .content .card .order .prices p {
     position: relative;
-    font-size: 20px;
+    font-size: 17px;
     padding: 0 0 5px 0;
 }
-.categories .category .content .card .order p::before {
-    content: "556$";
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #a4a4a4;
+.categories .category .content .card .order .prices span {
+    font-size: 10px;
+}
+.categories .category .content .card .order .prices div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.categories .category .content .card .order .prices div p {
+    transform: translateX(-3px);
+    color: gray;
     text-decoration: line-through;
+    color: gray;
+}
+.categories .category .content .card .order .prices div span {
+    color: gray;
+}
+.categories .category .content .card .order p::before {
+    display: none;
 }
 .categories .category .content .card .order button {
     width: 100%;
@@ -292,4 +308,3 @@ h6 {
         font-size: 10px;
     }
 }
-

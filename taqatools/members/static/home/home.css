@@ -29,6 +29,9 @@ p {
 a {
     padding: var(--a--padding);
 }
+a.logo {
+    padding: unset;
+}
 .container {
     overflow: visible;
 }
@@ -239,23 +242,37 @@ a {
     justify-content: center;
     flex-direction: column;
 }
-.products .content .card .order p {
+.products .content .card .order .prices {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.products .content .card .order .prices p {
     position: relative;
-    font-size: 20px;
+    font-size: 17px;
     padding: 0 0 5px 0;
 }
-.products .content .card .order p span {
+.products .content .card .order .prices span {
     position: relative;
     font-size: 10px;
     padding: 0 0 5px 0;
 }
-.products .content .card .order p::after {
-    content: "556 EGP";
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #a4a4a4;
+.products .content .card .order .prices div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.products .content .card .order .prices div p {
     text-decoration: line-through;
+    color: gray;
+    transform: translateX(-3px);
+}
+.products .content .card .order .prices div span {
+    transform: translateY(3px);
+    color: gray;
+}
+.products .content .card .order p::after {
+    display: none;
 }
 .products .content .card .order button {
     width: 100%;
@@ -390,7 +407,7 @@ a {
     }
     .products .content .card .order p {
         position: relative;
-        font-size: 18px;
+        font-size: 15px;
         padding: 0 0 5px 0;
     }
     .products .content .card .order button {
@@ -451,7 +468,7 @@ a {
     }
     .products .content .card .order p {
         position: relative;
-        font-size: 15px;
+        font-size: 13px;
         padding: 0 0 5px 0;
     }
     .products .content .card .order button {
@@ -540,9 +557,8 @@ a {
         --h4--size: 13px;
         --a--padding: 0.2rem 1.5rem;
     }
-
-    .waveImage::after {
-        top: 84vw;
+    .container {
+        padding: 100px 20px 0px 20px;
     }
 
     .home .content h1 {
@@ -648,6 +664,9 @@ a {
     }
 }
 @media screen and (max-width: 470px) {
+    .container {
+        padding: 100px 20px 0 20px;
+    }
     .home .content h1 {
         font-size: 30px;
     }

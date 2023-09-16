@@ -26,6 +26,9 @@
         {% block mycss %} {% endblock mycss %}
     </head>
     <style>
+        body{
+            min-height: 100vh;
+        }
         .btn-primary {
             --bs-btn-color: #fff;
             --bs-btn-bg: #000;
@@ -45,7 +48,6 @@
         @media screen and (max-width: 400px){
             .btn{
                 font-size: 13px;
-                transform: translateX(20px);
             }
         }
         .container {

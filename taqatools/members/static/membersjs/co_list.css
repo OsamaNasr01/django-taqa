@@ -8,7 +8,6 @@
     padding: 20vh 0 0 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    border: 1px solid red;
 }
 header {
     position: absolute;
