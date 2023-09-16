@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load humanize %} {% block title %} {{ post.title }}
+{% extends 'base.html' %} {% load humanize %}
+{% load static %} 
+{% block title %} {{ post.title }}
 {% endblock %} {% block content %}
 <button
     type="button"
@@ -11,48 +13,8 @@
 </button>
 <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">Edit</a>
 <br /><br />
-<style>
-    .content {
-        padding: 30px 20px;
-        margin: 0 0 20px 0;
-    }
-    .content p:nth-child(1),
-    .content p:nth-child(2),
-    .content p:nth-child(3),
-    .content p:nth-child(4) {
-        margin-bottom: unset;
-    }
-    .content h3 {
-        padding: 10px 0;
-    }
-    .content ul {
-        padding: 0px 10px;
-    }
-    .content a {
-        color: black;
-    }
-    .also {
-        border: none;
-        margin-bottom: 100px;
-    }
-    .also h3 {
-        padding: 20px;
-    }
-    .also .card {
-        padding: 20px;
-        text-decoration: none;
-        border: none;
-        box-shadow: 0 0 50px #efefef;
-        transition: .5s box-shadow;
-        border-radius: 20px;
-    }
-    .also .card:hover {
-        box-shadow: 0 0 50px #818181;
-    }
-    .also .card h3{
-        padding: 10px 0;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'posts/post.css' %}">
+<style></style>
 <div class="content">
     <p>{{ post.timeToRead }}</p>
     <p>{{ post.category }}</p>
@@ -68,7 +30,7 @@
     {% for post in category_posts %}
     <a href="{% url 'post' post.slug %}" class="card">
         <h3>{{ post.title }}</h3>
-        <p>The bulk charging voltage for a gel battery is the initial stage of the charging process, where the battery receives the maximum current from the charger until it reaches a certain voltage level.</p>
+        <p>{{ post.content|safe|truncatewords:20 }}</p>
     </a>
     {% endfor %} {% endif %}
 </div>
