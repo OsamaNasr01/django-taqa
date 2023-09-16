@@ -1,5 +1,7 @@
 {
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8"
-    }
+    },
+    "[django-html]": {
+        "extends": "html"}
 }
