@@ -17,7 +17,7 @@ def posts(request):
 @login_required(login_url='login')
 def add_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         new_post = form.save(commit=False)
         new_post.auther = request.user
         new_post.save()

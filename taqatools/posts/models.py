@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 import readtime 
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -72,6 +73,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='posts')
     slug = models.SlugField(unique=True, max_length=255, null=True)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
     
     def __str__(self):
         return self.title
