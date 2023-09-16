@@ -11,7 +11,7 @@
         </ul>
         <ul>
             <li><h4>Contact us</h4></li>
-            <li><a href="#">Who we are ?</a></li>
+            <li><a href="{% url 'about' %}">Who we are ?</a></li>
             <li><a href="#">Location Numer 1</a></li>
             <li><a href="#">Location Numer 2</a></li>
             <li>
@@ -30,20 +30,20 @@
         <ul>
             <li><h4>Policies</h4></li>
             <li>
-                <a href="#">Privacy Policy</a>
+                <a href="{% url 'privacy' %}">Privacy Policy</a>
             </li>
             <li>
-                <a href="#">Return Policy</a>
+                <a href="{% url 'return' %}">Return Policy</a>
             </li>
         </ul>
         <ul>
             <li><h4>Socail</h4></li>
             <li>
-                <img src="static/images/facebook.svg" alt="" />
+                <img src="{% static 'images/facebook.svg' %}" alt="" />
                 <a href="#">FaceBook</a>
             </li>
             <li>
-                <img src="static/images/linkedin.svg" alt="" />
+                <img src="{% static 'images/linkedin.svg' %}" alt="" />
                 <a href="#">LinkedIn</a>
             </li>
         </ul>
