@@ -4,25 +4,6 @@
 <!-- this is a command line  -->
 {% block content%}
 
-<style>
-    @media screen and (max-width: 470px) {
-        .home .content h1 {
-            font-size: 30px;
-        }
-    }
-    @media screen and (max-width: 405px) {
-        .home {
-            min-height: 300px;
-        }
-        .home .content h1 {
-            font-size: 6vw;
-        }
-        .home .content p {
-            font-size: 11px;
-        }
-    }
-</style>
-
 <div class="home">
     <div class="content">
         <h1>
@@ -95,7 +76,13 @@
                 <!-- <p>{{product.description}}</p> -->
             </div>
             <div class="order">
-                <p class="price">{{product.price}} <span>EGP</span></p>
+                <div class="prices">
+                    <p class="price">{{product.price}} <span>EGP</span></p>
+                    <div>
+                        <p>{{product.price}}</p>
+                        <span> EGP</span>
+                    </div>
+                </div>
                 <form action="https://twitter.com/">
                     <button type="submit">Buy Now</button>
                 </form>
