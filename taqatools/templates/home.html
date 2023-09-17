@@ -111,9 +111,26 @@
                     <img src="{{post.image.url}}" alt="" />
                     {% endif %}
                 </div>
+                <style>
+                    .posts .content form .post h4{
+                        margin: 0 0 20px 0;
+                    }
+                    .spans{
+                        padding: 10px 0;
+                    }
+                    .spans span{
+                        font-size: 12px;
+                        padding: 3px 10px;
+                        border-radius: 1000px;
+                        color: white;
+                        background: black;
+                    }
+                </style>
+                <div class="spans">
+                    <span>{{post.category}}</span>
+                    <span>{{post.timeToRead}}</span>
+                </div>
                 <h4>{{ post.title }}</h4>
-                <span style="color: white; background-color: black;">{{post.category}}</span>
-                <span style="color: white; background-color: black;">{{post.timeToRead}}</span>
                 <p>{{ post.content|safe|truncatewords:50 }}</p>
             </button>
         </form>

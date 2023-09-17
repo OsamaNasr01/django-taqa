@@ -1,44 +1,136 @@
-{% extends 'base.html' %} {% load static %} {% load humanize %} 
-{% block title %} Posts {% endblock %} 
+{% extends 'base.html' %} {% load static %} {% load humanize %}
+<!-- comment -->
+{% block title %} Posts {% endblock %}
+<!-- comment -->
 {% block content %}
 
-<a href="{% url 'add_post' %}" class="btn btn-primary">Add new Post</a>
+<style>
+    .container {
+        border: 1px solid red;
+    }
+    .posts .content {
+        border: 1px solid red;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .posts .content .post {
+        position: relative;
+        height: 800px;
+        color: black;
+        text-decoration: none;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0px 50px #efefef;
+        transition: 0.5s ease box-shadow, 0.5s tran;
+        overflow: hidden;
+    }
+    .posts .content .post .image {
+        border: 1px solid #ddd;
+        height: 300px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .posts .content .post .image img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+    }
+    .posts .content .post .text {
+        padding: 20px 0;
+    }
+    @media screen and (max-width: 1400px) {
+        .posts .content .post .image {
+            min-height: 250px;
+        }
+        .posts .content .post {
+            min-height: 550px;
+        }
+    }
+    @media screen and (max-width: 1200px) {
+        .posts .content .post {
+            min-height: 510px;
+        }
+        .posts .content .post h4 {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .posts .content .post p {
+            font-size: 13px;
+        }
+    }
+    @media screen and (max-width: 991px) {
+        .posts .content .post h4 {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .posts .content .post p {
+            font-size: 13px;
+        }
+        .posts .content .post .image {
+            min-height: 200px;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .posts .content {
+            grid-template-columns: 1fr;
+        }
+        .posts .content .post h4 {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .posts .content .post p {
+            font-size: 13px;
+        }
+        .posts .content .post .image {
+            min-height: 50vw;
+        }
+    }
+    @media screen and (max-width: 575px) {
+        .posts .content .post h4 {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .posts .content .post p {
+            font-size: 13px;
+        }
+    }
+    @media screen and (max-width: 460px) {
+        .posts .content .post {
+            min-height: 36vw;
+        }
+    }
+</style>
 
-<h1>Posts</h1>
-{% if posts %} {% for post in posts %}
-<button class="btn btn-danger" onclick="post_slug('{{post.slug}}')">
-    delete
-</button>
-<button
-    type="button"
-    id="modal_button"
-    hidden
-    class="btn btn-danger"
-    data-bs-toggle="modal"
-    data-bs-target="#delete-post-modal"
->
-    Delete
-</button>
-<a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">Edit</a>
-<a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
-    <div class="shadow p-3 mb-5 bg-white rounded">
-        <div>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.timeToRead }}</p>
-            <p>{{ post.created_at|naturaltime }}</p>
-            <p>{{ post.auther.full_name }}</p>
-            <div>
+<div class="posts">
+    <div class="header">
+        <h2>Posts</h2>
+        <a href="{% url 'add_post' %}" class="btn btn-primary">Add new Post</a>
+    </div>
+    <div class="content">
+        {% if posts %} {% for post in posts %}
+        <a href="{% url 'post' post.slug %}" class="post">
+            <div class="image">
                 {% if post.image %}
                 <img src="{{post.image.url}}" alt="" />
                 {% endif %}
             </div>
-            <p>{{ post.content|safe|truncatewords:100 }} read more</p>
-        </div>
+            <div class="text">
+                <!-- <p>{{ post.timeToRead }}</p> -->
+                <!-- <p>{{ post.created_at|naturaltime }}</p> -->
+                <!-- <p>{{ post.auther.full_name }}</p> -->
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content|safe|truncatewords:100 }} read more</p>
+            </div>
+        </a>
+        {% endfor %} {% else %}
+        <h3>There is no Posts to view</h3>
+        {% endif %}
     </div>
-</a>
-{% endfor %} {% else %}
-<h3>There is no Posts to view</h3>
-{% endif %}
+</div>
 
 <!-- delete-post-modal.html -->
 
@@ -73,20 +165,20 @@
                 >
                     Cancel
                 </button>
-                <form id="post_del_form" action="" method="POST">
-                    <input
-                        type="hidden"
-                        name="csrfmiddlewaretoken"
-                        value="{{ csrf_token }}"
-                    />
-                    <button
-                        type="submit"
-                        class="btn btn-danger"
-                        id="confirm-delete-post"
-                    >
-                        Confirm Delete
-                    </button>
-                </form>
+                id="post_del" action="" method="POST">
+                <input
+                    type="hidden"
+                    name="csrfmiddlewaretoken"
+                    value="{{ csrf_token }}"
+                />
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                    id="confirm-delete-post"
+                >
+                    Confirm Delete
+                </button>
+                <>
             </div>
         </div>
     </div>
