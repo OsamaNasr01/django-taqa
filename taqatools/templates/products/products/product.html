@@ -161,7 +161,7 @@
 
 <div class="product">
     <div class="image">
-        <img src="/{{product.image}}">
+        <img src="{{product.image.url}}">
     </div>
     <div class="text">
         <h1>{{ product.name }}</h1>
@@ -261,6 +261,11 @@
                         <p>{{ post.timeToRead }}</p>
                         <p>{{ post.created_at|naturaltime }}</p>
                         <p>{{ post.auther.full_name }}</p>
+                        <div>
+                            {% if post.image %}
+                                <img src="{{post.image.url}}" alt="">
+                            {% endif %}
+                        </div>
                         <p>{{ post.content|safe|truncatewords:100 }} read more</p>
                     </div>
                 </div>

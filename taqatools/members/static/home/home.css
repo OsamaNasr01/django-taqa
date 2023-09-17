@@ -727,3 +727,724 @@ box-shadow: 0 128px 100px #e2dacf;
         font-size: 11px;
     }
 }
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Averta CY";
+    text-transform: capitalize;
+}
+:root {
+    --h2--size: 40px;
+    --h3--size: 30px;
+    --h4--size: 20px;
+    --a--padding: 0.3rem 2rem;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+h2 {
+    font-size: var(--h2--size);
+}
+h3 {
+    font-size: var(--h3--size);
+}
+h4 {
+    font-size: var(--h4--size);
+}
+p {
+    margin-bottom: unset;
+}
+a {
+    padding: var(--a--padding);
+}
+a.logo {
+    padding: unset;
+}
+.container {
+    overflow: visible;
+}
+
+.home {
+    min-height: 500px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.home .content h1 {
+    font-size: 65px;
+}
+.home .content p {
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+.home .content a {
+    border: 2px solid black;
+    text-decoration: none;
+    color: black;
+    padding: var(--a--padding);
+    border-radius: 10px;
+}
+/* home page  */
+
+.header {
+    min-height: 200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    z-index: 1;
+    position: relative;
+}
+.categories .content {
+    min-height: 950px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 55% 1fr;
+    z-index: 1;
+    position: relative;
+}
+.categories .content .right {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.categories .content .left {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.categories .content .right .category,
+.categories .content .left .category {
+    position: relative;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    flex-direction: column;
+}
+.categories .content .left .category::after,
+.categories .content .right .category:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to top, black, #0000);
+}
+.categories .content .left .category:nth-child(1) {
+    background: url("../images/power control.jpg") no-repeat;
+    background-size: cover;
+}
+.categories .content .left .category:nth-child(2) {
+    background: url("../images/tanks.jpg") no-repeat;
+    background-size: cover;
+}
+.categories .content .left .category:nth-child(3) {
+    background: url("../images/equipments.jpeg") no-repeat;
+    background-size: cover;
+}
+.categories .content .right .category:nth-child(1) {
+    background: url("../images/abar.jpg") no-repeat;
+    background-size: cover;
+}
+.categories .content .right .category:nth-child(2) {
+    background: url("../images/solar energy.jpg") no-repeat;
+    background-size: cover;
+}
+.categories .content .left .category h3,
+.categories .content .right .category h3 {
+    overflow: visible;
+    margin-bottom: unset;
+    color: white;
+    z-index: 1;
+}
+.categories .content .left .category p,
+.categories .content .right .category p {
+    position: relative;
+    color: white;
+    margin-bottom: unset;
+    z-index: 1;
+    padding: 10px 0;
+    max-height: 40px;
+    overflow: hidden;
+}
+.categories .content .left .category a,
+.categories .content .right .category a {
+    color: white;
+    overflow: visible;
+    text-decoration: none;
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 1;
+    margin: 10px 0 0 0;
+}
+/* categories page  */
+
+.products {
+    min-height: 200px;
+    margin: 50px 0;
+    z-index: 1;
+    position: relative;
+}
+.products .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: unset;
+}
+.products .header a {
+    color: black;
+    text-decoration: none;
+    border: 2px solid black;
+}
+.products .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.products .content .card {
+    margin: 10px;
+    height: 400px;
+    padding: unset;
+    display: grid;
+    grid-template-rows: 50% 20% 1fr;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 0px 50px #efefef;
+    transition: 0.5s ease box-shadow, 0.5s transform;
+    border: none;
+}
+.products .content .card:hover {
+    box-shadow: 0 0px 100px #818181;
+    transform: scale(1.02);
+}
+.products .content .card .images {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+.products .content .card .images img {
+    height: auto;
+    width: 80%;
+}
+.products .content .card .text {
+    padding: 0 20px;
+}
+.products .content .card .text span {
+    background: black;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 1000px;
+    font-size: 10px;
+}
+.products .content .card .text h4 {
+    margin: 10px 0;
+}
+.products .content .card .order {
+    position: relative;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.products .content .card .order .prices {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.products .content .card .order .prices p {
+    position: relative;
+    font-size: 17px;
+    padding: 0 0 5px 0;
+}
+.products .content .card .order .prices span {
+    position: relative;
+    font-size: 10px;
+    padding: 0 0 5px 0;
+}
+.products .content .card .order .prices div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.products .content .card .order .prices div p {
+    text-decoration: line-through;
+    color: gray;
+    transform: translateX(-3px);
+}
+.products .content .card .order .prices div span {
+    transform: translateY(3px);
+    color: gray;
+}
+.products .content .card .order p::after {
+    display: none;
+}
+.products .content .card .order button {
+    width: 100%;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+    background: #0000;
+    border: 2px solid black;
+    transition: 0.5s background, 0.5s color;
+}
+.products .content .card:hover .order button {
+    background: black;
+    color: white;
+}
+.products .content .card:hover .order button:hover {
+    background: white;
+    color: black;
+}
+/* products page  */
+
+.posts {
+    min-height: 200px;
+}
+.posts .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.posts .content form {
+    margin: 10px;
+}
+.posts .content form button {
+    min-height: 600px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 30px;
+    text-align: left;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0 0px 50px #efefef;
+    transition: 0.5s ease box-shadow, 0.5s transform;
+}
+.posts .content form button:hover {
+    box-shadow: 0 0px 100px #818181;
+    transform: scale(1.01);
+}
+.posts .content form button .image {
+    border: 1px solid #ddd;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.posts .content form button .image img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+}
+.posts .content form button h4 {
+    font-size: 25px;
+    margin: 20px 0;
+}
+.posts .content form button ul{
+    list-style: unset;
+}
+/* post page  */
+
+.companies {
+    padding: 100px 0;
+}
+.companies .content {
+    min-height: 230px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.companies .content .card {
+    margin: 10px;
+    overflow: hidden;
+    padding: 0 20px;
+    box-shadow: 0 0px 50px #efefef;
+    border: none;
+    text-decoration: none;
+    transition: 0.5s ease box-shadow, 0.5s transform;
+}
+.companies .content .card:hover {
+    box-shadow: 0 0px 100px #818181;
+    transform: scale(1.02);
+}
+.companies .content .card .image {
+    height: 160px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.companies .content .card .image img {
+    height: auto;
+    width: 100%;
+}
+.companies .content .card .text {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.companies .content .all {
+    margin: 10px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0px 50px #efefef;
+    transition: 0.5s ease box-shadow, 0.5s transform;
+    border: none;
+    text-decoration: none;
+    overflow: hidden;
+}
+.companies .content .all:hover {
+    box-shadow: 0 0px 100px #818181;
+    transform: scale(1.02);
+}
+.companies .content .all .image {
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1000px;
+    margin: 10px auto;
+}
+.companies .content .all .text h5 {
+    color: black;
+}
+/* companies page */
+@media screen and (max-width: 1400px) {
+    :root {
+        --h2--size: 35px;
+        --h3--size: 25px;
+        --h4--size: 15px;
+        --a--padding: 0.3rem 2rem;
+    }
+    .home .content h1 {
+        font-size: 60px;
+    }
+
+    .header {
+        min-height: 150px;
+    }
+    .categories .content {
+        min-height: 820px;
+    }
+
+    .products .content .card {
+        height: 350px;
+    }
+    .products .content .card .order p {
+        position: relative;
+        font-size: 15px;
+        padding: 0 0 5px 0;
+    }
+    .products .content .card .order button {
+        width: 100%;
+        padding: 0.3rem 0;
+        font-size: 13px;
+    }
+
+    .posts .content form button .image {
+        min-height: 250px;
+    }
+    .posts .content form button {
+        min-height: 550px;
+    }
+
+    .companies .content {
+        min-height: 190px;
+    }
+    .companies .content .card .image {
+        height: 120px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .companies .content .card .text {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 1200px) {
+    :root {
+        --h2--size: 30px;
+        --h3--size: 20px;
+        --h4--size: 13px;
+        --a--padding: 0.2rem 1.5rem;
+    }
+    .home .content h1 {
+        font-size: 55px;
+    }
+    .home .content a {
+        font-size: 13px;
+    }
+
+    .header {
+        min-height: 150px;
+    }
+    .categories .content {
+        min-height: 820px;
+    }
+    .categories .content .left .category p,
+    .categories .content .right .category p {
+        font-size: 13px;
+        padding: 5px 0;
+    }
+    .categories .content .left .category a,
+    .categories .content .right .category a {
+        font-size: 13px;
+    }
+
+    .products .content .card {
+        height: 305px;
+    }
+    .products .content .card .order p {
+        position: relative;
+        font-size: 13px;
+        padding: 0 0 5px 0;
+    }
+    .products .content .card .order button {
+        width: 100%;
+        padding: 0.3rem 0;
+        font-size: 10px;
+    }
+
+    .posts .content form button {
+        min-height: 510px;
+    }
+    .posts .content form button h4 {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+    .posts .content form button p {
+        font-size: 13px;
+    }
+
+    .companies .content {
+        min-height: 190px;
+    }
+    .companies .content .card .image {
+        height: 120px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .companies .content .card .text {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 991px) {
+    :root {
+        --h2--size: 30px;
+        --h3--size: 20px;
+        --h4--size: 13px;
+        --a--padding: 0.2rem 1.5rem;
+    }
+    .home .content h1 {
+        font-size: 55px;
+    }
+    .home .content a {
+        font-size: 13px;
+    }
+
+    .header {
+        min-height: 100px;
+    }
+    .categories .content {
+        min-height: 640px;
+    }
+    .categories .content .left .category p,
+    .categories .content .right .category p {
+        font-size: 13px;
+        padding: 5px 0;
+    }
+    .categories .content .left .category a,
+    .categories .content .right .category a {
+        font-size: 13px;
+    }
+
+    .products .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .posts .content form button h4 {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+    .posts .content form button p {
+        font-size: 13px;
+    }
+    .posts .content form button .image {
+        min-height: 200px;
+    }
+
+    .companies .content {
+        min-height: 190px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+@media screen and (max-width: 767px) {
+    :root {
+        --h2--size: 30px;
+        --h3--size: 20px;
+        --h4--size: 13px;
+        --a--padding: 0.2rem 1.5rem;
+    }
+    .container {
+        padding: 100px 20px 0px 20px;
+    }
+
+    .home .content h1 {
+        font-size: 40px;
+    }
+    .home .content p {
+        font-size: 14px;
+    }
+    .home .content p br {
+        display: none;
+    }
+    .home .content a {
+        font-size: 13px;
+    }
+
+    .header {
+        min-height: 100px;
+    }
+    .categories .content {
+        min-height: 640px;
+        grid-template-columns: 1fr;
+    }
+    .categories .content .category {
+        min-height: 300px;
+    }
+
+    .products .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .products .content .card {
+        min-height: 340px;
+    }
+
+    .posts .content {
+        grid-template-columns: 1fr;
+    }
+    .posts .content form button h4 {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+    .posts .content form button p {
+        font-size: 13px;
+    }
+    .posts .content form button .image {
+        min-height: 50vw;
+    }
+
+    .companies .content {
+        min-height: 190px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media screen and (max-width: 575px) {
+    :root {
+        --h2--size: 25px;
+        --h3--size: 20px;
+        --h4--size: 13px;
+        --a--padding: 0.2rem 1.5rem;
+    }
+    .container {
+        padding: 100px 20px 0 20px;
+    }
+    .home .content h1 {
+        font-size: 35px;
+    }
+    .home .content h1 br {
+        display: none;
+    }
+    .home .content p {
+        font-size: 14px;
+    }
+    .home .content a {
+        font-size: 13px;
+    }
+
+    .header {
+        min-height: 100px;
+    }
+    .categories .content {
+        min-height: 640px;
+        grid-template-columns: 1fr;
+    }
+    .categories .content .category {
+        min-height: 200px;
+    }
+
+    .products .content {
+        display: grid;
+        width: 270px;
+        margin: 0 auto;
+        grid-template-columns: 1fr;
+    }
+    .products .content .card {
+        min-height: 340px;
+    }
+
+    .posts .content form button h4 {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+    .posts .content form button p {
+        font-size: 13px;
+    }
+
+    .companies .content {
+        min-height: 190px;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 470px) {
+    .container {
+        padding: 100px 20px 0 20px;
+    }
+    .home .content h1 {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .posts .content form button {
+        min-height: 36vw;
+    }
+}
+@media screen and (max-width: 405px) {
+    .home {
+        min-height: 300px;
+    }
+    .home .content h1 {
+        font-size: 6vw;
+    }
+    .home .content p {
+        font-size: 11px;
+    }
+}
