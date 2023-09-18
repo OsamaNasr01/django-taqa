@@ -1,110 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% load humanize %}
 <!-- comment -->
 {% block title %} Posts {% endblock %}
+
 <!-- comment -->
 {% block content %}
-
-<style>
-    .container {
-        border: 1px solid red;
-    }
-    .posts .content {
-        border: 1px solid red;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-    .posts .content .post {
-        position: relative;
-        height: 800px;
-        color: black;
-        text-decoration: none;
-        margin: 10px;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 0px 50px #efefef;
-        transition: 0.5s ease box-shadow, 0.5s tran;
-        overflow: hidden;
-    }
-    .posts .content .post .image {
-        border: 1px solid #ddd;
-        height: 300px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-    .posts .content .post .image img {
-        height: auto;
-        width: 100%;
-        object-fit: cover;
-    }
-    .posts .content .post .text {
-        padding: 20px 0;
-    }
-    @media screen and (max-width: 1400px) {
-        .posts .content .post .image {
-            min-height: 250px;
-        }
-        .posts .content .post {
-            min-height: 550px;
-        }
-    }
-    @media screen and (max-width: 1200px) {
-        .posts .content .post {
-            min-height: 510px;
-        }
-        .posts .content .post h4 {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        .posts .content .post p {
-            font-size: 13px;
-        }
-    }
-    @media screen and (max-width: 991px) {
-        .posts .content .post h4 {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        .posts .content .post p {
-            font-size: 13px;
-        }
-        .posts .content .post .image {
-            min-height: 200px;
-        }
-    }
-    @media screen and (max-width: 767px) {
-        .posts .content {
-            grid-template-columns: 1fr;
-        }
-        .posts .content .post h4 {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        .posts .content .post p {
-            font-size: 13px;
-        }
-        .posts .content .post .image {
-            min-height: 50vw;
-        }
-    }
-    @media screen and (max-width: 575px) {
-        .posts .content .post h4 {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        .posts .content .post p {
-            font-size: 13px;
-        }
-    }
-    @media screen and (max-width: 460px) {
-        .posts .content .post {
-            min-height: 36vw;
-        }
-    }
-</style>
-
+<link rel="stylesheet" href="{% static '/posts/posts.css' %}">
 <div class="posts">
     <div class="header">
         <h2>Posts</h2>
@@ -123,7 +23,11 @@
                 <!-- <p>{{ post.created_at|naturaltime }}</p> -->
                 <!-- <p>{{ post.auther.full_name }}</p> -->
                 <h3>{{ post.title }}</h3>
-                <p>{{ post.content|safe|truncatewords:100 }} read more</p>
+                <div class="spans">
+                    <span>{{post.category}}</span>
+                    <span>{{post.timeToRead}}</span>
+                </div>
+                <p>{{ post.content|safe|truncatewords:100 }}</p>
             </div>
         </a>
         {% endfor %} {% else %}

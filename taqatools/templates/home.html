@@ -77,9 +77,9 @@
             </div>
             <div class="order">
                 <div class="prices">
-                    <p class="price">{{product.price}} <span>EGP</span></p>
+                    <p class="price">{{product.price|floatformat:2|intcomma }} <span>EGP</span></p>
                     <div>
-                        <p>{{product.o_price}}</p>
+                        <p>{{product.o_price|floatformat:2|intcomma }}</p>
                         <span> EGP</span>
                     </div>
                 </div>
