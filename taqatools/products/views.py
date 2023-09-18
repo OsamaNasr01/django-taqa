@@ -10,7 +10,7 @@ from posts.models import Post
 # Create your views here.
 
 def p_category_list(request):
-    categories = Category.objects.filter(parent_id = 0)
+    categories = Category.objects.all()
     form = AddCategoryForm()
     return render(request, 'products/categories/p_category_list.html', {
         'categories':categories,

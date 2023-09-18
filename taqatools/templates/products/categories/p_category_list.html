@@ -63,34 +63,28 @@
     </div>
     <div class="main-content">
         {% for category in categories %}
+        {% if category.parent_id == 0 %}
         <div class="category">
             <div class="header">
                 <h2>{{category.name}}</h2>
                 <p>{{category.description}}</p>
             </div>
-            <div class="content">
-                {% for product in category.products.all %}
-                <a href="{% url 'product' product.slug %}" class="card">
-                    <div class="image">
-                        <img src="{{product.image.url}}" alt="" />
-                    </div>
-                    <div class="text">
-                        <h4>{{product.name}}</h4>
-                    </div>
-                    <div class="order">
-                        <div class="prices">
-                            <p>{{product.price}} <span>EGP</span></p>
-                            <div>
-                                <p>{{product.price}}</p>
-                                <span>EGP</span>
-                            </div>
+            <div class="container">
+                <div class="container-container-content">
+                    {% for sub_category in categories %}
+                    {% if sub_category.parent_id == category.id %}
+                    <a href="{% url 'p_category_profile' sub_category.slug %}" class="card">
+                        <div class="image">
+                            <img src="{{sub_category.image.url}}" alt="" />
                         </div>
-                        <form action="{% url 'product' product.slug %}">
-                            <button>Buy Now</button>
-                        </form>
-                    </div>
-                </a>
-                {% endfor %}
+                        <div class="text">
+                            <h4>{{ sub_category.name }}</h4>
+                            <p>{{ sub_category.description|truncatewords:20 }}</p>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
             <div class="tolist">
                 <a href="{% url 'p_category_profile'  category.slug %}"
@@ -98,6 +92,7 @@
                 >
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
