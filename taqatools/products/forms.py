@@ -22,7 +22,7 @@ class AddProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ('name', 'description', 'brand', 'image')
+        fields = ('name', 'description', 'image', 'brand' )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

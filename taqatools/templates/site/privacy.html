@@ -1,92 +1,10 @@
-{% extends 'base.html' %} {% block title %} Update Product {% endblock %} {%
-block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %} Privacy Policy {% endblock %} 
 
-<style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: "Averta CY";
-        text-transform: capitalize;
-    }
-    :root {
-        --h2--size: 40px;
-        --h3--size: 30px;
-        --h4--size: 20px;
-        --a--padding: 0.3rem 2rem;
-    }
-    ::-webkit-scrollbar {
-        display: none;
-    }
-    h2 {
-        font-size: var(--h2--size);
-    }
-    h3 {
-        font-size: var(--h3--size);
-    }
-    h4 {
-        font-size: var(--h4--size);
-    }
-    p {
-        margin-bottom: unset;
-    }
-    a {
-        padding: var(--a--padding);
-    }
-    a.logo {
-        padding: unset;
-    }
-    .container {
-        overflow: visible;
-        border: 1px solid red;
-    }
-    .header {
-        min-height: 200px;
-        width: 100%;
-        display: flex;
-        /* align-items: center; */
-        justify-content: center;
-        flex-direction: column;
-        z-index: 1;
-        position: relative;
-    }
 
-    @media screen and (max-width: 1400px) {
-        :root {
-            --h2--size: 35px;
-            --h3--size: 25px;
-            --h4--size: 15px;
-            --a--padding: 0.3rem 2rem;
-        }
-        .header {
-            min-height: 150px;
-        }
-    }
-    @media screen and (max-width: 1200px) {
-        :root {
-            --h2--size: 30px;
-            --h3--size: 20px;
-            --h4--size: 13px;
-            --a--padding: 0.2rem 1.5rem;
-        }
-    }
-    @media screen and (max-width: 991px) {
-        .header {
-            min-height: 100px;
-        }
-    }
-    @media screen and (max-width: 575px) {
-        :root {
-            --h2--size: 25px;
-            --h3--size: 20px;
-            --h4--size: 13px;
-            --a--padding: 0.2rem 1.5rem;
-        }
-        p {
-            font-size: 12px;
-        }
-    }
-</style>
+{%block content %}
+<link rel="stylesheet" href="{% static 'site/privacy.css' %}">
 
 <div class="privacy">
     <div class="header">
