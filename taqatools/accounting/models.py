@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from products.models import Product, Category
 from sitestats.models import Site
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -33,7 +32,7 @@ def update_details(sender, instance,  **kwargs):
     
     
 class PurchaseInvoiceItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='purchase')
+    product = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, related_name='purchase')
     invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField(default=0)
@@ -88,7 +87,7 @@ def update_details(sender, instance,  **kwargs):
     
     
 class SaleInvoiceItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='sale')
+    product = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, related_name='sale')
     invoice = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price =models.FloatField(default=0)
@@ -164,7 +163,7 @@ def update_details(sender, instance, **kwargs):
 class TermCondition(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=1000)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='terms')
+    category = models.ForeignKey('products.Category', on_delete=models.CASCADE, related_name='terms')
     
     
 class Offer(models.Model):
@@ -191,7 +190,7 @@ def update_details(sender, instance, **kwargs):
     instance.user.account.details.save()
     
 class OfferItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='offer')
+    product = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, related_name='offer')
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='items')
     q = models.PositiveSmallIntegerField()
     price = models.FloatField(default=0)
@@ -213,7 +212,7 @@ def update_details(sender, instance,  **kwargs):
 
         
 class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='cart')
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE, null=True, related_name='cart')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cartitems')
     q = models.PositiveBigIntegerField(default=1)
     price = models.FloatField(default=0)
