@@ -129,4 +129,30 @@
     </ul>
     {% endfor %}
 </div>
+
+<div>
+    {% for product in brand.products.all %}
+    <a href="{% url 'product' product.slug %}" class="product-card">
+        <div class="image">
+            <img src="/{{product.image}}" alt="" />
+        </div>
+        <div class="text">
+            <h4>{{product.name}}</h4>
+        </div>
+        <div class="order">
+            <div class="prices">
+                <p>{{product.price}} <span>EGB</span></p>
+                <div>
+                    <p>{{product.price}}</p>
+                    <span>EGB</span>
+                </div>
+            </div>
+            <form action="{% url 'product' product.slug %}">
+                <button>Buy Now</button>
+            </form>
+        </div>
+    </a>
+
+    {% endfor %}
+</div>
 {% endblock %}
