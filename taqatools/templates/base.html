@@ -26,8 +26,12 @@
         {% block mycss %} {% endblock mycss %}
     </head>
     <style>
-        body{
+        body {
             min-height: 100vh;
+        }
+        .container {
+            padding: 100px 20px 0 20px;
+            min-height: calc(100vh - 400px);
         }
         .btn-primary {
             --bs-btn-color: #fff;
@@ -45,13 +49,10 @@
             --bs-btn-disabled-bg: #000;
             --bs-btn-disabled-border-color: #fff;
         }
-        @media screen and (max-width: 400px){
-            .btn{
+        @media screen and (max-width: 400px) {
+            .btn {
                 font-size: 13px;
             }
-        }
-        .container {
-            padding: 100px 0 0 0;
         }
     </style>
     <body>
