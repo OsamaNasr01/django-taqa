@@ -201,7 +201,7 @@ def update_product(request, slug):
                 spec_value = spec_form.save(commit=False)
                 spec_value.value = request.POST.get(spec.spec.name)
                 spec_value.save()
-            messages.success(request, ('The Product Category has been Updated Successfully!'))
+            messages.success(request, ('The Product has been Updated Successfully!'))
             return product(request, productt.slug)
     else:
         form = AddProductForm(instance=product)

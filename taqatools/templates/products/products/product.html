@@ -38,10 +38,11 @@
             </div>
             <div class="modal-body">
                 <form
+                    enctype="multipart/form-data"
                     action="{% url 'update_product' product.slug %}"
                     method="post"
                     name="update-product_form"
-                >
+                > 
                     {% csrf_token %} {{ form.as_p }}
                     <!-- comment  -->
                     {% for spec in product.txt_spec.all %}
