@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounting',
     'sitestats',
     'posts',
+    'pumpoffers',
     'ckeditor',
     'ckeditor_uploader',
 ]
