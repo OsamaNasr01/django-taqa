@@ -24,50 +24,50 @@ function remove_c_option() {
 
 const category_submit = document.getElementById('category_submit')
 category_submit.addEventListener('click', function (e) {
-  e.preventDefault()
-  var input_name = document.getElementById('input_name')
-  var input_description = document.getElementById('input_description')
-  const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
-  const url = '/company/category/add/'
+    e.preventDefault()
+    var input_name = document.getElementById('input_name')
+    var input_description = document.getElementById('input_description')
+    const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+    const url = '/company/category/add/'
 
-  const data = JSON.stringify({
-      'name': input_name.value,
-      'description': input_description.value,
-  })
-  console.log(data)
-  input_description.value = ""
-  input_name.value = ""
-  fetch(url, {
-      'method' : 'POST',
-      'headers' : {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
-      },
-      'body': data,
-  })
-  .then(response => {
-      if (response.ok) {
-        document.getElementById('modal_close').click()
-         return response.json()
-      } else {
-      console.log(response)
-      }
-  })
-  .then(data => {
-    remove_c_option()
-    const category = data['category']
-    const select = document.getElementById('id_category')
-    const new_category = document.createElement('option')
-    new_category.value = category['id']
-    new_category.innerText = category['name']
-    new_category.selected = true
-    select.appendChild(new_category)
-    add_c_option()
+    const data = JSON.stringify({
+        'name': input_name.value,
+        'description': input_description.value,
+    })
     console.log(data)
-  })
-  .catch((error) => {
-      console.log(error)
-  })
-})
+    input_description.value = ""
+    input_name.value = ""
+    fetch(url, {
+        'method' : 'POST',
+        'headers' : {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        'body': data,
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById('modal_close').click()
+            return response.json()
+        } else {
+        console.log(response)
+        }
+    })
+    .then(data => {
+        remove_c_option()
+        const category = data['category']
+        const select = document.getElementById('id_category')
+        const new_category = document.createElement('option')
+        new_category.value = category['id']
+        new_category.innerText = category['name']
+        new_category.selected = true
+        select.appendChild(new_category)
+        add_c_option()
+        console.log(data)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+    })
 
 
