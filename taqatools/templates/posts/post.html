@@ -30,19 +30,22 @@
 </div>
 
 <div class="also">
-    {% if category_posts %}
-    <h3>Read also</h3>
-    {% for post in category_posts %}
-    <a href="{% url 'post' post.slug %}" class="card">
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.content|safe|truncatewords:20 }}</p>
-    </a>
-    {% endfor %} {% endif %}
+    {% if post.category.posts.count > 1 %}
+        <h3>Read also</h3>
+        {% for cat_post in post.category.posts.all %}
+            {% if not cat_post.id == post.id %}
+                <a href="{% url 'post' cat_post.slug %}" class="card">
+                    <h3>{{ cat_post.title }}</h3>
+                    <p>{{ cat_post.content|safe|truncatewords:20 }}</p>
+                </a>
+            {% endif %}
+        {% endfor %} 
+    {% endif %}
 </div>
 
-{% if category_products %}
+{% if post.category.products.count %}
 <h3>Buy now</h3>
-{% for product in category_products %}
+{% for product in post.category.products.all %}
 <a
     href="{% url 'product' product.slug %}"
     class="text-dark text-decoration-none"
