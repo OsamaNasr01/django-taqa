@@ -142,3 +142,18 @@ class Account(models.Model):
     @property
     def member(self):
         return self.user
+    
+    
+
+class Gov(models.Model):
+    name = models.CharField(max_length=100)
+    
+    
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    gov = models.ForeignKey(Gov, on_delete=models.CASCADE, related_name='cities')
+    
+class Address(models.Model):
+    details = models.CharField(max_length=200)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='addresses')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
