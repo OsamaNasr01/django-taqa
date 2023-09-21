@@ -1,3 +1,4 @@
+
 * {
     padding: 0;
     margin: 0;
@@ -10,12 +11,9 @@
 ::-webkit-scrollbar-thumb {
     background: #e2dacf;
 }
-.container {
-    max-width: unset;
-    padding: unset;
-    margin: unset;
-    margin-top: unset;
-}
+/* .container {
+    border: 1px solid red;
+} */
 p {
     margin-bottom: unset;
 }
@@ -26,285 +24,204 @@ h4,
 h5,
 h6 {
     overflow: hidden;
-}
-
-.categories {
-    min-height: 100vh;
-    width: 1330px;
-    margin: 0px auto;
-    padding: 100px 0;
-    overflow: unset;
-    overflow: visible;
-}
-.categories .main-content {
-    overflow: visible;
-}
-.categories .main-header {
-    min-height: 20vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.categories .main-header h1 {
-    text-align: center;
-    font-size: 50px;
-}
-.categories .category {
-    width: 100%;
-    margin-bottom: 100px;
-    overflow: visible;
-}
-.categories .category .header {
-    min-height: 10vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.categories .category .header h2 {
-    font-size: 35px;
-}
-.categories .category .content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    overflow: visible;
-}
-.categories .category .content .card {
-    margin: 10px;
-    min-height: 400px;
-    display: grid;
-    grid-template-rows: 50% 20% 1fr;
-    border-radius: 20px;
-    text-decoration: none;
-    box-shadow: 0 0px 50px #efefef;
-    transition: 0.5s ease box-shadow, 0.5s transform;
-    border: none;
-}
-.categories .category .content .card:hover {
-    box-shadow: 0 0px 100px #818181;
-    transform: scale(1.02);
-}
-.categories .category .content .card .image {
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.categories .category .content .card .image img {
-    height: auto;
-    width: 50%;
-}
-.categories .category .content .card .text {
-    padding: 0px 20px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.categories .category .content .card .text h4 {
     margin-bottom: unset;
 }
-.categories .category .content .card .order {
-    position: relative;
-    padding: 0 20px;
+.categories .main-header {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+.categories .main-content .category .header {
+    min-height: 150px;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
-.categories .category .content .card .order .prices {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.categories .main-content .category .container {
+    padding: 0;
+    min-height: unset;
 }
-.categories .category .content .card .order .prices p {
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card {
     position: relative;
-    font-size: 17px;
-    padding: 0 0 5px 0;
+    margin: 10px;
+    height: 405.33px;
+    overflow: hidden;
+    border: none;
+    border-radius: 0;
 }
-.categories .category .content .card .order .prices span {
-    font-size: 10px;
-}
-.categories .category .content .card .order .prices div {
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card
+    .image {
+    min-height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.categories .category .content .card .order .prices div p {
-    transform: translateX(-3px);
-    color: gray;
-    text-decoration: line-through;
-    color: gray;
-}
-.categories .category .content .card .order .prices div span {
-    color: gray;
-}
-.categories .category .content .card .order p::before {
-    display: none;
-}
-.categories .category .content .card .order button {
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card
+    .image
+    img {
+    min-height: 100%;
     width: 100%;
-    padding: 0.5rem 0;
-    border-radius: 10px;
-    background: #0000;
-    border: 2px solid black;
-    transition: 0.5s background, 0.5s color;
+    object-fit: cover;
 }
-.categories .category .content .card:hover .order button {
-    background: #000;
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card
+    .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to top, #000, #00000049);
+    min-height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card
+    .text
+    h4 {
     color: white;
 }
-.categories .category .content .card:hover .order button:hover {
-    background: #0000;
-    color: black;
+.categories
+    .main-content
+    .category
+    .container
+    .container-container-content
+    .card
+    .text
+    p {
+    color: white;
 }
-.categories .category .tolist {
+.categories .main-content .category .tolist {
     min-height: 100px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.categories .category .tolist a {
-    border: 2px solid black;
-    padding: 0.7rem 3rem;
-    border-radius: 20px;
-    color: black;
-    text-decoration: none;
-    transition: 0.5s background, 0.5s color, 0.5s box-shadow;
-}
-.categories .category .tolist a:hover {
     color: white;
-    background: black;
-    box-shadow: 0 0 40px #ddd;
 }
-@media screen and (max-width: 1480px) {
-    .categories {
-        width: 1280px;
-    }
-}
-@media screen and (max-width: 1430px) {
-    .categories {
-        width: 1200px;
-    }
-    .categories .main-header {
-        min-height: 15vh;
-    }
+
+@media screen and (max-width: 1400px) {
     .categories .main-header h1 {
-        font-size: 40px;
-    }
-    .categories .main-content .category .header h2 {
         font-size: 30px;
     }
-    .categories .main-content .category .content .card {
-        min-height: 370px;
+    h2 {
+        font-size: 1.5rem;
     }
-    .categories .main-content .category .content .text h4 {
-        font-size: 20px;
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content
+        .card {
+        height: 318.33px;
     }
-    .categories .category .content .card .order p {
+}
+@media screen and (max-width: 1400px) {
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content
+        .card {
+        height: 248.32999999999998px;
+    }
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content
+        .card
+        .text
+        h4 {
         font-size: 18px;
     }
-    .categories .category .content .card .order button {
-        padding: 0.3rem 0;
-        font-size: 15px;
-    }
-    .categories .category .tolist a {
-        padding: 0.5rem 2rem;
-        border-radius: 12px;
-        font-size: 15px;
-    }
-}
-@media screen and (max-width: 1300px) {
-    .categories {
-        width: 870px;
-    }
-    .categories .main-header h1 {
-        font-size: 30px;
-    }
-    .categories .main-content .category .header h2 {
-        font-size: 20px;
-    }
-    .categories .main-content .category .header p {
-        font-size: 15px;
-    }
-    .categories .main-content .category .content {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-    .categories .main-content .category .content .card {
-        min-height: 330px;
-    }
-    .categories .main-content .category .content .text h4 {
-        font-size: 15px;
-    }
-    .categories .category .content .card .order p {
-        font-size: 15px;
-    }
-    .categories .category .content .card .order button {
-        padding: 0.3rem 0;
-        font-size: 12px;
-    }
-    .categories .category .tolist a {
-        padding: 0.5rem 2rem;
-        border-radius: 12px;
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content
+        .card
+        .text
+        p {
         font-size: 13px;
     }
 }
-@media screen and (max-width: 1280px) {
-    .categories {
-        width: 825px;
+@media screen and (max-width: 992px) {
+    .categories .main-header {
+        height: 100px;
     }
     .categories .main-header h1 {
-        font-size: 30px;
-        padding: 30px 0;
-    }
-    .categories .main-content .category .header {
-        padding: 30px 0;
-    }
-    .categories .main-content .category .header h2 {
         font-size: 25px;
     }
-    .categories .main-content .category .header p {
-        font-size: 15px;
+    .categories .main-content .category .header {
+        min-height: 80px;
     }
-    .categories .main-content .category .content {
-        grid-template-columns: 1fr 1fr 1fr;
+    h2 {
+        font-size: 1.2rem;
     }
-    .categories .main-content .category .content .card {
-        min-height: 330px;
-    }
-    .categories .main-content .category .content .text h4 {
-        font-size: 15px;
-    }
-    .categories .category .content .card .order p {
-        font-size: 15px;
-    }
-    .categories .category .content .card .order button {
-        padding: 0.3rem 0;
-        font-size: 12px;
-    }
-}
-@media screen and (max-width: 880px) {
-    .categories {
-        width: 560px;
-    }
-    .categories .main-content .category .content {
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content {
         grid-template-columns: 1fr 1fr;
     }
 }
-@media screen and (max-width: 600px) {
-    .categories {
-        width: 100%;
-        padding: 100px 20px;
-    }
-    .categories .main-header h1 {
-        font-size: 5.5vw;
-        padding: 30px 0;
-    }
-    .categories .main-content .category .content {
+@media screen and (max-width: 520px) {
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content {
         grid-template-columns: 1fr;
-        width: 260px;
-        margin: 0 auto;
     }
-    .categories .main-content .category .header p {
-        font-size: 10px;
+    .categories
+        .main-content
+        .category
+        .container
+        .container-container-content
+        .card {
+            margin: 10px 0;
     }
 }

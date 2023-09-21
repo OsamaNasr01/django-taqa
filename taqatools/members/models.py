@@ -156,4 +156,3 @@ class City(models.Model):
 class Address(models.Model):
     details = models.CharField(max_length=200)
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='addresses')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
