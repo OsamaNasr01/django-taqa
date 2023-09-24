@@ -147,12 +147,21 @@ class Account(models.Model):
 
 class Gov(models.Model):
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
     
     
 class City(models.Model):
     name = models.CharField(max_length=100)
     gov = models.ForeignKey(Gov, on_delete=models.CASCADE, related_name='cities')
+
+    def __str__(self):
+        return self.name
     
 class Address(models.Model):
     details = models.CharField(max_length=200)
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='addresses')
+
+    def __str__(self):
+        return self.details

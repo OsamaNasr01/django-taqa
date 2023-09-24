@@ -26,5 +26,6 @@ urlpatterns = [
     path('company/category/<slug:slug>/', views.co_category_profile, name='co_category_profile'),
     # Address
     path('address/add/gov/', views.add_gov, name='add_gov'),
+    path('address/add/city/', views.add_city, name='add_city'),
     
 ]
