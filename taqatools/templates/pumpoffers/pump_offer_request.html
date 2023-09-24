@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %} Pump Offer Request {% endblock %}
+{% block content %}
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <h3>
+    Pump Offer Request
+  </h3>
+  <br>
+  <form method="post">
+    {% csrf_token %}
+    <p>
+      <label for="id_gov">Governerate:</label>
+      <select name="gov" class="form-control" required="" id="id_gov">
+        <option value="" selected="">---------</option>
+        {% for gov in govs %}
+        <option value="{{gov.id}}">{{ gov.name }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    
+    <p>
+      <label for="id_city">City:</label>
+      <select name="city" class="form-control" required="" id="id_city">
+        <option value="" selected="">---------</option>
+      </select>
+    </p>
+    {{ address_form.as_p }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">submit</button>
+  </form>
+</div>
+<script>
+  const gov = document.getElementById('id_gov')
+  gov.addEventListener('change', function (value) {
+    console.log(gov.value)
+    
+    url = '/pump-offer/gov-select/'
+    const csrftoken =  document.querySelector('[name="csrfmiddlewaretoken"]').value;
+    
+    const data = JSON.stringify({
+      'gov_id': gov.value,
+    })
+    console.log(data)
+    fetch(url, {
+      'method' : 'POST',
+      'headers' : {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+      'body': data,
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        console.log(response)
+      }
+    })
+    .then(data => {
+      console.log(data)
+      const city = document.getElementById('id_city')
+      for (var key in data) {
+        const option = document.createElement('option')
+        option.value = key
+        option.innerText = data[key]
+        city.appendChild(option)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    })
+</script>
+{% endblock %}

@@ -108,10 +108,9 @@ class AddAddressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = ('details', 'city')
+        fields = ('details',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['details'].widget.attrs.update({'class': 'form-control'})
-        self.fields['city'].widget.attrs.update({'class': 'form-control'})
   
