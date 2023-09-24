@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Company, CoCategory, Details, Account, Gov, City
+from .models import Company, CoCategory, Details, Account, Gov, City, Address
 
 class RegisterUserForm(UserCreationForm):
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -100,4 +100,18 @@ class AddCityForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['gov'].widget.attrs.update({'class': 'form-control'})
+
+
+
+
+class AddAddressForm(forms.ModelForm):
+
+    class Meta:
+        model = Address
+        fields = ('details', 'city')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['details'].widget.attrs.update({'class': 'form-control'})
+        self.fields['city'].widget.attrs.update({'class': 'form-control'})
   

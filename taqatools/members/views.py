@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm, AddGovForm, AddCityForm
+from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm
+from .forms import AddAddressForm, AddGovForm, AddCityForm
 from django.contrib.auth.models import User
 from .models import Company, CoCategory, Details, Account
 from products.models import Category, Product, Brand
@@ -274,4 +275,16 @@ def add_city(request):
             return redirect('add_city')
     else:
         form = AddCityForm()
+        return render(request, 'members/address/add_city.html', {'form': form})
+
+
+@login_required
+def add_address(request):
+    if request.method == 'POST':
+        form = AddAddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_city')
+    else:
+        form = AddAddressForm()
         return render(request, 'members/address/add_city.html', {'form': form})

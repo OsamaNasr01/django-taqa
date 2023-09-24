@@ -27,5 +27,6 @@ urlpatterns = [
     # Address
     path('address/add/gov/', views.add_gov, name='add_gov'),
     path('address/add/city/', views.add_city, name='add_city'),
+    path('address/add/address/', views.add_address, name='add_address'),
     
 ]
