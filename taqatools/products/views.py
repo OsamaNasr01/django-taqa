@@ -159,11 +159,15 @@ def product(request, slug):
     price = (original_price * (100 - discount ))/100
     form = AddProductForm(instance = product)
     price_form = PriceForm(instance = product.prices.last())
-    in_cart = product.cart.filter(user=request.user)
-    if in_cart:
-        no_in_cart = product.cart.get(user=request.user).q
+    if request.user.is_authenticated:
+        in_cart = product.cart.filter(user=request.user)
+        if in_cart:
+            no_in_cart = product.cart.get(user=request.user).q
+        else:
+            no_in_cart =0
     else:
-        no_in_cart =0
+        in_cart = 1
+        no_in_cart = 0
     context = {
         'product' : product,
         'form' : form,

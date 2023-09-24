@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm
+from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm, AddGovForm
 from django.contrib.auth.models import User
 from .models import Company, CoCategory, Details, Account
 from products.models import Category, Product, Brand
@@ -250,3 +250,15 @@ def co_category_profile(request, slug):
         }
     return render(request, 'members/company_category/co_category_profile.html', context)
 
+
+
+@login_required
+def add_gov(request):
+    if request.method == 'POST':
+        form = AddGovForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_gov')
+    else:
+        form = AddGovForm()
+        return render(request, 'members/address/add_gov.html', {'form': form})
