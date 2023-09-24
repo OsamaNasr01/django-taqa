@@ -1,7 +1,6 @@
-{% extends 'base.html' %} {% load humanize %}
-{% load static %} 
-{% block title %} {{ post.title }}
-{% endblock %} {% block content %}
+{% extends 'base.html' %} {% load humanize %} {% load static %}
+<!-- comment  -->
+{% block title%} {{ post.title }} {% endblock %} {% block content %}
 <button
     type="button"
     id="modal_button"
@@ -13,53 +12,232 @@
 </button>
 <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">Edit</a>
 <br /><br />
-<link rel="stylesheet" href="{% static 'posts/post.css' %}">
-<style></style>
+<link rel="stylesheet" href="{% static 'posts/post.css' %}" />
+<style>
+    .container {
+        border: 1px solid red;
+    }
+    .content {
+        position: relative;
+        border: 1px solid red;
+    }
+    .content .image {
+        border: 1px solid red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .content .image img {
+        height: 400px;
+        width: auto;
+        border: 1px solid #ddd;
+    }
+</style>
 <div class="content">
     <p>{{ post.timeToRead }}</p>
     <p>{{ post.category }}</p>
     <p>{{ post.created_at|naturaltime }}</p>
     <p>{{ post.auther.full_name }}</p>
-    <h3>{{ post.title }}</h3>
     <div class="image">
         {% if post.image %}
-        <img src="{{post.image.url}}" alt="">
+        <img src="{{post.image.url}}" alt="" />
         {% endif %}
     </div>
+    <h3>{{ post.title }}</h3>
     <p>{{ post.content|safe }}</p>
 </div>
 
 <div class="also">
     {% if post.category.posts.count > 1 %}
-        <h3>Read also</h3>
-        {% for cat_post in post.category.posts.all %}
-            {% if not cat_post.id == post.id %}
-                <a href="{% url 'post' cat_post.slug %}" class="card">
-                    <h3>{{ cat_post.title }}</h3>
-                    <p>{{ cat_post.content|safe|truncatewords:20 }}</p>
-                </a>
-            {% endif %}
-        {% endfor %} 
+    <h3>Read also</h3>
+    {% for cat_post in post.category.posts.all %}
+    <!-- comment -->
+    {% if not cat_post.id == post.id %}
+    <a href="{% url 'post' cat_post.slug %}" class="card">
+        <h3>{{ cat_post.title }}</h3>
+        <p>{{ cat_post.content|safe|truncatewords:20 }}</p>
+    </a>
+    {% endif %}
+    <!-- comment -->
+    {% endfor %}
+    <!-- comment  -->
     {% endif %}
 </div>
 
+<style>
+    .header {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 150px;
+        width: 100%;
+    }
+    .card {
+        position: relative;
+        height: 400px;
+        margin: 0 20px 20px 0;
+        width: 23.18%;
+        display: inline-flex;
+        overflow: hidden;
+        text-decoration: none;
+        box-shadow: 0 0 50px #f2f2f2;
+        border-radius: 20px;
+        border: none;
+        transition: 0.5s box-shadow;
+    }
+    .card:hover {
+        box-shadow: 0 0 50px #818181;
+    }
+    .card .image {
+        height: 55%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .card .image img {
+        height: auto;
+        width: 70%;
+    }
+    .card .text {
+        overflow: hidden;
+        height: 18%;
+        width: 100%;
+        padding: 5px 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .card .text h3 {
+        font-size: 18px;
+        margin-bottom: unset;
+        font-weight: bolder;
+    }
+    .card .text p {
+        margin-bottom: unset;
+    }
+    .card .order {
+        overflow: hidden;
+        height: 27%;
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .card .order .prices {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+    .card .order .prices p {
+        margin-bottom: unset;
+    }
+    .card .order .prices div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .card .order .prices span {
+        font-size: 10px;
+    }
+    .card .order .prices div p {
+        text-decoration: line-through;
+        padding: 0 4px 0 0;
+        color: gray;
+    }
+    .card .order .prices div span {
+        font-size: 10px;
+        transform: translateY(3px);
+        color: gray;
+    }
+    .card .order form {
+        position: relative;
+        width: 100%;
+    }
+    .card .order form button {
+        border: 1px solid black;
+        width: 100%;
+        background: none;
+        border-radius: 10px;
+        padding: 0.3rem 0;
+    }
+</style>
+
 {% if post.category.products.count %}
+<div class="header">
     <h3>Buy now</h3>
-    {% for product in post.category.products.all %}
-        <a
-            href="{% url 'product' product.slug %}"
-            class="text-dark text-decoration-none"
-        >
-            <div class="shadow p-3 mb-5 bg-white rounded">
-                <div>
-                    <img src="/{{product.image}}" alt="" />
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
-                </div>
+</div>
+{% for product in post.category.products.all %}
+<a href="{% url 'product' product.slug %}" class="card">
+    <div class="image">
+        <img src="/{{product.image}}" alt="" />
+    </div>
+    <div class="text">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+    </div>
+    <div class="order">
+        <div class="prices">
+            <p>3483 <span>EGP</span></p>
+            <div>
+                <p>4243</p>
+                <span>EGP</span>
             </div>
-        </a>
-    {% endfor %} 
-{% endif %}
+        </div>
+        <form action="erpjq.com">
+            <button>Buy now</button>
+        </form>
+    </div>
+</a>
+<a href="{% url 'product' product.slug %}" class="card">
+    <div class="image">
+        <img src="/{{product.image}}" alt="" />
+    </div>
+    <div class="text">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+    </div>
+    <div class="order">
+        <div class="prices">
+            <p>3483 <span>EGP</span></p>
+            <div>
+                <p>4243</p>
+                <span>EGP</span>
+            </div>
+        </div>
+        <form action="erpjq.com">
+            <button>Buy now</button>
+        </form>
+    </div>
+</a>
+<a href="{% url 'product' product.slug %}" class="card">
+    <div class="image">
+        <img src="/{{product.image}}" alt="" />
+    </div>
+    <div class="text">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+    </div>
+    <div class="order">
+        <div class="prices">
+            <p>3483 <span>EGP</span></p>
+            <div>
+                <p>4243</p>
+                <span>EGP</span>
+            </div>
+        </div>
+        <form action="erpjq.com">
+            <button>Buy now</button>
+        </form>
+    </div>
+</a>
+{% endfor %} {% endif %}
 
 <!-- delete-post-modal.html -->
 
