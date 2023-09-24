@@ -24,7 +24,7 @@ def gov_select(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         gov_id = data['gov_id']
-        cities = City.objects.filter(id=gov_id)
+        cities = City.objects.filter(gov=gov_id)
         return_data = {}
         for city in cities:
             return_data[city.id] = city.name

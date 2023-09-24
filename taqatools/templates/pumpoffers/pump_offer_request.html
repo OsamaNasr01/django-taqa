@@ -60,6 +60,7 @@
     .then(data => {
       console.log(data)
       const city = document.getElementById('id_city')
+      city.innerHTML = ''
       for (var key in data) {
         const option = document.createElement('option')
         option.value = key
@@ -71,5 +72,9 @@
       console.log(error)
     })
     })
+
+    function clean_cities() {
+
+    }
 </script>
 {% endblock %}
