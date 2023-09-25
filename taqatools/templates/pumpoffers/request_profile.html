@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %} Pump Offer Request {% endblock %}
 {% block content %}
 
 
 <div class="container">
     <div class="row">
-        <a href="">
+        <div class="col-12">
             <h3>{{ offer_request.hp }} hp sub pump offer request </h3>
-            <p>{{ offer_request.address }}</p>
-            <p>{{ offer_request.gwdepth }}</p>
-            <p>{{ offer_request.boreholediam }}</p>
-            <p>{{ offer_request.created_at }}</p>
-        </a>
+            <p>Project location in {{ offer_request.address.location }}</p>
+            <p>Ground water level {{ offer_request.gwdepth }}m from ground service</p>
+            <p>Borehole diameter {{ offer_request.boreholediam }} inchs</p>
+            <p>Since {{ offer_request.created_at|naturaltime }}</p>
+
+        </div>
+        <div class="col-12">
+            <a class="btn btn-primary" href="">Submit an offer</a>
+        </div>
     </div>
 </div>
 {% endblock %}

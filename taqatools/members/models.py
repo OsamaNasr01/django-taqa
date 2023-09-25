@@ -165,3 +165,7 @@ class Address(models.Model):
 
     def __str__(self):
         return self.details
+    
+    @property
+    def location(self):
+        return f'{self.city.gov.name} governerate, {self.city.name} city, {self.details}'

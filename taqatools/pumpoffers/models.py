@@ -13,7 +13,6 @@ class PumpOfferRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-
 class PumpOffer(models.Model):
     request = models.ForeignKey(PumpOfferRequest, on_delete=models.SET_NULL, null=True, related_name='offers')
     company  = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, related_name='offers')
