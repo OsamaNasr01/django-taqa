@@ -51,3 +51,9 @@ def gov_select(request):
 def pumpoffer_request_list(request):
     requests = PumpOfferRequest.objects.all()
     return render(request, 'pumpoffers/pumpoffer_request_list.html', {'requests': requests})
+
+
+def pumpoffer_request_profile(request, id):
+    offer_request = PumpOfferRequest.objects.get(id=id)
+    return render(request, 'pumpoffers/request_profile.html', {'offer_request': offer_request})
+    

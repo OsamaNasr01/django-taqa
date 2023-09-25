@@ -6,15 +6,13 @@
 
 <div class="container">
     <div class="row">
-        {% for offer_request in requests %}
-        <a href="{% url 'pumpoffer_request_profile' offer_request.id %}">
+        <a href="">
             <h3>{{ offer_request.hp }} hp sub pump offer request </h3>
             <p>{{ offer_request.address }}</p>
             <p>{{ offer_request.gwdepth }}</p>
             <p>{{ offer_request.boreholediam }}</p>
             <p>{{ offer_request.created_at }}</p>
         </a>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
