@@ -39,3 +39,130 @@
 .also .card h3{
     padding: 10px 0;
 }
+
+
+
+.container {
+    border: 1px solid red;
+}
+.content {
+    position: relative;
+    border: 1px solid red;
+}
+.content .image {
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.content .image img {
+    height: 400px;
+    width: auto;
+    border: 1px solid #ddd;
+}
+
+
+
+
+.header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    width: 100%;
+}
+.card {
+    position: relative;
+    height: 400px;
+    margin: 0 20px 20px 0;
+    width: 23.18%;
+    display: inline-flex;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 0 50px #f2f2f2;
+    border-radius: 20px;
+    border: none;
+    transition: 0.5s box-shadow;
+}
+.card:hover {
+    box-shadow: 0 0 50px #818181;
+}
+.card .image {
+    height: 55%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card .image img {
+    height: auto;
+    width: 70%;
+}
+.card .text {
+    overflow: hidden;
+    height: 18%;
+    width: 100%;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.card .text h3 {
+    font-size: 18px;
+    margin-bottom: unset;
+    font-weight: bolder;
+}
+.card .text p {
+    margin-bottom: unset;
+}
+.card .order {
+    overflow: hidden;
+    height: 27%;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.card .order .prices {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.card .order .prices p {
+    margin-bottom: unset;
+}
+.card .order .prices div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.card .order .prices span {
+    font-size: 10px;
+}
+.card .order .prices div p {
+    text-decoration: line-through;
+    padding: 0 4px 0 0;
+    color: gray;
+}
+.card .order .prices div span {
+    font-size: 10px;
+    transform: translateY(3px);
+    color: gray;
+}
+.card .order form {
+    position: relative;
+    width: 100%;
+}
+.card .order form button {
+    border: 1px solid black;
+    width: 100%;
+    background: none;
+    border-radius: 10px;
+    padding: 0.3rem 0;
+}
