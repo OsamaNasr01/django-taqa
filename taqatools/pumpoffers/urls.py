@@ -10,6 +10,7 @@ urlpatterns = [
     
     path('pump-offer/pump-selection/', views.pump_selection, name='pump_selection'),
     path('pump-offer/add-pump-to-offer/', views.add_pump_to_offer, name='add_pump_to_offer'),
+    path('pump-offer/remove-pump-from-offer/', views.remove_pump_from_offer, name='remove_pump_from_offer'),
     
     path('pump-offer/motor-selection/', views.motor_selection, name='motor_selection'),
     path('pump-offer/pipes-selection/', views.pipes_selection, name='pipes_selection'),

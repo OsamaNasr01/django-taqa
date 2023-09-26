@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .forms import PumpOfferRequestForm
 from .models import PumpOfferRequest, PumpOffer, PumpOfferItem
 from members.forms import AddAddressForm
@@ -77,8 +77,21 @@ def add_pump_to_offer(request):
         price = request.POST['price'],
     )
     offer_pump.save()
-    json_data = json.dumps({'data':'ok'})
+    json_data = json.dumps({'data':'added'})
     return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_pump_from_offer(request):
+    offer_pump = PumpOfferItem.objects.get(
+        product_id =request.POST['pump_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_pump.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
+    
+
+
 
 def motor_selection(request):
     return render(request, 'pumpoffers/response/motor.html', {})
