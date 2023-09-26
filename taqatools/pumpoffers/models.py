@@ -17,7 +17,7 @@ class PumpOffer(models.Model):
     request = models.ForeignKey(PumpOfferRequest, on_delete=models.SET_NULL, null=True, related_name='offers')
     company  = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, related_name='offers')
     value = models.FloatField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=True)
     
     
 class PumpOfferItem(models.Model):

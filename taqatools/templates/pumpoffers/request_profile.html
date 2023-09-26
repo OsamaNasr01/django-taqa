@@ -16,7 +16,11 @@
 
         </div>
         <div class="col-12">
-            <a class="btn btn-primary" href="{% url 'pump_selection' %}">Submit an offer</a>
+            <form method="post" action="{% url 'create_pump_offer' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{offer_request.id}}" name="request_id">
+                <button class="btn btn-primary" type="submit">submit an offer</button>
+            </form>
         </div>
     </div>
 </div>

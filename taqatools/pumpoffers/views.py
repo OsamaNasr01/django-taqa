@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import PumpOfferRequestForm
-from .models import PumpOfferRequest
+from .models import PumpOfferRequest, PumpOffer
 from members.forms import AddAddressForm
-from members.models import Gov, City
+from members.models import Gov, City, Company
 import json
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -55,8 +55,19 @@ def pumpoffer_request_profile(request, id):
     offer_request = PumpOfferRequest.objects.get(id=id)
     return render(request, 'pumpoffers/request_profile.html', {'offer_request': offer_request})
     
-    
+
+def create_offer(request):
+    offer = PumpOffer.objects.create(
+        company = Company.objects.get(owner = request.user), 
+        request = PumpOfferRequest.objects.get(id = request.POST['request_id']),
+        value = 0,
+        )
+    offer.save()
+    return render(request, 'pumpoffers/response/pump.html', {'offer':offer})
+
+ 
 def pump_selection(request):
+    
     return render(request, 'pumpoffers/response/pump.html', {})
 
 def motor_selection(request):
