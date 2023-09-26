@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from members.models import Address, Company
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -24,10 +26,20 @@ class PumpOffer(models.Model):
 class PumpOfferItem(models.Model):
     product = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, related_name='pumpoffer')
     offer = models.ForeignKey(PumpOffer, on_delete=models.CASCADE, related_name='items')
-    q = models.PositiveSmallIntegerField()
+    q = models.FloatField()
     price = models.FloatField(default=0)
     @property
     def item_value(self):
-        return self.price * self.q
+        return float(self.price) * float(self.q)
 
+
+@receiver(post_save, sender =  PumpOfferItem)
+def update_details(sender, instance, created, **kwargs):
+    if created:
+        instance.offer.value += instance.item_value
+        instance.offer.save()
     
+@receiver(post_delete, sender =  PumpOfferItem)
+def update_details(sender, instance,  **kwargs):
+    instance.offer.value -= instance.item_value
+    instance.offer.save()

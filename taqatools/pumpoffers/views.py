@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import PumpOfferRequestForm
-from .models import PumpOfferRequest, PumpOffer
+from .models import PumpOfferRequest, PumpOffer, PumpOfferItem
 from members.forms import AddAddressForm
 from members.models import Gov, City, Company
 from products.models import Product, Category
@@ -61,7 +61,6 @@ def pump_selection(request):
     offer = PumpOffer.objects.create(
         company = Company.objects.get(owner = request.user), 
         request = PumpOfferRequest.objects.get(id = request.POST['request_id']),
-        value = 0,
         )
     offer.save()
     pumps = Product.objects.filter(category = Category.objects.get(id = 15 ))
@@ -70,6 +69,16 @@ def pump_selection(request):
         'pumps':pumps,
         })
 
+def add_pump_to_offer(request):
+    offer_pump = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['pump_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_pump.save()
+    json_data = json.dumps({'data':'ok'})
+    return HttpResponse(json_data, content_type="application/json")
 
 def motor_selection(request):
     return render(request, 'pumpoffers/response/motor.html', {})

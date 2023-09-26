@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import PumpOfferRequest
+from .models import PumpOfferRequest, PumpOfferItem
 
 
 
@@ -16,3 +16,7 @@ class PumpOfferRequestForm(forms.ModelForm):
         self.fields['hp'].widget.attrs.update({'class': 'form-control'})
         self.fields['gwdepth'].widget.attrs.update({'class': 'form-control'})
         self.fields['boreholediam'].widget.attrs.update({'class': 'form-control'})
+        
+        
+
+
