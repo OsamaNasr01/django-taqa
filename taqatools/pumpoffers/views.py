@@ -4,10 +4,12 @@ from .models import PumpOfferRequest
 from members.forms import AddAddressForm
 from members.models import Gov, City
 import json
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
 
+@login_required(login_url='login')
 def pump_offer_request(request):
     if request.method == 'POST':
         address_form = AddAddressForm(request.POST)
@@ -15,15 +17,11 @@ def pump_offer_request(request):
         new_address.city = City.objects.get(id=request.POST['city'])
         new_address.details = request.POST['details']
         new_address.save()
-        # if address_form.is_valid():
-        #     address_form.save()
         offer_request_form = PumpOfferRequestForm(request.POST)
         new_request = offer_request_form.save(commit=False)
         new_request.user = request.user
         new_request.address = new_address
         new_request.save()
-        # if offer_request_form.is_valid():
-        #     offer_request_form.save()
         return redirect('home')
     else:
         address_form = AddAddressForm()
@@ -57,3 +55,24 @@ def pumpoffer_request_profile(request, id):
     offer_request = PumpOfferRequest.objects.get(id=id)
     return render(request, 'pumpoffers/request_profile.html', {'offer_request': offer_request})
     
+    
+def pump_selection(request):
+    return render(request, 'pumpoffers/response/pump.html', {})
+
+def motor_selection(request):
+    return render(request, 'pumpoffers/response/motor.html', {})
+
+def pipes_selection(request):
+    return render(request, 'pumpoffers/response/pipes.html', {})
+
+def adaptors_selection(request):
+    return render(request, 'pumpoffers/response/adaptors.html', {})
+
+def cable_selection(request):
+    return render(request, 'pumpoffers/response/cable.html', {})
+
+def control_panel_selection(request):
+    return render(request, 'pumpoffers/response/control_panel.html', {})
+
+def install_evaluatation(request):
+    return render(request, 'pumpoffers/response/installation.html', {})

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Pump Offer Request {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <h3>Motor selection</h3>
+    </div>
+    <div>
+        <a class="btn btn-primary" href="{% url 'pipes_selection' %}">next</a>
+    </div>
+</div>
+{% endblock %}

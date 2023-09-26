@@ -7,5 +7,12 @@ urlpatterns = [
     path('pump-offer/gov-select/', views.gov_select, name='gov_select'),
     path('pump-offer/requests/list/', views.pumpoffer_request_list, name='pumpoffer_request_list'),
     path('pump-offer/requests/<int:id>/', views.pumpoffer_request_profile, name='pumpoffer_request_profile'),
+    path('pump-offer/pump-selection/', views.pump_selection, name='pump_selection'),
+    path('pump-offer/motor-selection/', views.motor_selection, name='motor_selection'),
+    path('pump-offer/pipes-selection/', views.pipes_selection, name='pipes_selection'),
+    path('pump-offer/adaptors-selection/', views.adaptors_selection, name='adaptors_selection'),
+    path('pump-offer/cable-selection/', views.cable_selection, name='cable_selection'),
+    path('pump-offer/control-panel-selection/', views.control_panel_selection, name='control_panel_selection'),
+    path('pump-offer/instalation-evaluation/', views.install_evaluatation, name='install_evaluatation'),
     
 ]

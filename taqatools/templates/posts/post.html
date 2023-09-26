@@ -55,7 +55,7 @@
 {% for product in post.category.products.all %}
 <a href="{% url 'product' product.slug %}" class="card">
     <div class="image">
-        <img src="/{{product.image}}" alt="" />
+        <img src="{{product.image.url}}" alt="" />
     </div>
     <div class="text">
         <h3>{{ product.name }}</h3>
@@ -63,51 +63,9 @@
     </div>
     <div class="order">
         <div class="prices">
-            <p>3483 <span>EGP</span></p>
+            <p>{{product.price}} <span>EGP</span></p>
             <div>
-                <p>4243</p>
-                <span>EGP</span>
-            </div>
-        </div>
-        <form action="erpjq.com">
-            <button>Buy now</button>
-        </form>
-    </div>
-</a>
-<a href="{% url 'product' product.slug %}" class="card">
-    <div class="image">
-        <img src="/{{product.image}}" alt="" />
-    </div>
-    <div class="text">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-    </div>
-    <div class="order">
-        <div class="prices">
-            <p>3483 <span>EGP</span></p>
-            <div>
-                <p>4243</p>
-                <span>EGP</span>
-            </div>
-        </div>
-        <form action="erpjq.com">
-            <button>Buy now</button>
-        </form>
-    </div>
-</a>
-<a href="{% url 'product' product.slug %}" class="card">
-    <div class="image">
-        <img src="/{{product.image}}" alt="" />
-    </div>
-    <div class="text">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-    </div>
-    <div class="order">
-        <div class="prices">
-            <p>3483 <span>EGP</span></p>
-            <div>
-                <p>4243</p>
+                <p>{{product.o_price}}</p>
                 <span>EGP</span>
             </div>
         </div>
