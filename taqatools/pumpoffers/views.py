@@ -94,7 +94,36 @@ def remove_pump_from_offer(request):
 
 
 def motor_selection(request):
-    return render(request, 'pumpoffers/response/motor.html', {})
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    motors = Product.objects.filter(category = Category.objects.get(id = 3 ))
+    for motor in motors:
+        print(motor.name)
+    return render(request, 'pumpoffers/response/motor.html', {
+        'offer':offer,
+        'motors':motors,
+        })
+
+def add_motor_to_offer(request):
+    offer_motor = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['motor_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_motor.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_motor_from_offer(request):
+    offer_motor = PumpOfferItem.objects.get(
+        product_id =request.POST['motor_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_motor.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
+    
 
 def pipes_selection(request):
     return render(request, 'pumpoffers/response/pipes.html', {})

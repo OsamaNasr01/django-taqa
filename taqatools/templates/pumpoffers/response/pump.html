@@ -42,10 +42,14 @@
             {% endfor %}
         </div>
     </div>
-
-    <div>
-        <a class="btn btn-primary" href="{% url 'motor_selection' %}">next</a>
+    <div class="col-12">
+        <form method="post" action="{% url 'motor_selection' %}">
+            {% csrf_token %}
+            <input type="hidden" value="{{offer.id}}" name="offer_id">
+            <button class="btn btn-primary" type="submit">Next to Motors</button>
+        </form>
     </div>
+
 </div>
 
 
