@@ -125,8 +125,36 @@ def remove_motor_from_offer(request):
     return HttpResponse(json_data, content_type="application/json")
     
 
-def pipes_selection(request):
-    return render(request, 'pumpoffers/response/pipes.html', {})
+
+def pipe_selection(request):
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    pipes = Product.objects.filter(category = Category.objects.get(id = 16 ))
+    return render(request, 'pumpoffers/response/pipes.html', {
+        'offer':offer,
+        'pipes':pipes,
+        })
+
+def add_pipe_to_offer(request):
+    offer_pipe = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['pipe_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_pipe.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_pipe_from_offer(request):
+    offer_motor = PumpOfferItem.objects.get(
+        product_id =request.POST['pipe_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_motor.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
+
 
 def adaptors_selection(request):
     return render(request, 'pumpoffers/response/adaptors.html', {})
