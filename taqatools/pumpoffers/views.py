@@ -217,8 +217,36 @@ def remove_cable_from_offer(request):
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
 
-def control_panel_selection(request):
-    return render(request, 'pumpoffers/response/control_panel.html', {})
 
+
+
+def control_panel_selection(request):
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    controls = Product.objects.filter(category = Category.objects.get(id = 19 ))
+    return render(request, 'pumpoffers/response/control_panel.html', {
+        'offer':offer,
+        'controls':controls,
+        })
+
+def add_control_to_offer(request):
+    offer_control = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['control_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_control.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_control_from_offer(request):
+    offer_control = PumpOfferItem.objects.get(
+        product_id =request.POST['control_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_control.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
 def install_evaluatation(request):
     return render(request, 'pumpoffers/response/installation.html', {})
