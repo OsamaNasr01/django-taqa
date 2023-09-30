@@ -23,7 +23,7 @@ def pump_offer_request(request):
         new_request.user = request.user
         new_request.address = new_address
         new_request.save()
-        return redirect('home')
+        return redirect('pumpoffer_request_list')
     else:
         address_form = AddAddressForm()
         form = PumpOfferRequestForm()
@@ -147,17 +147,43 @@ def add_pipe_to_offer(request):
 
 
 def remove_pipe_from_offer(request):
-    offer_motor = PumpOfferItem.objects.get(
+    offer_pipe = PumpOfferItem.objects.get(
         product_id =request.POST['pipe_id'], 
         offer_id =  request.POST['offer_id'],
         )
-    offer_motor.delete()
+    offer_pipe.delete()
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
 
 
-def adaptors_selection(request):
-    return render(request, 'pumpoffers/response/adaptors.html', {})
+def adaptor_selection(request):
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    adaptors = Product.objects.filter(category = Category.objects.get(id = 17 ))
+    return render(request, 'pumpoffers/response/adaptors.html', {
+        'offer':offer,
+        'adaptors':adaptors,
+        })
+
+def add_adaptor_to_offer(request):
+    offer_adaptor = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['adaptor_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_adaptor.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_adaptor_from_offer(request):
+    offer_adaptor = PumpOfferItem.objects.get(
+        product_id =request.POST['adaptor_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_adaptor.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
 
 def cable_selection(request):
     return render(request, 'pumpoffers/response/cable.html', {})

@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="col-12">
-        <form method="post" action="{% url 'adaptors_selection' %}">
+        <form method="post" action="{% url 'adaptor_selection' %}">
             {% csrf_token %}
             <input type="hidden" value="{{offer.id}}" name="offer_id">
             <button class="btn btn-primary" type="submit">Next to Adaptors</button>

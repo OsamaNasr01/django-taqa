@@ -21,7 +21,10 @@ urlpatterns = [
     path('pump-offer/remove-pipe-from-offer/', views.remove_pipe_from_offer, name='remove_pipe_from_offer'),
     
     
-    path('pump-offer/adaptors-selection/', views.adaptors_selection, name='adaptors_selection'),
+    path('pump-offer/adaptors-selection/', views.adaptor_selection, name='adaptor_selection'),
+    path('pump-offer/add-adaptor-to-offer/', views.add_adaptor_to_offer, name='add_adaptor_to_offer'),
+    path('pump-offer/remove-adaptor-from-offer/', views.remove_adaptor_from_offer, name='remove_adaptor_from_offer'),
+    
     path('pump-offer/cable-selection/', views.cable_selection, name='cable_selection'),
     path('pump-offer/control-panel-selection/', views.control_panel_selection, name='control_panel_selection'),
     path('pump-offer/instalation-evaluation/', views.install_evaluatation, name='install_evaluatation'),
