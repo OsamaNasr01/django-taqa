@@ -248,5 +248,38 @@ def remove_control_from_offer(request):
     offer_control.delete()
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
-def install_evaluatation(request):
-    return render(request, 'pumpoffers/response/installation.html', {})
+
+
+
+
+def install_evaluation(request):
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    installs = Product.objects.filter(category = Category.objects.get(id = 20 ))
+    return render(request, 'pumpoffers/response/installation.html', {
+        'offer':offer,
+        'installs':installs,
+        })
+
+def add_install_to_offer(request):
+    offer_install = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['install_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_install.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_install_from_offer(request):
+    offer_control = PumpOfferItem.objects.get(
+        product_id =request.POST['install_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_control.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
+
+def final_submit(request):
+    pass

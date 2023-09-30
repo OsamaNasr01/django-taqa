@@ -33,6 +33,9 @@ urlpatterns = [
     path('pump-offer/add-control-to-offer/', views.add_control_to_offer, name='add_control_to_offer'),
     path('pump-offer/remove-control-from-offer/', views.remove_control_from_offer, name='remove_control_from_offer'),
     
-    path('pump-offer/instalation-evaluation/', views.install_evaluatation, name='install_evaluatation'),
+    path('pump-offer/instalation-evaluation/', views.install_evaluation, name='install_evaluation'),
+    path('pump-offer/add-install-to-offer/', views.add_install_to_offer, name='add_install_to_offer'),
+    path('pump-offer/remove-install-from-offer/', views.remove_install_from_offer, name='remove_install_from_offer'),
     
+    path('pump-offer/final-submit/', views.final_submit, name='final_submit')
 ]
