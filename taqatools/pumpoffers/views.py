@@ -282,4 +282,13 @@ def remove_install_from_offer(request):
     return HttpResponse(json_data, content_type="application/json")
 
 def final_submit(request):
-    pass
+    offer = PumpOffer.objects.get(id = request.POST['offer_id'])
+    return render(request, 'pumpoffers/response/final_submit.html', {
+        'offer':offer,
+    })
+    
+def send_offer(request):
+    offer = PumpOffer.objects.get(id = request.POST['offer_id'])
+    offer.submit = True
+    offer.save()
+    return redirect(pumpoffer_request_list)

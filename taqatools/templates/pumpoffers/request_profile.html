@@ -22,6 +22,13 @@
                 <button class="btn btn-primary" type="submit">submit an offer</button>
             </form>
         </div>
+        <div>
+            {% for offer in offer_request.offers.all %}
+                {% if offer.submit %}
+                    <a href="">{{ offer.company.name }} {{ offer.value }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

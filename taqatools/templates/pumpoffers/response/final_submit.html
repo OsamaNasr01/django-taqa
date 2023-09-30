@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Sale invoice {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ offer.description }}</h1>
+            <p>{{ offer.member.full_name }}</p>
+            <p>{{ offer.value|floatformat:2|intcomma }}</p>
+            <p>{{ offer.created_at|naturaltime  }}</p>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered table-hover" id="cart_items">
+                <tr id="table_head">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>NO</th>
+                    <th>Total</th>
+                </tr>
+                {% for item in offer.items.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td><input  class="form-control" type="number" value="{{ item.price|floatformat:2|intcomma }}"></td>
+                        <td><input class="form-control" type="number" value="{{ item.q|intcomma }}"></td>
+                        <td>{{ item.item_value|floatformat:2|intcomma  }}</td>
+                    </tr>
+                {% endfor %}
+                <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ offer.value|floatformat:2|intcomma }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-12">
+            <form method="post" action="{% url 'send_offer' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{offer.id}}" name="offer_id">
+                <button class="btn btn-primary" type="submit">Confirm Offer</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
