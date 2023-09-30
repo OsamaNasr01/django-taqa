@@ -185,8 +185,37 @@ def remove_adaptor_from_offer(request):
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
 
+
+
+
 def cable_selection(request):
-    return render(request, 'pumpoffers/response/cable.html', {})
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    cables = Product.objects.filter(category = Category.objects.get(id = 18 ))
+    return render(request, 'pumpoffers/response/cable.html', {
+        'offer':offer,
+        'cables':cables,
+        })
+
+def add_cable_to_offer(request):
+    offer_cable = PumpOfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['cable_id']),
+        offer = PumpOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_cable.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def remove_cable_from_offer(request):
+    offer_cable = PumpOfferItem.objects.get(
+        product_id =request.POST['cable_id'], 
+        offer_id =  request.POST['offer_id'],
+        )
+    offer_cable.delete()
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
 
 def control_panel_selection(request):
     return render(request, 'pumpoffers/response/control_panel.html', {})

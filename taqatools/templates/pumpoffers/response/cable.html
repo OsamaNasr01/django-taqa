@@ -1,15 +1,100 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %} Pump Offer Request {% endblock %}
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'home/home.css' %}">
 
 <div class="container">
     <div class="row">
-        <h3>Cable selection</h3>
+        <h3>Cable Selection {{ offer.request.user.full_name }}</h3>
+        <h6>{{ offer.value }}</h6>
     </div>
-    <div>
-        <a class="btn btn-primary" href="{% url 'control_panel_selection' %}">next</a>
+
+
+    <div class="products">
+        <div class="header">
+            <h2>Select Cable from the List</h2>
+            <a href="#">See All</a>
+        </div>
+        <div class="content">
+            {% for cable in cables %}
+                <div class="images">
+                    <img src="{{cable.image.url}}" alt="" />
+                </div>
+                <div class="text">
+                    <span>{{cable.category}}</span>
+                    <h4>{{cable.name}}</h4>
+                    <!-- <p>{{product.description}}</p> -->
+                </div>
+                <div class="order">
+                    <form class="form-group" id="cable_selection" method="post" action="#">
+                        {% csrf_token %}
+                        <input  type="hidden" value="{{offer.id}}" name="offer_id">
+                        <input type="hidden" value="{{cable.id}}" name="cable_id">
+                        <label for="price">Price</label>
+                        <input id="price" class="form-control" type="number" value="{{cable.price}}" name="price">
+                        <label for="q">Quantity</label>
+                        <input id="q" class="form-control" type="number" value="1" name="q">
+                        <button class="btn btn-primary form-control" id="cable_submit" type="submit">Add to offer</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
     </div>
+    <div class="col-12">
+        <form method="post" action="{% url 'control_panel_selection' %}">
+            {% csrf_token %}
+            <input type="hidden" value="{{offer.id}}" name="offer_id">
+            <button class="btn btn-primary" type="submit">Next to control panel</button>
+        </form>
+    </div>
+
 </div>
+
+
+<script>
+    const cable_submit = document.getElementById('cable_submit')
+    cable_submit.addEventListener('click', function (e) {
+        e.preventDefault()
+        const cable_selection = document.getElementById('cable_selection')
+        const data_form = new FormData(cable_selection)
+        console.log(data_form.get('price'))
+        if (cable_submit.innerText === 'Remove from offer') {
+            url = '/pump-offer/remove-cable-from-offer/'
+        } else {
+            url = '/pump-offer/add-cable-to-offer/'
+        }
+        fetch(url, {
+            'method' : 'POST',
+            'body': data_form,
+        }) 
+        .then(response => {
+            if (response.ok) {
+              console.log(response)
+              return response.json()
+            } else {
+            console.log(response)
+            }
+        })
+        .then(data => {
+          console.log(data)
+          if (data['data'] === 'added') {
+            cable_submit.className = "btn btn-danger form-control"
+            cable_submit.innerText = 'Remove from offer'
+
+          } else {
+            cable_submit.className = "btn btn-primary form-control"
+            cable_submit.innerText = 'Add to offer'
+
+          }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    
+
+    })
+</script>
 {% endblock %}
