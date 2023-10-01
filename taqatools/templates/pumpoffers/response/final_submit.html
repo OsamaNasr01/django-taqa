@@ -9,8 +9,8 @@
 
     <div class="container">
         <div class="shadow p-3 mb-5 bg-white rounded">
-            <h1>{{ offer.description }}</h1>
-            <p>{{ offer.member.full_name }}</p>
+            <h1>{{ offer.request.hp }}hp</h1>
+            <p>{{ offer.company.name }}</p>
             <p>{{ offer.value|floatformat:2|intcomma }}</p>
             <p>{{ offer.created_at|naturaltime  }}</p>
         </div>
@@ -27,9 +27,9 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ item.product.name }}</td>
-                        <td><input  class="form-control" type="number" value="{{ item.price|floatformat:2|intcomma }}"></td>
-                        <td><input class="form-control" type="number" value="{{ item.q|intcomma }}"></td>
-                        <td>{{ item.item_value|floatformat:2|intcomma  }}</td>
+                        <td><input id="price_{{item.id}}" oninput="change_price('{{item.id}}')"  class="form-control" type="number" value="{{ item.price }}"></td>
+                        <td><input id="q_{{item.id}}" oninput="change_q('{{item.id}}')" class="form-control" type="number" value="{{ item.q|intcomma }}"></td>
+                        <td id="item_total_{{item.id}}">{{ item.item_value|floatformat:2|intcomma  }}</td>
                     </tr>
                 {% endfor %}
                 <tfoot>
@@ -38,7 +38,7 @@
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td>{{ offer.value|floatformat:2|intcomma }}</td>
+                        <td id="offer_value">{{ offer.value|floatformat:2|intcomma }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -52,6 +52,81 @@
         </div>
     </div>
 
+<script>
+    function change_price(id) {
+        const offer_total_value = document.getElementById('offer_value')
+        const price_value = document.getElementById(`price_${id}`)
+        const q_value = document.getElementById(`q_${id}`)
+        const item_total_value = document.getElementById(`item_total_${id}`)
+        console.log(price_value.value)
+        const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+        const url = '/pump-offer/change-item-price/'
+        const data = JSON.stringify({
+            'item_id': id,
+            'new_price': price_value.value
+        })
+        fetch(url, {
+            'method' : 'POST',
+            'headers' : {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            'body': data,
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+            console.log(response)
+            }
+        })
+        .then(data => {
+            console.log('ok')
+            item_total_value.innerText = data['item_value']
+            offer_total_value.innerText = data['offer_value']
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
 
+    
+    function change_q(id) {
+        const offer_total_value = document.getElementById('offer_value')
+        const price_value = document.getElementById(`price_${id}`)
+        const q_value = document.getElementById(`q_${id}`)
+        const item_total_value = document.getElementById(`item_total_${id}`)
+        console.log(price_value.value)
+        const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+        const url = '/pump-offer/change-item-q/'
+        const data = JSON.stringify({
+            'item_id': id,
+            'new_q': q_value.value
+        })
+        fetch(url, {
+            'method' : 'POST',
+            'headers' : {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            'body': data,
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+            console.log(response)
+            }
+        })
+        .then(data => {
+            console.log('ok')
+            item_total_value.innerText = data['item_value']
+            offer_total_value.innerText = data['offer_value']
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+</script>
 {% endblock %}
 

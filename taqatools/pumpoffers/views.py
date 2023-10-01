@@ -287,6 +287,46 @@ def final_submit(request):
         'offer':offer,
     })
     
+def change_item_price(request):
+    data = json.loads(request.body)
+    item = PumpOfferItem.objects.get(id = data['item_id'])
+    offer = PumpOffer.objects.get(id = item.offer.id)
+    offer.value -= item.item_value
+    item.price = data['new_price']
+    item.save()
+    offer.value += item.item_value
+    offer.save()
+    return_data = {
+        'item_value': item.item_value,
+        'offer_value': offer.value,
+    }
+    json_data = json.dumps(return_data)
+    print(json_data)
+    return HttpResponse(json_data, content_type="application/json")
+
+
+
+def change_item_q(request):
+    data = json.loads(request.body)
+    item = PumpOfferItem.objects.get(id = data['item_id'])
+    offer = PumpOffer.objects.get(id = item.offer.id)
+    offer.value -= item.item_value
+    item.q = data['new_q']
+    item.save()
+    offer.value += item.item_value
+    offer.save()
+    return_data = {
+        'item_value': item.item_value,
+        'offer_value': offer.value,
+    }
+    json_data = json.dumps(return_data)
+    print(json_data)
+    return HttpResponse(json_data, content_type="application/json")
+
+
+    
+
+    
 def send_offer(request):
     offer = PumpOffer.objects.get(id = request.POST['offer_id'])
     offer.submit = True

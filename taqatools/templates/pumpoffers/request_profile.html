@@ -22,10 +22,11 @@
                 <button class="btn btn-primary" type="submit">submit an offer</button>
             </form>
         </div>
-        <div>
+        <div class="container">
             {% for offer in offer_request.offers.all %}
                 {% if offer.submit %}
-                    <a href="">{{ offer.company.name }} {{ offer.value }}</a>
+                <div class="row"><a href="">{{ offer.company.name }} {{ offer.value }}</a></div>
+                    
                 {% endif %}
             {% endfor %}
         </div>
