@@ -117,7 +117,10 @@ def user_account_details(sender, instance, created, **kwargs):
         users_no.users   += 1
         users_no.save()
         
-    
+def has_company(self):
+    return self.companies.count()
+
+User.add_to_class('has_company', has_company)
 
 
 

@@ -28,8 +28,8 @@ function change_price(id) {
     })
     .then(data => {
         console.log('ok')
-        item_total_value.innerText = data['item_value']
-        offer_total_value.innerText = data['offer_value']
+        item_total_value.innerText = data['item_value'].toLocaleString ({minimumFractionDigits: 2})
+        offer_total_value.innerText = data['offer_value'].toLocaleString ({minimumFractionDigits: 2})
     })
     .catch((error) => {
         console.log(error)
@@ -66,8 +66,8 @@ function change_q(id) {
     })
     .then(data => {
         console.log('ok')
-        item_total_value.innerText = data['item_value']
-        offer_total_value.innerText = data['offer_value']
+        item_total_value.innerText = data['item_value'].toLocaleString ({minimumFractionDigits: 2})
+        offer_total_value.innerText = data['offer_value'].toLocaleString ({minimumFractionDigits: 2})
     })
     .catch((error) => {
         console.log(error)

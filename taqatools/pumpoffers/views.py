@@ -332,3 +332,9 @@ def send_offer(request):
     offer.submit = True
     offer.save()
     return redirect(pumpoffer_request_list)
+
+
+
+def offer_profile(request, id):
+    offer = PumpOffer.objects.get(id = id)
+    return render(request, 'pumpoffers/offer_profile.html', {'offer':offer})

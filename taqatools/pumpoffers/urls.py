@@ -40,5 +40,7 @@ urlpatterns = [
     path('pump-offer/final-submit/', views.final_submit, name='final_submit'),
     path('pump-offer/change-item-price/', views.change_item_price, name='change_item_price'),
     path('pump-offer/change-item-q/', views.change_item_q, name='change_item_q'),
+    
     path('pump-offer/send-offer/', views.send_offer, name='send_offer'),
+    path('pump-offer/offer/<int:id>/', views.offer_profile, name='offer_profile'),
 ]

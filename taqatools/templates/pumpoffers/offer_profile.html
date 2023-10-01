@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Sale invoice {% endblock %}
+{% block content %}
+
+{% load humanize %}
+
+
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ offer.request.hp }}hp</h1>
+            <p>{{ offer.company.name }}</p>
+            <p>{{ offer.value|floatformat:2|intcomma }}</p>
+            <p>{{ offer.created_at|naturaltime  }}</p>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered table-hover" id="cart_items">
+                <tr id="table_head">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>NO</th>
+                    <th>Total</th>
+                </tr>
+                {% for item in offer.items.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.q|intcomma }}</td>
+                        <td id="item_total_{{item.id}}">{{ item.item_value|floatformat:2|intcomma  }}</td>
+                    </tr>
+                {% endfor %}
+                <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td id="offer_value">{{ offer.value|floatformat:2|intcomma }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
