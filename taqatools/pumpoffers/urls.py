@@ -37,6 +37,7 @@ urlpatterns = [
     path('pump-offer/add-install-to-offer/', views.add_install_to_offer, name='add_install_to_offer'),
     path('pump-offer/remove-install-from-offer/', views.remove_install_from_offer, name='remove_install_from_offer'),
     
+    path('pump-offer/terms/', views.terms, name='terms'),
     path('pump-offer/final-submit/', views.final_submit, name='final_submit'),
     path('pump-offer/change-item-price/', views.change_item_price, name='change_item_price'),
     path('pump-offer/change-item-q/', views.change_item_q, name='change_item_q'),

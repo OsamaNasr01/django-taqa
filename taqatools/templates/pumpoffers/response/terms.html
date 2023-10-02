@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} Terms and conditions {% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/home.css' %}">
+
+<div class="container">
+    <div class="row">
+        <h3>Terms and conitions {{ offer.request.user.full_name }}</h3>
+    </div>
+
+
+                <div class="order">
+                    <form class="form-group"  method="post" action="#">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button  class="btn btn-primary form-control" id="pump_submit_{{pump.id}}" type="button">Add to offer</button>
+                    </form>
+                </div>
+    <div class="col-12">
+        <form method="post" action="{% url 'motor_selection' %}">
+            {% csrf_token %}
+            <input type="hidden" value="{{offer.id}}" name="offer_id">
+            <button class="btn btn-primary" type="submit">Next to Motors</button>
+        </form>
+    </div>
+
+</div>
+
+
+<script src="{% static 'pumpoffers/pump.js' %}"></script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .forms import PumpOfferRequestForm
+from .forms import PumpOfferRequestForm, TermsForm
 from .models import PumpOfferRequest, PumpOffer, PumpOfferItem
 from members.forms import AddAddressForm
 from members.models import Gov, City, Company
@@ -280,6 +280,16 @@ def remove_install_from_offer(request):
     offer_control.delete()
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
+
+
+def terms(request):
+    form = TermsForm()
+    offer = PumpOffer.objects.get(id=request.POST['offer_id'])
+    return render(request, 'pumpoffers/response/terms.html', {
+        'form':form,
+        'offer':offer,
+        })
+    
 
 def final_submit(request):
     offer = PumpOffer.objects.get(id = request.POST['offer_id'])
