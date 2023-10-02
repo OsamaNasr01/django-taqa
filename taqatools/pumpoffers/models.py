@@ -19,7 +19,12 @@ class PowerSource(models.Model):
     def __str__(self):
         return self.source
     
+class Validity(models.Model):
+    period = models.CharField(max_length=55)
+    days = models.PositiveSmallIntegerField() 
     
+    def __str__(self):
+        return self.period 
     
 class PumpOfferRequest(models.Model):
     user = models.ForeignKey(User, related_name='pumpoffer', on_delete=models.SET_NULL, null=True)
@@ -37,6 +42,10 @@ class PumpOffer(models.Model):
     request = models.ForeignKey(PumpOfferRequest, on_delete=models.SET_NULL, null=True, related_name='offers')
     company  = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, related_name='offers')
     value = models.FloatField(default=0)
+    valid = models.ForeignKey(Validity, on_delete=models.SET_NULL, null=True)
+    include_taxes = models.BooleanField(default=False)
+    include_trans = models.BooleanField(default=False)
+    installment = models.BooleanField(default=False)
     submit = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now=True)
     
