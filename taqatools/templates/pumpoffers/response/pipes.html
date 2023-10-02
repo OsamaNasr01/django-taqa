@@ -29,7 +29,7 @@
                     <!-- <p>{{product.description}}</p> -->
                 </div>
                 <div class="order">
-                    <form class="form-group" id="pipe_selection" method="post" action="#">
+                    <form class="form-group" id="pipe_selection_{{pipe.id}}" method="post" action="#">
                         {% csrf_token %}
                         <input  type="hidden" value="{{offer.id}}" name="offer_id">
                         <input type="hidden" value="{{pipe.id}}" name="pipe_id">
@@ -37,7 +37,7 @@
                         <input id="price" class="form-control" type="number" value="{{pipe.price}}" name="price">
                         <label for="q">Quantity</label>
                         <input id="q" class="form-control" type="number" value="1" name="q">
-                        <button class="btn btn-primary form-control" id="pipe_submit" type="submit">Add to offer</button>
+                        <button onclick="pipe_submit('{{pipe.id}}')" class="btn btn-primary form-control" id="pipe_submit_{{pipe.id}}" type="button">Add to offer</button>
                     </form>
                 </div>
             {% endfor %}

@@ -29,7 +29,7 @@
                     <!-- <p>{{product.description}}</p> -->
                 </div>
                 <div class="order">
-                    <form class="form-group" id="control_selection" method="post" action="#">
+                    <form class="form-group" id="control_selection_{{control.id}}" method="post" action="#">
                         {% csrf_token %}
                         <input  type="hidden" value="{{offer.id}}" name="offer_id">
                         <input type="hidden" value="{{control.id}}" name="control_id">
@@ -37,7 +37,7 @@
                         <input id="price" class="form-control" type="number" value="{{control.price}}" name="price">
                         <label for="q">Quantity</label>
                         <input id="q" class="form-control" type="number" value="1" name="q">
-                        <button class="btn btn-primary form-control" id="control_submit" type="submit">Add to offer</button>
+                        <button onclick="control_submit('{{control.id}}')" class="btn btn-primary form-control" id="control_submit_{{control.id}}" type="button">Add to offer</button>
                     </form>
                 </div>
             {% endfor %}
