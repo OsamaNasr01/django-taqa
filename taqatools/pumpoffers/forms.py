@@ -9,13 +9,15 @@ class PumpOfferRequestForm(forms.ModelForm):
 
     class Meta:
         model = PumpOfferRequest
-        fields = ('hp', 'gwdepth', 'boreholediam',)
+        fields = ('hp', 'gwdepth', 'boreholediam', 'irrigation', 'power',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['hp'].widget.attrs.update({'class': 'form-control'})
         self.fields['gwdepth'].widget.attrs.update({'class': 'form-control'})
         self.fields['boreholediam'].widget.attrs.update({'class': 'form-control'})
+        self.fields['irrigation'].widget.attrs.update({'class': 'form-control'})
+        self.fields['power'].widget.attrs.update({'class': 'form-control'})
         
         
 

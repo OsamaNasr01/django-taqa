@@ -6,13 +6,31 @@ from django.dispatch import receiver
 
 # Create your models here.
 
+
+class Irrigation(models.Model):
+    type = models.CharField(max_length=55)
+    
+    def __str__(self):
+        return self.type
+    
+class PowerSource(models.Model):
+    source = models.CharField(max_length=55)
+    
+    def __str__(self):
+        return self.source
+    
+    
+    
 class PumpOfferRequest(models.Model):
     user = models.ForeignKey(User, related_name='pumpoffer', on_delete=models.SET_NULL, null=True)
     hp = models.FloatField()
     gwdepth = models.PositiveIntegerField()
     boreholediam = models.PositiveIntegerField()
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+    irrigation = models.ForeignKey(Irrigation, on_delete=models.SET_NULL, null=True)
+    power = models.ForeignKey(PowerSource, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
 
 class PumpOffer(models.Model):
@@ -43,3 +61,4 @@ def update_details(sender, instance, created, **kwargs):
 def update_details(sender, instance,  **kwargs):
     instance.offer.value -= instance.item_value
     instance.offer.save()
+    
