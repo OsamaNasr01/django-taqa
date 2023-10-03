@@ -32,9 +32,9 @@ class TermsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['valid'].widget.attrs.update({'class': 'form-control'})
-        self.fields['include_taxes'].widget.attrs.update({'class': 'form-control'})
-        self.fields['include_trans'].widget.attrs.update({'class': 'form-control'})
-        self.fields['installment'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['include_taxes'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['include_trans'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['installment'].widget.attrs.update({'class': 'form-control'})
         
         
 

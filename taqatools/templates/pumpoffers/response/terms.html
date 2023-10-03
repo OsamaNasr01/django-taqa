@@ -16,13 +16,13 @@
                     <form class="form-group"  method="post" action="#">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button  class="btn btn-primary form-control" id="pump_submit_{{pump.id}}" type="button">Add to offer</button>
+                        <input type="hidden" value="{{offer.id}}">
                     </form>
                 </div>
     <div class="col-12">
         <form method="post" action="{% url 'motor_selection' %}">
             {% csrf_token %}
-            <input type="hidden" value="{{offer.id}}" name="offer_id">
+            <input type="hidden" id="offer_id" value="{{offer.id}}" name="offer_id">
             <button class="btn btn-primary" type="submit">Next to Motors</button>
         </form>
     </div>
@@ -30,5 +30,42 @@
 </div>
 
 
-<script src="{% static 'pumpoffers/pump.js' %}"></script>
+<script>
+    const valid = document.getElementById('id_valid')
+    const taxes = document.getElementById('id_include_taxes')
+    const trans = document.getElementById('id_include_trans')
+    const installment = document.getElementById('id_installment')
+    const offer_id = document.getElementById('offer_id')
+
+    valid.addEventListener('change', function(){
+        console.log(valid.value)
+        const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+        const url = '/pump-offer/validity/'
+        const data = JSON.stringify({
+            'offer_id': offer_id.value,
+            'validity': valid.value
+        })
+        fetch(url, {
+            'method' : 'POST',
+            'headers' : {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            'body': data,
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+            console.log(response)
+            }
+        })
+        .then(data => {
+            console.log('ok')
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    })
+</script>
 {% endblock %}

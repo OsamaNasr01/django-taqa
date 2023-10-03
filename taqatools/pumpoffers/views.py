@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .forms import PumpOfferRequestForm, TermsForm
-from .models import PumpOfferRequest, PumpOffer, PumpOfferItem
+from .models import PumpOfferRequest, PumpOffer, PumpOfferItem, Validity
 from members.forms import AddAddressForm
 from members.models import Gov, City, Company
 from products.models import Product, Category
@@ -289,6 +289,18 @@ def terms(request):
         'form':form,
         'offer':offer,
         })
+
+def validity(request):
+    data = json.loads(request.body)
+    offer = PumpOffer.objects.get(id=data['offer_id'])
+    offer.valid = Validity.objects.get(id=data['validity']) 
+    offer.save()
+    return_data = {
+        'ok': 'ok',
+    }
+    json_data = json.dumps(return_data)
+    return HttpResponse(json_data, content_type="application/json")
+    
     
 
 def final_submit(request):
