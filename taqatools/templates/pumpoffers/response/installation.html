@@ -47,7 +47,7 @@
         <form method="post" action="{% url 'terms' %}">
             {% csrf_token %}
             <input type="hidden" value="{{offer.id}}" name="offer_id">
-            <button class="btn btn-primary" type="submit">Final Check</button>
+            <button class="btn btn-primary" type="submit">Terms and conditions</button>
         </form>
     </div>
 
