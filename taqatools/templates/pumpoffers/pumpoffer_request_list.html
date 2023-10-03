@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %} Pump Offer Request {% endblock %}
 {% block content %}
 
@@ -15,7 +16,7 @@
             <p>{{ offer_request.address }}</p>
             <p>{{ offer_request.gwdepth }}</p>
             <p>{{ offer_request.boreholediam }}</p>
-            <p>{{ offer_request.created_at }}</p>
+            <p>{{ offer_request.created_at|naturaltime }}</p>
         </a>
         {% endfor %}
     </div>

@@ -43,6 +43,26 @@
                 </tfoot>
             </table>
         </div>
+        <div>
+            <ol>
+                <li>العرض ساري لمدة {{ offer.valid.period }}  من تاريخ العرض</li>
+                {% if offer.include_taxes %}
+                    <li>قيمة العرض تشمل ضريبة المبيعات وضريبة القيمة المضافة</li>
+                {% else %}
+                    <li>قيمة العرض غير شاملة ضريبة المبيعات او ضريبة القيمة المضافة</li>
+                {% endif %}
+                {% if offer.include_trans %}
+                    <li>قيمة العرض تشمل النقل الي الموقع</li>
+                {% else %}
+                <li>قيمة العرض  لا تشمل النقل الي الموقع</li>
+                {% endif %}
+                {% if offer.installment %}
+                    <li>يوجد امكانية للتقسيط</li>
+                {% else %}
+                <li>لا يوجد امكانية للتقسيط</li>
+                {% endif %}
+            </ol>
+        </div>
     </div>
 {% endblock %}
 
