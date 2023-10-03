@@ -39,6 +39,9 @@ urlpatterns = [
     
     path('pump-offer/terms/', views.terms, name='terms'),
     path('pump-offer/validity/', views.validity, name='validity'),
+    path('pump-offer/taxes/', views.taxes, name='taxes'),
+    path('pump-offer/transport/', views.transport, name='transport'),
+    path('pump-offer/installment/', views.installment, name='installment'),
     
     
     path('pump-offer/final-submit/', views.final_submit, name='final_submit'),

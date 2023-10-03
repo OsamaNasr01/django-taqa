@@ -301,7 +301,42 @@ def validity(request):
     json_data = json.dumps(return_data)
     return HttpResponse(json_data, content_type="application/json")
     
+
+def installment(request):
+    data = json.loads(request.body)
+    offer = PumpOffer.objects.get(id=data['offer_id'])
+    offer.installment = data['installment']
+    offer.save()
+    return_data = {
+        'ok': 'ok',
+    }
+    json_data = json.dumps(return_data)
+    return HttpResponse(json_data, content_type="application/json")
     
+
+def taxes(request):
+    data = json.loads(request.body)
+    offer = PumpOffer.objects.get(id=data['offer_id'])
+    offer.include_taxes = data['taxes']
+    offer.save()
+    return_data = {
+        'ok': 'ok',
+    }
+    json_data = json.dumps(return_data)
+    return HttpResponse(json_data, content_type="application/json")
+    
+
+def transport(request):
+    data = json.loads(request.body)
+    offer = PumpOffer.objects.get(id=data['offer_id'])
+    offer.include_trans = data['trans']
+    offer.save()
+    return_data = {
+        'ok': 'ok',
+    }
+    json_data = json.dumps(return_data)
+    return HttpResponse(json_data, content_type="application/json")
+        
 
 def final_submit(request):
     offer = PumpOffer.objects.get(id = request.POST['offer_id'])
