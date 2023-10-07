@@ -27,7 +27,7 @@
             {% for offer in offer_request.offers.all %}
                 {% if offer.submit %}
                 {% if user == offer_request.user or user == offer.company.owner %}
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3 mb-3">
                     <div class="card h-100">
                         <div class="card-header"><small><i class="bx bxs-map"></i> {{ offer.company.name }}</small></div>
                         <div class="card-body text-primary">
@@ -39,9 +39,9 @@
                             <li class="list-group-item">
                                 <i class='bx bx-receipt'></i>
                                 {% if offer.include_taxes %}
-                                القيمة تشمل ضريبة المبيعات والقيمة المضافة وقدرها 14%
+                                القيمة تشمل ضريبة المبيعات والقيمة المضافة
                                 {% else %}
-                                القيمة لا تشمل ضريبة المبيعات او ضريبة القيمة المضافة
+                                القيمة لا تشمل ضريبة المبيعات او القيمة المضافة
                                 {% endif %}
                             </li>
                             <li class="list-group-item">
