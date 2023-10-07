@@ -8,17 +8,39 @@
 <div class="container">
     <div class="row">
         <a href="{% url 'pump_offer_request' %}" class="btn btn-primary">Request an offer</a>
-    </div>
-    <div class="row">
+    </div><br>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for offer_request in requests %}
-        <a href="{% url 'pumpoffer_request_profile' offer_request.id %}">
-            <h3>{{ offer_request.hp }} hp sub pump offer request </h3>
-            <p>{{ offer_request.address }}</p>
-            <p>{{ offer_request.gwdepth }}</p>
-            <p>{{ offer_request.boreholediam }}</p>
-            <p>{{ offer_request.created_at|naturaltime }}</p>
-        </a>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-header"><small><i class="bx bxs-map"></i> {{ offer_request.address.location }}</small></div>
+                <div class="card-body text-primary">
+                    <h5 style="color: black;" class="card-title">{{ offer_request.hp }} hp sub pump offer request</h5>
+                    <p style="color: black;" class="card-text"><small><i class="bx bxs-time"></i> {{ offer_request.created_at|naturaltime }}</small></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Groundwater depth: {{ offer_request.gwdepth }}m</li>
+                    <li class="list-group-item">Borehole diameter: {{ offer_request.boreholediam }} inch</li>
+                    <li class="list-group-item">Irrigation system: {{ offer_request.irrigation }}</li>
+                    <li class="list-group-item">Power source: {{ offer_request.power }}</li>
+                    <li class="list-group-item">
+                        {% if offer_request.offers.count %}
+                        <small><i class='bx bxs-file-doc'></i> {{ offer_request.offers.count }} offer{{ offer_request.offers.count|pluralize }} submitted</small>
+                        {% else %}
+                        <small>No offers submitted yet</small> 
+                        {% endif %}
+                    </li>
+                </ul>
+                <div class="card-footer bg-transparent border-primary">
+                    <a class="btn btn-primary" href="#" class="card-link">Submit an offer</a>
+                    <a class="btn btn-primary" href="{% url 'pumpoffer_request_profile' offer_request.id %}" class="card-link">Details</a>
+                </div>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
+
+
+  
 {% endblock %}
