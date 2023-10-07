@@ -9,10 +9,9 @@
     <div class="row">
         <div class="col-12">
             <h3>{{ offer_request.hp }} hp sub pump offer request </h3>
-            <p>Project location in {{ offer_request.address.location }}</p>
-            <p>Ground water level {{ offer_request.gwdepth }}m from ground surface</p>
-            <p>Borehole diameter {{ offer_request.boreholediam }} inchs</p>
-            <p>Since {{ offer_request.created_at|naturaltime }}</p>
+            <p><small><i class="bx bxs-map"></i> {{ offer_request.address.location }}</small> <i class='bx bxs-stopwatch' ></i> {{ offer_request.created_at|naturaltime }}     </p>
+            <p><i class='bx bx-water'></i> Ground water level {{ offer_request.gwdepth }}m from ground surface</p>
+            <p><i class='bx bx-ruler'></i> Borehole diameter {{ offer_request.boreholediam }} inchs</p>
 
         </div>
         {% if user.has_company %}
@@ -23,15 +22,50 @@
                 <button class="btn btn-primary" type="submit">submit an offer</button>
             </form>
         </div>
+        <br><br>
         {% endif %}
             {% for offer in offer_request.offers.all %}
                 {% if offer.submit %}
                 {% if user == offer_request.user or user == offer.company.owner %}
-                <div class="row">
-                    <a href="{% url 'offer_profile' offer.id %}">
-                        <p>{{ offer.company.name }}</p>
-                        <h3>{{ offer.value }}</h3>
-                    </a>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-header"><small><i class="bx bxs-map"></i> {{ offer.company.name }}</small></div>
+                        <div class="card-body text-primary">
+                            <h5 style="color: black;" class="card-title"><i class='bx bx-purchase-tag'></i>  {{ offer.value }}</h5>
+                            <p style="color: black;" class="card-text"><small><i class="bx bxs-map"></i> {{ offer.company.address }}  <i class="bx bxs-time"></i> {{ offer_request.created_at|naturaltime }}</small></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class='bx bxs-stopwatch' ></i> صلاحية العرض {{ offer.valid.period }}</li>
+                            <li class="list-group-item">
+                                <i class='bx bx-receipt'></i>
+                                {% if offer.include_taxes %}
+                                القيمة تشمل ضريبة المبيعات والقيمة المضافة وقدرها 14%
+                                {% else %}
+                                القيمة لا تشمل ضريبة المبيعات او ضريبة القيمة المضافة
+                                {% endif %}
+                            </li>
+                            <li class="list-group-item">
+                                <i class='bx bxs-bank'></i>
+                                {% if offer.installment %}
+                                يوجد امكانية للتقسيط
+                                {% else %}
+                                لا يوجد امكانية للتقسيط
+                                {% endif %}
+                            </li>
+                            <li class="list-group-item">
+                                <i class='bx bxs-truck'></i>
+                                {% if offer.include_trans %}
+                                القيمة تشمل النقل الي الموقع
+                                {% else %}
+                                القيمة لا تشمل النقل الي الموقع
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <div class="card-footer bg-transparent border-primary">
+                            <a class="btn btn-primary" href="#" class="card-link">Submit an offer</a>
+                            <a class="btn btn-primary" href="{% url 'offer_profile' offer.id %}" class="card-link">Details</a>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
                 {% endif %}
