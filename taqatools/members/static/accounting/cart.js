@@ -25,10 +25,10 @@ for (var item in items) {
         } else if ( key === 'id') {
             const delete_item = document.createElement('button')
             delete_item.setAttribute('onclick', `del_item(${item_data[key]})`)
-            delete_item.setAttribute('class', 'btn')
-            delete_item.classList.add('btn-danger')
-            delete_item.classList.add('btn-sm')
-            delete_item.innerText = 'delete'
+            delete_item.setAttribute('class', 'btn-close')
+            // delete_item.classList.add('btn-danger')
+            // delete_item.classList.add('btn-sm')
+            // delete_item.innerText = 'delete'
             delete_item.id = 'delete_item'
             delete_item.setAttribute('name', `${item_data[key]}`)
             td.setAttribute('style', 'width:10%')
