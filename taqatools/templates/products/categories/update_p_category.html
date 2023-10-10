@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
-{% block title %} Update Product Category  {% endblock %}
+{% block title %}تعديل قسم {% endblock %}
 {% block content %}
 
 <div class="shadow p-3 mb-5 bg-white rounded">
   <h3>
-    Update {{ category.name }} 
+    تعديل {{ category.name }} 
   </h3>
   <br>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">تعديل</button>
   </form>
 </div>
 {% endblock %}

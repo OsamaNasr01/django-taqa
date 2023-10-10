@@ -5,7 +5,7 @@
 
 
 <div class="container" id="cart_div">
-    <h3>Cart Items</h3>
+    <h3>بنود العربة</h3>
     <input type="hidden" value="{{json_data}}" id="json_data" />
     {% csrf_token %}
     <!-- Add the table element with the Bootstrap classes -->
@@ -15,11 +15,11 @@
     >
         <tr id="table_head">
             <th>#</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>NO</th>
-            <th>Total</th>
-            <th>Delete</th>
+            <th>البيان</th>
+            <th>السعر</th>
+            <th>العدد</th>
+            <th>الاجمالي</th>
+            <th>خذف</th>
         </tr>
     </table>
     <div>
@@ -33,7 +33,7 @@
         data-bs-toggle="modal"
         data-bs-target="#price-offer-modal"
     >
-        Price Offer
+        عرض سعر
     </button>
     <button
         type="button"
@@ -42,7 +42,7 @@
         data-bs-toggle="modal"
         data-bs-target="#price-offer-modal"
     >
-        Sale invoice
+        فاتورة بيع
     </button>
     <button
         type="button"
@@ -51,7 +51,7 @@
         data-bs-toggle="modal"
         data-bs-target="#price-offer-modal"
     >
-        Purchase invoice
+        فاتورة شراء
     </button>
 
     <div
@@ -64,7 +64,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="price-offer-modal">Update</h5>
+                    <h5 class="modal-title" id="price-offer-modal">اضافة عميل</h5>
                     <button
                         type="button"
                         class="btn-close"
@@ -83,7 +83,7 @@
                         {% csrf_token %}
                         <div class="form-group mb-4" id="name_input">
                             <label for="search" class="form-label"
-                                >Search:</label
+                                >بحث:</label
                             >
                             <input
                                 type="text"
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="description" class="form-label"
-                                >Description:</label
+                                >الوصف:</label
                             >
                             <input
                                 type="text"
@@ -112,7 +112,7 @@
                             id="offer_submit"
                             class="btn btn-primary"
                         >
-                            Submit
+                            اضافة
                         </button>
                     </form>
                 </div>

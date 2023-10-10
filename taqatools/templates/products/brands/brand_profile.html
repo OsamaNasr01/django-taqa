@@ -9,7 +9,7 @@
     data-bs-toggle="modal"
     data-bs-target="#update-brand-modal"
 >
-    Update
+    تعديل
 </button>
 
 <div
@@ -53,7 +53,7 @@
     data-bs-toggle="modal"
     data-bs-target="#delete-brand-modal"
 >
-    Delete
+    حذف
 </button>
 <br /><br />
 
@@ -120,9 +120,9 @@
         <!-- {{member.first_name}} {{ member.last_name }} -->
         {{ brand.name }}
     </h3>
-    <p>description : {{ brand.description }}</p>
-    <p>country : {{ brand.country }}</p>
-    <p>Categories :</p>
+    <p>الوصف : {{ brand.description }}</p>
+    <p>الدولة المصنعة:{{ brand.country }}</p>
+    <p>القسم التابع :</p>
     {% for category in brand.category.all %}
     <ul>
         <li>{{ category }}</li>
@@ -141,14 +141,14 @@
         </div>
         <div class="order">
             <div class="prices">
-                <p>{{product.price}} <span>EGB</span></p>
+                <p>{{product.price}} <span>ج.م</span></p>
                 <div>
                     <p>{{product.price}}</p>
-                    <span>EGB</span>
+                    <span>ج.م</span>
                 </div>
             </div>
             <form action="{% url 'product' product.slug %}">
-                <button>Buy Now</button>
+                <button>تسوق الان</button>
             </form>
         </div>
     </a>

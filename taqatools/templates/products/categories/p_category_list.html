@@ -2,16 +2,14 @@
 <link rel="stylesheet" href="{% static 'products/category_list.css' %}" />
 {% endblock mycss %}
 <!-- comment -->
-{% block title %} List of Companies {% endblock %}
+{% block title %} الاقسام {% endblock %}
 <!-- comment -->
 {% block content %}
 
 
 <div class="categories">
     <div class="main-header">
-        <h1>
-            Let's See Our <br />
-            Categories & Products
+        <h1>الاقسام والمنتجات
         </h1>
     </div>
     <button
@@ -20,7 +18,7 @@
         data-bs-toggle="modal"
         data-bs-target="#add-co-category-modal"
     >
-        Add Category
+        اضافة قسم
     </button>
 
     <div
@@ -34,7 +32,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="add-co-category-modal">
-                        + Add Category
+                        اضافة قسم
                     </h5>
                     <button
                         type="button"
@@ -52,7 +50,7 @@
                     >
                         {% csrf_token %} {{ form.as_p }}
                         <button type="submit" class="btn btn-primary">
-                            + Add Category
+                            اضافة قسم
                         </button>
                     </form>
                 </div>
@@ -95,7 +93,7 @@
                 <a
                     class="btn btn-primary"
                     href="{% url 'p_category_profile'  category.slug %}"
-                    >See All List</a
+                    >عرض الكل</a
                 >
             </div>
         </div>

@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
-{% block title %} Add Category  {% endblock %}
+{% block title %}اضافة قسم {% endblock %}
 {% block content %}
 
 <div class="shadow p-3 mb-5 bg-white rounded">
   <h3>
-    Add Category 
+    اضافة قسم 
   </h3>
   <br>
   <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Add Category</button>
+    <button type="submit" class="btn btn-primary">تأكيد</button>
   </form>
 
 {% endblock %}

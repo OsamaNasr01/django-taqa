@@ -9,8 +9,8 @@
             <!-- {{member.first_name}} {{ member.last_name }} -->
             {{ member.full_name  }} 
         </h3>
-        <p>Email : {{ member.email }}</p>
-        <p>Username @{{member.username }}</p>
+        <p>البريد الاليكتروني :{{ member.email }}</p>
+        <p>اسم الامستخدم @{{member.username }}</p>
         <h1>{{ member.account.details.offers_value|floatformat:2|intcomma }}</h1>
     </div>
 
@@ -20,8 +20,8 @@
             <a href="{% url 'offer_profile' offer.id %}" class="text-dark text-decoration-none">
                 <div class="shadow p-3 mb-5 bg-white rounded">
                     <h3>{{ offer.description }}</h3>
-                    <h5>Value: {{ offer.total_value|floatformat:2|intcomma }}</h5>
-                    <h5>{{ offer.items.all.count|intcomma }} item{{offer.items.all.count|pluralize}} included</h5>
+                    <h5>القيمة {{ offer.total_value|floatformat:2|intcomma }}</h5>
+                    <h5>{{ offer.items.all.count|intcomma }} بند {{offer.items.all.count|pluralize}} متضمن</h5>
                     <p>{{ offer.created_at|naturaltime  }}</p>
                 </div>
             </a>

@@ -6,18 +6,16 @@
     <div class="content">
         <ul>
             <li>
-                <h3>TAQATOOLS</h3>
+                <h3>مجمع الطاقة</h3>
             </li>
         </ul>
         <ul>
-            <li><h4>Contact us</h4></li>
-            <li><a href="{% url 'about' %}">Who we are ?</a></li>
-            <li><a href="#">Location Numer 1</a></li>
-            <li><a href="#">Location Numer 2</a></li>
+            <li><h4>اتصل بنا</h4></li>
+            <li><a href="{% url 'about' %}">من نحن؟</a></li>
             <li>
-                <a href="#">Location Numer 3</a>
+                <a href="#">العنوان</a>
                 <ul>
-                    <li><a href="#"> location link</a></li>
+                    <li><a href="#">رابط العنوان</a></li>
                 </ul>
             </li>
             <li>
@@ -30,23 +28,23 @@
         <ul>
             <li><h4>Policies</h4></li>
             <li>
-                <a href="{% url 'privacy' %}">Privacy Policy</a>
+                <a href="{% url 'privacy' %}">سياسة الخصوصية</a>
             </li>
             <li>
-                <a href="{% url 'return' %}">Return Policy</a>
+                <a href="{% url 'return' %}">سياسة الاسترجاع</a>
             </li>
         </ul>
         <ul>
-            <li><h4>Socail</h4></li>
+            <li><h4>مواقع التواصل الاجتماعي</h4></li>
             <li>
                 <img src="{% static 'images/facebook.svg' %}" alt="" />
-                <a href="#">FaceBook</a>
+                <a href="#">فيس بوك</a>
             </li>
             <li>
                 <img src="{% static 'images/linkedin.svg' %}" alt="" />
-                <a href="#">LinkedIn</a>
+                <a href="#">لينكد ان</a>
             </li>
         </ul>
     </div>
-    <div class="copy"><h6>All Rights &copy; Reviced {% now 'Y' %}</h6></div>
+    <div class="copy"><h6>جميع الحقوق محفوظة &copy;  {% now 'Y' %}</h6></div>
 </footer>

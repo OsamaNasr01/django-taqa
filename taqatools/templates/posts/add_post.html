@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static  %}
-{% block title %} New Post Form {% endblock %}
+{% block title %}نموذج مقال جديد{% endblock %}
 
 {% block content %}
 
 
-  <h1 id="messege_id">New Post form</h1>
+  <h1 id="messege_id">نموذج مقال جديد</h1>
 
   <form enctype="multipart/form-data" action="{% url 'add_post' %}" method="POST" id="form_id" class="container">
     {% csrf_token %}

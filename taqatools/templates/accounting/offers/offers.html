@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} Accounting Control Panel {% endblock %}
+{% block title %}عروض الاسعار {% endblock %}
 {% block content %}
 
 {% load humanize %}
 
     <div class="container">
-        <h1>List of all Offers</h1>
+        <h1>قائمة بكل العروض</h1>
             {% for offer in offers %}
                 <a href="{% url 'offer_profile' offer.id %}" class="text-dark text-decoration-none">
                     <div class="shadow p-3 mb-5 bg-white rounded">

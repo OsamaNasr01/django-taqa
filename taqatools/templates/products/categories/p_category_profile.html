@@ -27,7 +27,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="update-category-modal">Update</h5>
+                <h5 class="modal-title" id="update-category-modal">تعديل</h5>
                 <button
                     type="button"
                     class="btn-close"
@@ -44,7 +44,7 @@
                 >
                     {% csrf_token %} {{ update_category_form.as_p }}
                     <button type="submit" class="btn btn-primary">
-                        Update
+                        تعديل
                     </button>
                 </form>
             </div>
@@ -74,7 +74,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-category-modal-label">
-                    Delete Category
+                   حذف القسم
                 </h5>
                 <button
                     type="button"
@@ -84,7 +84,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this category?
+                هل انت متأكد من حذف هذا القسم؟
             </div>
             <div class="modal-footer">
                 <button
@@ -92,7 +92,7 @@
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
                 >
-                    Cancel
+                    إلغاء
                 </button>
                 <form
                     action="{% url 'delete_p_category' category.slug %}"
@@ -108,7 +108,7 @@
                         class="btn btn-danger"
                         id="confirm-delete-category"
                     >
-                        Confirm Delete
+                        تأكيد الحذف
                     </button>
                 </form>
             </div>
@@ -126,7 +126,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="add-spec-modal">+ Add spec</h5>
+                <h5 class="modal-title" id="add-spec-modal">إضافة خاصية</h5>
                 <button
                     type="button"
                     class="btn-close"
@@ -147,7 +147,7 @@
                         value="{{ category.id }}"
                     />
                     <button type="submit" class="btn btn-primary">
-                        + Add spec
+                        اضافة خاصية
                     </button>
                 </form>
             </div>
@@ -161,8 +161,8 @@
     </div>
     <div class="text">
         <h1>{{ category.name }}</h1>
-        <p>description : {{ category.description }}</p>
-        <p>Specifications:</p>
+        <p>وصف القسم {{ category.description }}</p>
+        <p>المواصفات</p>
         {% if category.parent_id %}
         <ul>
             {% for spec in category.specs.all %}
@@ -180,7 +180,7 @@
                         data-bs-placement="top"
                         title="Update"
                     >
-                        Update
+                        تعديل
                     </a>
                     <form
                         action="{% url 'delete_spec' spec.id %}"
@@ -195,7 +195,7 @@
                             data-bs-placement="top"
                             title="Delete"
                         >
-                            Delete
+                            حذف
                         </button>
                     </form>
                 </div>
@@ -213,7 +213,7 @@
                     data-bs-toggle="modal"
                     data-bs-target="#add-spec-modal"
                 >
-                    + Add Spec
+                    إضافة خاصية
                 </button>
                 {% endif %}
             </div>
@@ -229,7 +229,7 @@
     class="btn btn-primary"
     data-bs-toggle="modal"
     data-bs-target="#add-category-modal">
-    Add sub Category</button>
+    إضافة قسم فرعي</button>
 {% endif %}
 <br/><br/>
 <div
@@ -243,7 +243,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-category-modal">
-                    + Add subcategory
+                    إضافة قسم فرعي
                 </h5>
                 <button
                     type="button"
@@ -267,7 +267,7 @@
                         value="{{ category.id }}"
                     />
                     <button type="submit" class="btn btn-primary">
-                        + Add sub Category
+                        إضافة
                     </button>
                 </form>
             </div>
@@ -295,7 +295,7 @@
                     display: none;
                 }
             </style>
-            <h6>There is no sub categories in {{category.name}}</h6>
+            <h6>لا توجد أقسام فرعية في  {{category.name}}</h6>
         </div>
         {% endif %}
     </div>
@@ -309,7 +309,7 @@
     data-bs-toggle="modal"
     data-bs-target="#add-brand-modal"
 >
-    Add brand
+    إضافة براند
 </button>
 
 <div
@@ -322,7 +322,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="add-brand-modal">+ Add brand</h5>
+                <h5 class="modal-title" id="add-brand-modal">إضافة براند</h5>
                 <button
                     type="button"
                     id="brand_modal_close"
@@ -345,7 +345,7 @@
                         id="brand_submit"
                         class="btn btn-primary"
                     >
-                        + Add brand
+                        إضافة
                     </button>
                 </form>
             </div>
@@ -361,7 +361,7 @@
     data-bs-toggle="modal"
     data-bs-target="#add-product-modal"
 >
-    Add Product
+    إضافة منتج
 </button>
 {% endif %}
 <div
@@ -375,7 +375,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-product-modal">
-                    + Add Product
+                    إضافة منتج
                 </h5>
                 <button
                     type="button"
@@ -394,7 +394,7 @@
                 >
                     {% csrf_token %} {{ form.as_p }}
                     <button class="btn btn-primary mb-3" onclick="new_brand()">
-                        New Brand
+                        براند جديد
                     </button>
                     {{ price_form.as_p }}
                     <hr />
@@ -441,7 +441,7 @@
                         value="{{ category.id }}"
                     />
                     <button type="submit" class="btn btn-primary">
-                        + Add Product
+                        إضافة منتج
                     </button>
                 </form>
             </div>
@@ -463,14 +463,14 @@
             </div>
             <div class="order">
                 <div class="prices">
-                    <p>{{product.price}} <span>EGB</span></p>
+                    <p>{{product.price}} <span>ج.م</span></p>
                     <div>
                         <p>{{product.o_price}}</p>
-                        <span>EGB</span>
+                        <span>ج.م</span>
                     </div>
                 </div>
                 <form action="{% url 'product' product.slug %}">
-                    <button>Buy Now</button>
+                    <button>تسوق الان</button>
                 </form>
             </div>
         </a>

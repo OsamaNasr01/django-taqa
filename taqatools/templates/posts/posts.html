@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% load humanize %}
 <!-- comment -->
-{% block title %} Posts {% endblock %}
+{% block title %} المقالات {% endblock %}
 
 <!-- comment -->
 {% block content %}
@@ -8,7 +8,7 @@
 <div class="posts">
     <div class="header">
         <h2>Posts</h2>
-        <a href="{% url 'add_post' %}" class="btn btn-primary">Add new Post</a>
+        <a href="{% url 'add_post' %}" class="btn btn-primary">اضف مقال جديد</a>
     </div>
     <div class="content">
         {% if posts %} {% for post in posts %}
@@ -31,7 +31,7 @@
             </div>
         </a>
         {% endfor %} {% else %}
-        <h3>There is no Posts to view</h3>
+        <h3>لاتوجد مقالات للعرض</h3>
         {% endif %}
     </div>
 </div>
@@ -49,7 +49,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-post-modal-label">
-                    Delete post
+                    حذف المقال
                 </h5>
                 <button
                     type="button"
@@ -59,7 +59,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this post?
+                هل انت متأكد من حذف المقال؟
             </div>
             <div class="modal-footer">
                 <button
@@ -80,7 +80,7 @@
                     class="btn btn-danger"
                     id="confirm-delete-post"
                 >
-                    Confirm Delete
+                    تأكيد الحذف
                 </button>
                 <>
             </div>

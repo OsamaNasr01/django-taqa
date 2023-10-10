@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Pump Offer Request {% endblock %}
+{% block title %}طلب عرض سعر لطلمبة {% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'home/home.css' %}">
 
 <div class="container">
     <div class="row">
-        <h3>Adaptors Selection {{ offer.request.user.full_name }}</h3>
+        <h3>اختيار الادابتور {{ offer.request.user.full_name }}</h3>
         <h6>{{ offer.value }}</h6>
     </div>
 
 
     <div class="products">
         <div class="header">
-            <h2>Select Adaptors from the List</h2>
+            <h2>اختر الادابتور المناسب من القائمة</h2>
             <a href="#">See All</a>
         </div>
         <div class="content">
@@ -33,11 +33,11 @@
                         {% csrf_token %}
                         <input  type="hidden" value="{{offer.id}}" name="offer_id">
                         <input type="hidden" value="{{adaptor.id}}" name="adaptor_id">
-                        <label for="price">Price</label>
+                        <label for="price">السعر</label>
                         <input id="price" class="form-control" type="number" value="{{adaptor.price}}" name="price">
-                        <label for="q">Quantity</label>
+                        <label for="q">الكمية</label>
                         <input id="q" class="form-control" type="number" value="1" name="q">
-                        <button onclick="adaptor_submit('{{adaptor.id}}')" class="btn btn-primary form-control" id="adaptor_submit_{{adaptor.id}}" type="button">Add to offer</button>
+                        <button onclick="adaptor_submit('{{adaptor.id}}')" class="btn btn-primary form-control" id="adaptor_submit_{{adaptor.id}}" type="button">اضف الي العرض</button>
                     </form>
                 </div>
             {% endfor %}
@@ -47,7 +47,7 @@
         <form method="post" action="{% url 'cable_selection' %}">
             {% csrf_token %}
             <input type="hidden" value="{{offer.id}}" name="offer_id">
-            <button class="btn btn-primary" type="submit">Next to Cables</button>
+            <button class="btn btn-primary" type="submit">التالي الي الكابلات</button>
         </form>
     </div>
 

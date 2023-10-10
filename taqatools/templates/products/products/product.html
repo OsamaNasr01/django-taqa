@@ -15,7 +15,7 @@
     data-bs-toggle="modal"
     data-bs-target="#update-product-modal"
 >
-    Update
+    تعديل
 </button>
 
 <div
@@ -102,7 +102,7 @@
     data-bs-toggle="modal"
     data-bs-target="#delete-product-modal"
 >
-    Delete
+    حذف
 </button>
 
 <!-- delete-product-modal.html -->
@@ -167,8 +167,8 @@
     <div class="text">
         <h1>{{ product.name }}</h1>
         <p>{{ product.description }}</p>
-        <p>Brand : {{ product.brand.name }}</p>
-        <p>category : {{ product.category }}</p>
+        <p>البراند: {{ product.brand.name }}</p>
+        <p>القسم: {{ product.category }}</p>
         <input type="hidden" value="{{product.id}}" id="product_id" />
         <div>
             <ul>
@@ -183,7 +183,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <h6>{{ price|floatformat:2|intcomma  }} EGP <span>{{ original_price|floatformat:2|intcomma  }} EGP</span></h6>
+        <h6>{{ price|floatformat:2|intcomma  }} ج.م <span>{{ original_price|floatformat:2|intcomma  }} ج.م</span></h6>
         <ul>
             <li class="discount">-{{ discount }}%</li>
         </ul>
@@ -212,7 +212,7 @@
             </button>
             {% endif %}
         </div>
-        <p>Last updated at: {{ product.prices.last.created_at|naturaltime}}</p>
+        <p>اخر تعديل: {{ product.prices.last.created_at|naturaltime}}</p>
     </div>
 </div>
 
@@ -251,7 +251,7 @@
     </div>
 </div>
 <div class="container">
-    <h3>{% if posts.count %}Related Posts{% endif %}</h3>
+    <h3>{% if posts.count %}المقالات المتعلقة بالمنتج{% endif %}</h3>
     <div class="row">
         {% for post in posts %}
         <div class="col-lg-4 col-md-6 col-sm-12">

@@ -14,43 +14,43 @@
 
 <nav>
     <a aria-current="page" href="{% url 'home' %}" class="logo">
-        <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25"> TAQATOOLS
+        <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25"> مجمع الطاقة
     </a>
     <div class="navlinks">
         <ul>
             <li>
                 <a aria-current="page" href="{% url 'home' %}"
-                    ><i class="bx bx-home"></i> Home</a
+                    ><i class="bx bx-home"></i> الرئيسية</a
                 >
             </li>
             <li>
                 <a href="{% url 'posts' %}"
-                    ><i class="bx bxs-city"></i> Posts</a
+                    ><i class="bx bxs-city"></i> المقالات</a
                 >
             </li>
             <li>
                 <a href="{% url 'companies' %}"
-                    ><i class="bx bxs-city"></i> Companies</a
+                    ><i class="bx bxs-city"></i> الشركات</a
                 >
             </li>
             <li>
                 <a href="{% url 'p_category_list' %}"
-                    ><i class="bx bxs-carousel"></i> Products</a
+                    ><i class="bx bxs-carousel"></i> المنتجات</a
                 >
             </li>
             <li>
                 <a href="{% url 'pumpoffer_request_list' %}"
-                    ><i class="bx bxs-carousel"></i> Pump offer requests</a
+                    ><i class="bx bxs-carousel"></i>طلب عرض سعر لطلمبة غاطسة</a
                 >
             </li>
             <li>
                 <a href="{% url 'brands' %}"
-                    ><i class="bx bx-badge-check"></i> Brands</a
+                    ><i class="bx bx-badge-check"></i> البراندات</a
                 >
             </li>
             <li>
                 <a href="{% url 'cart' %}" id="cart-navbar"
-                    ><i class="bx bx-cart-alt"></i> Cart
+                    ><i class="bx bx-cart-alt"></i> العربة
                     ({{user.cartitems.count}})</a
                 >
             </li>
@@ -58,35 +58,35 @@
             {% if user.is_authenticated %} {% if user.first_name %}
             <li class="none">
                 <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.first_name }}!</a
+                    >اهلا {{ user.first_name }}!</a
                 >
             </li>
             {% else %}
             <li class="none">
                 <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.username }}!</a
+                    >اهلا {{ user.username }}!</a
                 >
             </li>
             {% endif %} {% if not user.companies.exists %}
             <li class="none">
-                <a href="{% url 'add_company' %}">Add Company</a>
+                <a href="{% url 'add_company' %}">اضف شركة</a>
             </li>
             {% endif %}
 
             <li class="none">
                 <a href="{% url 'logout' %}"
-                    ><i class="bx bx-log-out"></i> Logout</a
+                    ><i class="bx bx-log-out"></i> تسجيل خروج</a
                 >
             </li>
             {% else %}
             <li class="none">
                 <a href="{% url 'register' %}"
-                    ><i class="bx bx-registered"></i> Register</a
+                    ><i class="bx bx-registered"></i> اشتراك</a
                 >
             </li>
             <li class="none">
                 <a href="{% url 'login' %}"
-                    ><i class="bx bx-log-in"></i> Login</a
+                    ><i class="bx bx-log-in"></i> تسجيل دخول</a
                 >
             </li>
             {% endif %}
@@ -97,30 +97,30 @@
             {% if user.is_authenticated %} {% if user.first_name %}
             <li>
                 <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.first_name }}!</a
+                    >اهلا {{ user.first_name }}!</a
                 >
             </li>
             {% else %}
             <li>
                 <a href="{% url 'user_profile' user.username %}"
-                    >Hello {{ user.username }}!</a
+                    >الها {{ user.username }}!</a
                 >
             </li>
             {% endif %} {% if not user.companies.exists %}
             <li>
-                <a href="{% url 'add_company' %}">Add Company</a>
+                <a href="{% url 'add_company' %}">اضف شركة</a>
             </li>
             {% endif %}
 
             <li>
-                <a href="{% url 'logout' %}">Logout</a>
+                <a href="{% url 'logout' %}">تسجيل خروج</a>
             </li>
             {% else %}
             <li>
-                <a href="{% url 'register' %}">Register</a>
+                <a href="{% url 'register' %}">اشتراك</a>
             </li>
             <li>
-                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'login' %}">تسجيل دخول</a>
             </li>
             {% endif %}
         </ul>

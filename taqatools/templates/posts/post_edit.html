@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static  %}
-{% block title %} Edit {{ post.title }} {% endblock %}
+{% block title %} تعديل مقال {{ post.title }} {% endblock %}
 
 {% block content %}
 
 
-    <h1 id="messege_id">Edit {{ post.title }}</h1>
+    <h1 id="messege_id">تعديل {{ post.title }}</h1>
 
     <form enctype="multipart/form-data" action="" method="POST" id="form_id" class="container">
         {% csrf_token %}
