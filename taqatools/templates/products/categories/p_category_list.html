@@ -75,7 +75,9 @@
                         class="card"
                     >
                         <div class="image">
+                            {% if sub_category.image %}
                             <img src="{{sub_category.image.url}}" alt="" />
+                            {% endif %}
                         </div>
                         <div class="text">
                             <h4>{{ sub_category.name }}</h4>

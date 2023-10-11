@@ -18,6 +18,11 @@ class PumpOfferRequestForm(forms.ModelForm):
         self.fields['boreholediam'].widget.attrs.update({'class': 'form-control'})
         self.fields['irrigation'].widget.attrs.update({'class': 'form-control'})
         self.fields['power'].widget.attrs.update({'class': 'form-control'})
+        self.fields['hp'].label = ' قدرة الطلمبة الغاطسة بالحصان'
+        self.fields['gwdepth'].label = 'عمق وش المياه من سطح الارض بالمتر'
+        self.fields['boreholediam'].label = 'قطر ماسورة البير بالبوصة'
+        self.fields['irrigation'].label = 'نوع نظام الري'
+        self.fields['power'].label = 'مصدر الكهرباء'
         
         
 

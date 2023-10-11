@@ -43,32 +43,32 @@
                 </tfoot>
             </table>
         </div>
+        <div>
+            <ol>
+                <li class="h4"><i class='bx bx-timer bx-flip-horizontal' ></i>  العرض ساري لمدة  {{ offer.valid.period }}  من تاريخ العرض</li>
+                {% if offer.include_taxes %}
+                    <li class="h4">قيمة العرض تشمل ضريبة المبيعات وضريبة القيمة المضافة <i class='bx bx-receipt'></i> </li>
+                {% else %}
+                    <li class="h4">  <i class='bx bx-receipt'></i>  قيمة العرض غير شاملة ضريبة المبيعات او ضريبة القيمة المضافة </li>
+                {% endif %}
+                {% if offer.include_trans %}
+                    <li class="h4">  <i class='bx bxs-truck bx-flip-horizontal' ></i>  قيمة العرض تشمل النقل الي الموقع</li>
+                {% else %}
+                <li class="h4"><i class='bx bxs-truck bx-flip-horizontal' ></i>  قيمة العرض  لا تشمل النقل الي الموقع</li>
+                {% endif %}
+                {% if offer.installment %}
+                    <li class="h4"><i class='bx bxs-bank bx-flip-horizontal' ></i>  يوجد امكانية للتقسيط</li>
+                {% else %}
+                <li class="h4"><i class='bx bxs-bank bx-flip-horizontal' ></i>  لا يوجد امكانية للتقسيط</li>
+                {% endif %}
+            </ol>
+        </div>
         <div class="col-12">
             <form method="post" action="{% url 'send_offer' %}">
                 {% csrf_token %}
                 <input type="hidden" value="{{offer.id}}" name="offer_id">
                 <button class="btn form-control btn-primary" type="submit">تأكيد العرض</button>
             </form>
-        </div>
-        <div>
-            <ol>
-                <li>العرض ساري لمدة {{ offer.valid.period }}  من تاريخ العرض</li>
-                {% if offer.include_taxes %}
-                <li>قيمة العرض تشمل ضريبة المبيعات وضريبة القيمة المضافة</li>
-                {% else %}
-                <li>قيمة العرض غير شاملة ضريبة المبيعات او ضريبة القيمة المضافة</li>
-                {% endif %}
-                {% if offer.include_trans %}
-                <li>قيمة العرض تشمل النقل الي الموقع</li>
-                {% else %}
-                <li>قيمة العرض  لا تشمل النقل الي الموقع</li>
-                {% endif %}
-                {% if offer.installment %}
-                <li>يوجد امكانية للتقسيط</li>
-                {% else %}
-                <li>لا يوجد امكانية للتقسيط</li>
-                {% endif %}
-            </ol>
         </div>
     </div>
 

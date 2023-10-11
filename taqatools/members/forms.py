@@ -100,6 +100,8 @@ class AddCityForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['gov'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].label = 'اسم المدينة'
+        self.fields['gov'].label = 'المحافظة التابعة لها'
 
 
 
@@ -113,4 +115,5 @@ class AddAddressForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['details'].widget.attrs.update({'class': 'form-control'})
+        self.fields['details'].label = 'العنوان بالتفصيل'
   

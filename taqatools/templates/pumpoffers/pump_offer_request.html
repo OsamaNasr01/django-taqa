@@ -11,7 +11,7 @@
   <form method="post" action="{% url 'pump_offer_request' %}">
     {% csrf_token %}
     <p>
-      <label for="id_gov">Governerate:</label>
+      <label for="id_gov">المحافظة:</label>
       <select name="gov" class="form-control" required="" id="id_gov">
         <option value="" selected="">---------</option>
         {% for gov in govs %}
@@ -21,7 +21,7 @@
     </p>
     
     <p>
-      <label for="id_city">City:</label>
+      <label for="id_city">المدينة او المركز:</label>
       <select name="city" class="form-control" required="" id="id_city">
         <option value="" selected="">---------</option>
       </select>
