@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Pump Offer Request {% endblock %}
+{% block title %} طلب عرض سعر طلمبة غاطسة {% endblock %}
 {% block content %}
 
 <div class="shadow p-3 mb-5 bg-white rounded">
   <h3>
-    Pump Offer Request
+    طلب عرض سعر طلمبة غاطسة
   </h3>
   <br>
   <form method="post" action="{% url 'pump_offer_request' %}">
@@ -28,7 +28,7 @@
     </p>
     {{ address_form.as_p }}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">تأكيد</button>
   </form>
 </div>
 <script src="{% static 'pumpoffers/gov_select.js' %}"></script>

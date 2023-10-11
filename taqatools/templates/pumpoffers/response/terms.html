@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Terms and conditions {% endblock %}
+{% block title %}عرض سعر طلمبة غاطسة {% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'home/home.css' %}">
 
 <div class="container">
     <div class="row">
-        <h3>Terms and conitions {{ offer.request.user.full_name }}</h3>
+        <h3>الشروط والاحكام {{ offer.request.user.full_name }}</h3>
     </div>
 
 
@@ -23,7 +23,7 @@
         <form method="post" action="{% url 'final_submit' %}">
             {% csrf_token %}
             <input type="hidden" id="offer_id" value="{{offer.id}}" name="offer_id">
-            <button class="btn btn-primary" type="submit">Final Check</button>
+            <button class="btn btn-primary" type="submit">التالي الي التأكيد النهائي</button>
         </form>
     </div>
 

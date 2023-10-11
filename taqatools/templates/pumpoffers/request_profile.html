@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Pump Offer Request {% endblock %}
+{% block title %} طلب عرض سعر طلمبة غاطسة {% endblock %}
 {% block content %}
 
 
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h3>{{ offer_request.hp }} hp sub pump offer request </h3>
+            <h3>طلب عرض سعر لــطلمبة غاطسة قدرة {{ offer_request.hp }} حصان </h3>
             <p><small><i class="bx bxs-map"></i> {{ offer_request.address.location }}</small> <i class='bx bxs-stopwatch' ></i> {{ offer_request.created_at|naturaltime }}     </p>
-            <p><i class='bx bx-water'></i> Ground water level {{ offer_request.gwdepth }}m from ground surface</p>
-            <p><i class='bx bx-ruler'></i> Borehole diameter {{ offer_request.boreholediam }} inchs</p>
+            <p><i class='bx bx-water'></i>عمق وش المية  {{ offer_request.gwdepth }}م من سطح الارض</p>
+            <p><i class='bx bx-ruler'></i>قطر ماسورة البير {{ offer_request.boreholediam }} بوصة</p>
+            <p><i class='bx bx-ruler'></i>نظام الري: {{ offer_request.irrigation }} </p>
+            <p><i class='bx bx-ruler'></i>مصدر الكهرباء: {{ offer_request.power }} </p>
 
         </div>
         {% if user.has_company %}
@@ -19,7 +21,7 @@
             <form method="post" action="{% url 'pump_selection' %}">
                 {% csrf_token %}
                 <input type="hidden" value="{{offer_request.id}}" name="request_id">
-                <button class="btn form-control btn-primary" type="submit">submit an offer</button>
+                <button class="btn form-control btn-primary" type="submit">قدم عرض سعر</button>
             </form>
         </div>
         <br><br>
