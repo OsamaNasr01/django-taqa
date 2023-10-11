@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Pump Offer Request {% endblock %}
+{% block title %}عرض سعر طلمبة غاطسة {% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'home/home.css' %}">
 
 <div class="container">
     <div class="row">
-        <h3>Cable Selection {{ offer.request.user.full_name }}</h3>
+        <h3>اختيار الكابل {{ offer.request.user.full_name }}</h3>
         <h6>{{ offer.value }}</h6>
     </div>
 
 
     <div class="products">
         <div class="header">
-            <h2>Select Cable from the List</h2>
-            <a href="#">See All</a>
+            <h2>اختر الكابل المناسب من القائمة</h2>
+            <a href="#">عرض الكل</a>
         </div>
         <div class="content">
             {% for cable in cables %}
@@ -33,11 +33,11 @@
                         {% csrf_token %}
                         <input  type="hidden" value="{{offer.id}}" name="offer_id">
                         <input type="hidden" value="{{cable.id}}" name="cable_id">
-                        <label for="price">Price</label>
+                        <label for="price">السعر</label>
                         <input id="price" class="form-control" type="number" value="{{cable.price}}" name="price">
-                        <label for="q">Quantity</label>
+                        <label for="q">الكمية</label>
                         <input id="q" class="form-control" type="number" value="1" name="q">
-                        <button onclick="cable_submit('{{cable.id}}')" class="btn btn-primary form-control" id="cable_submit_{{cable.id}}" type="button">Add to offer</button>
+                        <button onclick="cable_submit('{{cable.id}}')" class="btn btn-primary form-control" id="cable_submit_{{cable.id}}" type="button">اضف الي العرض</button>
                     </form>
                 </div>
             {% endfor %}
@@ -47,7 +47,7 @@
         <form method="post" action="{% url 'control_panel_selection' %}">
             {% csrf_token %}
             <input type="hidden" value="{{offer.id}}" name="offer_id">
-            <button class="btn btn-primary" type="submit">Next to control panel</button>
+            <button class="btn btn-primary" type="submit">التالي الي لوحة التحكم</button>
         </form>
     </div>
 
