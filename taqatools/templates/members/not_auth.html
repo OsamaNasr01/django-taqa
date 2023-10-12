@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Posts {% endblock %}
+{% block title %} تحتاج تصريح {% endblock %}
 
 {% block content %}
-<h3>You are not authorized to this page</h3>
-<a href="{% url 'home' %}">Back Home</a>
+<h3>ليس مصرح لك بدخول هذه الصفحة</h3>
+<a href="{% url 'home' %}">العودة للصفحة الرئيسية</a>
 {% endblock %}

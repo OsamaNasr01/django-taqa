@@ -17,8 +17,14 @@ class RegisterUserForm(UserCreationForm):
         self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
-        self.fields['username'].label = 'Phone Number'
-        self.fields['username'].help_text = 'Enter your Whats App number'
+        self.fields['username'].label = 'رقم التليفون'
+        self.fields['username'].help_text = 'ادخل رقم الواتس اب الخاص بك'
+        self.fields['first_name'].label = 'الاسم الاول'
+        self.fields['last_name'].label = 'الاسم الاخير'
+        self.fields['email'].label = 'البريد الاليكتروني'
+        self.fields['password1'].label = 'رمز الدخول السري'
+        self.fields['password2'].label = 'تأكيد رمز الدخول السري'
+        self.fields['password2'].help_text = 'ادخل نفس الرمز الذي ادخلته من قبل للتأكيد'
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -37,6 +43,15 @@ class AddCompanyForm(forms.ModelForm):
         self.fields['website'].widget.attrs.update({'class': 'form-control'})
         self.fields['address'].widget.attrs.update({'class': 'form-control'})
         self.fields['category'].widget.attrs.update({'class': 'form-control'})
+        
+        self.fields['name'].label = 'اسم الشركة'
+        self.fields['description'].label = 'نبذة عن الشركة'
+        self.fields['image'].label = 'لوجو الشركة'
+        self.fields['phone'].label = 'رقم التليفون'
+        self.fields['email'].label = 'البريد الاليكتروني'
+        self.fields['website'].label = 'موقع الويب'
+        self.fields['address'].label = 'عنوان الشركة'
+        self.fields['category'].label = 'تخصص الشركة'
 
 
 
@@ -53,6 +68,8 @@ class AddCoCategoryForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].label = 'اسم التخصص'
+        self.fields['description'].label = 'نبذة عن التخصص'
   
   
         
@@ -84,6 +101,7 @@ class AddGovForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].label = 'اسم المحافظة'
 
 
 

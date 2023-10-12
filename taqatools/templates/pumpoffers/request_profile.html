@@ -10,10 +10,10 @@
         <div class="col-12">
             <h3>طلب عرض سعر لــطلمبة غاطسة قدرة {{ offer_request.hp }} حصان </h3>
             <p><small><i class="bx bxs-map"></i> {{ offer_request.address.location }}</small> <i class='bx bxs-stopwatch' ></i> {{ offer_request.created_at|naturaltime }}     </p>
-            <p><i class='bx bx-water'></i>عمق وش المية  {{ offer_request.gwdepth }}م من سطح الارض</p>
-            <p><i class='bx bx-ruler'></i>قطر ماسورة البير {{ offer_request.boreholediam }} بوصة</p>
-            <p><i class='bx bx-ruler'></i>نظام الري: {{ offer_request.irrigation }} </p>
-            <p><i class='bx bx-ruler'></i>مصدر الكهرباء: {{ offer_request.power }} </p>
+            <p><i class='bx bx-water'></i> عمق وش المية  {{ offer_request.gwdepth }}م من سطح الارض</p>
+            <p><i class='bx bx-ruler'></i> قطر ماسورة البير {{ offer_request.boreholediam }} بوصة</p>
+            <p><i class='bx bxs-tree-alt'></i> نظام الري: {{ offer_request.irrigation }} </p>
+            <p><i class='bx bx-power-off'></i> مصدر الكهرباء: {{ offer_request.power }} </p>
 
         </div>
         {% if user.has_company %}
