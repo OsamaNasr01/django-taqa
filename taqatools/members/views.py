@@ -288,3 +288,7 @@ def add_address(request):
     else:
         form = AddAddressForm()
         return render(request, 'members/address/add_city.html', {'form': form})
+    
+    
+def paymob(request):
+    return render(request, 'members/paymob.html', {})

@@ -16,6 +16,11 @@ class AddCategoryForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        
+        self.fields['name'].label = 'اسم القسم'
+        self.fields['description'].label = 'وصف القسم'
+        self.fields['image'].label = 'صورة القسم'
+        
 
 
 class AddProductForm(forms.ModelForm):
@@ -30,6 +35,11 @@ class AddProductForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['brand'].widget.attrs.update({'class': 'form-control'})
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        
+        self.fields['name'].label = 'اسم المنتج'
+        self.fields['description'].label = 'وصف المنتج'
+        self.fields['image'].label = 'صورة المنتج'
+        self.fields['brand'].label = 'الشركة المصنعة للمنتج'
 
 
 class BrandForm(forms.ModelForm):
@@ -50,6 +60,12 @@ class BrandForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update({'id': 'brand_description'})
         self.fields['category'].widget.attrs.update({'id': 'brand_category'})
         self.fields['image'].widget.attrs.update({'id': 'brand_image'})
+        
+        self.fields['name'].label = 'اسم البراند'
+        self.fields['description'].label = 'وصف البراند'
+        self.fields['image'].label = 'لوجو البراند'
+        self.fields['country'].label = 'جنسية  البراند'
+        self.fields['category'].label = 'القسم التابع له البراند'
 
 
 
@@ -63,7 +79,8 @@ class PriceForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['value'].widget.attrs.update({'class': 'form-control'})
         self.fields['discount'].widget.attrs.update({'class': 'form-control'})
-        self.fields['value'].label = 'Price'
+        self.fields['value'].label = 'السعر'
+        self.fields['discount'].label = 'نسبة الخصم %'
 
 class SpecForm(forms.ModelForm):
     class Meta:
@@ -75,6 +92,9 @@ class SpecForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['type'].widget.attrs.update({'class': 'form-control'})
         self.fields['unit'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].label = 'اسم الخاصية'
+        self.fields['type'].label = 'نوع الخاصية'
+        self.fields['unit'].label = 'وحدة الخاصية'
 
 
 class NumSpecForm(forms.ModelForm):

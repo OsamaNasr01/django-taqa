@@ -7,7 +7,6 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'products/p_category_profile.css' %}">
-
 <button
     type="button"
     class="btn "
@@ -16,6 +15,16 @@
 >
 <i class='bx h2 mt-2 bx-edit bx-flip-horizontal' ></i>
 </button>
+
+<button
+    type="button"
+    class="btn btn-close"
+    data-bs-toggle="modal"
+    data-bs-target="#delete-category-modal"
+>
+    
+</button>
+
 
 <div
     class="modal fade"
@@ -51,16 +60,6 @@
         </div>
     </div>
 </div>
-
-<button
-    type="button"
-    class="btn btn-close"
-    data-bs-toggle="modal"
-    data-bs-target="#delete-category-modal"
->
-    
-</button>
-
 <!-- delete-category-modal.html -->
 
 <div
@@ -155,9 +154,9 @@
     </div>
 </div>
 
-<div class="main-category">
+<div class="mb-1 main-category">
     <div class="image">
-        <img src="/{{category.image}}" alt="" />
+        <img src="{{category.image.url}}" alt="" />
     </div>
     <div class="text">
         <h1>{{ category.name }}</h1>
@@ -275,31 +274,27 @@
     </div>
 </div>
 
-<style></style>
+{% if sub_categories %} 
 <div class="container">
     <div class="container-container-content">
-        {% if sub_categories %} {% for sub in sub_categories %}
-        <a href="{% url 'p_category_profile' sub.slug %}" class="card">
-            <div class="image">
-                <img src="/{{sub.image}}" alt="" />
-            </div>
-            <div class="text">
-                <h4>{{ sub.name }}</h4>
-                <p>{{ sub.description|truncatewords:20 }}</p>
-            </div>
-        </a>
-        {% endfor %} {% else %}
-        <div>
-            <style>
-                .container .container {
-                    display: none;
-                }
-            </style>
-            <h6>لا توجد أقسام فرعية في  {{category.name}}</h6>
-        </div>
-        {% endif %}
+            {% for sub in sub_categories %}
+            <a href="{% url 'p_category_profile' sub.slug %}" class="card">
+                <div class="image">
+                    <img src="/{{sub.image}}" alt="" />
+                </div>
+                <div class="text">
+                    <h4>{{ sub.name }}</h4>
+                    <p>{{ sub.description|truncatewords:20 }}</p>
+                </div>
+            </a>
+            {% endfor %} 
     </div>
 </div>
+{% else %}
+<div>
+    <h3>لا توجد أقسام فرعية في  {{category.name}}</h3>
+</div>
+{% endif %}
 
 <button
     type="button"
@@ -449,34 +444,35 @@
     </div>
 </div>
 
-<style></style>
-
-<div class="products">
-    <div class="content">
+<div style="padding: 20px;" class="container ">
+    <div class="row">
         {% for product in products %}
-        <a href="{% url 'product' product.slug %}" class="product-card">
-            <div class="image">
-                <img src="/{{product.image}}" alt="" />
-            </div>
-            <div class="text">
-                <h4>{{product.name}}</h4>
-            </div>
-            <div class="order">
-                <div class="prices">
-                    <p>{{product.price}} <span>ج.م</span></p>
-                    <div>
-                        <p>{{product.o_price}}</p>
-                        <span>ج.م</span>
-                    </div>
+        <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-3">
+            <a href="{% url 'product' product.slug %}" class="">
+                <div class="image">
+                    <img src="/{{product.image}}" alt="" />
                 </div>
-                <form action="{% url 'product' product.slug %}">
-                    <button>تسوق الان</button>
-                </form>
-            </div>
-        </a>
+                <div class="text">
+                    <h4>{{product.name}}</h4>
+                </div>
+                <div class="order">
+                    <div class="prices">
+                        <p>{{product.price}} <span>ج.م</span></p>
+                        <div>
+                            <p>{{product.o_price}}</p>
+                            <span>ج.م</span>
+                        </div>
+                    </div>
+                    <form action="{% url 'product' product.slug %}">
+                        <button>تسوق الان</button>
+                    </form>
+                </div>
+            </a>
+        </div>
         {% endfor %}
     </div>
 </div>
+
 
 <script src="{% static '/products/add_brand.js' %}"></script>
 
