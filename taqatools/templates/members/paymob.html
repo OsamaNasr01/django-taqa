@@ -23,7 +23,7 @@
     function wallet_pay_request(payment_token)  {
         let data = {
             "source": {
-              "identifier": "01027476938", 
+              "identifier": "01063800439", 
               "subtype": "WALLET"
             },
             "payment_token": payment_token,
@@ -78,7 +78,7 @@
               "state": "NA"
             }, 
             "currency": "EGP", 
-            "integration_id": 3765052,
+            "integration_id": 3544185,
           }
                 
         url = 'https://accept.paymob.com/api/acceptance/payment_keys'
@@ -99,7 +99,7 @@
         })
         .then(data => {
             console.log(data.token) 
-            card_pay_request(data.token)
+            wallet_pay_request(data.token)
         })
         .catch((error) => {
             console.log(error)
