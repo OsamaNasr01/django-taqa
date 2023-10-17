@@ -9,6 +9,24 @@
 {% block content %}
 
 <div class="container">
+    <div class="row">
+        <div class="col-6">
+            <button id="card_btn" class="btn btn-primary form-control">الدفع من خلال كارت</button>
+         </div>
+        <div class="col-6">            
+            <button onclick="wallet_pay_click()" class="btn btn-primary form-control">الدفع من خلال محفظة اليكترونية</button>
+        </div>
+    </div>
+    <br>
+    <div id="wallet" hidden class="row">
+        <div class="col-12 form-group">
+            <form class="form-group" action="">
+            <label for="phone">ادخل رقم المحفظة الالكترونية</label>
+            <input id="phone" class="form-control" type="number"><br>
+            <button class="form-control btn btn-primary">تأكيد الرقم</button>
+            </form>
+        </div>
+    </div>
 
 </div>
 <script>
@@ -23,7 +41,7 @@
     function wallet_pay_request(payment_token)  {
         let data = {
             "source": {
-              "identifier": "01063800439", 
+              "identifier": "01557444030", 
               "subtype": "WALLET"
             },
             "payment_token": payment_token,
@@ -56,7 +74,7 @@
 
     }
 
-    function request_payment_key(token, id) {
+    function request_payment_key(token, id, int_id, gate) {
         let data = {
             "auth_token": token,
             "amount_cents": "1000", 
@@ -78,7 +96,7 @@
               "state": "NA"
             }, 
             "currency": "EGP", 
-            "integration_id": 3544185,
+            "integration_id": int_id,
           }
                 
         url = 'https://accept.paymob.com/api/acceptance/payment_keys'
@@ -99,7 +117,12 @@
         })
         .then(data => {
             console.log(data.token) 
-            wallet_pay_request(data.token)
+            if (gate===wallet){
+                wallet_pay_request(data.token)
+            } else {
+                card_pay_request(data.token)
+            }
+            
         })
         .catch((error) => {
             console.log(error)
@@ -134,7 +157,8 @@
         })
         .then(data => {
             console.log(data.id)
-            request_payment_key(token, data.id)
+            const card_btn = document.getElementById('card_btn')
+            card_btn.setAttribute('onclick', `card_pay_click('${token}', '${data.id}', '3544186', 'card')`)
         })
         .catch((error) => {
             console.log(error)
@@ -175,6 +199,19 @@
 
     get_token()
 
+    function card_pay_click(token, id, int_id, gate) {
+        request_payment_key(token, id, int_id, gate)
+    }
+
+    function get_wallet_no(token, id, int_id, gate) {
+        const wallet_no = document.getElementById('phone').value
+        request_payment_key(token, id, int_id, gate)
+    }
+
+    function wallet_pay_click() {
+        const wallet_form = document.getElementById('wallet')
+        wallet_form.removeAttribute('hidden')
+    }
 
 
 </script>
