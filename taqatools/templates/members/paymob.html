@@ -14,16 +14,17 @@
             <button id="card_btn" class="btn btn-primary form-control">الدفع من خلال كارت</button>
          </div>
         <div class="col-6">            
-            <button onclick="wallet_pay_click()" class="btn btn-primary form-control">الدفع من خلال محفظة اليكترونية</button>
+            <button id="wallet_btn" class="btn btn-primary form-control">الدفع من خلال محفظة اليكترونية</button>
         </div>
     </div>
     <br>
     <div id="wallet" hidden class="row">
         <div class="col-12 form-group">
             <form class="form-group" action="">
-            <label for="phone">ادخل رقم المحفظة الالكترونية</label>
-            <input id="phone" class="form-control" type="number"><br>
-            <button class="form-control btn btn-primary">تأكيد الرقم</button>
+                <input type="hidden" id="pay_token">
+                <label for="phone">ادخل رقم المحفظة الالكترونية</label>
+                <input id="phone" class="form-control" type="number"><br>
+                <button id="confirm_wallet" disabled class="form-control btn btn-primary">تأكيد الرقم</button>
             </form>
         </div>
     </div>
@@ -38,10 +39,10 @@
 
     }
 
-    function wallet_pay_request(payment_token)  {
+    function wallet_pay_request(payment_token, wallet_no)  {
         let data = {
             "source": {
-              "identifier": "01557444030", 
+              "identifier": wallet_no, 
               "subtype": "WALLET"
             },
             "payment_token": payment_token,
@@ -74,7 +75,14 @@
 
     }
 
-    function request_payment_key(token, id, int_id, gate) {
+    const request_token = document.getElementById('pay_token')
+
+    function request_payment_key(token, id, gate) {
+        if (gate === 'wallet') {
+            var int_id = '3544185'
+        } else {
+            var int_id = '3544186'
+        }
         let data = {
             "auth_token": token,
             "amount_cents": "1000", 
@@ -117,12 +125,13 @@
         })
         .then(data => {
             console.log(data.token) 
-            if (gate===wallet){
-                wallet_pay_request(data.token)
+            if (gate === 'wallet') {
+                const wallet = document.getElementById('wallet')
+                wallet.removeAttribute('hidden')
+                request_token.value = data.token
             } else {
                 card_pay_request(data.token)
             }
-            
         })
         .catch((error) => {
             console.log(error)
@@ -130,7 +139,7 @@
 
     }
 
-    function make_order(token) {
+    function make_order(token, gate) {
         let data = {
             "auth_token":  token,
             "delivery_needed": "false",
@@ -157,8 +166,7 @@
         })
         .then(data => {
             console.log(data.id)
-            const card_btn = document.getElementById('card_btn')
-            card_btn.setAttribute('onclick', `card_pay_click('${token}', '${data.id}', '3544186', 'card')`)
+            request_payment_key(token, data.id, gate)
         })
         .catch((error) => {
             console.log(error)
@@ -167,7 +175,7 @@
     }
 
     const api_key = 'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SndjbTltYVd4bFgzQnJJam8zTVRZd016a3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuUHVXVVh1NUlUdDQ2NjdFVmV1YUdzVkZwb0JmQm56N0NFRmtiLVMzNFNmazRnQkhQX3Fxb24yU0R4RkRzeklISDM5c3FJSWE4MUVqcm50LWNvd3k4WUE='
-    function get_token() {
+    function get_token(gate) {
         let data = {
             'api_key':api_key,
         }
@@ -190,28 +198,46 @@
         })
         .then(data => {
             console.log(data.token)
-            make_order(data.token)
+            make_order(data.token, gate)
         })
         .catch((error) => {
             console.log(error)
         })
     }
 
-    get_token()
 
-    function card_pay_click(token, id, int_id, gate) {
-        request_payment_key(token, id, int_id, gate)
-    }
 
-    function get_wallet_no(token, id, int_id, gate) {
-        const wallet_no = document.getElementById('phone').value
-        request_payment_key(token, id, int_id, gate)
-    }
+    
 
-    function wallet_pay_click() {
-        const wallet_form = document.getElementById('wallet')
-        wallet_form.removeAttribute('hidden')
-    }
+    const wallet_btn = document.getElementById('wallet_btn')
+    wallet_btn.addEventListener('click', function (){
+        get_token('wallet')
+    })
+
+
+
+    const card_btn = document.getElementById('card_btn')
+    card_btn.addEventListener('click', function (){
+        get_token('card')
+    })
+
+    const confirm_btn = document.getElementById('confirm_wallet')
+
+    const wallet_input = document.getElementById('phone')
+    wallet_input.addEventListener('change', function (){
+        var string = wallet_input.value
+        if (string.length === 11){
+            const confirm_btn = document.getElementById('confirm_wallet')
+            confirm_btn.removeAttribute('disabled')
+        }
+    })
+
+    confirm_btn.addEventListener('click', function(e){
+        e.preventDefault()
+
+        wallet_pay_request(request_token.value, wallet_input.value)
+    })
+
 
 
 </script>
