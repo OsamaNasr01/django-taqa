@@ -291,4 +291,9 @@ def add_address(request):
     
     
 def paymob(request):
-    return render(request, 'members/paymob.html', {})
+    return render(request, 'members/paymob/paymob.html', {})
+
+
+
+def payment_status(request):
+    return render(request, 'members/paymob/payment_status.html', {})

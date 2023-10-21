@@ -32,5 +32,6 @@ urlpatterns = [
     
     
     path('paymob/', views.paymob, name='paymob'),
+    path('paymob/status/', views.payment_status, name='payment_status'),
     
 ]
