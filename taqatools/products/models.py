@@ -148,12 +148,12 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        if not self.slug:
-            self.slug = arabic_to_english_slug(self.name)
-        super(Product, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = slugify(self.id + self.name)
+    #     if not self.slug:
+    #         self.slug = arabic_to_english_slug(self.id + self.name)
+    #     super(Product, self).save(*args, **kwargs)
         
     @property
     def price(self):
@@ -174,6 +174,9 @@ def update_details(sender, instance, created, **kwargs):
         site = Site.objects.get(id=1)
         site.products +=1
         site.save()
+        slug_name = instance.name +'-'+ str(instance.id)
+        instance.slug = arabic_to_english_slug(slug_name)
+        instance.save()
         Inventory.objects.create(product=instance)
     
 @receiver(post_delete, sender =  Product)
