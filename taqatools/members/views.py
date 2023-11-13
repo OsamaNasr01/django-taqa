@@ -70,8 +70,7 @@ def user_delete(request, username):
             return render(request, 'members/not_auth.html', {})
 
 def home(request):
-    if not Site.objects.get(id=1):
-        Site.objects.create()
+    Site.objects.create()
     categories = Category.objects.all()
     products = Product.objects.all()
     brands = Brand.objects.all()
