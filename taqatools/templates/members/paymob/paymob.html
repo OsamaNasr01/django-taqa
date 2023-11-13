@@ -34,7 +34,9 @@
     function card_pay_request(payment_token)  {
                 
         url = `https://accept.paymob.com/api/acceptance/iframes/740313?payment_token=${payment_token}`
-        window.location.href = url
+        open(url, '_blank', {
+            popup:true
+        }) 
 
 
     }
@@ -66,7 +68,7 @@
         })
         .then(data => {
             console.log(data)
-            window.location.href = data.iframe_redirection_url
+            open(data.iframe_redirection_url)
 
         })
         .catch((error) => {
@@ -85,7 +87,7 @@
         }
         let data = {
             "auth_token": token,
-            "amount_cents": "5000", 
+            "amount_cents": "1000", 
             "expiration": 3600, 
             "order_id": id,
             "billing_data": {
