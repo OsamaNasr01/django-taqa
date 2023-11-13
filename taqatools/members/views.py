@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from .models import Company, CoCategory, Details, Account
 from products.models import Category, Product, Brand
 from posts.models import Post
+from sitestats.models import Site
 from accounting.forms import DepitForm, CreditForm
 import json
 from django.contrib.auth.decorators import login_required
@@ -69,6 +70,8 @@ def user_delete(request, username):
             return render(request, 'members/not_auth.html', {})
 
 def home(request):
+    if not Site.objects.get(id=1):
+        Site.objects.create()
     categories = Category.objects.all()
     products = Product.objects.all()
     brands = Brand.objects.all()
