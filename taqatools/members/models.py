@@ -113,6 +113,8 @@ def user_account_details(sender, instance, created, **kwargs):
     if created:
         details = Details.objects.create()
         Account.objects.create(user=instance, details= details)
+        if not Site.objects.get(id=1):
+            Site.objects.create()
         users_no =Site.objects.get(id=1)
         users_no.users   += 1
         users_no.save()
