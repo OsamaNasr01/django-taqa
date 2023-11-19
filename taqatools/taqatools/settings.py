@@ -86,8 +86,12 @@ WSGI_APPLICATION = 'taqatools.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'taqatools',
+        'USER': 'osama',
+        'PASSWORD': '05051986',
+        'HOST': 'taqatools.ciehlraafkct.eu-central-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
