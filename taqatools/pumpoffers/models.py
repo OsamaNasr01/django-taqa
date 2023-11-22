@@ -1,10 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 from members.models import Address, Company
+from products.models import Category
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 # Create your models here.
+
+
+class OffersApp(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(max_length=500)
+    
+    
+class offerCats(models.Model):
+    offer_app = models.ForeignKey(OffersApp, related_name='cats', on_delete=models.CASCADE)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 class Irrigation(models.Model):
@@ -34,6 +45,7 @@ class PumpOfferRequest(models.Model):
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     irrigation = models.ForeignKey(Irrigation, on_delete=models.SET_NULL, null=True)
     power = models.ForeignKey(PowerSource, on_delete=models.SET_NULL, null=True)
+    app = models.ForeignKey(OffersApp, related_name='requests', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
 
