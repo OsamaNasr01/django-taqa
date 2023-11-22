@@ -10,6 +10,17 @@ from django.contrib.auth.decorators import login_required
 
 
 
+def offers_apps(request):
+    return render(request, 'pumpoffers/offer_apps/apps_list.html', {})
+
+
+
+@login_required(login_url='login')
+def add_app(request):
+    return render(request, 'pumpoffers/offer_apps/add_app.html', {})
+    
+
+
 @login_required(login_url='login')
 def pump_offer_request(request):
     if request.method == 'POST':

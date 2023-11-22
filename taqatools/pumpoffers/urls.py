@@ -50,4 +50,8 @@ urlpatterns = [
     
     path('pump-offer/send-offer/', views.send_offer, name='send_offer'),
     path('pump-offer/offer/<int:id>/', views.offer_profile, name='offer_profile'),
+    
+    
+    path('offers-apps/', views.offers_apps, name='offers_apps'),
+    path('offers-apps/add-app/', views.add_app, name='add_app'),
 ]
