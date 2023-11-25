@@ -1,8 +1,41 @@
 
 from django import forms
-from .models import PumpOfferRequest, PumpOfferItem, PumpOffer
+from .models import PumpOfferRequest, PumpOfferItem, PumpOffer, OffersApp
 
 
+
+
+class OffersAppForm(forms.ModelForm):
+
+    class Meta:
+        model = OffersApp
+        fields = ('name', 'description',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].label = 'اسم نموذج المناقصة'
+        self.fields['description'].label = 'وصف نموذح المناقصة'
+        
+        
+
+
+
+class TermsForm(forms.ModelForm):
+
+    class Meta:
+        model = PumpOffer
+        fields = ('valid', 'include_taxes', 'include_trans', 'installment',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['valid'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['include_taxes'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['include_trans'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['installment'].widget.attrs.update({'class': 'form-control'})
+        
+        
 
 
 class PumpOfferRequestForm(forms.ModelForm):
@@ -25,22 +58,3 @@ class PumpOfferRequestForm(forms.ModelForm):
         self.fields['power'].label = 'مصدر الكهرباء'
         
         
-
-
-
-class TermsForm(forms.ModelForm):
-
-    class Meta:
-        model = PumpOffer
-        fields = ('valid', 'include_taxes', 'include_trans', 'installment',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['valid'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['include_taxes'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['include_trans'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['installment'].widget.attrs.update({'class': 'form-control'})
-        
-        
-
-

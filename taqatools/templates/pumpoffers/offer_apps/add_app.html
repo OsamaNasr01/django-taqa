@@ -4,10 +4,12 @@
 اضافة نموذج مناقصات 
 {% endblock %}
 {% block content %}
+{% load humanize %}
+
+
 <h1>
     اضافة نموذج مناقصات 
 </h1>
-{% load humanize %}
-
+{{ form.as_p }}
 {% endblock %}
 

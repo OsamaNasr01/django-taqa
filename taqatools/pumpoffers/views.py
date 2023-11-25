@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .forms import PumpOfferRequestForm, TermsForm
+from .forms import PumpOfferRequestForm, TermsForm, OffersAppForm
 from .models import PumpOfferRequest, PumpOffer, PumpOfferItem, Validity
 from members.forms import AddAddressForm
 from members.models import Gov, City, Company
@@ -17,7 +17,12 @@ def offers_apps(request):
 
 @login_required(login_url='login')
 def add_app(request):
-    return render(request, 'pumpoffers/offer_apps/add_app.html', {})
+    form = OffersAppForm()
+    if request.method == 'POST':
+        pass
+    else:
+        
+        return render(request, 'pumpoffers/offer_apps/add_app.html', {'form' : form})
     
 
 

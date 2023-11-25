@@ -1,5 +1,48 @@
 {% load static %}
-
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25">
+        مجمع الطاقة
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">الرئيسية</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'posts' %}"><i class="bx bxs-city"></i> المقالات</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'p_category_list' %}"><i class="bx bxs-carousel"></i> المنتجات</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              عروض الاسعار
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#"> الطلمبات الغاطسة</a></li>
+              <li><a class="dropdown-item" href="#"> الطاقة الشمسية للري</a></li>
+              <li><a class="dropdown-item" href="#"> الطاقة الشمسية للانارة</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<!-- 
 <link rel="stylesheet" href="{% static 'navbar/navbar.css' %}" />
 <style>
     * .alert-dismissible {
@@ -138,4 +181,4 @@
         navlinks.classList.toggle("active");
         body.classList.toggle("active");
     };
-</script>
+</script> -->
