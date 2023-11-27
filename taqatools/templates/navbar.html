@@ -9,7 +9,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav  mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">الرئيسية</a>
           </li>
@@ -27,158 +27,9 @@
               <li><a class="dropdown-item" href="#"> الطلمبات الغاطسة</a></li>
               <li><a class="dropdown-item" href="#"> الطاقة الشمسية للري</a></li>
               <li><a class="dropdown-item" href="#"> الطاقة الشمسية للانارة</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
-<!-- 
-<link rel="stylesheet" href="{% static 'navbar/navbar.css' %}" />
-<style>
-    * .alert-dismissible {
-        position: absolute;
-        top: 100px;
-        transform: translatex(-50%);
-        left: 50%;
-        box-shadow: 0 0 20px #dbdbdb;
-        z-index: 1;
-    }
-</style>
-
-<nav>
-    <a aria-current="page" href="{% url 'home' %}" class="logo">
-        <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25"> مجمع الطاقة
-    </a>
-    <div class="navlinks">
-        <ul>
-            <li>
-                <a  aria-current="page" href="{% url 'home' %}"
-                    ><i class="bx bx-home"></i> الرئيسية</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'posts' %}"
-                    ><i class="bx bxs-city"></i> المقالات</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'companies' %}"
-                    ><i class="bx bxs-city"></i> الشركات</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'p_category_list' %}"
-                    ><i class="bx bxs-carousel"></i> المنتجات</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'pumpoffer_request_list' %}"
-                    ><i class="bx bxs-carousel"></i>طلب عرض سعر لطلمبة غاطسة</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'brands' %}"
-                    ><i class="bx bx-badge-check"></i> البراندات</a
-                >
-            </li>
-            <li>
-                <a href="{% url 'cart' %}" id="cart-navbar"
-                    ><i class="bx bx-cart-alt"></i> العربة
-                    ({{user.cartitems.count}})</a
-                >
-            </li>
-            <hr />
-            {% if user.is_authenticated %} {% if user.first_name %}
-            <li class="none">
-                <a href="{% url 'user_profile' user.username %}"
-                    >اهلا {{ user.first_name }}!</a
-                >
-            </li>
-            {% else %}
-            <li class="none">
-                <a href="{% url 'user_profile' user.username %}"
-                    >اهلا {{ user.username }}!</a
-                >
-            </li>
-            {% endif %} {% if not user.companies.exists %}
-            <li class="none">
-                <a href="{% url 'add_company' %}">اضف شركة</a>
-            </li>
-            {% endif %}
-
-            <li class="none">
-                <a href="{% url 'logout' %}"
-                    ><i class="bx bx-log-out"></i> تسجيل خروج</a
-                >
-            </li>
-            {% else %}
-            <li class="none">
-                <a href="{% url 'register' %}"
-                    ><i class="bx bx-registered"></i> اشتراك</a
-                >
-            </li>
-            <li class="none">
-                <a href="{% url 'login' %}"
-                    ><i class="bx bx-log-in"></i> تسجيل دخول</a
-                >
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-    <div class="register">
-        <ul>
-            {% if user.is_authenticated %} {% if user.first_name %}
-            <li>
-                <a href="{% url 'user_profile' user.username %}"
-                    >اهلا {{ user.first_name }}!</a
-                >
-            </li>
-            {% else %}
-            <li>
-                <a href="{% url 'user_profile' user.username %}"
-                    >الها {{ user.username }}!</a
-                >
-            </li>
-            {% endif %} {% if not user.companies.exists %}
-            <li>
-                <a href="{% url 'add_company' %}">اضف شركة</a>
-            </li>
-            {% endif %}
-
-            <li>
-                <a href="{% url 'logout' %}">تسجيل خروج</a>
-            </li>
-            {% else %}
-            <li>
-                <a href="{% url 'register' %}">اشتراك</a>
-            </li>
-            <li>
-                <a href="{% url 'login' %}">تسجيل دخول</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-    <div class="humberger"></div>
-</nav>
-
-<script>
-    let humberger = document.querySelector(".humberger");
-    let navlinks = document.querySelector(".navlinks");
-    let body = document.querySelector("body");
-
-    humberger.onclick = function () {
-        humberger.classList.toggle("active");
-        navlinks.classList.toggle("active");
-        body.classList.toggle("active");
-    };
-</script> -->
