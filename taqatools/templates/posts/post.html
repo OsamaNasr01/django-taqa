@@ -183,33 +183,6 @@
 
 
 
-{% if post.category.products.count %}
-<div class="header">
-    <h3>تسوق الان</h3>
-</div>
-{% for product in post.category.products.all %}
-<a href="{% url 'product' product.slug %}" class="card">
-    <div class="image">
-        <img src="{{product.image.url}}" alt="" />
-    </div>
-    <div class="text">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-    </div>
-    <div class="order">
-        <div class="prices">
-            <p>{{product.price}} <span>ج.م</span></p>
-            <div>
-                <p>{{product.o_price}}</p>
-                <span>ج.م</span>
-            </div>
-        </div>
-        <form action="erpjq.com">
-            <button>تسوق الان</button>
-        </form>
-    </div>
-</a>
-{% endfor %} {% endif %}
 
 <!-- delete-post-modal.html -->
 
