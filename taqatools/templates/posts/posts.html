@@ -24,15 +24,15 @@
             <!-- Nested row for non-featured blog posts-->
             <div class="row">
                 {% for post in posts %}
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <!-- Blog post-->
                     <div class="card mb-4">
-                        <a href="#!">{% if post.image %}<img class="card-img-top" src="{{post.image.url}}" alt="..." />{% else %}<img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
+                        <a href="{% url 'post' post.slug %}">{% if post.image %}<img class="card-img-top" src="{{post.image.url}}" alt="..." />{% else %}<img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
                         <div class="card-body">
                             <div class="small text-muted">{{post.created_at}}</div>
                             <h2 class="card-title h4">{{post.title}}</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
+                            <p class="card-text">{{ post.content|safe|truncatewords:20 }}</p>
+                            <a class="btn btn-primary" href="{% url 'post' post.slug %}">المزيد</a>
                         </div>
                     </div>
                 </div>

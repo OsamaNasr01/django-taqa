@@ -2,6 +2,8 @@
 <!-- comment  -->
 {% block title%} {{ post.title }} {% endblock %} {% block content %}
 
+
+<div class="container mt-3">
 <button
     type="button"
     id="modal_button"
@@ -12,41 +14,174 @@
     حذف
 </button>
 <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">تعديل</a>
-<br /><br />
-<link rel="stylesheet" href="{% static 'posts/post.css' %}" />
-<style></style>
-<div class="content">
-    <p>{{ post.timeToRead }}</p>
-    <p>{{ post.category }}</p>
-    <p>{{ post.created_at|naturaltime }}</p>
-    <p>{{ post.auther.full_name }}</p>
-    <div class="image">
-        {% if post.image %}
-        <img src="{{post.image.url}}" alt="" />
-        {% endif %}
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">{{ post.created_at|naturaltime }} by {{ post.auther.full_name }}</div>
+                    <!-- Post categories-->
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category }}</a>
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.timeToRead }}</a>
+                </header>
+                <!-- Preview image figure-->
+                <figure class="mb-4"><img class="img-fluid rounded" src="{{post.image.url}}" alt="..." /></figure>
+                <!-- Post content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{ post.content|safe }}</p>
+                </section>
+            </article>
+            <!-- Comments section-->
+            <section class="mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <!-- Comment form-->
+                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                        <!-- Comment with nested comments-->
+                        <div class="d-flex mb-4">
+                            <!-- Parent comment-->
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">Commenter Name</div>
+                                If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                                <!-- Child comment 1-->
+                                <div class="d-flex mt-4">
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">Commenter Name</div>
+                                        And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                    </div>
+                                </div>
+                                <!-- Child comment 2-->
+                                <div class="d-flex mt-4">
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">Commenter Name</div>
+                                        When you put money directly to a problem, it makes a good headline.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Single comment-->
+                        <div class="d-flex">
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">Commenter Name</div>
+                                When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">Web Design</a></li>
+                                <li><a href="#!">HTML</a></li>
+                                <li><a href="#!">Freebies</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">JavaScript</a></li>
+                                <li><a href="#!">CSS</a></li>
+                                <li><a href="#!">Tutorials</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            {% if post.category.posts.count > 1 %}
+                <div class="card mb-4">
+                    <div class="card-header">مقالات مشابهة</div>
+                    <div class="card-body">
+                        
+                            {% for cat_post in post.category.posts.all %}
+                            <!-- comment -->
+                                {% if not cat_post.id == post.id %}
+                                <div class="card  mb-4">
+                                    <a href="{% url 'post' cat_post.slug %}">{% if cat_post.image %}<img class="card-img-top" src="{{cat_post.image.url}}" alt="..." />{% else %}<img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
+                                    <div class="card-body">
+                                        <div class="small text-muted">{{post.created_at}}</div>
+                                        <h2 class="card-title h4">{{ cat_post.title }}</h2>
+                                        <p class="card-text">{{ cat_post.content|safe|truncatewords:20 }}</p>
+                                        <a class="btn btn-primary" href="{% url 'post' cat_post.slug %}">المزيد</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            <!-- comment -->
+                            {% endfor %}
+                        <!-- comment  -->
+                    </div>
+                </div>
+            {% endif %}
+            <!-- Side widget-->
+            {% if post.category.products.count %}
+                <div class="card mb-4">
+                    <div class="card-header"> منتجات متعلقة بالمقال</div>
+                    <div class="card-body">
+                        
+                            {% for product in post.category.products.all %}
+                            <div class="card mb-3 h-100">
+                                <!-- Sale badge-->
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                <!-- Product image-->
+                                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{product.name}}</h5>
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                        </div>
+                                        <!-- Product price-->
+                                        <span class="text-muted text-decoration-line-through">{{product.o_price}}</span>
+                                        {{product.price}}
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        <!-- comment  -->
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.content|safe }}</p>
 </div>
 
-<div class="also">
-    {% if post.category.posts.count > 1 %}
-    <h3>Read also</h3>
-    {% for cat_post in post.category.posts.all %}
-    <!-- comment -->
-    {% if not cat_post.id == post.id %}
-    <a href="{% url 'post' cat_post.slug %}" class="card">
-        <h3>{{ cat_post.title }}</h3>
-        <p>{{ cat_post.content|safe|truncatewords:20 }}</p>
-    </a>
-    {% endif %}
-    <!-- comment -->
-    {% endfor %}
-    <!-- comment  -->
-    {% endif %}
-</div>
 
-<style></style>
 
 {% if post.category.products.count %}
 <div class="header">
