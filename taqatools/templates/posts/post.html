@@ -141,10 +141,10 @@
             {% if post.category.products.count %}
                 <div class="card mb-4">
                     <div class="card-header"> منتجات متعلقة بالمقال</div>
-                    <div class="card-body">
+                    <div class="card-body row">
                         
                             {% for product in post.category.products.all %}
-                            <div class="card mb-3 h-100">
+                            <div class="card m-1 col-lg-12 col-md-4 col-sm-6 mb-3 h-100">
                                 <!-- Sale badge-->
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                                 <!-- Product image-->

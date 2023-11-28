@@ -8,102 +8,168 @@
 <!-- comment -->
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'products/product.css' %}" />
-<button
-    type="button"
-    class="btn btn-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#update-product-modal"
->
-    تعديل
-</button>
 
-<div
-    class="modal fade"
-    id="update-product-modal"
-    tabindex="-1"
-    aria-labelledby="update-product-modal"
-    aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="update-product-modal">Update</h5>
+        <!-- Product section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
                 <button
                     type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#update-product-modal"
+                >
+                    تعديل
+                </button>
+                
+                <div
+                    class="modal fade"
+                    id="update-product-modal"
+                    tabindex="-1"
+                    aria-labelledby="update-product-modal"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="update-product-modal">Update</h5>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                <form
+                                    enctype="multipart/form-data"
+                                    action="{% url 'update_product' product.slug %}"
+                                    method="post"
+                                    name="update-product_form"
+                                > 
+                                    {% csrf_token %} {{ form.as_p }}
+                                    <!-- comment  -->
+                                    {% for spec in product.txt_spec.all %}
+                                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                                    <input
+                                        type="text"
+                                        name="{{ spec.spec.name }}"
+                                        class="form-control"
+                                        id="{{spec.spec.name}}"
+                                        value="{{spec.value}}"
+                                    />
+                                    <small
+                                        id="{{spec.spec.name}}Help"
+                                        class="form-text text-muted"
+                                    ></small>
+                                    {% endfor %}
+                                    <!-- comment  -->
+                                    {% for spec in product.num_spec.all %}
+                                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                                    <input
+                                        type="number"
+                                        name="{{ spec.spec.name }}"
+                                        class="form-control"
+                                        id="{{spec.spec.name}}"
+                                        value="{{spec.value}}"
+                                    />
+                                    <small
+                                        id="{{spec.spec.name}}Help"
+                                        class="form-text text-muted"
+                                        >{{ spec.spec.unit }}</small
+                                    ><br />
+                                    {% endfor %}
+                                    <!-- comment  -->
+                                    {% for spec in product.bool_spec.all %}
+                                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                                    <input
+                                        type="checkbox"
+                                        name="{{ spec.spec.name }}"
+                                        class="form-check-input"
+                                        id="{{spec.spec.name}}"
+                                        value="{{spec.value}}"
+                                    />
+                                    {% endfor %}
+                                    <br /><br />
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#delete-product-modal"
+                >
+                    حذف
+                </button>
+                <div class="row pt-1 gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
+                    <div class="col-md-6">
+                        <div class="small mb-1">{{ product.category }}</div>
+                        <h1 class="display-5 fw-bolder">{{product.name}}</h1>
+                        <div class="fs-5 mb-5">
+                            <span class="text-decoration-line-through">{{product.o_price|floatformat:2|intcomma}}</span>
+                            <span>{{product.price|floatformat:2|intcomma}}</span>
+                        </div>
+                        <p class="lead">{{product.description}}</p>
+                        <ul>
+                            {% for spec in product.num_spec.all%}
+                            <li>
+                                {{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}
+                            </li>
+                            {% endfor %} {% for spec in product.txt_spec.all%}
+                            <li>{{ spec.spec.name }}: {{ spec.value }}</li>
+                            {% endfor %} {% for spec in product.bool_spec.all%}
+                            <li>{{ spec.spec.name }}: {{ spec.value }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="d-flex">
+                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                <i class="bi-cart-fill me-1"></i>
+                                اضف الي العربة
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form
-                    enctype="multipart/form-data"
-                    action="{% url 'update_product' product.slug %}"
-                    method="post"
-                    name="update-product_form"
-                > 
-                    {% csrf_token %} {{ form.as_p }}
-                    <!-- comment  -->
-                    {% for spec in product.txt_spec.all %}
-                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                    <input
-                        type="text"
-                        name="{{ spec.spec.name }}"
-                        class="form-control"
-                        id="{{spec.spec.name}}"
-                        value="{{spec.value}}"
-                    />
-                    <small
-                        id="{{spec.spec.name}}Help"
-                        class="form-text text-muted"
-                    ></small>
+        </section>
+        <!-- Related items section-->
+        <section class="py-5 bg-light">
+            <div class="container px-4 px-lg-5 mt-5">
+                <h2 class="fw-bolder mb-4">Related products</h2>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for cat_product in product.category.products.all %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{cat_product.image.url}}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{cat_product.name}}</h5>
+                                    <!-- Product price-->
+                                    {{cat_product.price}}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' cat_product.slug %}">View options</a></div>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                    <!-- comment  -->
-                    {% for spec in product.num_spec.all %}
-                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                    <input
-                        type="number"
-                        name="{{ spec.spec.name }}"
-                        class="form-control"
-                        id="{{spec.spec.name}}"
-                        value="{{spec.value}}"
-                    />
-                    <small
-                        id="{{spec.spec.name}}Help"
-                        class="form-text text-muted"
-                        >{{ spec.spec.unit }}</small
-                    ><br />
-                    {% endfor %}
-                    <!-- comment  -->
-                    {% for spec in product.bool_spec.all %}
-                    <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                    <input
-                        type="checkbox"
-                        name="{{ spec.spec.name }}"
-                        class="form-check-input"
-                        id="{{spec.spec.name}}"
-                        value="{{spec.value}}"
-                    />
-                    {% endfor %}
-                    <br /><br />
-                    <button type="submit" class="btn btn-primary">
-                        Update
-                    </button>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
+        </section>
 
-<button
-    type="button"
-    class="btn btn-danger"
-    data-bs-toggle="modal"
-    data-bs-target="#delete-product-modal"
->
-    حذف
-</button>
+<!-- <link rel="stylesheet" href="{% static 'products/product.css' %}" /> -->
 
 <!-- delete-product-modal.html -->
 
@@ -161,32 +227,7 @@
 </div>
 
 <div class="product">
-    <div class="image">
-        <img src="{{product.image.url}}">
-    </div>
     <div class="text">
-        <h1>{{ product.name }}</h1>
-        <p>{{ product.description }}</p>
-        <p>البراند: {{ product.brand.name }}</p>
-        <p>القسم: {{ product.category }}</p>
-        <input type="hidden" value="{{product.id}}" id="product_id" />
-        <div>
-            <ul>
-                {% for spec in product.num_spec.all%}
-                <li>
-                    {{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}
-                </li>
-                {% endfor %} {% for spec in product.txt_spec.all%}
-                <li>{{ spec.spec.name }}: {{ spec.value }}</li>
-                {% endfor %} {% for spec in product.bool_spec.all%}
-                <li>{{ spec.spec.name }}: {{ spec.value }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <h6>{{ price|floatformat:2|intcomma  }} ج.م <span>{{ original_price|floatformat:2|intcomma  }} ج.م</span></h6>
-        <ul>
-            <li class="discount">-{{ discount }}%</li>
-        </ul>
         <div class="row">
             <div class="col-12">
                 <p id="messege"></p>
