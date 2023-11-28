@@ -10,8 +10,8 @@
 
 
         <!-- Product section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 my-5">
+        <section class="">
+            <div class="container px-4 px-lg-5 my-2">
                 <button
                     type="button"
                     class="btn btn-primary"
@@ -107,7 +107,7 @@
                 >
                     حذف
                 </button>
-                <div class="row pt-1 gx-4 gx-lg-5 align-items-center">
+                <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
                     <div class="col-md-6">
                         <div class="small mb-1">{{ product.category }}</div>
@@ -140,9 +140,9 @@
             </div>
         </section>
         <!-- Related items section-->
-        <section class="py-5 bg-light">
-            <div class="container px-4 px-lg-5 mt-5">
-                <h2 class="fw-bolder mb-4">Related products</h2>
+        <section class="py-1 bg-light">
+            <div class="container px-4 px-lg-5 mt-2">
+                <h2 class="fw-bolder mb-4">منتجات ذات صلة</h2>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% for cat_product in product.category.products.all %}
                     <div class="col mb-5">
@@ -168,6 +168,37 @@
                 </div>
             </div>
         </section>
+
+        
+        {% if product.category.posts.count %}
+        <div class="container">
+            <h2 class="fw-bolder mb-4">مقالات ذات صلة</h2>
+            <div class="row justify-content-center">
+                <!-- Blog entries-->
+                <div class="col-lg-12">
+                    <!-- Featured blog post-->
+                    <!-- Nested row for non-featured blog posts-->
+                    <div class="row justify-content-center">
+                        {% for post in posts %}
+                        <div class="col-lg-4 col-md-6">
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">January 1, 2023</div>
+                                    <h2 class="card-title h4">{{ post.title }}</h2>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
 
 <!-- <link rel="stylesheet" href="{% static 'products/product.css' %}" /> -->
 
@@ -226,36 +257,6 @@
     </div>
 </div>
 
-<div class="product">
-    <div class="text">
-        <div class="row">
-            <div class="col-12">
-                <p id="messege"></p>
-            </div>
-            {% if in_cart %}
-            <input
-                type="number"
-                class="form-control"
-                id="no"
-                value="{{no_in_cart}}"
-            />
-            <button style="width: 100%" class="btn btn-danger" id="add_to_cart">
-                Remove from Cart
-            </button>
-            {% else %}
-            <input type="number" class="form-control" id="no" value="1" />
-            <button
-                style="width: 100%"
-                class="btn btn-primary"
-                id="add_to_cart"
-            >
-                Add to Cart
-            </button>
-            {% endif %}
-        </div>
-        <p>اخر تعديل: {{ product.prices.last.created_at|naturaltime}}</p>
-    </div>
-</div>
 
 <div
     style="margin: 10px 0"
@@ -289,32 +290,6 @@
                 </form>
             </div>
         </div>
-    </div>
-</div>
-<div class="container">
-    <h3>{% if posts.count %}المقالات المتعلقة بالمنتج{% endif %}</h3>
-    <div class="row">
-        {% for post in posts %}
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            
-            <a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">
-                <div class="shadow p-3 mb-5 bg-white rounded">
-                    <div>
-                        <div>
-                            {% if post.image %}
-                                <img src="{{post.image.url}}" alt="">
-                            {% endif %}
-                        </div>
-                        <h3>{{ post.title }}</h3>
-                        <p>{{ post.timeToRead }}</p>
-                        <p>{{ post.created_at|naturaltime }}</p>
-                        <p>{{ post.auther.full_name }}</p>
-                        <p>{{ post.content|safe|truncatewords:20 }}</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
     </div>
 </div>
 
