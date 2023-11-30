@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'pumpoffers',
     'ckeditor',
     'ckeditor_uploader',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [
