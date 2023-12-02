@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def posts(request):
     posts = Post.objects.all()
-    categories = Category.objects.all()
+    categories = Category.objects.filter(posts__isnull=False).distinct()
     return render(request, 'posts/posts.html', {
         'posts' : posts,
         'categories': categories,
@@ -18,7 +18,7 @@ def posts(request):
 def post_category(request, slug):
     category = Category.objects.get(slug = slug)
     posts = Post.objects.filter(category = category)
-    categories = Category.objects.all()
+    categories = Category.objects.filter(posts__isnull=False).distinct()
     return render(request, 'posts/post_category.html', {
         'posts' : posts,
         'categories': categories,
@@ -43,7 +43,7 @@ def add_post(request):
     
 def post_view(request, slug):
     post = Post.objects.get(slug=slug)
-    categories = Category.objects.all()
+    categories = Category.objects.filter(posts__isnull=False).distinct()
     return render(request, 'posts/post.html', {
         'post': post,
         'categories' : categories,
