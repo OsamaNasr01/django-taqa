@@ -4,15 +4,32 @@ from .models import Post
 import json
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def posts(request):
     posts = Post.objects.all()
+    items_per_page = 3
+    paginator = Paginator(posts, items_per_page)
+
+    page = request.GET.get('page', 1)
+
+    try:
+        current_page = paginator.page(page)
+    except PageNotAnInteger:
+        current_page = paginator.page(1)
+    except EmptyPage:
+        current_page = paginator.page(paginator.num_pages)
+        
+        
     categories = Category.objects.filter(posts__isnull=False).distinct()
     return render(request, 'posts/posts.html', {
         'posts' : posts,
         'categories': categories,
+        'current_page': current_page,
     })
+
+
 
 
 def post_category(request, slug):
@@ -22,6 +39,7 @@ def post_category(request, slug):
     return render(request, 'posts/post_category.html', {
         'posts' : posts,
         'categories': categories,
+        'category' : category,
     })
 
 
