@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load humanize %} {% load static %}
+{% extends 'base.html' %} {% load humanize %} {% load static %} {% load mathfilters %}
 <!-- comment  -->
 {% block title%} {{ post.title }} {% endblock %} {% block content %}
 
@@ -92,21 +92,25 @@
             </div>
             <!-- Categories widget-->
             <div class="card mb-4">
-                <div class="card-header">Categories</div>
+                <div class="card-header">الاقسام</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
+                                {% for category in categories %}
+                                    {% if forloop.counter <= categories|length|div:2 %}
+                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">JavaScript</a></li>
-                                <li><a href="#!">CSS</a></li>
-                                <li><a href="#!">Tutorials</a></li>
+                                {% for category in categories %}
+                                    {% if forloop.counter > categories|length|div:2 %}
+                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
