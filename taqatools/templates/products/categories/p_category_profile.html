@@ -6,51 +6,113 @@
 <!-- comment  -->
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'products/p_category_profile.css' %}">
-<button
-    type="button"
-    class="btn "
-    data-bs-toggle="modal"
-    data-bs-target="#update-category-modal"
->
-<i class='bx h2 mt-2 bx-edit bx-flip-horizontal' ></i>
+<!-- Product section-->
+<section class="">
+    <div class="container px-4 px-lg-5 my-2">
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
+            حذف
+        </button>
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">{{ category.parent_id }}</div>
+                <h1 class="display-5 fw-bolder">{{category.name}}</h1>
+                <p class="lead">{{category.description}}</p>
+                <p>المواصفات</p>
+                {% if category.parent_id %}
+                <ul>
+                    {% for spec in category.specs.all %}
+                    <div class="spec">
+                        <li>
+                            {{ spec.name }} {% if not spec.unit == None %}
+                            <!-- comment  -->
+                            {{spec.unit }} {% endif %}
+                        </li>
+                        <div class="btn-group">
+                            <a href="{% url 'update_spec' spec.id %}" class="btn btn-primary btn-sm"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
+                                تعديل
+                            </a>
+                            <form action="{% url 'delete_spec' spec.id %}" method="POST" class="btn-group">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Delete">
+                                    حذف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="row">
+                    <div class="col-9">
+
+                        {% if category.parent_id %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#add-spec-modal">
+                            إضافة خاصية
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->
+<section class="py-1 bg-light">
+    <div class="container px-4 px-lg-5 mt-2">
+        <h2 class="fw-bolder mb-4">منتجات ذات صلة</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in category.products.all %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{product.name}}</h5>
+                            <!-- Product price-->
+                            {{product.price}}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                href="{% url 'product' product.slug %}">View options</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- <link rel="stylesheet" href="{% static 'products/p_category_profile.css' %}"> -->
+<button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
+    <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
 </button>
 
-<button
-    type="button"
-    class="btn btn-close"
-    data-bs-toggle="modal"
-    data-bs-target="#delete-category-modal"
->
-    
+<button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
+
 </button>
 
 
-<div
-    class="modal fade"
-    id="update-category-modal"
-    tabindex="-1"
-    aria-labelledby="update-category-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="update-category-modal"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="update-category-modal">تعديل</h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    enctype="multipart/form-data"
-                    action="{% url 'update_p_category' category.slug %}"
-                    method="post"
-                    name="update-category_form"
-                >
+                <form enctype="multipart/form-data" action="{% url 'update_p_category' category.slug %}" method="post"
+                    name="update-category_form">
                     {% csrf_token %} {{ update_category_form.as_p }}
                     <button type="submit" class="btn btn-primary">
                         تعديل
@@ -62,51 +124,26 @@
 </div>
 <!-- delete-category-modal.html -->
 
-<div
-    class="modal fade"
-    id="delete-category-modal"
-    tabindex="-1"
-    aria-labelledby="delete-category-modal-label"
-    aria-hidden="true"
->
+<div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="delete-category-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-category-modal-label">
-                   حذف القسم
+                    حذف القسم
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 هل انت متأكد من حذف هذا القسم؟
             </div>
             <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     إلغاء
                 </button>
-                <form
-                    action="{% url 'delete_p_category' category.slug %}"
-                    method="POST"
-                >
-                    <input
-                        type="hidden"
-                        name="csrfmiddlewaretoken"
-                        value="{{ csrf_token }}"
-                    />
-                    <button
-                        type="submit"
-                        class="btn btn-danger"
-                        id="confirm-delete-category"
-                    >
+                <form action="{% url 'delete_p_category' category.slug %}" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-category">
                         تأكيد الحذف
                     </button>
                 </form>
@@ -115,36 +152,17 @@
     </div>
 </div>
 <br /><br />
-<div
-    class="modal fade"
-    id="add-spec-modal"
-    tabindex="-1"
-    aria-labelledby="add-spec-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="add-spec-modal" tabindex="-1" aria-labelledby="add-spec-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-spec-modal">إضافة خاصية</h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    action="{% url 'add_spec' %}"
-                    method="post"
-                    name="add_spec_form"
-                >
+                <form action="{% url 'add_spec' %}" method="post" name="add_spec_form">
                     {% csrf_token %} {{ spec_form.as_p }}
-                    <input
-                        type="hidden"
-                        name="category_id"
-                        value="{{ category.id }}"
-                    />
+                    <input type="hidden" name="category_id" value="{{ category.id }}" />
                     <button type="submit" class="btn btn-primary">
                         اضافة خاصية
                     </button>
@@ -154,116 +172,27 @@
     </div>
 </div>
 
-<div class="mb-1 main-category">
-    <div class="image">
-    </div>
-    <div class="text">
-        <h1>{{ category.name }}</h1>
-        <p>وصف القسم {{ category.description }}</p>
-        <p>المواصفات</p>
-        {% if category.parent_id %}
-        <ul>
-            {% for spec in category.specs.all %}
-            <div class="spec">
-                <li>
-                    {{ spec.name }} {% if not spec.unit == None %}
-                    <!-- comment  -->
-                    {{spec.unit }} {% endif %}
-                </li>
-                <div class="btn-group">
-                    <a
-                        href="{% url 'update_spec' spec.id %}"
-                        class="btn btn-primary btn-sm"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
-                    >
-                        تعديل
-                    </a>
-                    <form
-                        action="{% url 'delete_spec' spec.id %}"
-                        method="POST"
-                        class="btn-group"
-                    >
-                        {% csrf_token %}
-                        <button
-                            type="submit"
-                            class="btn btn-danger btn-sm"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Delete"
-                        >
-                            حذف
-                        </button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <div class="row">
-            <div class="col-9">
-                
-                {% if category.parent_id %}
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#add-spec-modal"
-                >
-                    إضافة خاصية
-                </button>
-                {% endif %}
-            </div>
-            <div class="col-3"></div>
-        </div>
-    </div>
-</div>
 
 {% if not category.parent_id %}
-<button
-    style="margin: 0 0 0 20px"
-    type="button"
-    class="btn btn-primary"
-    data-bs-toggle="modal"
+<button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
     data-bs-target="#add-category-modal">
     إضافة قسم فرعي</button>
 {% endif %}
-<br/><br/>
-<div
-    class="modal fade"
-    id="add-category-modal"
-    tabindex="-1"
-    aria-labelledby="add-category-modal"
-    aria-hidden="true"
->
+<br /><br />
+<div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-category-modal">
                     إضافة قسم فرعي
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    enctype="multipart/form-data"
-                    action="{% url 'add_p_category' %}"
-                    method="post"
-                    name="add_category_form"
-                    id="cat_form"
-                >
+                <form enctype="multipart/form-data" action="{% url 'add_p_category' %}" method="post"
+                    name="add_category_form" id="cat_form">
                     {% csrf_token %} {{ category_form.as_p }}
-                    <input
-                        type="hidden"
-                        name="category_id"
-                        value="{{ category.id }}"
-                    />
+                    <input type="hidden" name="category_id" value="{{ category.id }}" />
                     <button type="submit" class="btn btn-primary">
                         إضافة
                     </button>
@@ -273,72 +202,45 @@
     </div>
 </div>
 
-{% if sub_categories %} 
+{% if sub_categories %}
 <div class="container">
     <div class="container-container-content">
-            {% for sub in sub_categories %}
-            <a href="{% url 'p_category_profile' sub.slug %}" class="card">
-                <div class="image">
-                    <img src="/{{sub.image}}" alt="" />
-                </div>
-                <div class="text">
-                    <h4>{{ sub.name }}</h4>
-                    <p>{{ sub.description|truncatewords:20 }}</p>
-                </div>
-            </a>
-            {% endfor %} 
+        {% for sub in sub_categories %}
+        <a href="{% url 'p_category_profile' sub.slug %}" class="card">
+            <div class="image">
+                <img src="/{{sub.image}}" alt="" />
+            </div>
+            <div class="text">
+                <h4>{{ sub.name }}</h4>
+                <p>{{ sub.description|truncatewords:20 }}</p>
+            </div>
+        </a>
+        {% endfor %}
     </div>
 </div>
 {% else %}
 <div>
-    <h3>لا توجد أقسام فرعية في  {{category.name}}</h3>
+    <h3>لا توجد أقسام فرعية في {{category.name}}</h3>
 </div>
 {% endif %}
 
-<button
-    type="button"
-    hidden
-    id="brand_modal"
-    class="btn btn-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#add-brand-modal"
->
+<button type="button" hidden id="brand_modal" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#add-brand-modal">
     إضافة براند
 </button>
 
-<div
-    class="modal fade"
-    id="add-brand-modal"
-    tabindex="-1"
-    aria-labelledby="add-brand-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="add-brand-modal" tabindex="-1" aria-labelledby="add-brand-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-brand-modal">إضافة براند</h5>
-                <button
-                    type="button"
-                    id="brand_modal_close"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" id="brand_modal_close" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    id="brand_form"
-                    enctype="multipart/form-data"
-                    action=""
-                    method="post"
-                    name="add_brand_form"
-                >
+                <form id="brand_form" enctype="multipart/form-data" action="" method="post" name="add_brand_form">
                     {% csrf_token %} {{ brand_form.as_p }}
-                    <button
-                        type="submit"
-                        id="brand_submit"
-                        class="btn btn-primary"
-                    >
+                    <button type="submit" id="brand_submit" class="btn btn-primary">
                         إضافة
                     </button>
                 </form>
@@ -347,45 +249,24 @@
     </div>
 </div>
 {% if category.parent_id %}
-<button
-    style="margin: 20px"
-    type="button"
-    id="product_modal"
-    class="btn btn-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#add-product-modal"
->
+<button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#add-product-modal">
     إضافة منتج
 </button>
 {% endif %}
-<div
-    class="modal fade"
-    id="add-product-modal"
-    tabindex="-1"
-    aria-labelledby="add-product-modal"
-    aria-hidden="true"
->
+<div class="modal fade" id="add-product-modal" tabindex="-1" aria-labelledby="add-product-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-product-modal">
                     إضافة منتج
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    id="product_modal_close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" id="product_modal_close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    enctype="multipart/form-data"
-                    action="{% url 'add_product' %}"
-                    method="post"
-                    name="add_product_form"
-                >
+                <form enctype="multipart/form-data" action="{% url 'add_product' %}" method="post"
+                    name="add_product_form">
                     {% csrf_token %} {{ form.as_p }}
                     <button class="btn btn-primary mb-3" onclick="new_brand()">
                         براند جديد
@@ -394,46 +275,21 @@
                     <hr />
                     {% for spec in category.specs.all %} {% if spec.type == 2 %}
                     <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input
-                        type="text"
-                        name="{{ spec.name }}"
-                        class="form-control"
-                        id="{{spec.name}}"
-                        placeholder="Enter {{ spec.name }}"
-                    />
-                    <small
-                        id="{{spec.name}}Help"
-                        class="form-text text-muted"
-                    ></small
-                    ><br />
+                    <input type="text" name="{{ spec.name }}" class="form-control" id="{{spec.name}}"
+                        placeholder="Enter {{ spec.name }}" />
+                    <small id="{{spec.name}}Help" class="form-text text-muted"></small><br />
                     {% elif spec.type == 1 %}
                     <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input
-                        type="number"
-                        name="{{ spec.name }}"
-                        class="form-control"
-                        id="{{spec.name}}"
-                        placeholder="Enter {{ spec.name }}"
-                    />
-                    <small id="{{spec.name}}Help" class="form-text text-muted"
-                        >{{ spec.unit }}.</small
-                    >
+                    <input type="number" name="{{ spec.name }}" class="form-control" id="{{spec.name}}"
+                        placeholder="Enter {{ spec.name }}" />
+                    <small id="{{spec.name}}Help" class="form-text text-muted">{{ spec.unit }}.</small>
                     <br /><br />
                     {% elif spec.type == 3 %}
                     <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input
-                        type="checkbox"
-                        onchange="dosomething(id)"
-                        name="{{ spec.name }}"
-                        class="form-check-input"
-                        id="{{spec.name}}"
-                    /><br /><br />
+                    <input type="checkbox" onchange="dosomething(id)" name="{{ spec.name }}" class="form-check-input"
+                        id="{{spec.name}}" /><br /><br />
                     {% endif %} {% endfor %}
-                    <input
-                        type="hidden"
-                        name="category_id"
-                        value="{{ category.id }}"
-                    />
+                    <input type="hidden" name="category_id" value="{{ category.id }}" />
                     <button type="submit" class="btn btn-primary">
                         إضافة منتج
                     </button>
@@ -443,34 +299,6 @@
     </div>
 </div>
 
-<div style="padding: 20px;" class="container ">
-    <div class="row">
-        {% for product in products %}
-        <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-3">
-            <a href="{% url 'product' product.slug %}" class="">
-                <div class="image">
-                    <img src="/{{product.image}}" alt="" />
-                </div>
-                <div class="text">
-                    <h4>{{product.name}}</h4>
-                </div>
-                <div class="order">
-                    <div class="prices">
-                        <p>{{product.price}} <span>ج.م</span></p>
-                        <div>
-                            <p>{{product.o_price}}</p>
-                            <span>ج.م</span>
-                        </div>
-                    </div>
-                    <form action="{% url 'product' product.slug %}">
-                        <button>تسوق الان</button>
-                    </form>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 
 
 <script src="{% static '/products/add_brand.js' %}"></script>
