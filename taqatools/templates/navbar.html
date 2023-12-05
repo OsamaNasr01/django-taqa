@@ -1,35 +1,62 @@
 {% load static %}
 <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25">
-        مجمع الطاقة
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav  mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">الرئيسية</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'posts' %}"><i class="bx bxs-city"></i> المقالات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'p_category_list' %}"><i class="bx bxs-carousel"></i> المنتجات</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              عروض الاسعار
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#"> الطلمبات الغاطسة</a></li>
-              <li><a class="dropdown-item" href="#"> الطاقة الشمسية للري</a></li>
-              <li><a class="dropdown-item" href="#"> الطاقة الشمسية للانارة</a></li>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25">
+            مجمع الطاقة
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posts' %}"><i class="bx bxs-city"></i> المقالات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'p_category_list' %}"><i class="bx bxs-carousel"></i> المنتجات</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        عروض الاسعار
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"> الطلمبات الغاطسة</a></li>
+                        <li><a class="dropdown-item" href="#"> الطاقة الشمسية للري</a></li>
+                        <li><a class="dropdown-item" href="#"> الطاقة الشمسية للانارة</a></li>
+                    </ul>
+                </li>
             </ul>
-          </li>
-        </ul>
-      </div>
+            <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+                {% if user.is_authenticated %} {% if user.first_name %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_profile' user.username %}">اهلا {{ user.first_name }}!</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_profile' user.username %}">الها {{ user.username }}!</a>
+                </li>
+                {% endif %} {% if not user.companies.exists %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_company' %}">اضف شركة</a>
+                </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">تسجيل خروج</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">اشتراك</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">تسجيل دخول</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
