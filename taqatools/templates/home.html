@@ -8,15 +8,20 @@
         <div class="container px-4 px-lg-5 mt-5">
             {% for category in categories %}
             {% if not category.parent_id %}
-            <h1>{{ category.name }}</h1>
-            <h5>{{ category.description }}</h5>
+            <div>
+                <h1 style="background-color: rgb(73, 47, 47); color: white">{{ category.name }}</h1>
+                <h5 style="background-color: rgb(104, 70, 70); color: white">{{ category.description }}</h5>
+            </div>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
                 {% for sub_category in categories %}
                 {% if sub_category.parent_id == category.id %}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
+                        {% if sub_category.image %}
                         <img class="card-img-top" src="{{sub_category.image.url}}" height="200" alt="..." />
+                        {% endif %}
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">

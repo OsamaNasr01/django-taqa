@@ -7,16 +7,21 @@
 {% block content %}
 
 <!-- Product section-->
-<section class="">
     <div class="container px-4 px-lg-5 my-2">
-
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
-            حذف
+        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
+            <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
+        </button>
+        
+        <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
+        
         </button>
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." /></div>
             <div class="col-md-6">
-                <div class="small mb-1">{{ category.parent_id }}</div>
+                {% if category.image %}
+                <img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." />
+                {% endif %}
+            </div>
+            <div class="col-md-6">
                 <h1 class="display-5 fw-bolder">{{category.name}}</h1>
                 <p class="lead">{{category.description}}</p>
                 <p>المواصفات</p>
@@ -61,11 +66,16 @@
             </div>
         </div>
     </div>
-</section>
 <!-- Related items section-->
-<section class="py-1 bg-light">
-    <div class="container px-4 px-lg-5 mt-2">
-        <h2 class="fw-bolder mb-4">منتجات ذات صلة</h2>
+    <div class="container py-1 px-4 px-lg-5 mt-2">
+        <hr>
+        {% if category.parent_id %}
+        <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#add-product-modal">
+            إضافة منتج
+        </button>
+        {% endif %}
+        <h2 class="fw-bolder mb-4">منتجات قسم {{ category.name }}</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for product in category.products.all %}
             <div class="col mb-5">
@@ -91,15 +101,6 @@
             {% endfor %}
         </div>
     </div>
-</section>
-<!-- <link rel="stylesheet" href="{% static 'products/p_category_profile.css' %}"> -->
-<button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
-    <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
-</button>
-
-<button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
-
-</button>
 
 
 <div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="update-category-modal"
@@ -218,10 +219,6 @@
         {% endfor %}
     </div>
 </div>
-{% else %}
-<div>
-    <h3>لا توجد أقسام فرعية في {{category.name}}</h3>
-</div>
 {% endif %}
 
 <button type="button" hidden id="brand_modal" class="btn btn-primary" data-bs-toggle="modal"
@@ -248,12 +245,6 @@
         </div>
     </div>
 </div>
-{% if category.parent_id %}
-<button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
-    data-bs-target="#add-product-modal">
-    إضافة منتج
-</button>
-{% endif %}
 <div class="modal fade" id="add-product-modal" tabindex="-1" aria-labelledby="add-product-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
