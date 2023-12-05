@@ -1,25 +1,11 @@
 {% extends 'base.html' %} {% load static %} {% block mycss %}
-<link rel="stylesheet" href="{% static 'products/category_list.css' %}" />
+<!-- <link rel="stylesheet" href="{% static 'products/category_list.css' %}" /> -->
 {% endblock mycss %}
 <!-- comment -->
 {% block title %} الاقسام {% endblock %}
 <!-- comment -->
 {% block content %}
 
-
-<div class="categories">
-    <div class="main-header">
-        <h1>الاقسام والمنتجات
-        </h1>
-    </div>
-    <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#add-co-category-modal"
-    >
-        اضافة قسم
-    </button>
 
     <div
         class="modal fade"
@@ -32,11 +18,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="add-co-category-modal">
-                        اضافة قسم
+                        اضافة قسم رئيسي 
                     </h5>
                     <button
                         type="button"
-                        class="btn-close"
+                        class="btn-close me-auto ms-0"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                     ></button>
@@ -58,52 +44,52 @@
         </div>
     </div>
 
-    <div class="main-content">
-        {% for category in categories %} {% if category.parent_id == 0 %}
-        <div class="category">
-            <div class="header">
-                <h2>{{category.name}}</h2>
-                <p>{{category.description}}</p>
-            </div>
-            <div class="container">
-                <div class="container-container-content">
-                    {% for sub_category in categories %}
-                    <!-- comment  -->
-                    {% if sub_category.parent_id == category.id %}
-                    <a
-                        href="{% url 'p_category_profile' sub_category.slug %}"
-                        class="card"
-                    >
-                        <div class="image">
-                            {% if sub_category.image %}
-                            <img src="{{sub_category.image.url}}" alt="" />
-                            {% endif %}
-                        </div>
-                        <div class="text">
-                            <h4>{{ sub_category.name }}</h4>
-                            <p>
-                                {{ sub_category.description|truncatewords:20 }}
-                            </p>
-                        </div>
-                    </a>
+    <div class="container px-4 px-lg-5 mt-5">
+        <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#add-co-category-modal"
+        >
+            اضافة قسم رئيسي
+        </button>
+        {% for category in categories %}
+        {% if not category.parent_id %}
+        <div>
+            <h1 style="background-color: rgb(73, 47, 47); color: white">{{ category.name }}</h1>
+            <h5 style="background-color: rgb(104, 70, 70); color: white">{{ category.description }}</h5>
+        </div>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            {% for sub_category in categories %}
+            {% if sub_category.parent_id == category.id %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    {% if sub_category.image %}
+                    <img class="card-img-top" src="{{sub_category.image.url}}" height="200" alt="..." />
                     {% endif %}
-                    <!-- comment  -->
-                    {% endfor %}
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{sub_category.name}}</h5>
+                            <p>{{ sub_category.description }}</p>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'p_category_profile' sub_category.slug %}">المزيد عن القسم</a></div>
+                    </div>
                 </div>
             </div>
-            <div class="tolist">
-                <a
-                    class="btn btn-primary"
-                    href="{% url 'p_category_profile'  category.slug %}"
-                    >عرض الكل</a
-                >
-            </div>
+            {% endif %}
+            {% endfor %}
         </div>
+        <hr>
         {% endif %}
-        <!-- comment  -->
         {% endfor %}
     </div>
-</div>
 <!-- code  -->
 
 {% endblock %}
