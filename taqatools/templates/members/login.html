@@ -1,41 +1,46 @@
 {% extends 'base.html' %} {% load static %} {% block mycss %}
 <!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
-{% endblock mycss %} {% block title %} تسجيل دخول {% endblock %} 
+{% endblock mycss %} {% block title %} تسجيل دخول {% endblock %}
 {% block content %}
-{% if user.is_authenticated %}
-<h3>{{ user.first_name }}لقد قمت بتسجيل الدخول بالفعل!</h3>
-<br />
-<a href="{% url 'logout' %}">تسجيل خروج</a>
-{% else %}
-<style>
-    nav a.logo {
-        color: white;
-    }
-    nav .navlinks,
-    nav .register {
-        display: none;
-    }
-</style>
-<div class="left">
-    <!-- <img class="right-image" src="{% static 'images/left.jpg' %}" alt="" /> -->
-</div>
-<div class="right">
-    <h1>
-        لاكتشاف المزيد! <br />
-        سجل دخول
-    </h1>
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
 
-        <input type="text" name="username" placeholder="You Email" />
-        <input
-            type="password"
-            name="password"
-            placeholder="You Password"
-            required
-        />
-        <button>تسجيل دخول</button>
-    </form>
-    <a href="{% url 'register' %}">لست مشتركا في الموقع؟ قم بعمل حساب </a>
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    {% if user.is_authenticated %}
+    <h3>{{ user.first_name }}لقد قمت بتسجيل الدخول بالفعل!</h3>
+    <a class="btn btn-primary form-control" href="{% url 'logout' %}">تسجيل خروج</a>
+    {% else %}
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">تسجيل دخول</h4>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="username" class="form-label">رقم التليفون:</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">رمز الدخول:</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">تسجيل دخول</button>
+            </div>
+          </form>
+          <div class="text-center">
+            <p>لست مشتركا ؟ <a href="{% url 'register' %}">اشترك الان!</a></p>
+            <p>او اشترك عن طريق:</p>
+            <a href="#" class="btn btn-outline-primary"><i class='bx bxl-google'></i> جوجل</a>
+            <a href="#" class="btn btn-outline-dark"><i class='bx bxl-facebook'></i> فيسبوك</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
 </div>
-{% endif %} {% endblock %}
+{% endblock %}
