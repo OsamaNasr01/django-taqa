@@ -2,18 +2,35 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} اشتراك {% endblock %}
-<link rel="stylesheet" href="{% static 'membersjs/login.css' %}" />
 {% block content %}
 
-<div class="shadow p-3 mb-5 bg-white rounded">
-  <h3>
-    اشتراك
-  </h3>
-  <br>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">اشترك الان</button>
-  </form>
+
+
+<div class="container  mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">اشتراك</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">اشتراك</button>
+            </div>
+          </form>
+          <div class="text-center">
+            <p>لديك حساب بالفعل؟ <a href="{% url 'login' %}">تسجيل دخول</a></p>
+            <p>او اشترك الان عن طريق:</p>
+            <a href="#" class="btn btn-outline-primary"><i class='bx bxl-google'></i> جوجل</a>
+            <a href="#" class="btn btn-outline-dark"><i class='bx bxl-facebook'></i> فيسبوك</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
