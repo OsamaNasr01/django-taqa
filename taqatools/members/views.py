@@ -47,12 +47,12 @@ def register_user(request):
             password = form.cleaned_data['password1']
             user = authenticate(username = username, password = password)
             login(request, user)
-            messages.success(request, ('You Registred Successfully'))
+            messages.success(request, ('تهانينا! تم الاشتراك في الموقع بنجاح.'))
             return redirect('home')
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error Registering' + error_message))
+            messages.error(request, ('حدث خطأ أثناء التسجيل!' ))
             return render(request, 'members/register.html', {'form' : form, 'errors': errors})
     else:
         form = RegisterUserForm()
@@ -107,6 +107,7 @@ def update_picture(request, username):
     account = Account.objects.get(user= user)
     account.image = request.FILES.get('image')
     account.save()
+    messages.success(request, ('تم تغيير الصورة بنجاح.'))
     return user_profile(request, user.username)
     
 
@@ -121,12 +122,12 @@ def add_company(request):
             company.owner = request.user
             company.image = request.FILES.get('image')
             company.save()
-            messages.success(request, ('The Company has been Added Successfully!'))
+            messages.success(request, ('تم اضافة الشركة بنجاح.'))
             return redirect('companies')
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error Registering' + error_message))
+            messages.error(request, ('حدث خطأ أثناء التسجيل.' ))
             return render(request, 'members/add_company.html', {'form' : form, 'errors': errors})
     else:
         co_form = AddCompanyForm()
@@ -144,7 +145,10 @@ def update_company(request, slug):
         form = AddCompanyForm(request.POST, request.FILES, instance=company)
         if form.is_valid():
             form.save()
-            messages.success(request, ('The Company has been Updated Successfully!'))
+            messages.success(request, ('تم تغيير بيانات الشركة بنجاح'))
+            return redirect('co_profile', slug = slug)
+        else:
+            messages.error(request, ('حدث خطأ اثناء تغيير بيانات الشركة '))
             return redirect('co_profile', slug = slug)
     else:
         form = AddCompanyForm(instance=company)
@@ -158,7 +162,7 @@ def delete_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
     if request.method == 'POST':
         company.delete()
-        messages.success(request, ('The Company has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف الشركة بنجاح'))
         return redirect('companies')
 
 
@@ -201,7 +205,7 @@ def add_co_category(request):
                 'id' : category.id
             }
         })
-        messages.success(request, ('The Category has been Added Successfully!'))
+        messages.success(request, ('تم اضافة القسم بنجاح.'))
         return HttpResponse(json_data, content_type="application/json")
     
 
@@ -212,7 +216,10 @@ def update_co_category(request, slug):
         form = AddCoCategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            messages.success(request, ('The Company Category has been Updated Successfully!'))
+            messages.success(request, ('تم تعديل القسم بنجاح.'))
+            return redirect('co_category_list')
+        else:
+            messages.error(request, ('حدث خطأ اثناء تعديل القسم .'))
             return redirect('co_category_list')
     else:
         form = AddCoCategoryForm(instance=category)
@@ -227,7 +234,7 @@ def delete_co_category(request, slug):
     category = get_object_or_404(CoCategory, slug=slug)
     if request.method == 'POST':
         category.delete()
-        messages.success(request, ('The Category has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف القسم بنجاح'))
         return redirect('co_category_list')
     
 
@@ -260,6 +267,10 @@ def add_gov(request):
         form = AddGovForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, ('تم اضافة المحاظة بنجاح.'))
+            return redirect('add_gov')
+        else:
+            messages.error(request, ('حدث خطأ اثناء اضافة المحاظة .'))
             return redirect('add_gov')
     else:
         form = AddGovForm()
@@ -273,6 +284,10 @@ def add_city(request):
         form = AddCityForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, ('تم اضافة المدينة بنجاح.'))
+            return redirect('add_city')
+        else:
+            messages.error(request, ('حدث خطأ اثناء اضافة المدينة .'))
             return redirect('add_city')
     else:
         form = AddCityForm()
@@ -285,6 +300,10 @@ def add_address(request):
         form = AddAddressForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, ('تم اضافة العنوان بنجاح.'))
+            return redirect('add_city')
+        else:
+            messages.error(request, ('حدث خطأ اثناء اضافة العنوان .')) 
             return redirect('add_city')
     else:
         form = AddAddressForm()
