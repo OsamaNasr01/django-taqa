@@ -21,11 +21,11 @@ def login_user(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page.
-            messages.success(request, ('You Logged in Successfully'))
+            messages.success(request, ('تم تسجيل الدخول بنجاح'))
             return redirect('home')
         else:
             # Return an 'invalid login' error message.
-            messages.success(request, ('There Was An Error Logging in'))
+            messages.error(request, ('حدث خطأ اثناء الدخول! تأكد من صحة رقم التليفون ورمز الدخول..'))
             return redirect('login')
     else:
         return render(request, 'members/login.html', {})
@@ -34,7 +34,7 @@ def login_user(request):
 @login_required(login_url='login')
 def logout_user(request):
     logout(request)
-    messages.success(request, ('You Logged Out!'))
+    messages.warning(request, ('تم تسجيل الخروج بنجاح'))
     return redirect('login')
 
 
