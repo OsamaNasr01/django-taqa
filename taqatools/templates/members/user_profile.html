@@ -49,7 +49,7 @@
                 <h5 class="modal-title" id="update-picture-modal">
                     Update Picture
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div>
@@ -79,7 +79,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-pyment-modal">Add Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{% url 'add_payment' user.username %}" method="post" name="add-pyment_form">
@@ -97,7 +97,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-receipt-modal">Add Receipt</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{% url 'add_receipt' user.username %}" method="post" name="add-receipt_form">

@@ -5,6 +5,7 @@ import json
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
 # Create your views here.
 def posts(request):
@@ -62,6 +63,7 @@ def add_post(request):
         new_post = form.save(commit=False)
         new_post.auther = request.user
         new_post.save()
+        messages.success(request, ('تم اضافة المقال بنجاح'))
         return post_view(request, new_post.slug)
     else:
         post_form = PostForm()
@@ -87,6 +89,10 @@ def post_edit(request, slug):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, ('تم تعديل المقال بنجاح'))
+            return post_view(request, slug)
+        else:
+            messages.error(request, ('حدث خطأ اثناء تعديل المقال '))
             return post_view(request, slug)
     else:
         post_form = PostForm(instance=post)
@@ -101,4 +107,5 @@ def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
         post.delete()
+        messages.success(request, ('تم حذف المقال بنجاح'))
         return posts(request)
