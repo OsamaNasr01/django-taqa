@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} Accounting Control Panel {% endblock %}
+{% block title %} لوحة تحكم المحاسبة {% endblock %}
 {% block content %}
 
 {% load humanize %}
 
     <div class="container">
-        <h1>List of all Payments</h1>
+        <h1>قائمة بكل المدفوعات</h1>
             {% for payment in payments %}
                 <a href="{% url 'payment_profile' payment.id %}" class="text-dark text-decoration-none">
                     <div class="shadow p-3 mb-5 bg-white rounded">

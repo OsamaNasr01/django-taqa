@@ -12,7 +12,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="add-co-category-modal">+ Add Category</h5>
+          <h5 class="modal-title" id="add-co-category-modal">اضافة تخصص شركة</h5>
           <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
@@ -20,7 +20,7 @@
           <form action="{% url 'add_co_category' %}" method="post" name="add_co_category_form">
             {% csrf_token %}
             {{ co_category_form.as_p }}
-            <button type="submit" class="btn btn-primary">+ Add Category</button>
+            <button type="submit" class="btn btn-primary">اضافة تخصص</button>
           </form>
         </div>
       </div>
@@ -35,7 +35,7 @@
                     {{ category.name  }}
                 </h3>
                 <p>description : {{ category.description }}</p>
-                <a href="{% url 'update_co_category' category.slug %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'update_co_category' category.slug %}" class="btn btn-primary">تحديث</a>
             </div>
         </a>
     {% endfor %}

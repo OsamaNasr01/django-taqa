@@ -9,8 +9,8 @@
             <!-- {{member.first_name}} {{ member.last_name }} -->
             {{ member.full_name  }}
         </h3>
-        <p>Email : {{ member.email }}</p>
-        <p>Username @{{member.username }}</p>
+        <p>البريد الالكتروني: {{ member.email }}</p>
+        <p>اسم المستخدم:  @{{member.username }}</p>
         <h1>{{ member.account.details.payments_value|floatformat:2|intcomma }}</h1>
     </div>
 
