@@ -10,15 +10,52 @@
 
 
 <!-- Product section-->
-    <div class="container  px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{tender.image.url}}" alt="..." width="400" height="300" /></div>
-            <div class="col-md-6">
-                <div class="small mb-1">{{ product.category }}</div>
-                <h1 class="display-5 fw-bolder">{{tender.name}}</h1>
-                <p class="lead">{{tender.description}}</p>
-                </div>
+<div class="container  px-4 px-lg-5 my-5">
+    
+    <a href="{% url 'tender_update' tender.id %}" class="btn "><i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i></a>
+
+    <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-tender-modal">
+
+    </button>
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{tender.image.url}}" alt="..." width="400"
+                height="300" /></div>
+        <div class="col-md-6">
+            <div class="small mb-1">{{ product.category }}</div>
+            <h1 class="display-5 fw-bolder">{{tender.name}}</h1>
+            <p class="lead">{{tender.description}}</p>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal fade" id="delete-tender-modal" tabindex="-1" aria-labelledby="delete-tender-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-tender-modal-label">
+                    حذف القسم
+                </h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل انت متأكد من حذف هذه المناقصة؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    إلغاء
+                </button>
+                <form action="{% url 'tender_delete' tender.id %}" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-tender">
+                        تأكيد الحذف
+                    </button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

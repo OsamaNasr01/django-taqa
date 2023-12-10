@@ -24,9 +24,9 @@
                         عروض الاسعار
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"> الطلمبات الغاطسة</a></li>
-                        <li><a class="dropdown-item" href="#"> الطاقة الشمسية للري</a></li>
-                        <li><a class="dropdown-item" href="#"> الطاقة الشمسية للانارة</a></li>
+                        {% for tender in tenders %}
+                        <li><a class="dropdown-item" href="{% url 'tender_profile' tender.id %}">{{ tender.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
             </ul>
@@ -37,7 +37,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_profile' user.username %}">الها {{ user.username }}!</a>
+                    <a class="nav-link" href="{% url 'user_profile' user.username %}">الها {{ user.full_name }}!</a>
                 </li>
                 {% endif %} {% if not user.companies.exists %}
                 <li class="nav-item">
