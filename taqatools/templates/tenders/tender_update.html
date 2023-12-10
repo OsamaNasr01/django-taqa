@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
+{% endblock mycss %} {% block title %} تعديل مناقصة  {% endblock %}
+{% block content %}
+
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">تعديل مناقصة </h4>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'tender_update' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="name" class="form-label">الاسم التعريفي للمناقصة :</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{tender.name}}" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">وصف المناقصة :</label>
+              <input type="text" class="form-control" id="description" name="description" value="{{tender.description}}" required>
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">صورة تعبر عن المناقصة:</label>
+              <input type="file" class="form-control" id="image" name="image" value="{{tender.image.url}}" required>
+            </div>
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">تعديل </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<!-- <link rel="stylesheet" href="{% static 'products/category_list.css' %}" /> -->
+{% endblock mycss %}
+<!-- comment -->
+{% block title %} المناقصات {% endblock %}
+<!-- comment -->
+{% block content %}
+
+
+<div class="container px-4 px-lg-5 mt-5">
+    <a href="{% url 'add_tender'  %}" type="button" class="btn btn-primary">
+        اضافة مناقصة
+    </a>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+        {% for tender in tenders %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                {% if tender.image %}
+                <img class="card-img-top" src="{{tender.image.url}}" height="200" alt="..." />
+                {% endif %}
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{tender.name}}</h5>
+                        <p>{{ tender.description }}</p>
+                    </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'tender_profile' tender.id %}"> طلب عرض سعر </a></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- code  -->
+
+{% endblock %}
