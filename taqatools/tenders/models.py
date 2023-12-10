@@ -2,6 +2,7 @@ from django.db import models
 from products.models import Category
 from django.contrib.auth.models import User
 from members.models import Address, Company
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ from members.models import Address, Company
 class Tender(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=255)
+    image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
     
     
 class Question(models.Model):
