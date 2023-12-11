@@ -7,100 +7,100 @@
 {% block content %}
 
 <!-- Product section-->
-    <div class="container px-4 px-lg-5 my-2">
-        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
-            <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
-        </button>
-        
-        <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
-        
-        </button>
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6">
-                {% if category.image %}
-                <img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." />
-                {% endif %}
-            </div>
-            <div class="col-md-6">
-                <h1 class="display-5 fw-bolder">{{category.name}}</h1>
-                <p class="lead">{{category.description}}</p>
-                <p>المواصفات</p>
-                {% if category.parent_id %}
-                <ul>
-                    {% for spec in category.specs.all %}
-                    <div class="spec">
-                        <li>
-                            {{ spec.name }} {% if not spec.unit == None %}
-                            <!-- comment  -->
-                            {{spec.unit }} {% endif %}
-                        </li>
-                        <div class="btn-group">
-                            <a href="{% url 'update_spec' spec.id %}" class="btn btn-primary btn-sm"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
-                                تعديل
-                            </a>
-                            <form action="{% url 'delete_spec' spec.id %}" method="POST" class="btn-group">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Delete">
-                                    حذف
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                <div class="row">
-                    <div class="col-9">
+<div class="container px-4 px-lg-5 my-2">
+    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
+        <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
+    </button>
 
-                        {% if category.parent_id %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#add-spec-modal">
-                            إضافة خاصية
-                        </button>
-                        {% endif %}
+    <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
+
+    </button>
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6">
+            {% if category.image %}
+            <img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." />
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1 class="display-5 fw-bolder">{{category.name}}</h1>
+            <p class="lead">{{category.description}}</p>
+            <p>المواصفات</p>
+            {% if category.parent_id %}
+            <ul>
+                {% for spec in category.specs.all %}
+                <div class="spec">
+                    <li>
+                        {{ spec.name }} {% if not spec.unit == None %}
+                        <!-- comment  -->
+                        {{spec.unit }} {% endif %}
+                    </li>
+                    <div class="btn-group">
+                        <a href="{% url 'update_spec' spec.id %}" class="btn btn-primary btn-sm"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
+                            تعديل
+                        </a>
+                        <form action="{% url 'delete_spec' spec.id %}" method="POST" class="btn-group">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Delete">
+                                حذف
+                            </button>
+                        </form>
                     </div>
-                    <div class="col-3"></div>
                 </div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <div class="col-9">
+
+                    {% if category.parent_id %}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#add-spec-modal">
+                        إضافة خاصية
+                    </button>
+                    {% endif %}
+                </div>
+                <div class="col-3"></div>
             </div>
         </div>
     </div>
+</div>
 <!-- Related items section-->
-    <div class="container py-1 px-4 px-lg-5 mt-2">
-        <hr>
-        {% if category.parent_id %}
-        <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#add-product-modal">
-            إضافة منتج
-        </button>
-        {% endif %}
-        <h2 class="fw-bolder mb-4">منتجات قسم {{ category.name }}</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for product in category.products.all %}
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{product.image.url}}" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{product.name}}</h5>
-                            <!-- Product price-->
-                            {{product.price}}
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                href="{% url 'product' product.slug %}">View options</a></div>
+<div class="container py-1 px-4 px-lg-5 mt-2">
+    <hr>
+    {% if category.parent_id %}
+    <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-product-modal">
+        إضافة منتج
+    </button>
+    {% endif %}
+    <h2 class="fw-bolder mb-4">منتجات قسم {{ category.name }}</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for product in category.products.all %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{product.name}}</h5>
+                        <!-- Product price-->
+                        {{product.price}}
                     </div>
                 </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'product' product.slug %}">View options</a></div>
+                </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
 
 
 <div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="update-category-modal"
@@ -109,7 +109,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="update-category-modal">تعديل</h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" action="{% url 'update_p_category' category.slug %}" method="post"
@@ -133,7 +134,8 @@
                 <h5 class="modal-title" id="delete-category-modal-label">
                     حذف القسم
                 </h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 هل انت متأكد من حذف هذا القسم؟
@@ -158,7 +160,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="add-spec-modal">إضافة خاصية</h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{% url 'add_spec' %}" method="post" name="add_spec_form">
@@ -187,7 +190,8 @@
                 <h5 class="modal-title" id="add-category-modal">
                     إضافة قسم فرعي
                 </h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" action="{% url 'add_p_category' %}" method="post"

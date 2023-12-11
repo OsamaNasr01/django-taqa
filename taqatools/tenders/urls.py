@@ -8,5 +8,8 @@ urlpatterns = [
     path('tender/<int:id>/update/', views.tender_update, name = 'tender_update'),
     path('tender/<int:id>/delete/', views.tender_delete, name = 'tender_delete'),
     path('tenders/list/', views.tenders_list, name = 'tenders_list'),
+    
+    path('tenders/add-question/', views.add_question, name = 'add_question'),
+    
 
 ]

@@ -17,9 +17,9 @@ class Tender(models.Model):
 class Question(models.Model):
     text = models.CharField(max_length=155)
     type = models.IntegerField(choices=[
-        (1, 'Numeric'),
-        (2, 'Text'),
-        (3, 'Boolean'),
+        (1, 'رقمي'),
+        (2, 'نصي'),
+        (3, 'نعم او لا'),
     ])
     unit = models.CharField(max_length=50, null=True, blank=True)
     tender = models.ForeignKey(Tender, related_name='questions', on_delete=models.CASCADE)

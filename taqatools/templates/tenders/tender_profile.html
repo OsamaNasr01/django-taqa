@@ -4,14 +4,14 @@
 <!-- comment -->
 {% load humanize %}
 <!-- comment -->
-{% block title %} {{product.name}} {% endblock %}
+{% block title %} {{tender.name}} {% endblock %}
 <!-- comment -->
 {% block content %}
 
 
 <!-- Product section-->
 <div class="container  px-4 px-lg-5 my-5">
-    
+
     <a href="{% url 'tender_update' tender.id %}" class="btn "><i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i></a>
 
     <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-tender-modal">
@@ -21,12 +21,25 @@
         <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{tender.image.url}}" alt="..." width="400"
                 height="300" /></div>
         <div class="col-md-6">
-            <div class="small mb-1">{{ product.category }}</div>
+            <div class="small mb-1">{{ tender.name }}</div>
             <h1 class="display-5 fw-bolder">{{tender.name}}</h1>
             <p class="lead">{{tender.description}}</p>
+            <ul>
+                {% for question in questions %}
+                    <li>
+                        {{ question.text }}
+                        {% if question.unit %}
+                        بال{{ question.unit }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#add-question-modal">
+                    إضافة سؤال جديد
+                </button>
+            </ul>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -52,6 +65,28 @@
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
                     <button type="submit" class="btn btn-danger" id="confirm-delete-tender">
                         تأكيد الحذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="add-question-modal" tabindex="-1" aria-labelledby="add-question-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-question-modal">إضافة خاصية</h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'add_question' %}" method="post" name="add_question_form">
+                    {% csrf_token %} {{ question_form.as_p }}
+                    <input type="hidden" name="tender_id" value="{{ tender.id }}" />
+                    <button type="submit" class="btn btn-primary">
+                        اضافة سؤال جديد
                     </button>
                 </form>
             </div>
