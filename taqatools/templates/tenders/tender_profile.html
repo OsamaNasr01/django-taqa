@@ -27,20 +27,63 @@
             <ul>
                 {% for question in questions %}
                     <li>
+                        <a href="{% url 'update_question' question.id %}" style="text-decoration: none;">
+                            <i class='bx bx-edit'></i>
+                        </a>
+                        <a onclick="question_delete('{{question.id}}')" style="text-decoration: none; color: red;">
+                            <i class='bx bx-trash'></i>
+                        </a>
                         {{ question.text }}
                         {% if question.unit %}
                         بال{{ question.unit }}
                         {% endif %}
                     </li>
                 {% endfor %}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#add-question-modal">
-                    إضافة سؤال جديد
-                </button>
+                <li>
+                    <a type="button"  data-bs-toggle="modal"
+                        data-bs-target="#add-question-modal" >
+                        <i class='bx bx-comment-add' ></i>
+                        <i class='bx bx-question-mark' ></i>
+                        إضافة سؤال جديد
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
+
+
+<button  id="question_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-question-modal" >
+</button>
+<div class="modal fade" id="delete-question-modal" tabindex="-1" aria-labelledby="delete-question-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-question-modal-label">
+                    حذف القسم
+                </h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل انت متأكد من حذف السؤال؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    إلغاء
+                </button>
+                <form id="question_delete_modal" action="" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-question">
+                        تأكيد الحذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <div class="modal fade" id="delete-tender-modal" tabindex="-1" aria-labelledby="delete-tender-modal-label"
@@ -72,7 +115,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="add-question-modal" tabindex="-1" aria-labelledby="add-question-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -93,4 +135,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function question_delete(id) {
+        const question = document.getElementById('question_delete_modal')
+        question.setAttribute('action', `/tenders/${id}/delete/`)
+        const modal_btn = document.getElementById('question_delete_btn')
+        modal_btn.click()
+    }
+</script>
 {% endblock %}

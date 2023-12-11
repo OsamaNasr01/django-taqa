@@ -25,6 +25,7 @@ def tender_profile(request, id):
         'tender': tender,
         'questions': Question.objects.filter(tender = tender),
         'question_form': question_form,
+        
     })
 
 
@@ -63,6 +64,32 @@ def add_question(request):
         tender = Tender.objects.get(id = request.POST['tender_id'])
         question.tender = tender
         question.save()
-        messages.success(request, 'تم اضافة السؤال الي نموذج المناقصة بنحاج.')
+        messages.success(request, 'تم اضافة السؤال الي نموذج المناقصة بنجاح.')
         return tender_profile(request, tender.id)
         
+        
+def delete_question(request, id):
+    if request.method == 'POST':
+        question = Question.objects.get(id =id)
+        tender = Tender.objects.get(id = question.tender.id)
+        question.delete()
+        messages.success(request, 'تم حذف السؤال من نموذج المناقصة بنجاح. ')
+        return tender_profile(request, tender.id)
+    
+    
+def update_question(request, id):
+    question = Question.objects.get(id = id)
+    tender = Tender.objects.get(id = question.tender.id)
+    if request.method == 'POST':
+        form = QuestionForm(request.POST,instance = question)
+        new_question = form.save(commit=False)
+        new_question.tender = tender
+        new_question.save()
+        messages.success(request, 'تم تعديل صيغة السؤال بنجاح.')
+        return tender_profile(request, tender.id)
+    else:
+        form = QuestionForm(instance = question)
+        return render(request, 'tenders/question_update.html', {
+            'form':form,
+            'question':question,
+            })
