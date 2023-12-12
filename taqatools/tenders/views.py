@@ -150,3 +150,12 @@ def add_category_to_tender(request):
         new_category.save()
         messages.success(request, 'تم اضافة القسم الي المناقصة بنجاح')
         return tender_profile(request, tender.id)
+    
+    
+def delete_category_from_tender(request, id):
+    if request.method == 'POST':
+        cat = TenderCategory.objects.get(id =id)
+        tender = Tender.objects.get(id = cat.tender.id)
+        cat.delete()
+        messages.success(request, 'تم حذف القسم من نموذج المناقصة بنجاح. ')
+        return tender_profile(request, tender.id)

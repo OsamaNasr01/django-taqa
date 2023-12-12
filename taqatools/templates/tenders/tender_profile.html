@@ -79,8 +79,11 @@
         {% for category in tender.categories.all %}
         <div class="col mb-5">
             <div class="card h-100">
+                <div class="badge  text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><a class="btn btn-close" onclick="cat_delete('{{category.id}}')" href="#"></i></a></div>
                 <!-- Product image-->
+                {% if category.category.image %}
                 <img class="card-img-top" src="{{category.category.image.url}}" alt="..." />
+                {% endif %}
                 <!-- Product details-->
                 <div class="card-body p-4">
                     <div class="text-center">
@@ -279,6 +282,36 @@
 </div>
 
 
+<button hidden  id="cat_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-cat-modal" >
+</button>
+<div class="modal fade" id="delete-cat-modal" tabindex="-1" aria-labelledby="delete-cat-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-cat-modal-label">
+                    حذف قسم
+                </h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل انت متأكد من حذف هذا القسم؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    إلغاء
+                </button>
+                <form id="cat_delete_modal" action="" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-cat">
+                        تأكيد الحذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -290,13 +323,20 @@
     }
 
     
+    function cat_delete(id) {
+        const del_cat = document.getElementById('cat_delete_modal')
+        del_cat.setAttribute('action', `/tenders/category/${id}/delete/`)
+        const cat_del_modal_btn = document.getElementById('cat_delete_btn')
+        cat_del_modal_btn.click()
+    }
+
+
     function choice_delete(id) {
-        const del_choice = document.getElementById('choice_delete_modal')
+        const del_cat = document.getElementById('choice_delete_modal')
         del_choice.setAttribute('action', `/tenders/choice/${id}/delete/`)
         const choice_del_modal_btn = document.getElementById('choice_delete_btn')
         choice_del_modal_btn.click()
     }
-
 
     
     function question_choice(id) {
