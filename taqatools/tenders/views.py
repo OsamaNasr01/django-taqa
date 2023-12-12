@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Tender, Question, Choice
+from .models import Tender, Question, Choice, TenderCategory
 from django.contrib import messages
 from members.views import home
+from products.models import Category
 from .forms import QuestionForm, ChoiceForm
 
 # Create your views here.
@@ -22,11 +23,13 @@ def tender_profile(request, id):
     tender = Tender.objects.get(id = id)
     question_form = QuestionForm()
     choice_form = ChoiceForm()
+    categories = Category.objects.all()
     return render(request, 'tenders/tender_profile.html', {
         'tender': tender,
         'questions': Question.objects.filter(tender = tender),
         'question_form': question_form,
         'choice_form': choice_form,
+        'categories': categories,  
         
     })
 
@@ -136,3 +139,14 @@ def update_choice(request, id):
             'form':form,
             'choice':choice,
             })
+        
+        
+def add_category_to_tender(request):
+    if request.method == 'POST':
+        tender_id = request.POST['tender_id']
+        tender = Tender.objects.get(id = tender_id)
+        category = Category.objects.get(id = request.POST['category_id'])
+        new_category = TenderCategory.objects.create(category= category , tender = tender)
+        new_category.save()
+        messages.success(request, 'تم اضافة القسم الي المناقصة بنجاح')
+        return tender_profile(request, tender.id)

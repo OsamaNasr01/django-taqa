@@ -18,5 +18,8 @@ urlpatterns = [
     path('tenders/choice/<int:id>/delete/', views.delete_choice, name = 'delete_choice'),
     path('tenders/choice/<int:id>/update/', views.update_choice, name = 'update_choice'),
     
+    
+    path('tenders/add-category/', views.add_category_to_tender, name = 'add_category_to_tender'),
+    
 
 ]

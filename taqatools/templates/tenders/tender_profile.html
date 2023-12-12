@@ -68,6 +68,32 @@
     </div>
 </div>
 
+<!-- Related items section-->
+<div class="container py-1 px-4 px-lg-5 mt-2">
+    <button style="margin: 20px" type="button" id="category_modal" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-category-modal">
+        إضافة قسم
+    </button>
+    <h2 class="fw-bolder mb-4">الاقسام المرتبطة بمناقصة {{ tender.name }}</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for category in tender.categories.all %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{category.category.image.url}}" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{category.category.name}}</h5>
+                        <!-- Product price-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 <button hidden  id="question_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-question-modal" >
 </button>
@@ -213,6 +239,48 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-category-modal">إضافة قسم جديد</h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-group" action="{% url 'add_category_to_tender' %}" method="post" name="add_category_form">
+                    {% csrf_token %} 
+                    <select onchange="get_category(value)" class="form-select" aria-label="Default select example">
+                        <option selected>اختر قسم من القائمة</option>
+                        {% for category in categories %}
+                        {% if not category.parent_id %}
+                        <option disabled>{{category.name}}</option>
+                        {% for sub in categories %}
+                            {% if sub.parent_id == category.id %}
+                                <option value="{{sub.id}}">{{ sub.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <hr>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input type="hidden" id="category_id" name="category_id" value="">
+                    <input type="hidden" name="tender_id" value="{{tender.id}}" />
+                    <button type="submit" class="btn btn-primary">
+                        اضافة قسم جديد
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script>
     function question_delete(id) {
         const del_question = document.getElementById('question_delete_modal')
@@ -236,6 +304,12 @@
         question.value = `${id}`
         const choice_modal_btn = document.getElementById('add_choice_btn')
         choice_modal_btn.click()
+    }
+
+    function get_category(value) {
+        console.log(value)
+        const cat_id = document.getElementById('category_id')
+        cat_id.value = value
     }
 </script>
 {% endblock %}
