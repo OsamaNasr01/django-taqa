@@ -99,9 +99,7 @@ def update_question(request, id):
         
 def add_choice(request):
     question_id = request.POST['question_id']
-    print(question_id)
     question = Question.objects.get(id = question_id)
-    print(question.text)
     if request.method == 'POST':
         form = ChoiceForm(request.POST)
         choice = form.save(commit=False)
@@ -119,3 +117,22 @@ def delete_choice(request, id):
         choice.delete()
         messages.success(request, 'تم حذف الاختيار من نموذج المناقصة بنجاح. ')
         return tender_profile(request, tender.id)
+    
+    
+
+def update_choice(request, id):
+    choice = Choice.objects.get(id = id)
+    tender = Tender.objects.get(id = choice.question.tender.id)
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST,instance = choice)
+        new_choice = form.save(commit=False)
+        new_choice.question = choice.question
+        new_choice.save()
+        messages.success(request, 'تم تعديل صيغة الاختيار بنجاح.')
+        return tender_profile(request, tender.id)
+    else:
+        form = ChoiceForm(instance = choice)
+        return render(request, 'tenders/choice_update.html', {
+            'form':form,
+            'choice':choice,
+            })

@@ -16,6 +16,7 @@ urlpatterns = [
     
     path('tenders/question/add-choice/', views.add_choice, name = 'add_choice'),
     path('tenders/choice/<int:id>/delete/', views.delete_choice, name = 'delete_choice'),
+    path('tenders/choice/<int:id>/update/', views.update_choice, name = 'update_choice'),
     
 
 ]
