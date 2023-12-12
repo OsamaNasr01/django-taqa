@@ -28,7 +28,7 @@ class Question(models.Model):
     
 class Choice(models.Model):
     text = models.CharField(max_length=55)
-    Question  = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
+    question  = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
     
 class TenderCategory(models.Model):
     category = models.ForeignKey(Category, related_name='tenders', on_delete=models.CASCADE)

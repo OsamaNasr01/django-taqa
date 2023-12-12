@@ -29,18 +29,34 @@
                     <li>
                         <a href="{% url 'update_question' question.id %}" style="text-decoration: none;">
                             <i class='bx bx-edit'></i>
-                        </a>
-                        <a onclick="question_delete('{{question.id}}')" style="text-decoration: none; color: red;">
+                        </a> | 
+                        <a href="#" onclick="question_delete('{{question.id}}')" style="text-decoration: none; color: red;">
                             <i class='bx bx-trash'></i>
-                        </a>
+                        </a> | 
+                        <a href="#" onclick="question_choice('{{question.id}}')" style="text-decoration: none;">
+                            <i class='bx bx-add-to-queue'></i>
+                        </a> | 
                         {{ question.text }}
                         {% if question.unit %}
                         بال{{ question.unit }}
                         {% endif %}
+                        <ol>
+                            {% for choice in question.choices.all %}
+                                <li>
+                                    <a href="{% url 'update_question' question.id %}" style="text-decoration: none;">
+                                        <i class='bx bx-edit'></i>
+                                    </a> | 
+                                    <a href="#" onclick="choice_delete('{{choice.id}}')" style="text-decoration: none; color: red;">
+                                        <i class='bx bx-trash'></i>
+                                    </a> | 
+                                    {{ choice.text }}
+                                </li>
+                            {% endfor %}
+                        </ol>
                     </li>
                 {% endfor %}
                 <li>
-                    <a type="button"  data-bs-toggle="modal"
+                    <a href="" data-bs-toggle="modal"
                         data-bs-target="#add-question-modal" >
                         <i class='bx bx-comment-add' ></i>
                         <i class='bx bx-question-mark' ></i>
@@ -53,7 +69,7 @@
 </div>
 
 
-<button  id="question_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-question-modal" >
+<button hidden  id="question_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-question-modal" >
 </button>
 <div class="modal fade" id="delete-question-modal" tabindex="-1" aria-labelledby="delete-question-modal-label"
     aria-hidden="true">
@@ -61,7 +77,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-question-modal-label">
-                    حذف القسم
+                    حذف السؤال
                 </h5>
                 <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -85,6 +101,37 @@
 </div>
 
 
+<button hidden  id="choice_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-choice-modal" >
+</button>
+<div class="modal fade" id="delete-choice-modal" tabindex="-1" aria-labelledby="delete-choice-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-choice-modal-label">
+                    حذف الاختيار
+                </h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل انت متأكد من حذف الاختيار؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    إلغاء
+                </button>
+                <form id="choice_delete_modal" action="" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-choice">
+                        تأكيد الحذف
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="delete-tender-modal" tabindex="-1" aria-labelledby="delete-tender-modal-label"
     aria-hidden="true">
@@ -92,7 +139,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-tender-modal-label">
-                    حذف القسم
+                    حذف المناقصة
                 </h5>
                 <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -114,6 +161,36 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+<button hidden  id="add_choice_btn" data-bs-toggle="modal" data-bs-target="#add-choice-modal" >
+</button>
+<div class="modal fade" id="add-choice-modal" tabindex="-1" aria-labelledby="add-choice-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-choice-modal">إضافة اختيار</h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'add_choice' %}" method="post" name="add_choice_form">
+                    {% csrf_token %} 
+                    {{ choice_form.as_p }}
+                    <input id="question_id" type="hidden" name="question_id" value="" />
+                    <button type="submit" class="btn btn-primary">
+                        اضافة اختيار جديد
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="modal fade" id="add-question-modal" tabindex="-1" aria-labelledby="add-question-modal" aria-hidden="true">
     <div class="modal-dialog">
@@ -138,10 +215,27 @@
 
 <script>
     function question_delete(id) {
-        const question = document.getElementById('question_delete_modal')
-        question.setAttribute('action', `/tenders/${id}/delete/`)
+        const del_question = document.getElementById('question_delete_modal')
+        del_question.setAttribute('action', `/tenders/question/${id}/delete/`)
         const modal_btn = document.getElementById('question_delete_btn')
         modal_btn.click()
+    }
+
+    
+    function choice_delete(id) {
+        const del_choice = document.getElementById('choice_delete_modal')
+        del_choice.setAttribute('action', `/tenders/choice/${id}/delete/`)
+        const choice_del_modal_btn = document.getElementById('choice_delete_btn')
+        choice_del_modal_btn.click()
+    }
+
+
+    
+    function question_choice(id) {
+        const question = document.getElementById('question_id')
+        question.value = `${id}`
+        const choice_modal_btn = document.getElementById('add_choice_btn')
+        choice_modal_btn.click()
     }
 </script>
 {% endblock %}

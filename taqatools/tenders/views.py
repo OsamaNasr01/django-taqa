@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Tender, Question
+from .models import Tender, Question, Choice
 from django.contrib import messages
 from members.views import home
-from .forms import QuestionForm
+from .forms import QuestionForm, ChoiceForm
 
 # Create your views here.
 def add_tender(request):
@@ -21,10 +21,12 @@ def add_tender(request):
 def tender_profile(request, id):
     tender = Tender.objects.get(id = id)
     question_form = QuestionForm()
+    choice_form = ChoiceForm()
     return render(request, 'tenders/tender_profile.html', {
         'tender': tender,
         'questions': Question.objects.filter(tender = tender),
         'question_form': question_form,
+        'choice_form': choice_form,
         
     })
 
@@ -93,3 +95,27 @@ def update_question(request, id):
             'form':form,
             'question':question,
             })
+        
+        
+def add_choice(request):
+    question_id = request.POST['question_id']
+    print(question_id)
+    question = Question.objects.get(id = question_id)
+    print(question.text)
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST)
+        choice = form.save(commit=False)
+        choice.question = question
+        choice.save()
+        messages.success(request, 'تم اضافة الاختيار بنجاح')
+        return tender_profile(request, question.tender.id)
+    
+
+
+def delete_choice(request, id):
+    if request.method == 'POST':
+        choice = Choice.objects.get(id =id)
+        tender = Tender.objects.get(id = choice.question.tender.id)
+        choice.delete()
+        messages.success(request, 'تم حذف الاختيار من نموذج المناقصة بنجاح. ')
+        return tender_profile(request, tender.id)

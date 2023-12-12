@@ -1,5 +1,5 @@
 
-from .models import Question
+from .models import Question, Choice
 from django import forms
 
 
@@ -17,3 +17,17 @@ class QuestionForm(forms.ModelForm):
         self.fields['text'].label = 'صيغة السؤال:'
         self.fields['type'].label = 'نوع السؤال:'
         self.fields['unit'].label = 'وحدة السؤال إن وجدت:'
+        
+        
+        
+
+
+class ChoiceForm(forms.ModelForm):
+    class Meta:
+        model = Choice
+        fields = ('text', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['text'].widget.attrs.update({'class': 'form-control'})
+        self.fields['text'].label = 'نص الاختيار:'
