@@ -159,3 +159,13 @@ def delete_category_from_tender(request, id):
         cat.delete()
         messages.success(request, 'تم حذف القسم من نموذج المناقصة بنجاح. ')
         return tender_profile(request, tender.id)
+    
+def tender_request(request, id):
+    tender = Tender.objects.get(id = id)
+    if request.method == 'POST':
+        print(request.POST['1'])
+        for question in tender.questions.all():
+            print(request.POST[f'{question.id}'])
+        return tender_profile(request, id)
+    else:    
+        return render(request, 'tenders/requests/add_request.html', {'tender':tender,})
