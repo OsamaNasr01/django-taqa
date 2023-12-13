@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Tender, Question, Choice, TenderCategory
+from .models import Tender, Question, Choice, TenderCategory, TenderRequest, Answer
 from django.contrib import messages
 from members.views import home
+from members.forms import AddAddressForm
+from members.models import Gov, City
 from products.models import Category
 from .forms import QuestionForm, ChoiceForm
 
@@ -163,9 +165,39 @@ def delete_category_from_tender(request, id):
 def tender_request(request, id):
     tender = Tender.objects.get(id = id)
     if request.method == 'POST':
-        print(request.POST['1'])
+        address_form = AddAddressForm(request.POST)
+        new_address = address_form.save(commit=False)
+        new_address.city = City.objects.get(id=request.POST['city'])
+        new_address.details = request.POST['details']
+        new_address.save()
+        print('ok')
+        new_request = TenderRequest.objects.create()
+        new_request.user = request.user
+        new_request.location = new_address
+        new_request.tender = tender
+        new_request.save()
         for question in tender.questions.all():
+            new_answer = Answer.objects.create()
+            new_answer.question = question
+            new_answer.request = new_request
+            if question.type == 1:
+                new_answer.text = request.POST[f'{question.id}']
+            elif question.type == 2:
+                if question.choices:
+                    choice = Choice.objects.get(id= request.POST[f'{question.id}'])
+                    new_answer.text = choice.text
+                else:
+                    new_answer.text = request.POST[f'{question.id}']
+            elif question.type == 3:
+                new_answer.text = request.POST[f'{question.id}']
+            new_answer.save()
             print(request.POST[f'{question.id}'])
+        messages.success(request, 'تم قبول الطلب بنجاح')
         return tender_profile(request, id)
-    else:    
-        return render(request, 'tenders/requests/add_request.html', {'tender':tender,})
+    else:   
+        address_form = AddAddressForm()
+        return render(request, 'tenders/requests/add_request.html', {
+            'tender':tender,
+            'address_form':address_form,
+            'govs': Gov.objects.all()
+            })

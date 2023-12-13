@@ -38,7 +38,7 @@ class TenderRequest(models.Model):
     tender = models.ForeignKey(Tender, related_name='requests', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='tender_requests', on_delete=models.CASCADE)
     location = models.ForeignKey(Address, related_name='tenders', on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     
     

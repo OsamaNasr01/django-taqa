@@ -14,6 +14,24 @@
         <div class="card-body">
           <form action="{% url 'tender_request'  tender.id %}" method="post" >
             {% csrf_token %}
+            <p>
+              <label for="id_gov">المحافظة:</label>
+              <select name="gov" class="form-control" required="" id="id_gov">
+                <option value="" selected="">---------</option>
+                {% for gov in govs %}
+                <option value="{{gov.id}}">{{ gov.name }}</option>
+                {% endfor %}
+              </select>
+            </p>
+            
+            <p>
+              <label for="id_city">المدينة او المركز:</label>
+              <select name="city" class="form-control" required="" id="id_city">
+                <option value="" selected="">---------</option>
+              </select>
+            </p>
+            
+            {{ address_form.as_p }}
             {% for question in tender.questions.all %}
                 {% if question.type == 1 %}
                 <div class="mb-3">
@@ -53,4 +71,6 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'pumpoffers/gov_select.js' %}"></script>
 {% endblock %}
