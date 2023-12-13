@@ -171,27 +171,26 @@ def tender_request(request, id):
         new_address.details = request.POST['details']
         new_address.save()
         print('ok')
-        new_request = TenderRequest.objects.create()
-        new_request.user = request.user
-        new_request.location = new_address
-        new_request.tender = tender
-        new_request.save()
+        new_request = TenderRequest.objects.create(
+            user = request.user, location = new_address, tender = tender
+        )
         for question in tender.questions.all():
-            new_answer = Answer.objects.create()
-            new_answer.question = question
-            new_answer.request = new_request
             if question.type == 1:
-                new_answer.text = request.POST[f'{question.id}']
+                new_answer_text = request.POST[f'{question.id}']
             elif question.type == 2:
                 if question.choices:
                     choice = Choice.objects.get(id= request.POST[f'{question.id}'])
-                    new_answer.text = choice.text
+                    new_answer_text = choice.text
                 else:
                     new_answer.text = request.POST[f'{question.id}']
             elif question.type == 3:
-                new_answer.text = request.POST[f'{question.id}']
-            new_answer.save()
-            print(request.POST[f'{question.id}'])
+                if request.POST[f'{question.id}']:
+                    new_answer_text = 1
+                else:
+                    new_answer_text = 0
+            new_answer = Answer.objects.create(
+                question = question, request = new_request, text = new_answer_text
+            )
         messages.success(request, 'تم قبول الطلب بنجاح')
         return tender_profile(request, id)
     else:   
