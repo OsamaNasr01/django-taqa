@@ -184,7 +184,7 @@ def tender_request(request, id):
                 else:
                     new_answer.text = request.POST[f'{question.id}']
             elif question.type == 3:
-                if request.POST[f'{question.id}']:
+                if f'{question.id}':
                     new_answer_text = 1
                 else:
                     new_answer_text = 0
