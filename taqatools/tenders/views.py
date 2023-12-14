@@ -208,3 +208,9 @@ def tender_profile(request, id):
     return render(request, 'tenders/tender_profile.html', {
         'tender':tender
     })
+    
+def tender_request_profile(request, id):
+    tender_request = TenderRequest.objects.get(id = id)
+    return render(request, 'tenders/requests/profile.html', {
+        'tender_request': tender_request,
+    })

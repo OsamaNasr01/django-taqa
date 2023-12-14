@@ -25,4 +25,5 @@ urlpatterns = [
     
     
     path('tender/<int:id>/request/', views.tender_request, name = 'tender_request'),
+    path('tender-request/<int:id>', views.tender_request_profile, name = 'tender_request_profile'),
 ]
