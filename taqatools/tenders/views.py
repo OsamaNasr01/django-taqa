@@ -16,17 +16,17 @@ def add_tender(request):
         tender.image = request.FILES['image']
         tender.save()
         messages.success(request, 'تم اضافة المناقصة بنجاح')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     else:
         return render(request, 'tenders/add_tender.html', {})
     
     
-def tender_profile(request, id):
+def tender_dashboard(request, id):
     tender = Tender.objects.get(id = id)
     question_form = QuestionForm()
     choice_form = ChoiceForm()
     categories = Category.objects.all()
-    return render(request, 'tenders/tender_profile.html', {
+    return render(request, 'tenders/tender_dashboard.html', {
         'tender': tender,
         'questions': Question.objects.filter(tender = tender),
         'question_form': question_form,
@@ -45,7 +45,7 @@ def tender_update(request, id):
         tender.image = request.FILES['image']
         tender.save()
         messages.success(request, 'تم تعديل بيانات المناقصة بنجاح')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     else:
         return render(request, 'tenders/tender_update.html', {'tender':tender})
     
@@ -72,7 +72,7 @@ def add_question(request):
         question.tender = tender
         question.save()
         messages.success(request, 'تم اضافة السؤال الي نموذج المناقصة بنجاح.')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
         
         
 def delete_question(request, id):
@@ -81,7 +81,7 @@ def delete_question(request, id):
         tender = Tender.objects.get(id = question.tender.id)
         question.delete()
         messages.success(request, 'تم حذف السؤال من نموذج المناقصة بنجاح. ')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     
     
 def update_question(request, id):
@@ -93,7 +93,7 @@ def update_question(request, id):
         new_question.tender = tender
         new_question.save()
         messages.success(request, 'تم تعديل صيغة السؤال بنجاح.')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     else:
         form = QuestionForm(instance = question)
         return render(request, 'tenders/question_update.html', {
@@ -111,7 +111,7 @@ def add_choice(request):
         choice.question = question
         choice.save()
         messages.success(request, 'تم اضافة الاختيار بنجاح')
-        return tender_profile(request, question.tender.id)
+        return tender_dashboard(request, question.tender.id)
     
 
 
@@ -121,7 +121,7 @@ def delete_choice(request, id):
         tender = Tender.objects.get(id = choice.question.tender.id)
         choice.delete()
         messages.success(request, 'تم حذف الاختيار من نموذج المناقصة بنجاح. ')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     
     
 
@@ -134,7 +134,7 @@ def update_choice(request, id):
         new_choice.question = choice.question
         new_choice.save()
         messages.success(request, 'تم تعديل صيغة الاختيار بنجاح.')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     else:
         form = ChoiceForm(instance = choice)
         return render(request, 'tenders/choice_update.html', {
@@ -151,7 +151,7 @@ def add_category_to_tender(request):
         new_category = TenderCategory.objects.create(category= category , tender = tender)
         new_category.save()
         messages.success(request, 'تم اضافة القسم الي المناقصة بنجاح')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     
     
 def delete_category_from_tender(request, id):
@@ -160,7 +160,7 @@ def delete_category_from_tender(request, id):
         tender = Tender.objects.get(id = cat.tender.id)
         cat.delete()
         messages.success(request, 'تم حذف القسم من نموذج المناقصة بنجاح. ')
-        return tender_profile(request, tender.id)
+        return tender_dashboard(request, tender.id)
     
 def tender_request(request, id):
     tender = Tender.objects.get(id = id)
@@ -192,7 +192,7 @@ def tender_request(request, id):
                 question = question, request = new_request, text = new_answer_text
             )
         messages.success(request, 'تم قبول الطلب بنجاح')
-        return tender_profile(request, id)
+        return tender_dashboard(request, id)
     else:   
         address_form = AddAddressForm()
         return render(request, 'tenders/requests/add_request.html', {
@@ -200,3 +200,11 @@ def tender_request(request, id):
             'address_form':address_form,
             'govs': Gov.objects.all()
             })
+        
+
+
+def tender_profile(request, id):
+    tender = Tender.objects.get(id = id)
+    return render(request, 'tenders/tender_profile.html', {
+        'tender':tender
+    })
