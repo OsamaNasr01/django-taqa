@@ -23,6 +23,53 @@
 </div>
 
 
+<div class="container my-1 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">طلبات عروض اسعار لــ{{ tender.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        {% for request in tender.requests.all %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed me-auto ms-0" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapse{{request.id}}" aria-expanded="false"
+                                    aria-controls="flush-collapse{{request.id}}">
+                                    {{request.location.location}}
+                                </button>
+                            </h2>
+                            <div id="flush-collapse{{request.id}}" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <ul>
+                                        {% for answer in request.answers.all %}
+                                        {% if answer.question.type == 3 %}
+                                        {% if answer.text == '1' %}
+                                        <li>{{ answer.question.text }}</li>
+                                        {% endif %}
+                                        {% else %}
+                                        <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong>
+                                            {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <a href="#" class="btn btn-primary">قدم عرض سعر</a>
+                                    <a href="#" class="btn btn-primary">تفاصيل اكثر</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="py-1">
     <div class="container px-4 px-lg-5 mt-5">
         <h3>طلبات عروض اسعار لــ{{ tender.name }}</h3>
@@ -32,7 +79,8 @@
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ request.created_at|naturalday }}</div><br>
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                        {{ request.created_at|naturalday }}</div><br>
                     <!-- Product details-->
                     <div class="card-body p-1">
                         <div class="text-center">
@@ -42,22 +90,24 @@
                             <ul>
                                 {% for answer in request.answers.all %}
                                 {% if answer.question.type == 3 %}
-                                    {% if answer.text == '1' %}
-                                        <li>{{ answer.question.text }}</li>
-                                    {% endif %}
-                                {% else %}
-                                    <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong> {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                                {% if answer.text == '1' %}
+                                <li>{{ answer.question.text }}</li>
                                 {% endif %}
-                                    {% endfor %}
+                                {% else %}
+                                <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong>
+                                    {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                                {% endif %}
+                                {% endfor %}
                             </ul>
                             <!-- Product price-->
                             <span class="text-muted text-decoration-line-through"></span>
-                            
+
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="">المزيد عن المنتج</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="">المزيد عن المنتج</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,6 +115,6 @@
         </div>
     </div>
 </section>
-    
+
 
 {% endblock %}
