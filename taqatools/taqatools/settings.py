@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'taqatools.urls'
@@ -127,6 +128,12 @@ TIME_ZONE = 'UTC'
 USE_L10N = True
 
 USE_I18N = True
+LANGUAGES = [
+    ('en', ('English')),
+    ('ar', ('Arabic')),
+    # Add more languages as needed
+]
+
 
 USE_TZ = True
 

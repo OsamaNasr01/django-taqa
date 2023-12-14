@@ -25,29 +25,31 @@
 
 <section class="py-1">
     <div class="container px-4 px-lg-5 mt-5">
+        <h3>طلبات عروض اسعار لــ{{ tender.name }}</h3>
+        <hr>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for request in tender.requests.all %}
             <div class="col mb-5">
                 <div class="card h-100">
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ request.created_at|naturalday }}</div><br>
                     <!-- Product details-->
-                    <div class="card-body p-4">
+                    <div class="card-body p-1">
                         <div class="text-center">
                             <!-- Product name-->
                             <h5 class="fw-bolder">{{request.location.location}}</h5>
                             <!-- Product reviews-->
-                            <div class="d-flex justify-content-right small  mb-2">
-                                <ul>
-                                    {% for answer in request.answers.all %}
-                                    {% if answer.question.type == 3 %}
-                                        {% if answer.text == '1' %}
-                                            <li>{{ answer.question.text }}</li>
-                                        {% endif %}
-                                    {% else %}
-                                        <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong> {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                            <ul>
+                                {% for answer in request.answers.all %}
+                                {% if answer.question.type == 3 %}
+                                    {% if answer.text == '1' %}
+                                        <li>{{ answer.question.text }}</li>
                                     {% endif %}
-                                        {% endfor %}
-                                </ul>
-                            </div>
+                                {% else %}
+                                    <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong> {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                                {% endif %}
+                                    {% endfor %}
+                            </ul>
                             <!-- Product price-->
                             <span class="text-muted text-decoration-line-through"></span>
                             
