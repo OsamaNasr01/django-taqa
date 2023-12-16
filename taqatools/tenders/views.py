@@ -214,3 +214,29 @@ def tender_request_profile(request, id):
     return render(request, 'tenders/requests/profile.html', {
         'tender_request': tender_request,
     })
+    
+def add_offer(request):
+    tender_request =  TenderRequest.objects.get(id = request.POST['tender_request'])
+    count = int(request.POST['count'])
+    i=0
+    for category in tender_request.tender.categories.all():
+        if category == tender_request.tender.categories.last():  
+            return render(request, 'tenders/requests/add_offer.html',  {
+                'category': category,
+                'tender_request':tender_request,
+                'count':'last',
+                })
+        else:
+            
+            i+=1
+            if i == count: 
+                count +=1   
+                return render(request, 'tenders/requests/add_offer.html',  {
+                    'category': category,
+                    'tender_request':tender_request,
+                    'count':count,
+                    })
+                
+                
+def confirm_offer(request):
+    return render(request, 'tenders/requests/confirm_offer.html', {})
