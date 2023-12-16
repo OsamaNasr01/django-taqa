@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
-from .models import Tender, Question, Choice, TenderCategory, TenderRequest, Answer
+from django.shortcuts import render, redirect, HttpResponse
+from .models import Tender, Question, Choice, TenderCategory, TenderRequest, Answer, OfferItem, TenderOffer
 from django.contrib import messages
 from members.views import home
 from members.forms import AddAddressForm
 from members.models import Gov, City
-from products.models import Category
+from products.models import Category, Product
 from .forms import QuestionForm, ChoiceForm
+import json
 
 # Create your views here.
 def add_tender(request):
@@ -235,7 +236,20 @@ def add_offer(request):
                     'count':count,
                     })
             i+=1
-                
+
+def add_product_offer(request):
+    offer_product = OfferItem.objects.create(
+        product = Product.objects.get(id = request.POST['pump_id']),
+        offer = TenderOffer.objects.get(id = request.POST['offer_id']),
+        q = request.POST['q'],
+        price = request.POST['price'],
+    )
+    offer_product.save()
+    json_data = json.dumps({'data':'added'})
+    return HttpResponse(json_data, content_type="application/json")
+
+def remove_product_offer(request):
+    pass    
                 
 def confirm_offer(request):
     return render(request, 'tenders/requests/confirm_offer.html', {})

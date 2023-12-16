@@ -28,6 +28,8 @@ urlpatterns = [
     path('tender-request/<int:id>', views.tender_request_profile, name = 'tender_request_profile'),
     
     path('tender-request/add-offer/', views.add_offer, name = 'add_offer'),
+    path('tender-request/add-product/', views.add_product_offer, name = 'add_product_offer'),
+    path('tender-request/remove-product/', views.remove_product_offer, name = 'remove_product_offer'),
     path('tender-request/confirm-offer/', views.confirm_offer, name = 'confirm_offer'),
     
 ]

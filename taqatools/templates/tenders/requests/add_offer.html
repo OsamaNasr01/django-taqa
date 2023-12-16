@@ -23,17 +23,19 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="">
-                              <form class="form-group" action="">
+                              <form class="form-group" id="product_selection{{product.id}}" action="">
+                                <input  type="hidden" value="{{offer.id}}" name="offer_id">
+                                <input type="hidden" value="{{motor.id}}" name="product_id">
                                 <div class="mb-3">
                                   <label for="price" class="form-label">السعر:</label>
-                                  <input class="form-control" type="number" name="price" id="price{{product.id}}" value="{{product.prices.last.value}}">
+                                  <input class="form-control" type="number" name="price" id="price" value="{{product.prices.last.value}}">
                                 </div>
                                 <div class="mb-3">
                                   <label for="qty" class="form-label">الكمية:</label>
-                                  <input class="form-control"  type="number" name="qty" id="qty{{product.id}}" value="1">
+                                  <input class="form-control"  type="number" name="qty" id="qty" value="1">
                                 </div>
                                 <div class="d-grid mb-3">
-                                  <button type="submit" class="btn btn-primary">إضافة </button>
+                                  <button onclick="product_submit('{{product.id}}')" type="button" id="product_submit_{{product.id}}" class="btn btn-primary">اضف الي العرض</button>
                                 </div>
                               </form>
                             </div>
@@ -58,4 +60,47 @@
       </div>
     </form>
 </div>
+<script>
+  
+function product_submit(id) {
+  const submit_btn = document.getElementById(`product_submit_${id}`)
+  const product_selection = document.getElementById(`product_selection${id}`)
+  const data_form = new FormData(product_selection)
+  console.log(data_form.get('price'))
+  if (submit_btn.innerText === 'حذف من العرض') {
+      url = '/tender-request/remove-product/'
+  } else {
+      url = '/tender-request/add-product/'
+  }
+  fetch(url, {
+      'method' : 'POST',
+      'body': data_form,
+  }) 
+  .then(response => {
+      if (response.ok) {
+        console.log(response)
+        return response.json()
+      } else {
+      console.log(response)
+      }
+  })
+  .then(data => {
+    console.log(data)
+    if (data['data'] === 'added') {
+      submit_btn.className = "btn btn-danger form-control"
+      submit_btn.innerText = 'حذف من العرض'
+
+    } else {
+      submit_btn.className = "btn btn-primary form-control"
+      submit_btn.innerText = 'اضف الي العرض'
+
+    }
+  })
+  .catch((error) => {
+      console.log(error)
+
+})
+}
+
+</script>
 {% endblock %}
