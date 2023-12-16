@@ -5,8 +5,47 @@
 
 
 <div class="container my-1 mt-5">
-    {{category.category.name}}
-    {% if count == 'last' %}
+    <section class="py-1">
+        <div class="container px-4 px-lg-5 mt-5">
+          <h3>الخطوة {{ count }} من {{  tender_request.tender.categories.count}}</h3>
+          <h5>{{category.category.name}}</h5>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in category.category.products.all %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{product.name}}</h5>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="">
+                              <form class="form-group" action="">
+                                <div class="mb-3">
+                                  <label for="price" class="form-label">السعر:</label>
+                                  <input class="form-control" type="number" name="price" id="price{{product.id}}" value="{{product.prices.last.value}}">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="qty" class="form-label">الكمية:</label>
+                                  <input class="form-control"  type="number" name="qty" id="qty{{product.id}}" value="1">
+                                </div>
+                                <div class="d-grid mb-3">
+                                  <button type="submit" class="btn btn-primary">إضافة </button>
+                                </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+        
+    {% if count == 'الاخيرة' %}
     <form action="{% url 'confirm_offer' %}" method="post" >
     {% else %}
     <form action="{% url 'add_offer' %}" method="post" >
@@ -18,23 +57,5 @@
         <button type="submit" class="btn btn-primary">التالي</button>
       </div>
     </form>
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">طلب عرض سعر {{ tender.name }}</h4>
-        </div>
-        <div class="card-body">
-          <form action="#" method="post" >
-            {% csrf_token %}
-
-            <div class="d-grid mb-3">
-              <button type="submit" class="btn btn-primary">تأكيد </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock %}

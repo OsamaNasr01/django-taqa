@@ -40,7 +40,7 @@
     <form action="{% url 'add_offer' %}" method="post" >
       {% csrf_token %}
         <input type="hidden"  name="tender_request" value="{{tender_request.id}}">
-        <input type="hidden" name="count" value="1">
+        <input type="hidden" name="count" value="0">
       <div class="d-grid mb-3">
         <button type="submit" class="btn btn-primary">إضافة عرض سعر</button>
       </div>

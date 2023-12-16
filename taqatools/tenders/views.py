@@ -224,11 +224,9 @@ def add_offer(request):
             return render(request, 'tenders/requests/add_offer.html',  {
                 'category': category,
                 'tender_request':tender_request,
-                'count':'last',
+                'count':'الاخيرة',
                 })
         else:
-            
-            i+=1
             if i == count: 
                 count +=1   
                 return render(request, 'tenders/requests/add_offer.html',  {
@@ -236,6 +234,7 @@ def add_offer(request):
                     'tender_request':tender_request,
                     'count':count,
                     })
+            i+=1
                 
                 
 def confirm_offer(request):
