@@ -34,5 +34,7 @@ urlpatterns = [
     path('tender-offer/<int:id>/confirm-offer/', views.confirm_offer, name = 'confirm_offer'),
     path('tender-offer/change-item-q/', views.change_item_q, name = 'change_item_q'),
     path('tender-offer/change-item-price/', views.change_item_price, name = 'change_item_price'),
+    path('tender-offer/<int:id>/', views.offer_profile, name = 'offer_profile'),
+    path('tender-offer/send-offer/', views.send_offer, name = 'send_offer'),
     
 ]

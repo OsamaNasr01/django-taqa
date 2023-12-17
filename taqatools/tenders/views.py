@@ -277,8 +277,26 @@ def remove_product_offer(request):
     
                 
 def confirm_offer(request, id):
-    return render(request, 'tenders/requests/confirm_offer.html', {
-        'offer': TenderOffer.objects.get(id = id)
+    if request.method == 'POST':
+        return render(request, 'tenders/requests/confirm_offer.html', {
+            'offer': TenderOffer.objects.get(id = id)
+        })
+        
+def send_offer(request):
+    if request.method == 'POST':
+        offer = TenderOffer.objects.get(id = request.POST['offer_id'])
+        offer.submit = True
+        offer.save()
+        messages.success(request, 'تم ارسال العرض بنجاح، سيتم موافاتكم اذا تم قبول العرض من العميل.')
+        return render(request, 'tenders/requests/offer_profile.html', {
+            'offer': offer,
+        })
+        
+
+def offer_profile(request, id):
+    offer = TenderOffer.objects.get(id = id )
+    return render(request, 'tenders/requests/offer_profile.html', {
+        'offer': offer,
     })
     
     

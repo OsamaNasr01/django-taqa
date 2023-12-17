@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}عرض سعر طلمبة غاطسة{% endblock %}
+{% block title %}عرض سعر طلمبة غاطسة {% endblock %}
 {% block content %}
 
 {% load humanize %}
@@ -27,8 +27,8 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ item.product.name }}</td>
-                        <td><input id="price_{{item.id}}" oninput="change_price('{{item.id}}')"  class="form-control" type="number" value="{{ item.price }}"></td>
-                        <td><input id="q_{{item.id}}" oninput="change_q('{{item.id}}')" class="form-control" type="number" value="{{ item.qty|intcomma }}"></td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.qty|intcomma }}</td>
                         <td id="item_total_{{item.id}}">{{ item.item_value|floatformat:2|intcomma  }}</td>
                     </tr>
                 {% endfor %}
@@ -43,13 +43,5 @@
                 </tfoot>
             </table>
         </div>
-        <div class="col-12">
-            <form method="post" action="{% url 'send_offer' %}">
-                {% csrf_token %}
-                <input type="hidden" value="{{offer.id}}" name="offer_id">
-                <button class="btn form-control btn-primary" type="submit">تأكيد العرض</button>
-            </form>
-        </div>
     </div>
-<script src="{% static 'tenders/confirm_offer.js' %}"></script>
 {% endblock %}
