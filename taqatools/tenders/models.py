@@ -24,6 +24,10 @@ class Question(models.Model):
         (3, 'نعم او لا'),
     ])
     unit = models.CharField(max_length=50, null=True, blank=True)
+    re_of = models.IntegerField(choices=[
+        (1, 'طلب'),
+        (2, 'عرض'),
+    ], default = 1)
     tender = models.ForeignKey(Tender, related_name='questions', on_delete=models.CASCADE)
     
     
@@ -50,13 +54,19 @@ class Answer(models.Model):
     request = models.ForeignKey(TenderRequest, related_name='answers', on_delete=models.CASCADE)
     
     
+    
 class TenderOffer(models.Model):
     request = models.ForeignKey(TenderRequest, on_delete=models.SET_NULL, null=True, related_name='offers')
     company  = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, related_name='tender_offers')
     value = models.FloatField(default=0)
     submit = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+
+class Terms(models.Model):
+    text = models.CharField(max_length=255)
+    question = models.ForeignKey(Question, related_name='terms', on_delete=models.CASCADE)
+    offer = models.ForeignKey(TenderOffer, related_name='terms', on_delete=models.CASCADE)    
 
 class OfferItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='tender_offers')

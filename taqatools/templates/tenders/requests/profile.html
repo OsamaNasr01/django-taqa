@@ -59,22 +59,16 @@
                                 <button class="accordion-button collapsed me-auto ms-0" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapse{{offer.id}}" aria-expanded="false"
                                     aria-controls="flush-collapse{{offer.id}}">
-                                    {{offer.value}}
+                                    {{ offer.company.name }}{{offer.value}}
                                 </button>
                             </h2>
                             <div id="flush-collapse{{offer.id}}" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <ul>
-                                        {% for answer in request.answers.all %}
-                                        {% if answer.question.type == 3 %}
-                                        {% if answer.text == '1' %}
-                                        <li>{{ answer.question.text }}</li>
-                                        {% endif %}
-                                        {% else %}
-                                        <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong>
-                                            {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
-                                        {% endif %}
+                                        {% for item in offer.items.all %}
+                                        <li>{{ item.product.name }} </li>
+                                       
                                         {% endfor %}
                                     </ul>
                                     <a href="#" class="btn btn-primary">قدم عرض سعر</a>
