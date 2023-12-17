@@ -1,28 +1,153 @@
-{% extends 'base.html' %} {% load static %} {% block mycss %}
-<!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
-{% endblock mycss %} {% block title %}  تأكيد عرض سعر  {% endblock %}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}عرض سعر طلمبة غاطسة{% endblock %}
 {% block content %}
 
+{% load humanize %}
 
-<div class="container my-1 mt-5">
-    <h3>تأكيد عرض السعر</h3>
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">طلب عرض سعر {{ tender.name }}</h4>
-        </div>
-        <div class="card-body">
-          <form action="#" method="post" >
-            {% csrf_token %}
 
-            <div class="d-grid mb-3">
-              <button type="submit" class="btn btn-primary">تأكيد </button>
-            </div>
-          </form>
+
+    <div class="container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h1>{{ offer.request.hp }}hp</h1>
+            <p>{{ offer.company.name }}</p>
+            <p>{{ offer.value|floatformat:2|intcomma }}</p>
+            <p>{{ offer.created_at|naturaltime  }}</p>
         </div>
-      </div>
+        <div>
+            <table class="table table-striped table-bordered table-hover" id="cart_items">
+                <tr id="table_head">
+                    <th>#</th>
+                    <th>البيان</th>
+                    <th>السعر</th>
+                    <th>الكمية</th>
+                    <th>الاجمالي</th>
+                </tr>
+                {% for item in offer.items.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td><input id="price_{{item.id}}" oninput="change_price('{{item.id}}')"  class="form-control" type="number" value="{{ item.price }}"></td>
+                        <td><input id="q_{{item.id}}" oninput="change_q('{{item.id}}')" class="form-control" type="number" value="{{ item.qty|intcomma }}"></td>
+                        <td id="item_total_{{item.id}}">{{ item.item_value|floatformat:2|intcomma  }}</td>
+                    </tr>
+                {% endfor %}
+                <tfoot>
+                    <tr>
+                        <td>#</td>
+                        <td>الاجمالي</td>
+                        <td></td>
+                        <td></td>
+                        <td id="offer_value">{{ offer.value|floatformat:2|intcomma }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div>
+            <ol>
+                <li class="h4"><i class='bx bx-timer bx-flip-horizontal' ></i>  العرض ساري لمدة  {{ offer.valid.period }}  من تاريخ العرض</li>
+                {% if offer.include_taxes %}
+                    <li class="h4">قيمة العرض تشمل ضريبة المبيعات وضريبة القيمة المضافة <i class='bx bx-receipt'></i> </li>
+                {% else %}
+                    <li class="h4">  <i class='bx bx-receipt'></i>  قيمة العرض غير شاملة ضريبة المبيعات او ضريبة القيمة المضافة </li>
+                {% endif %}
+                {% if offer.include_trans %}
+                    <li class="h4">  <i class='bx bxs-truck bx-flip-horizontal' ></i>  قيمة العرض تشمل النقل الي الموقع</li>
+                {% else %}
+                <li class="h4"><i class='bx bxs-truck bx-flip-horizontal' ></i>  قيمة العرض  لا تشمل النقل الي الموقع</li>
+                {% endif %}
+                {% if offer.installment %}
+                    <li class="h4"><i class='bx bxs-bank bx-flip-horizontal' ></i>  يوجد امكانية للتقسيط</li>
+                {% else %}
+                <li class="h4"><i class='bx bxs-bank bx-flip-horizontal' ></i>  لا يوجد امكانية للتقسيط</li>
+                {% endif %}
+            </ol>
+        </div>
+        <div class="col-12">
+            <form method="post" action="{% url 'send_offer' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{offer.id}}" name="offer_id">
+                <button class="btn form-control btn-primary" type="submit">تأكيد العرض</button>
+            </form>
+        </div>
     </div>
-  </div>
-</div>
+<script>
+  
+function change_price(id) {
+  const offer_total_value = document.getElementById('offer_value')
+  const price_value = document.getElementById(`price_${id}`)
+  const q_value = document.getElementById(`q_${id}`)
+  const item_total_value = document.getElementById(`item_total_${id}`)
+  console.log(price_value.value)
+  const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+  const url = '/tender-offer/change-item-price/'
+  const data = JSON.stringify({
+      'item_id': id,
+      'new_price': price_value.value
+  })
+  fetch(url, {
+      'method' : 'POST',
+      'headers' : {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+      },
+      'body': data,
+  })
+  .then(response => {
+      if (response.ok) {
+          return response.json()
+      } else {
+      console.log(response)
+      }
+  })
+  .then(data => {
+      console.log('ok')
+      item_total_value.innerText = data['item_value'].toLocaleString ({minimumFractionDigits: 2})
+      offer_total_value.innerText = data['offer_value'].toLocaleString ({minimumFractionDigits: 2})
+  })
+  .catch((error) => {
+      console.log(error)
+  })
+}
+
+
+function change_q(id) {
+  const offer_total_value = document.getElementById('offer_value')
+  const price_value = document.getElementById(`price_${id}`)
+  const q_value = document.getElementById(`q_${id}`)
+  const item_total_value = document.getElementById(`item_total_${id}`)
+  console.log(price_value.value)
+  const csrftoken=document.querySelector('[name="csrfmiddlewaretoken"]').value
+  const url = '/tender-offer/change-item-q/'
+  const data = JSON.stringify({
+      'item_id': id,
+      'new_q': q_value.value
+  })
+  fetch(url, {
+      'method' : 'POST',
+      'headers' : {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+      },
+      'body': data,
+  })
+  .then(response => {
+      if (response.ok) {
+          return response.json()
+      } else {
+      console.log(response)
+      }
+  })
+  .then(data => {
+      console.log('ok')
+      item_total_value.innerText = data['item_value'].toLocaleString ({minimumFractionDigits: 2})
+      offer_total_value.innerText = data['offer_value'].toLocaleString ({minimumFractionDigits: 2})
+  })
+  .catch((error) => {
+      console.log(error)
+  })
+}
+
+</script>
+<!-- <script src="{% static 'pumpoffers/final.js' %}"></script> -->
 {% endblock %}

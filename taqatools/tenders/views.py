@@ -276,5 +276,45 @@ def remove_product_offer(request):
     return HttpResponse(json_data, content_type="application/json")
     
                 
-def confirm_offer(request):
-    return render(request, 'tenders/requests/confirm_offer.html', {})
+def confirm_offer(request, id):
+    return render(request, 'tenders/requests/confirm_offer.html', {
+        'offer': TenderOffer.objects.get(id = id)
+    })
+    
+    
+
+def change_item_price(request):
+    data = json.loads(request.body)
+    item = OfferItem.objects.get(id = data['item_id'])
+    offer = TenderOffer.objects.get(id = item.offer.id)
+    offer.value -= item.item_value
+    item.price = data['new_price']
+    item.save()
+    offer.value += item.item_value
+    offer.save()
+    return_data = {
+        'item_value': item.item_value,
+        'offer_value': offer.value,
+    }
+    json_data = json.dumps(return_data)
+    print(json_data)
+    return HttpResponse(json_data, content_type="application/json")
+
+
+
+def change_item_q(request):
+    data = json.loads(request.body)
+    item = OfferItem.objects.get(id = data['item_id'])
+    offer = TenderOffer.objects.get(id = item.offer.id)
+    offer.value -= item.item_value
+    item.qty = data['new_q']
+    item.save()
+    offer.value += item.item_value
+    offer.save()
+    return_data = {
+        'item_value': item.item_value,
+        'offer_value': offer.value,
+    }
+    json_data = json.dumps(return_data)
+    print(json_data)
+    return HttpResponse(json_data, content_type="application/json")
