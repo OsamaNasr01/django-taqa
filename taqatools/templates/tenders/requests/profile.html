@@ -53,16 +53,16 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion accordion-flush" id="accordionFlushExample">
-                        {% for request in tender.requests.all %}
+                        {% for offer in tender_request.offers.all %}
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed me-auto ms-0" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapse{{request.id}}" aria-expanded="false"
-                                    aria-controls="flush-collapse{{request.id}}">
-                                    {{request.location.location}}
+                                    data-bs-target="#flush-collapse{{offer.id}}" aria-expanded="false"
+                                    aria-controls="flush-collapse{{offer.id}}">
+                                    {{offer.value}}
                                 </button>
                             </h2>
-                            <div id="flush-collapse{{request.id}}" class="accordion-collapse collapse"
+                            <div id="flush-collapse{{offer.id}}" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <ul>

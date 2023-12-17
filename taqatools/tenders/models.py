@@ -65,7 +65,7 @@ class OfferItem(models.Model):
     price = models.FloatField(default=0)
     @property
     def item_value(self):
-        return float(self.price) * float(self.q)
+        return float(self.price) * float(self.qty)
 
 
 @receiver(post_save, sender =  OfferItem)

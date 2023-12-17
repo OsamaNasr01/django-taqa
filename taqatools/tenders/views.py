@@ -216,8 +216,10 @@ def tender_request_profile(request, id):
         'tender_request': tender_request,
     })
     
-def add_offer(request):
+    
+def product_selection(request, id):
     tender_request =  TenderRequest.objects.get(id = request.POST['tender_request'])
+    offer = TenderOffer.objects.get(id =id)
     count = int(request.POST['count'])
     i=0
     for category in tender_request.tender.categories.all():
@@ -226,6 +228,7 @@ def add_offer(request):
                 'category': category,
                 'tender_request':tender_request,
                 'count':'الاخيرة',
+                'offer':offer,
                 })
         else:
             if i == count: 
@@ -234,22 +237,44 @@ def add_offer(request):
                     'category': category,
                     'tender_request':tender_request,
                     'count':count,
+                    'offer':offer,
                     })
             i+=1
+    
+    
+def add_offer(request):
+    tender_request =  TenderRequest.objects.get(id = request.POST['tender_request'])
+    if request.method  == 'POST':
+        offer = TenderOffer.objects.create(
+            request = tender_request,
+            company = request.user.companies.last(),
+        )
+        return product_selection(request, offer.id)
+
 
 def add_product_offer(request):
+    product = Product.objects.get(id = request.POST['product_id'])
     offer_product = OfferItem.objects.create(
-        product = Product.objects.get(id = request.POST['pump_id']),
+        product = product,
         offer = TenderOffer.objects.get(id = request.POST['offer_id']),
-        q = request.POST['q'],
+        qty = request.POST['qty'],
         price = request.POST['price'],
     )
     offer_product.save()
+    messages.success(request, f'تم اضافة {product.name} بنجاح')
     json_data = json.dumps({'data':'added'})
     return HttpResponse(json_data, content_type="application/json")
 
 def remove_product_offer(request):
-    pass    
+    offer_product = OfferItem.objects.get(
+        product = Product.objects.get(id = request.POST['product_id']),
+        offer = TenderOffer.objects.get(id = request.POST['offer_id']),
+        )
+    offer_product.delete()
+    messages.error(request, f'تم حذف {offer_product.product.name} بنجاح')
+    json_data = json.dumps({'data':'removed'})
+    return HttpResponse(json_data, content_type="application/json")
+    
                 
 def confirm_offer(request):
     return render(request, 'tenders/requests/confirm_offer.html', {})

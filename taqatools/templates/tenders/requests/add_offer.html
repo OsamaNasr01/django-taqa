@@ -24,8 +24,9 @@
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="">
                               <form class="form-group" id="product_selection{{product.id}}" action="">
+                                {% csrf_token %}
                                 <input  type="hidden" value="{{offer.id}}" name="offer_id">
-                                <input type="hidden" value="{{motor.id}}" name="product_id">
+                                <input type="hidden" value="{{product.id}}" name="product_id">
                                 <div class="mb-3">
                                   <label for="price" class="form-label">السعر:</label>
                                   <input class="form-control" type="number" name="price" id="price" value="{{product.prices.last.value}}">
@@ -50,7 +51,7 @@
     {% if count == 'الاخيرة' %}
     <form action="{% url 'confirm_offer' %}" method="post" >
     {% else %}
-    <form action="{% url 'add_offer' %}" method="post" >
+    <form action="{% url 'product_selection' offer.id %}" method="post" >
     {% endif %}
       {% csrf_token %}
         <input type="hidden"  name="tender_request" value="{{tender_request.id}}">
@@ -68,9 +69,9 @@ function product_submit(id) {
   const data_form = new FormData(product_selection)
   console.log(data_form.get('price'))
   if (submit_btn.innerText === 'حذف من العرض') {
-      url = '/tender-request/remove-product/'
+      url = '/tender-offer/remove-product/'
   } else {
-      url = '/tender-request/add-product/'
+      url = '/tender-offer/add-product/'
   }
   fetch(url, {
       'method' : 'POST',
