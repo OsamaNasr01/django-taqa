@@ -32,7 +32,7 @@
             </p>
             
             {{ address_form.as_p }}
-            {% for question in tender.questions.all %}
+            {% for question in questions %}
                 {% if question.type == 1 %}
                 <div class="mb-3">
                     <label for="{{question.id}}" class="form-label">{{question.text}} ({{question.unit}}):</label>

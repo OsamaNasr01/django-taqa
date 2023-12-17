@@ -175,7 +175,7 @@ def tender_request(request, id):
         new_request = TenderRequest.objects.create(
             user = request.user, location = new_address, tender = tender
         )
-        for question in tender.questions.all():
+        for question in tender.questions.filter(re_of = 1):
             if question.type == 1:
                 new_answer_text = request.POST[f'{question.id}']
             elif question.type == 2:
@@ -183,21 +183,23 @@ def tender_request(request, id):
                     choice = Choice.objects.get(id= request.POST[f'{question.id}'])
                     new_answer_text = choice.text
                 else:
-                    new_answer.text = request.POST[f'{question.id}']
+                    new_answer_text = request.POST[f'{question.id}']
             elif question.type == 3:
-                if f'{question.id}':
-                    new_answer_text = 1
-                else:
-                    new_answer_text = 0
+                    try:
+                        x =  request.POST[f'{question.id}']
+                        new_answer_text = 1
+                    except:
+                        new_answer_text = 0
             new_answer = Answer.objects.create(
                 question = question, request = new_request, text = new_answer_text
             )
         messages.success(request, 'تم قبول الطلب بنجاح')
-        return tender_dashboard(request, id)
+        return tender_request_profile(request, new_request.id)
     else:   
         address_form = AddAddressForm()
         return render(request, 'tenders/requests/add_request.html', {
             'tender':tender,
+            'questions': tender.questions.filter(re_of = 1),
             'address_form':address_form,
             'govs': Gov.objects.all()
             })
@@ -296,10 +298,11 @@ def submit_terms(request, id):
                 else:
                     new_answer_text = request.POST[f'{question.id}']
             elif question.type == 3:
-                if f'{question.id}':
-                    new_answer_text = 1
-                else:
-                    new_answer_text = 0
+                    try:
+                        x =  request.POST[f'{question.id}']
+                        new_answer_text = 1
+                    except:
+                        new_answer_text = 0
             new_term = Terms.objects.create(
                 question = question, offer = offer, text = new_answer_text
             )

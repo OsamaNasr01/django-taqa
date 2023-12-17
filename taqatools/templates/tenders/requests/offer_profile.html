@@ -47,14 +47,14 @@
     <div>
         <ul>
             {% for term in offer.terms.all %}
-            {% if term.question.type == 3 %}
-            {% if term.text == '1' %}
-            <li>{{ term.question.text }}</li>
-            {% endif %}
-            {% else %}
-            <li>{{ term.question.text }} <strong>{{ term.text }}</strong>
-                {% if term.question.unit %}{{ term.question.unit }}{% endif %}</li>
-            {% endif %}
+                {% if term.question.type == 3 %}
+                    {% if term.text == '1' %}
+                    <li>{{ term.question.text }}</li>
+                    {% endif %}
+                {% else %}
+                <li>{{ term.question.text }} <strong>{{ term.text }}</strong>
+                    {% if term.question.unit %}{{ term.question.unit }}{% endif %}</li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
