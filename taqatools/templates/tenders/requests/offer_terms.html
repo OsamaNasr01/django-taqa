@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
+{% endblock mycss %} {% block title %}  طلب عرض سعر  {% endblock %}
+{% block content %}
+
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">ِشروط عرض السعر {{ tender.name }}</h4>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'submit_terms'  offer.id %}" method="post" >
+            {% csrf_token %}
+            {% for question in questions %}
+                {% if question.type == 1 %}
+                <div class="mb-3">
+                    <label for="{{question.id}}" class="form-label">{{question.text}} ({{question.unit}}):</label>
+                    <input type="number" class="form-control" id="name" name="{{question.id}}" required>
+                </div>
+                {% elif question.type == 2 %}
+                {% if not question.choices %}
+                <div class="mb-3">
+                    <label for="{{question.id}}" class="form-label">{{question.text}}:</label>
+                    <input type="text" class="form-control" id="name" name="{{question.id}}" required>
+                </div>
+                {% else %}
+                <label for="{{question.id}}" class="form-label">{{question.text}}:</label>
+                <select name="{{question.id}}" class="form-select" aria-label="Default select example">
+                    <option selected>اختر اجابة من القائمة</option>
+                    {% for choice in question.choices.all %}
+                    <option value="{{choice.id}}">{{choice.text}}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                {% endif %}
+                {% elif question.type == 3 %}
+                <div class="form-check form-switch form-check-reverse">
+                  <input class="form-check-input" type="checkbox" id="check{{question.id}}">
+                  <label class="form-check-label" for="flexSwitchCheckReverse">{{question.text}}</label>
+                </div>
+                <br>
+                {% endif %}
+            {% endfor %}
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">تأكيد </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

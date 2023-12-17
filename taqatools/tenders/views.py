@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Tender, Question, Choice, TenderCategory, TenderRequest, Answer, OfferItem, TenderOffer
+from .models import Tender, Question, Choice, TenderCategory, TenderRequest, Answer, OfferItem, TenderOffer, Terms
 from django.contrib import messages
 from members.views import home
 from members.forms import AddAddressForm
@@ -274,7 +274,38 @@ def remove_product_offer(request):
     messages.error(request, f'تم حذف {offer_product.product.name} بنجاح')
     json_data = json.dumps({'data':'removed'})
     return HttpResponse(json_data, content_type="application/json")
-    
+
+
+def offer_terms(request, id):
+    if request.method == 'POST':
+        return render(request, 'tenders/requests/offer_terms.html', {
+            'offer': TenderOffer.objects.get(id = id),
+            'questions': Question.objects.filter(re_of = 2),
+        })
+
+def submit_terms(request, id):
+    offer = TenderOffer.objects.get(id = id)
+    if request.method == 'POST':
+        for question in offer.request.tender.questions.filter(re_of = 2):
+            if question.type == 1:
+                new_answer_text = request.POST[f'{question.id}']
+            elif question.type == 2:
+                if question.choices:
+                    choice = Choice.objects.get(id= request.POST[f'{question.id}'])
+                    new_answer_text = choice.text
+                else:
+                    new_answer_text = request.POST[f'{question.id}']
+            elif question.type == 3:
+                if f'{question.id}':
+                    new_answer_text = 1
+                else:
+                    new_answer_text = 0
+            new_term = Terms.objects.create(
+                question = question, offer = offer, text = new_answer_text
+            )
+        messages.success(request, 'تم إضافة الشروط الي العرض بنجاح')
+        return confirm_offer(request, id)
+        
                 
 def confirm_offer(request, id):
     if request.method == 'POST':

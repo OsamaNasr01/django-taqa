@@ -49,7 +49,7 @@
     </section>
         
     {% if count == 'الاخيرة' %}
-    <form action="{% url 'confirm_offer' offer.id %}" method="post" >
+    <form action="{% url 'offer_terms' offer.id %}" method="post" >
     {% else %}
     <form action="{% url 'product_selection' offer.id %}" method="post" >
     {% endif %}
