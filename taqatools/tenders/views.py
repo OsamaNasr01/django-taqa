@@ -299,10 +299,11 @@ def submit_terms(request, id):
                     new_answer_text = request.POST[f'{question.id}']
             elif question.type == 3:
                     try:
-                        x =  request.POST[f'{question.id}']
+                        request.POST[f'{question.id}']
                         new_answer_text = 1
                     except:
                         new_answer_text = 0
+                    
             new_term = Terms.objects.create(
                 question = question, offer = offer, text = new_answer_text
             )
