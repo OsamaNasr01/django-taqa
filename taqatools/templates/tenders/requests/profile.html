@@ -35,55 +35,33 @@
     </div>
 </div>
 
-
-<div class="container my-1 mt-5">
-    <form action="{% url 'add_offer' %}" method="post" >
-      {% csrf_token %}
-        <input type="hidden"  name="tender_request" value="{{tender_request.id}}">
-        <input type="hidden" name="count" value="0">
-      <div class="d-grid mb-3">
-        <button type="submit" class="btn btn-primary">إضافة عرض سعر</button>
-      </div>
-    </form>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"> عروض اسعار لــ{{ tender_request.tender.name }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        {% for offer in tender_request.offers.all %}
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed me-auto ms-0" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapse{{offer.id}}" aria-expanded="false"
-                                    aria-controls="flush-collapse{{offer.id}}">
-                                    {{ offer.company.name }}{{offer.value}}
-                                </button>
-                            </h2>
-                            <div id="flush-collapse{{offer.id}}" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <ul>
-                                        {% for item in offer.items.all %}
-                                        <li>{{ item.product.name }} </li>
-                                       
-                                        {% endfor %}
-                                    </ul>
-                                    <a href="#" class="btn btn-primary">قدم عرض سعر</a>
-                                    <a href="#" class="btn btn-primary">تفاصيل اكثر</a>
-                                </div>
-                            </div>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for offer in tender_request.offers.all %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{offer.company.image.url}}" height="200" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{offer.company.name}}</h5>
+                            <!-- Product price-->
+                            {{offer.value}}
                         </div>
-                        {% endfor %}
                     </div>
-
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'offer_profile' offer.id %}">تفاصيل العرض</a></div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-</div>
 
 
 {% endblock %}

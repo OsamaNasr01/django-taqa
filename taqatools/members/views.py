@@ -12,6 +12,7 @@ from sitestats.models import Site
 from accounting.forms import DepitForm, CreditForm
 import json
 from django.contrib.auth.decorators import login_required
+from tenders.models import Tender
 
 def login_user(request):
     if request.method == 'POST':
@@ -77,7 +78,8 @@ def home(request):
         'categories' : categories,
         'products': products,
         'brands': brands,
-        'posts': Post.objects.all()
+        'posts': Post.objects.all(),
+        'tenders':Tender.objects.all()
     })
 
 @login_required(login_url='login')

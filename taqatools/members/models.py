@@ -173,4 +173,4 @@ class Address(models.Model):
     
     @property
     def location(self):
-        return f'{self.city.gov.name}, {self.city.name}, {self.details}'
+        return f'{self.city.gov.name}، {self.city.name}، {self.details}'

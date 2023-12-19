@@ -280,9 +280,11 @@ def remove_product_offer(request):
 
 def offer_terms(request, id):
     if request.method == 'POST':
+        offer = TenderOffer.objects.get(id = id)
+        questions = Question.objects.filter(re_of = 2, tender = offer.request.tender)
         return render(request, 'tenders/requests/offer_terms.html', {
-            'offer': TenderOffer.objects.get(id = id),
-            'questions': Question.objects.filter(re_of = 2),
+            'offer': offer,
+            'questions': questions,
         })
 
 def submit_terms(request, id):
@@ -322,7 +324,7 @@ def send_offer(request):
         offer = TenderOffer.objects.get(id = request.POST['offer_id'])
         offer.submit = True
         offer.save()
-        messages.success(request, 'تم ارسال العرض بنجاح، سيتم موافاتكم اذا تم قبول العرض من العميل.')
+        messages.success(request, 'تم ارسال العرض للعميل، وسيتم موافاتكم اذا تم قبول العرض  .')
         return render(request, 'tenders/requests/offer_profile.html', {
             'offer': offer,
         })

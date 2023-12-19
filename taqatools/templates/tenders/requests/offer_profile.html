@@ -43,19 +43,17 @@
                 </tfoot>
             </table>
         </div>
-    </div>
     <div>
-        <ul>
             {% for term in offer.terms.all %}
                 {% if term.question.type == 3 %}
                     {% if term.text == '1' %}
-                    <li>{{ term.question.text }}</li>
+                    <p><i class='bx bxs-check-circle' style="color: green;" ></i>  {{ term.question.text }}</p>
                     {% endif %}
                 {% else %}
-                <li>{{ term.question.text }} <strong>{{ term.text }}</strong>
-                    {% if term.question.unit %}{{ term.question.unit }}{% endif %}</li>
+                <p><i class='bx bxs-check-circle' style="color: green;"></i>  {{ term.question.text }} <strong>{{ term.text }}</strong>
+                    {% if term.question.unit %}{{ term.question.unit }}{% endif %}</p>
                 {% endif %}
             {% endfor %}
-        </ul>
+    </div>
     </div>
 {% endblock %}
