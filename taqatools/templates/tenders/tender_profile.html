@@ -22,53 +22,39 @@
     </div>
 </div>
 
-
-<div class="container my-1 mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">طلبات عروض اسعار لــ{{ tender.name }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        {% for request in tender.requests.all %}
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed me-auto ms-0" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapse{{request.id}}" aria-expanded="false"
-                                    aria-controls="flush-collapse{{request.id}}">
-                                    {{request.location.location}}
-                                </button>
-                            </h2>
-                            <div id="flush-collapse{{request.id}}" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <ul>
-                                        {% for answer in request.answers.all %}
-                                        {% if answer.question.type == 3 %}
-                                        {% if answer.text == '1' %}
-                                        <li>{{ answer.question.text }}</li>
-                                        {% endif %}
-                                        {% else %}
-                                        <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong>
-                                            {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <a href="#" class="btn btn-primary">قدم عرض سعر</a>
-                                    <a href="{% url 'tender_request_profile' request.id %}" class="btn btn-primary">تفاصيل اكثر</a>
-                                </div>
-                            </div>
+<div class="container py-1">
+    <div class="row">
+        <!-- Blog entries-->
+        <div class="col-lg-12">
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row">
+                {% for request in tender.requests.all %}
+                <div class="col-lg-4 col-md-6">
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title h4"><i class='bx bx-location-plus' style="color: green;"></i>  {{ request.location.location }}</h2>
+                            <div class="small text-muted">{{ request.created_at }}</div>
+                            <ul>
+                                {% for answer in request.answers.all %}
+                                {% if answer.question.type == 3 %}
+                                {% if answer.text == '1' %}
+                                <li>{{ answer.question.text }}</li>
+                                {% endif %}
+                                {% else %}
+                                <li>{{ answer.question.text }} <strong>{{ answer.text }}</strong>
+                                    {% if answer.question.unit %}{{ answer.question.unit }}{% endif %}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <a class="btn btn-primary" href="{% url 'tender_request_profile' request.id %}">المزيد</a>
                         </div>
-                        {% endfor %}
                     </div>
-
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
-
 
 {% endblock %}
