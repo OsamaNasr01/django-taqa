@@ -17,6 +17,7 @@
         <div class="col-md-6">
             <div class="small mb-1">{{ tender_request.tender.name }}</div>
             <h1 class="display-5 fw-bolder">{{tender_request.location.location}}</h1>
+            <h3>{{ tender_request.created_at }}</h3>
             <p class="lead">{{tender_request.tender.description}}</p>
             
             <ul>
@@ -36,8 +37,19 @@
 </div>
 
     <div class="container px-4 px-lg-5 mt-5">
+        <form action="{% url 'add_offer' %}" method="post" >
+          {% csrf_token %}
+            <input type="hidden"  name="tender_request" value="{{tender_request.id}}">
+            <input type="hidden" name="count" value="0">
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">إضافة عرض سعر</button>
+          </div>
+        </form>
+        <br>
+        <h3>عروض الاسعار المقدمة لهذا الطلب</h3><br>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for offer in tender_request.offers.all %}
+            {% if offer.submit %}
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Sale badge-->
@@ -59,6 +71,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
