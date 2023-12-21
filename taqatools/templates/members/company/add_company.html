@@ -17,6 +17,7 @@
           <form action="{% url 'add_company' %}" method="post" >
             {% csrf_token %}
             <p>
+            {{ form.as_p }}
               <label for="id_gov">المحافظة:</label>
               <select name="gov" class="form-control" required="" id="id_gov">
                 <option value="" selected="">---------</option>
@@ -33,9 +34,8 @@
               </select>
             </p>
             {{ address_form.as_p }}
-            {{ form.as_p }}
             <div class="d-grid mb-3">
-              <button type="submit" class="btn btn-primary">تأكيد </button>
+              <button type="submit" class="btn btn-primary">إضافة</button>
             </div>
           </form>
         </div>
@@ -45,50 +45,7 @@
 </div>
 
 <script src="{% static 'pumpoffers/gov_select.js' %}"></script>
-
-
-
-
-
-<div class="shadow p-3 mb-5 bg-white rounded">  
-  <h3>
-    اضف شركة 
-  </h3>
-  <br>
-  <form id="company_form" enctype="multipart/form-data" action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">اضف شركة</button>
-  </form>
-
-  <button hidden type="button" id="category_modal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-co-category-modal">
-    Add Category
-  </button>
-
-  <div class="modal fade" id="add-co-category-modal" tabindex="-1" aria-labelledby="add-co-category-modal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="add-co-category-modal">اضف تصنيف</h5>
-          <button type="button" id="modal_close" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="{% url 'add_co_category' %}" method="post" name="add_co_category_form">
-            {% csrf_token %}
-            <label for="input_name">الاسم</label>
-            <input type="text" class="form-control" id="input_name">
-            <label for="input_description">الوصف:</label>
-            <textarea name="description" class="form-control bm-5" id="input_description" cols="30" rows="10"></textarea>
-            <button type="submit" id="category_submit" class="btn btn-primary">اضف تصنيف</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- <script src="{% static '/membersjs/add_company.js' %}"></script> -->
-
-  <script src="{% static 'pumpoffers/gov_select.js' %}"></script>
 {% endblock %}
 
 
