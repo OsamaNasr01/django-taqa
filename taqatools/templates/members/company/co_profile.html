@@ -5,134 +5,109 @@
 <!-- comment -->
 {% block content %}
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-company-modal">
-    تعديل
-</button>
+<div class="container py-3  px-4 px-lg-5 my-2">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-company-modal">
+        تعديل
+    </button>
 
-<div class="modal fade" id="update-company-modal" tabindex="-1" aria-labelledby="update-company-modal"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="update-company-modal">تعديل</h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="update-company-modal" tabindex="-1" aria-labelledby="update-company-modal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-company-modal">تعديل</h5>
+                    <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" action="{% url 'update_company' company.slug %}" method="post"
+                        name="update-company_form">
+                        {% csrf_token %} {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">
+                            تعديل
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                <form enctype="multipart/form-data" action="{% url 'update_company' company.slug %}" method="post"
-                    name="update-company_form">
-                    {% csrf_token %} {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">
-                        تعديل
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-company-modal">
+        حذف
+    </button>
+    <br /><br />
+
+    <!-- delete-company-modal.html -->
+
+    <div class="modal fade" id="delete-company-modal" tabindex="-1" aria-labelledby="delete-company-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-company-modal-label">
+                        حذف الشركة
+                    </h5>
+                    <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    هل انت متأكد من حذف هذه الشركة؟
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        إالغاء
                     </button>
-                </form>
+                    <form action="{% url 'delete_company' company.slug %}" method="POST">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                        <button type="submit" class="btn btn-danger" id="confirm-delete-company">
+                            تأكيد الحذف
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-company-modal">
-    حذف
-</button>
-<br /><br />
-
-<!-- delete-company-modal.html -->
-
-<div class="modal fade" id="delete-company-modal" tabindex="-1" aria-labelledby="delete-company-modal-label"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="delete-company-modal-label">
-                    حذف الشركة
-                </h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                هل انت متأكد من حذف هذه الشركة؟
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    إالغاء
-                </button>
-                <form action="{% url 'delete_company' company.slug %}" method="POST">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-                    <button type="submit" class="btn btn-danger" id="confirm-delete-company">
-                        تأكيد الحذف
-                    </button>
-                </form>
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1"></div>
+                <h1 class="display-5 fw-bolder">{{ company.name }}</h1>
+                <div class="fs-5 mb-5">
+                    <span>{{ companies.description }}</span>
+                </div>
+                <p>{{company.owner.full_name}}</p>
+                <p><i class='bx bx-phone'></i>  {{company.phone}}</p>
+                <p>@  {{company.email}}</p>
+                <p>{{company.website}}</p>
+                <p><i class='bx bx-map'></i>  {{company.address.location}}</p>
             </div>
         </div>
     </div>
-</div>
-<link rel="stylesheet" href="{% static '/membersjs/co_profile.css' %}">
-<style>
-</style>
-
-<div class="comany-content">
-    <div class="image">
-        <img src="/{{company.image}}" alt="" />
-    </div>
-    <div class="text">
-        <div class="head">
-            <h1>{{ company.name }}</h1>
-            <p>description : {{ company.description }}</p>
-        </div>
-        <div class="body">
-            <p>phone : {{ company.phone }}</p>
-            <p>email : {{ company.email }}</p>
-            <p>website : {{ company.website }}</p>
-            <p>address : {{ company.address.location }}</p>
-            {% if company.owner.full_name %}
-            <p>
-                owner : {{ company.owner.first_name }}
-                <!-- comment -->
-                {{company.owner.last_name }}
-            </p>
-            {% else %}
-            <p>owner : {{ company.owner.username }}</p>
-            {% endif %}
-        </div>
-        <p>Categories :</p>
-        {% for category in company.category.all %}
-        <ul>
-            <li>{{ category }}</li>
-        </ul>
-        {% endfor %}
-    </div>
-</div>
-<!-- Products For This Company -->
-<div class="cards">
-    {% if company.products.count %}
-    <div class="header">
-        <h1>
-            Products For <br />
-            {{comapny.name}}
-        </h1>
-    </div>
-    <div class="content">
-        {% for product in company.products %}
-        <div class="card">
-            <div class="image"></div>
-            <div class="text">
-                <h4>Submersible motor</h4>
-            </div>
-            <div class="order">
-                <p>552$</p>
-                <form action="www.twitter.com">
-                    <button>Buy Now</button>
-                </form>
+    <!-- Related items section-->
+        <div class="container px-4 px-lg-5 mt-2">
+            <h2 class="fw-bolder mb-4">عروض الاسعار المقدمة من الشركة</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for offer in company.offers.all %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{offer.company.image.url}}" height="200" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{offer.company.name}}</h5>
+                                <!-- Product price-->
+                                {{offer.value}}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'offer_profile' offer.id %}">تفاصيل العرض</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="header">
-        <h1>
-            لا توجد منتجات لشركة <br />
-            {{company.name}}
-        </h1>
-    </div>
-    {% endif %}
-
-</div>
 {% endblock %}

@@ -107,7 +107,7 @@ class Company(models.Model):
     website = models.URLField(max_length=200, null = True)
     address = models.ForeignKey(Address, on_delete = models.CASCADE, related_name = 'company')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
-    category = models.ManyToManyField(CoCategory, related_name='companies')
+    category = models.ManyToManyField(CoCategory, related_name='companies', null= True)
     slug = models.SlugField(max_length=150, blank=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
     image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)

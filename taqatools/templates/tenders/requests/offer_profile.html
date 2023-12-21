@@ -14,7 +14,7 @@
                 <header class="mb-4">
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">عرض سعر {{ offer.request.tender.name }}</h1>
-                    <h5><i class='bx bx-location-plus'></i>   {{ offer.request.location.location }}</h5>
+                    <h5><i class='bx bx-location-plus'></i>   {{ offer.company.address.location }}</h5>
                     <!-- Post meta content-->
                     <div class="text-muted fst-italic mb-2">{{ offer.created_at|naturaltime }} شركة
                         {{ offer.company.name }}</div>

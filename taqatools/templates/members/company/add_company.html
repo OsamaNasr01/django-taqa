@@ -14,7 +14,7 @@
           <h4 class="card-title">اضافة شركة</h4>
         </div>
         <div class="card-body">
-          <form action="{% url 'add_company' %}" method="post" >
+          <form action="{% url 'add_company' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>
             {{ form.as_p }}
