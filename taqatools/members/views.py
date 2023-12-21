@@ -154,8 +154,12 @@ def update_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
     if request.method == 'POST':
         form = AddCompanyForm(request.POST, request.FILES, instance=company)
-        if form.is_valid():
+        address_form = AddAddressForm(request.POST, instance = company.address)
+        if form.is_valid() and address_form.is_valid():
             form.save()
+            new_address  = address_form.save(commit=False)
+            new_address.city = City.objects.get(id = request.POST['city']) 
+            new_address.save()
             messages.success(request, ('تم تغيير بيانات الشركة بنجاح'))
             return redirect('co_profile', slug = slug)
         else:
@@ -187,6 +191,8 @@ def co_profile(request, slug):
     context = {
         'company': company,
         'form' : form,
+        'address_form':AddAddressForm(instance = company.address),
+        'govs':Gov.objects.all(),
         }
     return render(request, 'members/company/co_profile.html', context)
 
