@@ -249,7 +249,7 @@ def add_offer(request):
     if request.method  == 'POST':
         offer = TenderOffer.objects.create(
             request = tender_request,
-            company = request.user.companies.last(),
+            company = request.user.company.last(),
         )
         return product_selection(request, offer.id)
 

@@ -5,7 +5,8 @@
             <img src="{% static 'favicon.ico' %}" alt="" width="25" height="25">
             مجمع الطاقة
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -20,12 +21,14 @@
                     <a class="nav-link" href="{% url 'p_category_list' %}"><i class="bx bxs-carousel"></i> المنتجات</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         عروض الاسعار
                     </a>
                     <ul class="dropdown-menu">
                         {% for tender in tenders %}
-                        <li><a class="dropdown-item" href="{% url 'tender_profile' tender.id %}">{{ tender.name }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tender_profile' tender.id %}">{{ tender.name }}</a>
+                        </li>
                         {% endfor %}
                     </ul>
                 </li>
@@ -39,9 +42,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'user_profile' user.username %}">الها {{ user.full_name }}!</a>
                 </li>
-                {% endif %} {% if not user.companies.exists %}
+                {% endif %} 
+                {% if not user.has_company %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_company' %}">اضف شركة</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'co_profile'  user.company.last.slug %}">{{ user.company.last.name }}</a>
                 </li>
                 {% endif %}
 

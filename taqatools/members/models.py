@@ -106,7 +106,7 @@ class Company(models.Model):
     email = models.EmailField()
     website = models.URLField(max_length=200, null = True)
     address = models.ForeignKey(Address, on_delete = models.CASCADE, related_name = 'company')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='company')
     category = models.ManyToManyField(CoCategory, related_name='companies', null= True)
     slug = models.SlugField(max_length=150, blank=True)
     count = models.ForeignKey(Site, on_delete=models.SET_DEFAULT, default=1)
@@ -150,7 +150,7 @@ def user_account_details(sender, instance, created, **kwargs):
         users_no.save()
         
 def has_company(self):
-    return self.companies.count()
+    return self.company.count()
 
 User.add_to_class('has_company', has_company)
 
