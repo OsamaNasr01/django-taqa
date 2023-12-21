@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm, AddCompanyForm, AddCoCategoryForm, DetailsForm, AccountForm
 from .forms import AddAddressForm, AddGovForm, AddCityForm
 from django.contrib.auth.models import User
-from .models import Company, CoCategory, Details, Account
+from .models import Company, CoCategory, Details, Account, Gov, City
 from products.models import Category, Product, Brand
 from posts.models import Post
 from sitestats.models import Site
@@ -119,10 +119,16 @@ def update_picture(request, username):
 def add_company(request):
     if request.method == 'POST':
         form = AddCompanyForm(request.POST)
+        address_form = AddAddressForm(request.POST)
+        new_address = address_form.save(commit=False)
+        new_address.city = City.objects.get(id=request.POST['city'])
+        new_address.details = request.POST['details']
+        new_address.save()
         if form.is_valid():
             company = form.save(commit=False)
             company.owner = request.user
             company.image = request.FILES.get('image')
+            company.address = new_address
             company.save()
             messages.success(request, ('تم اضافة الشركة بنجاح.'))
             return redirect('companies')
@@ -134,9 +140,12 @@ def add_company(request):
     else:
         co_form = AddCompanyForm()
         cat_form = AddCoCategoryForm()
+        address_form = AddAddressForm()
         return render(request, 'members/company/add_company.html', {
             'form' : co_form,
-            'co_category_form': cat_form
+            'co_category_form': cat_form,
+            'address_form':address_form,
+            'govs': Gov.objects.all()
             })
     
 

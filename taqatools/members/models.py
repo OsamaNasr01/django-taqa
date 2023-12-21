@@ -54,6 +54,36 @@ def arabic_to_english_slug(text):
     slug = slugify(english_text)
     return slug
 
+
+
+
+class Gov(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+    
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    gov = models.ForeignKey(Gov, on_delete=models.CASCADE, related_name='cities')
+
+    def __str__(self):
+        return self.name
+    
+class Address(models.Model):
+    details = models.CharField(max_length=200)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='addresses')
+
+    def __str__(self):
+        return self.details
+    
+    @property
+    def location(self):
+        return f'{self.city.gov.name}، {self.city.name}، {self.details}'
+
+
+
 class CoCategory(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
@@ -74,8 +104,8 @@ class Company(models.Model):
     description = models.TextField(max_length=500)
     phone = models.CharField(max_length=15)
     email = models.EmailField()
-    website = models.URLField(max_length=200)
-    address = models.CharField(max_length=300)
+    website = models.URLField(max_length=200, null = True)
+    address = models.ForeignKey(Address, on_delete = models.CASCADE, related_name = 'company')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
     category = models.ManyToManyField(CoCategory, related_name='companies')
     slug = models.SlugField(max_length=150, blank=True)
@@ -149,28 +179,3 @@ class Account(models.Model):
         return self.user
     
     
-
-class Gov(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-    
-class City(models.Model):
-    name = models.CharField(max_length=100)
-    gov = models.ForeignKey(Gov, on_delete=models.CASCADE, related_name='cities')
-
-    def __str__(self):
-        return self.name
-    
-class Address(models.Model):
-    details = models.CharField(max_length=200)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='addresses')
-
-    def __str__(self):
-        return self.details
-    
-    @property
-    def location(self):
-        return f'{self.city.gov.name}، {self.city.name}، {self.details}'

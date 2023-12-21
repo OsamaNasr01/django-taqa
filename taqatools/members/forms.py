@@ -31,7 +31,7 @@ class AddCompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('name', 'description', 'image', 'phone', 'email', 'website', 'address', 'category')
+        fields = ('name', 'description', 'image', 'phone', 'email', 'website', 'category')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -41,7 +41,6 @@ class AddCompanyForm(forms.ModelForm):
         self.fields['phone'].widget.attrs.update({'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
         self.fields['website'].widget.attrs.update({'class': 'form-control'})
-        self.fields['address'].widget.attrs.update({'class': 'form-control'})
         self.fields['category'].widget.attrs.update({'class': 'form-control'})
         
         self.fields['name'].label = 'اسم الشركة'
@@ -50,7 +49,6 @@ class AddCompanyForm(forms.ModelForm):
         self.fields['phone'].label = 'رقم التليفون'
         self.fields['email'].label = 'البريد الاليكتروني'
         self.fields['website'].label = 'موقع الويب'
-        self.fields['address'].label = 'عنوان الشركة'
         self.fields['category'].label = 'تخصص الشركة'
 
 

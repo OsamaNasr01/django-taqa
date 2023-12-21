@@ -16,7 +16,9 @@
 <a id="main-card" href="{% url 'co_profile' company.slug %}" class="text-dark text-decoration-none">
     <div class="card">
         <div class="image">
+            {% if company.image %}
             <img src="{{company.image.url}}" alt="" />
+            {% endif %}
         </div>
         <div class="text">
             <h4>{{ company.name }}</h4>

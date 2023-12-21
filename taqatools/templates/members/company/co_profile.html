@@ -81,7 +81,7 @@
             <p>phone : {{ company.phone }}</p>
             <p>email : {{ company.email }}</p>
             <p>website : {{ company.website }}</p>
-            <p>address : {{ company.address }}</p>
+            <p>address : {{ company.address.location }}</p>
             {% if company.owner.full_name %}
             <p>
                 owner : {{ company.owner.first_name }}

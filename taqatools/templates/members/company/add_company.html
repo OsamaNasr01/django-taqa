@@ -3,7 +3,54 @@
 {% block title %} اضف شركة  {% endblock %}
 {% block content %}
 
-<div class="shadow p-3 mb-5 bg-white rounded">
+
+
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">اضافة شركة</h4>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'add_company' %}" method="post" >
+            {% csrf_token %}
+            <p>
+              <label for="id_gov">المحافظة:</label>
+              <select name="gov" class="form-control" required="" id="id_gov">
+                <option value="" selected="">---------</option>
+                {% for gov in govs %}
+                <option value="{{gov.id}}">{{ gov.name }}</option>
+                {% endfor %}
+              </select>
+            </p>
+            
+            <p>
+              <label for="id_city">المدينة او المركز:</label>
+              <select name="city" class="form-control" required="" id="id_city">
+                <option value="" selected="">---------</option>
+              </select>
+            </p>
+            {{ address_form.as_p }}
+            {{ form.as_p }}
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">تأكيد </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'pumpoffers/gov_select.js' %}"></script>
+
+
+
+
+
+<div class="shadow p-3 mb-5 bg-white rounded">  
   <h3>
     اضف شركة 
   </h3>
@@ -39,6 +86,9 @@
       </div>
     </div>
   </div>
-  <script src="{% static '/membersjs/add_company.js' %}"></script>
+  <!-- <script src="{% static '/membersjs/add_company.js' %}"></script> -->
 
+  <script src="{% static 'pumpoffers/gov_select.js' %}"></script>
 {% endblock %}
+
+
