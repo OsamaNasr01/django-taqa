@@ -60,6 +60,7 @@ def register_user(request):
         return render(request, 'members/register.html', {'form' : form})
 
 
+
 @login_required(login_url='login')
 def user_delete(request, username):
     if request.method == 'POST':
