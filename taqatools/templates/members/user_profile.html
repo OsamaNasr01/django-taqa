@@ -5,162 +5,70 @@
 <!-- comment  -->
 {% block title %} {{member.username}} {% endblock %}
 <!-- comment  -->
-{% block content %}
-<link rel="stylesheet" href="{% static 'membersjs/user_profile.css' %}">
+{% block content %} 
 
-<div class="main-content">
-    <div class="image">
-        {% if member.account.image %}
-        <button type="button" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
-            <img src="/{{member.account.image}}" alt="" />
-        </button>
-        {% else %}
-        <button type="button" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
-            <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" />
-        </button>
-        {% endif %}
-    </div>
-    <div class="text">
-        <h3>{{ member.full_name }}</h3>
-        <p>Email : {{ member.email }}</p>
-        <p>Username @{{member.username }}</p>
-        <h4>{{ member.balance|floatformat:2|intcomma }}</h4>
-        {% if member.cartitems.count %}
-        <a class="cart-items" href="{% url 'cart' %}">You have {{ member.cartitems.count }} items in cart</a>
-        {% else %}
-        <p class="cart-items">Your cart is empty</p>
-        {% endif %}
-        <div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-pyment-modal">
-                Add Payment
-            </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-receipt-modal">
-                Add Receipt
-            </button>
+<div class="container py-3  px-4 px-lg-5 my-2">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#update-picture-modal">
+                {% if member.account.image %}
+                <img class="card-img-top mb-5 mb-md-0" src="{{member.account.image.url}}" alt="..." />
+                {% else %}
+                <img class="card-img-top mb-5 mb-md-0" height="300" width="300" src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="..." />
+                {% endif %}
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="small mb-1"></div>
+            <h1 class="display-5 fw-bolder">{{ member.full_name }}</h1>
+            {% if member.has_company %}
+            <div class="fs-5 mb-5">
+                <span>مدير شركة {{ member.company.last.name }}</span>
+            </div>
+            {% else %}
+            <div class="fs-5 mb-5">
+                <span>مستخدم</span>
+            </div>
+            {% endif %}
+            <p>{{company.owner.full_name}}</p>
+            <p><i class='bx bx-phone'></i> {{member.username}}</p>
+            <p>@ {{member.email}}</p>
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="update-picture-modal" tabindex="-1" aria-labelledby="update-picture-modal"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="update-picture-modal">
-                    Update Picture
-                </h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    {% if user.account.image %}
-                    <img src="/{{user.account.image}}" alt="" />
-                    {% else %}
-                    <img src="/images/1__ARzR7F_fff_KI14yMKBzw.png" alt="" height="300" width="300" />
-                    {% endif %}
+<!-- Related items section-->
+<div class="container px-4 px-lg-5 mt-2">
+    {% if company.tender_offers.count %}
+    <h5 class="fw-bolder mb-4"> طلبات عروض الاسعار المقدمة من {{ member.full_name }}</h5>
+    {% else %}
+    <h5 class="fw-bolder mb-4">لا توجد طلبات عروض اسعار مقدمة من {{ member.full_name }} حتى الان</h5>
+    {% endif %}
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for offer in company.tender_offers.all %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Sale badge-->
+                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                <!-- Product image-->
+                <img class="card-img-top" src="{{offer.company.image.url}}" height="150" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{offer.request.tender.name}}</h5>
+                        <!-- Product price-->
+                        {{offer.value}}
+                    </div>
                 </div>
-                <br />
-                <form enctype="multipart/form-data" action="{% url 'update_picture' user.username %}" method="post"
-                    name="add-pyment_form">
-                    {% csrf_token %}
-                    <input type="file" name="image" id="" />
-                    <br /><br />
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'offer_profile' offer.id %}">تفاصيل العرض</a></div>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 
-<div class="modal fade" id="add-pyment-modal" tabindex="-1" aria-labelledby="add-pyment-modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="add-pyment-modal">Add Payment</h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'add_payment' user.username %}" method="post" name="add-pyment_form">
-                    {% csrf_token %} {{ pay_form.as_p }}
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="add-receipt-modal" tabindex="-1" aria-labelledby="add-receipt-modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="add-receipt-modal">Add Receipt</h5>
-                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'add_receipt' user.username %}" method="post" name="add-receipt_form">
-                    {% csrf_token %} {{ receive_form.as_p }}
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% if member.account.details.offers_no %}
-<a href="{% url 'user_offers'  member.username %}">
-    <div>
-        <h3>
-            You have requested {{ member.account.details.offers_no }} offer{{ user.account.details.offers_no|pluralize}}.
-        </h3>
-    </div>
-</a>
-{% endif %}
-<!-- comment  -->
-{% if member.account.details.sales_no %}
-<a href="{% url 'user_sales'  member.username %}">
-    <div>
-        <h3>
-            You have ordered {{ member.account.details.sales_no }} invoice{{ member.account.details.sales_no|pluralize}}.
-        </h3>
-    </div>
-</a>
-{% endif %}
-<!-- comment  -->
-{% if member.account.details.purchases_no %}
-<a href="{% url 'user_purchases'  member.username %}">
-    <div>
-        <h3>
-            You have delivered {{ member.account.details.purchases_no }}
-            invoice{{ member.account.details.purchases_no|pluralize}}.
-        </h3>
-    </div>
-</a>
-{% endif %}
-<!-- comment  -->
-{% if member.account.details.payments_no %}
-<a href="{% url 'user_payments'  member.username %}">
-    <div>
-        <h3>
-            You have delivered {{ member.account.details.payments_no }}
-            Payment{{ member.account.details.payments_no|pluralize}}.
-        </h3>
-    </div>
-</a>
-{% endif %}
-<!-- comment  -->
-{% if member.account.details.receipts_no %}
-<a href="{% url 'user_receipts'  member.username %}">
-    <div>
-        <h3>
-            You have delivered {{ member.account.details.receipts_no }}
-            Receipt{{ member.account.details.receipts_no|pluralize}}.
-        </h3>
-    </div>
-</a>
-{% endif %}
-<!-- comment  -->
 {% endblock %}
