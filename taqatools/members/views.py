@@ -19,11 +19,15 @@ def login_user(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+        next_url = request.POST['next']
         if user is not None:
             login(request, user)
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('home')
             # Redirect to a success page.
             messages.success(request, ('تم تسجيل الدخول بنجاح'))
-            return redirect('home')
         else:
             # Return an 'invalid login' error message.
             messages.error(request, ('حدث خطأ اثناء الدخول! تأكد من صحة رقم التليفون ورمز الدخول..'))

@@ -26,6 +26,7 @@
               <label for="password" class="form-label">رمز الدخول:</label>
               <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
             <div class="d-grid mb-3">
               <button type="submit" class="btn btn-primary">تسجيل دخول</button>
             </div>

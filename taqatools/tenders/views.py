@@ -7,8 +7,16 @@ from members.models import Gov, City
 from products.models import Category, Product
 from .forms import QuestionForm, ChoiceForm
 import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+
+
+
+def is_superuser(user):
+    return user.is_authenticated and user.is_superuser
 
 # Create your views here.
+@login_required(login_url='login')
 def add_tender(request):
     if request.method == 'POST':
         tender = Tender.objects.create()
@@ -21,7 +29,7 @@ def add_tender(request):
     else:
         return render(request, 'tenders/add_tender.html', {})
     
-    
+@user_passes_test(is_superuser, login_url='login')  
 def tender_dashboard(request, id):
     tender = Tender.objects.get(id = id)
     question_form = QuestionForm()
@@ -35,9 +43,14 @@ def tender_dashboard(request, id):
         'categories': categories,  
         
     })
+    
+    
+def not_allowed_page(request):
+    return render(request, 'not_allowed.html', status=403)
 
 
 
+@login_required(login_url='login')
 def tender_update(request, id):
     tender = Tender.objects.get(id = id)
     if request.method == 'POST':
@@ -51,7 +64,8 @@ def tender_update(request, id):
         return render(request, 'tenders/tender_update.html', {'tender':tender})
     
     
-    
+
+@login_required(login_url='login')    
 def tender_delete(request, id):
     tender = Tender.objects.get(id = id)
     tender.delete()
@@ -65,6 +79,7 @@ def tenders_list(request):
 
 
 
+@login_required(login_url='login')
 def add_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -75,7 +90,8 @@ def add_question(request):
         messages.success(request, 'تم اضافة السؤال الي نموذج المناقصة بنجاح.')
         return tender_dashboard(request, tender.id)
         
-        
+
+@login_required(login_url='login')        
 def delete_question(request, id):
     if request.method == 'POST':
         question = Question.objects.get(id =id)
@@ -84,7 +100,8 @@ def delete_question(request, id):
         messages.success(request, 'تم حذف السؤال من نموذج المناقصة بنجاح. ')
         return tender_dashboard(request, tender.id)
     
-    
+
+@login_required(login_url='login')    
 def update_question(request, id):
     question = Question.objects.get(id = id)
     tender = Tender.objects.get(id = question.tender.id)
@@ -102,7 +119,8 @@ def update_question(request, id):
             'question':question,
             })
         
-        
+
+@login_required(login_url='login')        
 def add_choice(request):
     question_id = request.POST['question_id']
     question = Question.objects.get(id = question_id)
@@ -116,6 +134,7 @@ def add_choice(request):
     
 
 
+@login_required(login_url='login')
 def delete_choice(request, id):
     if request.method == 'POST':
         choice = Choice.objects.get(id =id)
@@ -126,6 +145,7 @@ def delete_choice(request, id):
     
     
 
+@login_required(login_url='login')
 def update_choice(request, id):
     choice = Choice.objects.get(id = id)
     tender = Tender.objects.get(id = choice.question.tender.id)
@@ -143,7 +163,8 @@ def update_choice(request, id):
             'choice':choice,
             })
         
-        
+
+@login_required(login_url='login')        
 def add_category_to_tender(request):
     if request.method == 'POST':
         tender_id = request.POST['tender_id']
@@ -154,7 +175,8 @@ def add_category_to_tender(request):
         messages.success(request, 'تم اضافة القسم الي المناقصة بنجاح')
         return tender_dashboard(request, tender.id)
     
-    
+
+@login_required(login_url='login')    
 def delete_category_from_tender(request, id):
     if request.method == 'POST':
         cat = TenderCategory.objects.get(id =id)
@@ -162,7 +184,8 @@ def delete_category_from_tender(request, id):
         cat.delete()
         messages.success(request, 'تم حذف القسم من نموذج المناقصة بنجاح. ')
         return tender_dashboard(request, tender.id)
-    
+
+@login_required(login_url='login')    
 def tender_request(request, id):
     tender = Tender.objects.get(id = id)
     if request.method == 'POST':
@@ -218,7 +241,8 @@ def tender_request_profile(request, id):
         'tender_request': tender_request,
     })
     
-    
+
+@login_required(login_url='login')    
 def product_selection(request, id):
     tender_request =  TenderRequest.objects.get(id = request.POST['tender_request'])
     offer = TenderOffer.objects.get(id =id)
@@ -243,7 +267,8 @@ def product_selection(request, id):
                     })
             i+=1
     
-    
+
+@login_required(login_url='login')    
 def add_offer(request):
     tender_request =  TenderRequest.objects.get(id = request.POST['tender_request'])
     if request.method  == 'POST':
@@ -254,6 +279,7 @@ def add_offer(request):
         return product_selection(request, offer.id)
 
 
+@login_required(login_url='login')
 def add_product_offer(request):
     product = Product.objects.get(id = request.POST['product_id'])
     offer_product = OfferItem.objects.create(
@@ -267,6 +293,7 @@ def add_product_offer(request):
     json_data = json.dumps({'data':'added'})
     return HttpResponse(json_data, content_type="application/json")
 
+@login_required(login_url='login')
 def remove_product_offer(request):
     offer_product = OfferItem.objects.get(
         product = Product.objects.get(id = request.POST['product_id']),
@@ -278,6 +305,7 @@ def remove_product_offer(request):
     return HttpResponse(json_data, content_type="application/json")
 
 
+@login_required(login_url='login')
 def offer_terms(request, id):
     if request.method == 'POST':
         offer = TenderOffer.objects.get(id = id)
@@ -287,6 +315,7 @@ def offer_terms(request, id):
             'questions': questions,
         })
 
+@login_required(login_url='login')
 def submit_terms(request, id):
     offer = TenderOffer.objects.get(id = id)
     if request.method == 'POST':
@@ -312,13 +341,15 @@ def submit_terms(request, id):
         messages.success(request, 'تم إضافة الشروط الي العرض بنجاح')
         return confirm_offer(request, id)
         
-                
+
+@login_required(login_url='login')                
 def confirm_offer(request, id):
     if request.method == 'POST':
         return render(request, 'tenders/requests/confirm_offer.html', {
             'offer': TenderOffer.objects.get(id = id)
         })
-        
+
+@login_required(login_url='login')        
 def send_offer(request):
     if request.method == 'POST':
         offer = TenderOffer.objects.get(id = request.POST['offer_id'])
@@ -330,6 +361,7 @@ def send_offer(request):
         })
         
 
+@login_required(login_url='login')
 def offer_profile(request, id):
     offer = TenderOffer.objects.get(id = id )
     return render(request, 'tenders/requests/offer_profile.html', {
@@ -338,6 +370,7 @@ def offer_profile(request, id):
     
     
 
+@login_required(login_url='login')
 def change_item_price(request):
     data = json.loads(request.body)
     item = OfferItem.objects.get(id = data['item_id'])
@@ -357,6 +390,7 @@ def change_item_price(request):
 
 
 
+@login_required(login_url='login')
 def change_item_q(request):
     data = json.loads(request.body)
     item = OfferItem.objects.get(id = data['item_id'])
