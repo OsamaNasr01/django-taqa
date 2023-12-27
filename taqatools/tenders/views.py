@@ -29,7 +29,7 @@ def add_tender(request):
     else:
         return render(request, 'tenders/add_tender.html', {})
     
-@user_passes_test(is_superuser, login_url='login')  
+@user_passes_test(is_superuser, login_url='not_auth')  
 def tender_dashboard(request, id):
     tender = Tender.objects.get(id = id)
     question_form = QuestionForm()

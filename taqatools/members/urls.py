@@ -34,4 +34,7 @@ urlpatterns = [
     path('paymob/', views.paymob, name='paymob'),
     path('paymob/status/', views.payment_status, name='payment_status'),
     
+    
+    path('not-authinticated/', views.not_auth, name='not_auth')
+    
 ]

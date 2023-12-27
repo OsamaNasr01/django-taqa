@@ -339,3 +339,7 @@ def paymob(request):
 
 def payment_status(request):
     return render(request, 'members/paymob/payment_status.html', {})
+
+
+def not_auth(request):
+    return render(request, 'not_allowed.html', {})
