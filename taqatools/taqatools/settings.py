@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'mathfilters',
     'tenders',
+    'payments',
 ]
 
 MIDDLEWARE = [

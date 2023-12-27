@@ -30,4 +30,5 @@ urlpatterns = [
     path('', include('sitestats.urls')),
     path('', include('pumpoffers.urls')),
     path('', include('tenders.urls')),
+    path('', include('payments.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
