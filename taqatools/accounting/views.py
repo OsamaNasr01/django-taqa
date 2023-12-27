@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.db.models import Q
 from members.views import user_profile
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 

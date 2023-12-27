@@ -12,7 +12,19 @@ from sitestats.models import Site
 from accounting.forms import DepitForm, CreditForm
 import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from tenders.models import Tender
+
+
+
+
+def is_superuser(user):
+    return  user.is_superuser
+
+
+
+def has_company(user):
+    return user.has_company()
 
 def login_user(request):
     if request.method == 'POST':
@@ -111,11 +123,12 @@ def users(request):
 @login_required(login_url='login')
 def update_picture(request, username):
     user = get_object_or_404(User, username=username)
-    account = Account.objects.get(user= user)
-    account.image = request.FILES.get('image')
-    account.save()
-    messages.success(request, ('تم تغيير الصورة بنجاح.'))
-    return user_profile(request, user.username)
+    if user == request.user or request.user.is_staff:
+        account = Account.objects.get(user= user)
+        account.image = request.FILES.get('image')
+        account.save()
+        messages.success(request, ('تم تغيير الصورة بنجاح.'))
+        return user_profile(request, user.username)
     
 
 
@@ -157,22 +170,25 @@ def add_company(request):
 @login_required(login_url='login')
 def update_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
-    if request.method == 'POST':
-        form = AddCompanyForm(request.POST, request.FILES, instance=company)
-        address_form = AddAddressForm(request.POST, instance = company.address)
-        if form.is_valid() and address_form.is_valid():
-            form.save()
-            new_address  = address_form.save(commit=False)
-            new_address.city = City.objects.get(id = request.POST['city']) 
-            new_address.save()
-            messages.success(request, ('تم تغيير بيانات الشركة بنجاح'))
-            return redirect('co_profile', slug = slug)
+    if request.user == company.owner:
+        if request.method == 'POST':
+            form = AddCompanyForm(request.POST, request.FILES, instance=company)
+            address_form = AddAddressForm(request.POST, instance = company.address)
+            if form.is_valid() and address_form.is_valid():
+                form.save()
+                new_address  = address_form.save(commit=False)
+                new_address.city = City.objects.get(id = request.POST['city']) 
+                new_address.save()
+                messages.success(request, ('تم تغيير بيانات الشركة بنجاح'))
+                return redirect('co_profile', slug = slug)
+            else:
+                messages.error(request, ('حدث خطأ اثناء تغيير بيانات الشركة '))
+                return redirect('co_profile', slug = slug)
         else:
-            messages.error(request, ('حدث خطأ اثناء تغيير بيانات الشركة '))
-            return redirect('co_profile', slug = slug)
+            form = AddCompanyForm(instance=company)
+            return render(request, 'members/company/update_company.html', {'form': form})
     else:
-        form = AddCompanyForm(instance=company)
-    return render(request, 'members/company/update_company.html', {'form': form})
+        return not_auth(request)
 
 
 
@@ -180,10 +196,14 @@ def update_company(request, slug):
 @login_required(login_url='login')
 def delete_company(request, slug):
     company = get_object_or_404(Company, slug=slug)
-    if request.method == 'POST':
-        company.delete()
-        messages.success(request, ('تم حذف الشركة بنجاح'))
-        return redirect('companies')
+    if request.user == company.owner:
+        if request.method == 'POST':
+            company.delete()
+            messages.success(request, ('تم حذف الشركة بنجاح'))
+            return redirect('companies')
+    else:
+        return not_auth(request)
+        
 
 
 
@@ -230,6 +250,7 @@ def add_co_category(request):
         messages.success(request, ('تم اضافة القسم بنجاح.'))
         return HttpResponse(json_data, content_type="application/json")
     
+
 
 @login_required(login_url='login')
 def update_co_category(request, slug):
@@ -283,7 +304,8 @@ def co_category_profile(request, slug):
 
 
 
-@login_required
+@login_required(login_url='login')
+@user_passes_test(is_superuser, login_url='not_auth')  
 def add_gov(request):
     if request.method == 'POST':
         form = AddGovForm(request.POST)
@@ -300,7 +322,8 @@ def add_gov(request):
     
     
 
-@login_required
+@login_required(login_url='login')
+@user_passes_test(is_superuser, login_url='not_auth')  
 def add_city(request):
     if request.method == 'POST':
         form = AddCityForm(request.POST)
@@ -316,7 +339,7 @@ def add_city(request):
         return render(request, 'members/address/add_city.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='login') 
 def add_address(request):
     if request.method == 'POST':
         form = AddAddressForm(request.POST)

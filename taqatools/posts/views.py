@@ -4,10 +4,27 @@ from .models import Post
 import json
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from members.views import not_auth
 
 # Create your views here.
+
+
+
+
+def is_superuser(user):
+    return  user.is_superuser
+
+
+
+def has_company(user):
+    return user.has_company()  
+
+
+
+
 def posts(request):
     posts = Post.objects.all()
     items_per_page = 3
@@ -57,6 +74,7 @@ def post_category(request, slug):
 
 
 @login_required(login_url='login')
+@user_passes_test(has_company, login_url='not_auth')  
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -82,30 +100,38 @@ def post_view(request, slug):
     })
     
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
+@user_passes_test(has_company, login_url='not_auth')  
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form.save()
-            messages.success(request, ('تم تعديل المقال بنجاح'))
-            return post_view(request, slug)
+    if request.user == post.auther:
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+                form.save()
+                messages.success(request, ('تم تعديل المقال بنجاح'))
+                return post_view(request, slug)
+            else:
+                messages.error(request, ('حدث خطأ اثناء تعديل المقال '))
+                return post_view(request, slug)
         else:
-            messages.error(request, ('حدث خطأ اثناء تعديل المقال '))
-            return post_view(request, slug)
+            post_form = PostForm(instance=post)
+            return render(request, 'posts/post_edit.html', {
+                'post_form':post_form,
+                'post':post,
+                })
     else:
-        post_form = PostForm(instance=post)
-        return render(request, 'posts/post_edit.html', {
-            'post_form':post_form,
-            'post':post,
-            })
+        return not_auth(request)
         
 
 @login_required(login_url='login')
+@user_passes_test(has_company, login_url='not_auth')  
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if request.method == 'POST':
-        post.delete()
-        messages.success(request, ('تم حذف المقال بنجاح'))
-        return posts(request)
+    if request.user == post.auther:
+        if request.method == 'POST':
+            post.delete()
+            messages.success(request, ('تم حذف المقال بنجاح'))
+            return posts(request)
+    else:
+        return not_auth(request)

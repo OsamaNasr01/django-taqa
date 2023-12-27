@@ -5,6 +5,7 @@ from django.contrib import messages
 import json
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from posts.models import Post
 
 # Create your views here.
