@@ -343,3 +343,6 @@ def payment_status(request):
 
 def not_auth(request):
     return render(request, 'not_allowed.html', {})
+
+def company_only(request):
+    return render(request, 'company_only.html', {})

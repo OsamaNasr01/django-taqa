@@ -35,6 +35,7 @@ urlpatterns = [
     path('paymob/status/', views.payment_status, name='payment_status'),
     
     
-    path('not-authinticated/', views.not_auth, name='not_auth')
+    path('not-authinticated/', views.not_auth, name='not_auth'),
+    path('company-only/', views.company_only, name='company_only')
     
 ]
