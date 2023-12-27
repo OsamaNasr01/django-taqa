@@ -7,37 +7,23 @@
 {% block content %}
 
 
-<div class="container px-4 px-lg-5 mt-5">
+<div class="container py-3 px-4 px-lg-5">
     <a href="{% url 'add_tender'  %}" type="button" class="btn btn-primary">
         اضافة مناقصة
     </a>
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-        {% for tender in tenders %}
-        <div class="col mb-5">
-            <div class="card h-100">
-                <!-- Product image-->
-                {% if tender.image %}
-                <img class="card-img-top" src="{{tender.image.url}}" height="200" alt="..." />
-                {% endif %}
-                <!-- Product details-->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">{{tender.name}}</h5>
-                        <p>{{ tender.description }}</p>
-                    </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                            href="{% url 'tender_profile' tender.id %}"> طلب عرض سعر </a></div>
-                </div>
-            </div>
+    <!-- Heading Row-->
+    {% for tender in tenders %}
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="col-lg-5 py-2">
+            <h1 class="font-weight-light">{{ tender.name }}</h1>
+            <p>{{ tender.description }}</p>
+            <a class="btn btn-primary" href="{% url 'tender_request' tender.id %}">احصل على عرض سعر الان!</a>
         </div>
-        {% endfor %}
+        <div class="col-lg-7 py-2"><img class="img-fluid rounded mb-4 mb-lg-0" src="{{tender.image.url}}" alt="..." />
+        </div>
     </div>
+    {% endfor %}
 </div>
-<!-- code  -->
+
 
 {% endblock %}
