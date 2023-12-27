@@ -32,7 +32,7 @@
             </div>
           </form>
           <div class="text-center">
-            <p>لست مشتركا ؟ <a href="{% url 'register' %}">اشترك الان!</a></p>
+            <p>لست مشتركا ؟ <a href="{% url 'register' %}?next={{request.GET.next}}">اشترك الان!</a></p>
             <p>او اشترك عن طريق:</p>
             <a href="#" class="btn btn-outline-primary"><i class='bx bxl-google'></i> جوجل</a>
             <a href="#" class="btn btn-outline-dark"><i class='bx bxl-facebook'></i> فيسبوك</a>

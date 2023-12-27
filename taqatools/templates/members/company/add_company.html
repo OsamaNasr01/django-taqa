@@ -34,6 +34,7 @@
               </select>
             </p>
             {{ address_form.as_p }}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
             <div class="d-grid mb-3">
               <button type="submit" class="btn btn-primary">إضافة</button>
             </div>

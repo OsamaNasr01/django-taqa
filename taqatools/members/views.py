@@ -63,9 +63,13 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username = username, password = password)
+            next_url = request.POST['next']
             login(request, user)
             messages.success(request, ('تهانينا! تم الاشتراك في الموقع بنجاح.'))
-            return redirect('home')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('home')
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
@@ -141,6 +145,7 @@ def add_company(request):
         new_address = address_form.save(commit=False)
         new_address.city = City.objects.get(id=request.POST['city'])
         new_address.details = request.POST['details']
+        next_url = request.POST['next']
         new_address.save()
         if form.is_valid():
             company = form.save(commit=False)
@@ -149,7 +154,10 @@ def add_company(request):
             company.address = new_address
             company.save()
             messages.success(request, ('تم اضافة الشركة بنجاح.'))
-            return redirect('companies')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return co_profile(request, company.slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]

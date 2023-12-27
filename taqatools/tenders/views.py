@@ -204,7 +204,7 @@ def delete_category_from_tender(request, id):
         messages.success(request, 'تم حذف القسم من نموذج المناقصة بنجاح. ')
         return tender_dashboard(request, tender.id)
 
-@login_required(login_url='login')    
+@login_required(login_url='register')    
 def tender_request(request, id):
     tender = Tender.objects.get(id = id)
     if request.method == 'POST':

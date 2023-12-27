@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="text-center">
             <p>عذرا  {{user.first_name}}! غير مصرح لك بدخول هذه الصفحة حيث انها خاصة بمشرفي الموقع فقط</p>
-            <p>اذا كنت احد مشرفي الموقع! <a href="{% url 'logout' %}">اعد تسجيل الدخول من هنا</a></p>
+            <p>اذا كنت احد مشرفي الموقع! <a href="{% url 'logout' %}?next={{request.GET.next}}">اعد تسجيل الدخول من هنا</a></p>
             <p>او يمكنك العودة الي <a href="{% url 'home' %}">الصفحة الرئيسية من هنا</a></p>
             <p>شكرا لك {{user.first_name}} على تفهمك.</p>
           </div>
