@@ -6,7 +6,7 @@ import json
 import webbrowser
 
 # Create your views here.
-
+@login_required(login_url='login')
 def checkout(request):
     if request.method == 'POST':
         gate = request.POST['gate']
@@ -16,7 +16,8 @@ def checkout(request):
             return render(request, 'payments/wallet_input.html', {})
     else:
         return render(request, 'payments/checkout.html', {})
-    
+
+@login_required(login_url='login')
 def payment_proccess(request, gate):
     token = get_token(gate)
     order_id = make_order(token, gate)
@@ -24,10 +25,11 @@ def payment_proccess(request, gate):
     if gate == '2':
         wallet_no = request.POST['wallet_no']
         url = wallet_pay_request(payment_token, wallet_no)
-        return webbrowser.open(url)
+        webbrowser.open(url)
     else:
         url = card_pay_request(payment_token)
-        return webbrowser.open(url)
+        webbrowser.open(url)
+    return render(request, 'payments/status.html', {})
     
 
     
