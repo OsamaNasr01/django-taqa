@@ -76,7 +76,7 @@ def post_category(request, slug):
 
 
 @login_required(login_url='login')
-@user_passes_test(admin_company, login_url='not_auth')  
+@user_passes_test(admin_company, login_url='company_only')  
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -103,7 +103,7 @@ def post_view(request, slug):
     
 
 @login_required(login_url='login')
-@user_passes_test(admin_company, login_url='not_auth')  
+@user_passes_test(admin_company, login_url='company_only')  
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user == post.auther or request.user.is_superuser:
@@ -127,7 +127,7 @@ def post_edit(request, slug):
         
 
 @login_required(login_url='login')
-@user_passes_test(admin_company, login_url='not_auth')  
+@user_passes_test(admin_company, login_url='company_only')  
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user == post.auther or request.user.is_superuser:
