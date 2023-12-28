@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
+{% endblock mycss %} {% block title %}ؤقم المحفظة الالكترونية{% endblock %}
+{% block content %}
+
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">تسجيل دخول</h4>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'payment_proccess' '2' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="username" class="form-label">ادخل رقم المحفظة الالكترونية</label>
+              <input type="number" class="form-control"  name="wallet_no" required>
+            </div>
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">تسجيل دخول</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
