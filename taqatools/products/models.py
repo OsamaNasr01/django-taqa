@@ -204,17 +204,27 @@ class Price(models.Model):
 
 
 
-
 class Spec(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=155)
     type = models.IntegerField(choices=[
-        (1, 'Numeric'),
-        (2, 'Text'),
-        (3, 'Boolean'),
+        (1, 'رقمي'),
+        (2, 'نصي'),
+        (3, 'نعم او لا'),
     ])
     unit = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category, related_name='specs', on_delete=models.CASCADE)
 
+
+    
+class Choice(models.Model):
+    text = models.CharField(max_length=55)
+    question  = models.ForeignKey(Spec, related_name='choices', on_delete=models.CASCADE)
+
+  
+class SpecValue(models.Model):
+    value = models.CharField(max_length=255)
+    spec = models.ForeignKey(Spec, related_name='values', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='specs', on_delete=models.CASCADE)
 
 class NumSpecs(models.Model):
     value = models.FloatField()
@@ -233,3 +243,6 @@ class BoolSpecs(models.Model):
     product = models.ForeignKey(Product,  related_name='bool_spec', on_delete=models.CASCADE)
     spec = models.ForeignKey(Spec, related_name='bool_spec', on_delete=models.CASCADE)
     order = models.PositiveSmallIntegerField(null=True)
+
+  
+    

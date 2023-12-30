@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404, HttpResponse
 from .models import Category, Product, Brand, Price, Spec
-from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, NumSpecForm, TxtSpecForm, BoolSpecForm
+from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm
 from django.contrib import messages
 import json
 from django.core.serializers import serialize
@@ -130,33 +130,33 @@ def add_product(request):
             price.product = productt
             price.save()
             specs = category.specs.all()
-            for spec in specs:
-                spec_type = spec.type
-                if spec_type == 1:
-                    spec_form = NumSpecForm(request.POST)
-                    spec_value = spec_form.save(commit=False)
-                    spec_value.value = request.POST.get(spec.name)
-                    spec_value.spec = spec
-                    spec_value.product = productt
-                    spec_value.save()
-                if spec_type == 2:
-                    spec_form = TxtSpecForm(request.POST)
-                    spec_value = spec_form.save(commit=False)
-                    spec_value.value = request.POST.get(spec.name)
-                    spec_value.spec = spec
-                    spec_value.product = productt
-                    spec_value.save()
-                if spec_type == 3:
-                    spec_form = BoolSpecForm(request.POST)
-                    spec_value = spec_form.save(commit=False)
-                    if request.POST.get(spec.name):
-                        print(request.POST.get(spec.name))
-                        spec_value.value = True
-                    else:
-                        spec_value.value = False
-                    spec_value.spec = spec
-                    spec_value.product = productt
-                    spec_value.save()                       
+            # for spec in specs:
+            #     spec_type = spec.type
+            #     if spec_type == 1:
+            #         spec_form = NumSpecForm(request.POST)
+            #         spec_value = spec_form.save(commit=False)
+            #         spec_value.value = request.POST.get(spec.name)
+            #         spec_value.spec = spec
+            #         spec_value.product = productt
+            #         spec_value.save()
+            #     if spec_type == 2:
+            #         spec_form = TxtSpecForm(request.POST)
+            #         spec_value = spec_form.save(commit=False)
+            #         spec_value.value = request.POST.get(spec.name)
+            #         spec_value.spec = spec
+            #         spec_value.product = productt
+            #         spec_value.save()
+            #     if spec_type == 3:
+            #         spec_form = BoolSpecForm(request.POST)
+            #         spec_value = spec_form.save(commit=False)
+            #         if request.POST.get(spec.name):
+            #             print(request.POST.get(spec.name))
+            #             spec_value.value = True
+            #         else:
+            #             spec_value.value = False
+            #         spec_value.spec = spec
+            #         spec_value.product = productt
+            #         spec_value.save()                       
             messages.success(request, ('The Product has been Added Successfully!'))
             return product(request, productt.slug)
         else:
@@ -208,21 +208,21 @@ def update_product(request, slug):
         form = AddProductForm(request.POST, request.FILES, instance=productt,)
         if form.is_valid():
             form.save()
-            for spec in productt.num_spec.all():
-                spec_form = NumSpecForm(instance = spec)
-                spec_value = spec_form.save(commit=False)
-                spec_value.value = request.POST.get(spec.spec.name)
-                spec_value.save()
-            for spec in productt.txt_spec.all():
-                spec_form = TxtSpecForm(instance = spec)
-                spec_value = spec_form.save(commit=False)
-                spec_value.value = request.POST.get(spec.spec.name)
-                spec_value.save()
-            for spec in productt.bool_spec.all():
-                spec_form = BoolSpecForm(instance = spec)
-                spec_value = spec_form.save(commit=False)
-                spec_value.value = request.POST.get(spec.spec.name)
-                spec_value.save()
+            # for spec in productt.num_spec.all():
+            #     spec_form = NumSpecForm(instance = spec)
+            #     spec_value = spec_form.save(commit=False)
+            #     spec_value.value = request.POST.get(spec.spec.name)
+            #     spec_value.save()
+            # for spec in productt.txt_spec.all():
+            #     spec_form = TxtSpecForm(instance = spec)
+            #     spec_value = spec_form.save(commit=False)
+            #     spec_value.value = request.POST.get(spec.spec.name)
+            #     spec_value.save()
+            # for spec in productt.bool_spec.all():
+            #     spec_form = BoolSpecForm(instance = spec)
+            #     spec_value = spec_form.save(commit=False)
+            #     spec_value.value = request.POST.get(spec.spec.name)
+            #     spec_value.save()
             messages.success(request, ('The Product has been Updated Successfully!'))
             return product(request, productt.slug)
     else:
@@ -337,12 +337,12 @@ def add_spec(request):
             spec = form.save(commit=False)
             spec.category = category
             spec.save()
-            messages.success(request, ('The Specification has been Added Successfully!'))
+            messages.success(request, ('تم اضافة الخاصية بنجاح'))
             return p_category_profile(request, category.slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the specification' + error_message))
+            messages.error(request, ('حدث خطأ أثناء اضافة الخاصية'))
             return p_category_profile(request, category.slug)
 
 
@@ -354,16 +354,19 @@ def update_spec(request, id):
         form = SpecForm(request.POST, instance=spec)
         if form.is_valid():
             form.save()
-            messages.success(request, ('The Specification has been Updateded Successfully!'))
+            messages.success(request, ('تم تعديل خاصية المنتج بنجاح'))
             return p_category_profile(request, spec.category.slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the Brand' + error_message))
+            messages.error(request, ('حدث خطأأثناء تعديل البيانات'))
             return render(request, 'products/specs/update_spec.html', {'form' : form, 'errors': errors})
     else:
         form = SpecForm(instance = spec)
-        return render(request, 'products/specs/update_spec.html', {'form': form})
+        return render(request, 'products/specs/update_spec.html', {
+            'form': form,
+            'spec': spec,
+            })
     
 @login_required(login_url='login')  
 @user_passes_test(admin_company, login_url='company_only')  

@@ -97,21 +97,3 @@ class SpecForm(forms.ModelForm):
         self.fields['unit'].label = 'وحدة الخاصية'
 
 
-class NumSpecForm(forms.ModelForm):
-    class Meta:
-        model = NumSpecs
-        fields = ('value', )
-
-
-
-class TxtSpecForm(forms.ModelForm):
-    class Meta:
-        model = TxtSpecs
-        fields = ('value', )
-
-
-
-class BoolSpecForm(forms.ModelForm):
-    class Meta:
-        model = BoolSpecs
-        fields = ('value', )
