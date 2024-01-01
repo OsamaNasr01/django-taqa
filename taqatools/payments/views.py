@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 import requests
@@ -19,23 +19,23 @@ def checkout(request):
 
 @login_required(login_url='login')
 def payment_proccess(request, gate):
-    token = get_token(gate)
-    order_id = make_order(token, gate)
+    token = get_token()
+    order_id = make_order(token  )
     payment_token = request_payment_key(token, order_id, gate)
     if gate == '2':
         wallet_no = request.POST['wallet_no']
         url = wallet_pay_request(payment_token, wallet_no)
-        webbrowser.open(url)
+        # webbrowser.open(url)
     else:
         url = card_pay_request(payment_token)
-        webbrowser.open(url)
-    return render(request, 'payments/status.html', {})
+        # webbrowser.open(url)
+    return redirect(url)
     
 
     
 api_key = 'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SndjbTltYVd4bFgzQnJJam8zTVRZd016a3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuUHVXVVh1NUlUdDQ2NjdFVmV1YUdzVkZwb0JmQm56N0NFRmtiLVMzNFNmazRnQkhQX3Fxb24yU0R4RkRzeklISDM5c3FJSWE4MUVqcm50LWNvd3k4WUE='
 
-def get_token(gate):
+def get_token():
     data = {
         'api_key': api_key,
     }
@@ -59,7 +59,7 @@ def get_token(gate):
 
 
 
-def make_order(token, gate):
+def make_order(token):
     data = {
         "auth_token": token,
         "delivery_needed": "false",
