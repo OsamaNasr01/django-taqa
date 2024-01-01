@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Category, Product, Brand, Price, Spec, NumSpecs, TxtSpecs, BoolSpecs
+from .models import Category, Product, Brand, Price, Spec, Choice
 
 
 
@@ -97,3 +97,14 @@ class SpecForm(forms.ModelForm):
         self.fields['unit'].label = 'وحدة الخاصية'
 
 
+
+
+class ChoiceForm(forms.ModelForm):
+    class Meta:
+        model = Choice
+        fields = ('text', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['text'].widget.attrs.update({'class': 'form-control'})
+        self.fields['text'].label = 'نص الاختيار:'

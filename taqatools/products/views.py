@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404, HttpResponse
-from .models import Category, Product, Brand, Price, Spec
-from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm
+from .models import Category, Product, Brand, Price, Spec, Choice
+from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, ChoiceForm
 from django.contrib import messages
 import json
 from django.core.serializers import serialize
@@ -79,6 +79,7 @@ def p_category_profile(request, slug):
         'update_category_form': update_category_form,
         'spec_form' : spec_form,
         'brand_form': brand_form,
+        'choiceform': ChoiceForm(),
         }
     return render(request, 'products/categories/p_category_profile.html', context)
 
@@ -375,6 +376,54 @@ def delete_spec(request, id):
     category_slug = spec.category.slug
     if request.method == 'POST':
         spec.delete()
-        messages.success(request, ('The specification has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف الخاصية بنجاح'))
         return p_category_profile(request, category_slug)
+     
+
+
+@login_required(login_url='login')
+@user_passes_test(is_superuser, login_url='not_auth')      
+def add_choice_spec(request):
+    spec_id = request.POST['spec_id']
+    spec = Spec.objects.get(id = spec_id)
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST)
+        choice = form.save(commit=False)
+        choice.spec = spec
+        choice.save()
+        messages.success(request, 'تم اضافة الاختيار بنجاح')
+        return p_category_profile(request, spec.category.slug)
     
+
+
+@login_required(login_url='login')
+@user_passes_test(is_superuser, login_url='not_auth')  
+def delete_choice_spec(request, id):
+    if request.method == 'POST':
+        choice = Choice.objects.get(id =id)
+        category = Category.objects.get(id = choice.spec.category.id)
+        choice.delete()
+        messages.success(request, 'تم حذف الاختيار من نموذج خصائص القسم بنجاح. ')
+        return p_category_profile(request, category.slug)
+    
+    
+
+# @login_required(login_url='login')
+# @user_passes_test(is_superuser, login_url='not_auth')  
+# def update_choice(request, id):
+#     choice = Choice.objects.get(id = id)
+#     tender = Tender.objects.get(id = choice.question.tender.id)
+#     if request.method == 'POST':
+#         form = ChoiceForm(request.POST,instance = choice)
+#         new_choice = form.save(commit=False)
+#         new_choice.question = choice.question
+#         new_choice.save()
+#         messages.success(request, 'تم تعديل صيغة الاختيار بنجاح.')
+#         return tender_dashboard(request, tender.id)
+#     else:
+#         form = ChoiceForm(instance = choice)
+#         return render(request, 'tenders/choice_update.html', {
+#             'form':form,
+#             'choice':choice,
+#             })
+        

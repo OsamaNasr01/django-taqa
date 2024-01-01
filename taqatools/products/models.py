@@ -218,7 +218,7 @@ class Spec(models.Model):
     
 class Choice(models.Model):
     text = models.CharField(max_length=55)
-    question  = models.ForeignKey(Spec, related_name='choices', on_delete=models.CASCADE)
+    spec  = models.ForeignKey(Spec, related_name='choices', on_delete=models.CASCADE)
 
   
 class SpecValue(models.Model):
