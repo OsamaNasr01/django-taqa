@@ -15,8 +15,7 @@
 
     </button>
     <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." width="400"
-                height="300" /></div>
+        <div class="col-md-6">{% if category.image %}<img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." width="400" height="300" />{% endif %}</div>
         <div class="col-md-6">
             <div class="small mb-1">{{ category.name }}</div>
             <h1 class="display-5 fw-bolder">{{category.name}}</h1>
@@ -141,6 +140,30 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="update-category-modal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update-category-modal">تعديل</h5>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="{% url 'update_p_category' category.slug %}" method="post"
+                    name="update-category_form">
+                    {% csrf_token %} {{ update_category_form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        تعديل
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="add-product-modal" tabindex="-1" aria-labelledby="add-product-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -251,25 +274,25 @@
 </div>
 
 
-<div class="modal fade" id="delete-tender-modal" tabindex="-1" aria-labelledby="delete-tender-modal-label"
+<div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="delete-category-modal-label"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-tender-modal-label">
-                    حذف المناقصة
+                <h5 class="modal-title" id="delete-category-modal-label">
+                    حذف القسم
                 </h5>
                 <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                هل انت متأكد من حذف هذه المناقصة؟
+                هل انت متأكد من حذف هذا القسم؟
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     إلغاء
                 </button>
-                <form action="" method="POST">
+                <form action="{% url 'delete_p_category' category.slug %}" method="POST">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
                     <button type="submit" class="btn btn-danger" id="confirm-delete-tender">
                         تأكيد الحذف
@@ -356,11 +379,6 @@ function spec_choice(id) {
     choice_modal_btn.click()
 }
 
-function get_category(value) {
-    console.log(value)
-    const cat_id = document.getElementById('category_id')
-    cat_id.value = value
-}
 </script>
 
 <script src="{% static '/products/add_brand.js' %}"></script>

@@ -95,7 +95,7 @@ def update_p_category(request, slug):
             cat = form.save(commit=False)
             cat.image = request.FILES.get('image')
             cat.save()
-            messages.success(request, ('The Company Category has been Updated Successfully!'))
+            messages.success(request, ('تم تعديل بيانات القسم بنجاح'))
             return p_category_profile(request, category.slug)
     else:
         form = AddCategoryForm(instance=category)
@@ -111,7 +111,7 @@ def delete_p_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
         category.delete()
-        messages.success(request, ('The category has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف القسم بنجاح'))
         return redirect('p_category_list')
 
 
