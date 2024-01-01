@@ -408,22 +408,22 @@ def delete_choice_spec(request, id):
     
     
 
-# @login_required(login_url='login')
-# @user_passes_test(is_superuser, login_url='not_auth')  
-# def update_choice(request, id):
-#     choice = Choice.objects.get(id = id)
-#     tender = Tender.objects.get(id = choice.question.tender.id)
-#     if request.method == 'POST':
-#         form = ChoiceForm(request.POST,instance = choice)
-#         new_choice = form.save(commit=False)
-#         new_choice.question = choice.question
-#         new_choice.save()
-#         messages.success(request, 'تم تعديل صيغة الاختيار بنجاح.')
-#         return tender_dashboard(request, tender.id)
-#     else:
-#         form = ChoiceForm(instance = choice)
-#         return render(request, 'tenders/choice_update.html', {
-#             'form':form,
-#             'choice':choice,
-#             })
+@login_required(login_url='login')
+@user_passes_test(is_superuser, login_url='not_auth')  
+def update_choice_spec(request, id):
+    choice = Choice.objects.get(id = id)
+    category = Category.objects.get(id = choice.spec.category.id)
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST,instance = choice)
+        new_choice = form.save(commit=False)
+        new_choice.spec = choice.spec
+        new_choice.save()
+        messages.success(request, 'تم تعديل صيغة الاختيار بنجاح.')
+        return p_category_profile(request, category.slug)
+    else:
+        form = ChoiceForm(instance = choice)
+        return render(request, 'products/specs/update_choice.html', {
+            'form':form,
+            'choice':choice,
+            })
         

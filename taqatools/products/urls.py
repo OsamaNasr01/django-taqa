@@ -28,5 +28,6 @@ urlpatterns = [
     path('product/specs/delete/<int:id>', views.delete_spec, name='delete_spec'),
     path('product/specs/choice/add', views.add_choice_spec, name='add_choice_spec'),
     path('product/specs/choice/<int:id>/delete', views.delete_choice_spec, name='delete_choice_spec'),
+    path('product/specs/choice/<int:id>/update', views.update_choice_spec, name='update_choice_spec'),
 
 ]

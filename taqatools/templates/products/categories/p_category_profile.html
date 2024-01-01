@@ -41,7 +41,7 @@
                         <ol>
                             {% for choice in spec.choices.all %}
                                 <li>
-                                    <a href="{% url 'update_choice' choice.id %}" style="text-decoration: none;">
+                                    <a href="{% url 'update_choice_spec' choice.id %}" style="text-decoration: none;">
                                         <i class='bx bx-edit'></i>
                                     </a> | 
                                     <a href="#" onclick="choice_delete('{{choice.id}}')" style="text-decoration: none; color: red;">
