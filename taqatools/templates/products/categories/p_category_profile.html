@@ -217,23 +217,36 @@
                         براند جديد
                     </button>
                     {{ price_form.as_p }}
-                    <hr />
-                    {% for spec in category.specs.all %} {% if spec.type == 2 %}
-                    <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input type="text" name="{{ spec.name }}" class="form-control" id="{{spec.name}}"
-                        placeholder="Enter {{ spec.name }}" />
-                    <small id="{{spec.name}}Help" class="form-text text-muted"></small><br />
-                    {% elif spec.type == 1 %}
-                    <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input type="number" name="{{ spec.name }}" class="form-control" id="{{spec.name}}"
-                        placeholder="Enter {{ spec.name }}" />
-                    <small id="{{spec.name}}Help" class="form-text text-muted">{{ spec.unit }}.</small>
-                    <br /><br />
-                    {% elif spec.type == 3 %}
-                    <label for="{{spec.name}}">{{ spec.name }}</label>
-                    <input type="checkbox" onchange="dosomething(id)" name="{{ spec.name }}" class="form-check-input"
-                        id="{{spec.name}}" /><br /><br />
-                    {% endif %} {% endfor %}
+                    {% for spec in category.specs.all %}
+                        {% if spec.type == 1 %}
+                        <div class="mb-3">
+                            <label for="{{spec.id}}" class="form-label">{{spec.name}} ({{spec.unit}}):</label>
+                            <input type="number" class="form-control" id="name" name="{{spec.id}}" required>
+                        </div>
+                        {% elif spec.type == 2 %}
+                        {% if not spec.choices %}
+                        <div class="mb-3">
+                            <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
+                            <input type="text" class="form-control" id="name" name="{{spec.id}}" required>
+                        </div>
+                        {% else %}
+                        <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
+                        <select name="{{spec.id}}" class="form-select" aria-label="Default select example">
+                            <option selected>اختر من القائمة</option>
+                            {% for choice in spec.choices.all %}
+                            <option value="{{choice.id}}">{{choice.text}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        {% endif %}
+                        {% elif spec.type == 3 %}
+                        <div class="form-check form-switch form-check-reverse">
+                          <input name="{{spec.id}}" class="form-check-input" type="checkbox" id="check{{spec.id}}">
+                          <label class="form-check-label" for="flexSwitchCheckReverse">{{spec.name}}</label>
+                        </div>
+                        <br>
+                        {% endif %}
+                    {% endfor %}
                     <input type="hidden" name="category_id" value="{{ category.id }}" />
                     <button type="submit" class="btn btn-primary">
                         إضافة منتج
