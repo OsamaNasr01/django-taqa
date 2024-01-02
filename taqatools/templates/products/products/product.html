@@ -10,243 +10,179 @@
 
 
 <!-- Product section-->
-    <div class="container  px-4 px-lg-5 my-2">
-        <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#update-product-modal"
-        >
-            تعديل
-        </button>
-        
-        <div
-            class="modal fade"
-            id="update-product-modal"
-            tabindex="-1"
-            aria-labelledby="update-product-modal"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="update-product-modal">Update</h5>
-                        <button
-                            type="button"
-                            class="btn-close me-auto ms-0"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <form
-                            enctype="multipart/form-data"
-                            action="{% url 'update_product' product.slug %}"
-                            method="post"
-                            name="update-product_form"
-                        > 
-                            {% csrf_token %} {{ form.as_p }}
-                            <!-- comment  -->
-                            {% for spec in product.txt_spec.all %}
-                            <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                            <input
-                                type="text"
-                                name="{{ spec.spec.name }}"
-                                class="form-control"
-                                id="{{spec.spec.name}}"
-                                value="{{spec.value}}"
-                            />
-                            <small
-                                id="{{spec.spec.name}}Help"
-                                class="form-text text-muted"
-                            ></small>
-                            {% endfor %}
-                            <!-- comment  -->
-                            {% for spec in product.num_spec.all %}
-                            <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                            <input
-                                type="number"
-                                name="{{ spec.spec.name }}"
-                                class="form-control"
-                                id="{{spec.spec.name}}"
-                                value="{{spec.value}}"
-                            />
-                            <small
-                                id="{{spec.spec.name}}Help"
-                                class="form-text text-muted"
-                                >{{ spec.spec.unit }}</small
-                            ><br />
-                            {% endfor %}
-                            <!-- comment  -->
-                            {% for spec in product.bool_spec.all %}
-                            <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
-                            <input
-                                type="checkbox"
-                                name="{{ spec.spec.name }}"
-                                class="form-check-input"
-                                id="{{spec.spec.name}}"
-                                value="{{spec.value}}"
-                            />
-                            {% endfor %}
-                            <br /><br />
-                            <button type="submit" class="btn btn-primary">
-                                Update
-                            </button>
-                        </form>
-                    </div>
+<div class="container  px-4 px-lg-5 my-2">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-product-modal">
+        تعديل
+    </button>
+
+    <div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="update-product-modal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-product-modal">Update</h5>
+                    <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-        
-        <button
-            type="button"
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#delete-product-modal"
-        >
-            حذف
-        </button>
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
-            <div class="col-md-6">
-                <div class="small mb-1">{{ product.category }}</div>
-                <h1 class="display-5 fw-bolder">{{product.name}}</h1>
-                <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through">{{product.o_price|floatformat:2|intcomma}}</span>
-                    <span>{{product.price|floatformat:2|intcomma}}</span>
-                </div>
-                <p class="lead">{{product.description}}</p>
-                <ul>
-                    {% for spec in product.num_spec.all%}
-                    <li>
-                        {{ spec.spec.name }}: {{ spec.value }} {{ spec.spec.unit }}
-                    </li>
-                    {% endfor %} {% for spec in product.txt_spec.all%}
-                    <li>{{ spec.spec.name }}: {{ spec.value }}</li>
-                    {% endfor %} {% for spec in product.bool_spec.all%}
-                    <li>{{ spec.spec.name }}: {{ spec.value }}</li>
-                    {% endfor %}
-                </ul>
-                <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        اضف الي العربة
-                    </button>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" action="{% url 'update_product' product.slug %}" method="post"
+                        name="update-product_form">
+                        {% csrf_token %} {{ form.as_p }}
+                        <!-- comment  -->
+                        {% for spec in product.txt_spec.all %}
+                        <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                        <input type="text" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
+                            value="{{spec.value}}" />
+                        <small id="{{spec.spec.name}}Help" class="form-text text-muted"></small>
+                        {% endfor %}
+                        <!-- comment  -->
+                        {% for spec in product.num_spec.all %}
+                        <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                        <input type="number" name="{{ spec.spec.name }}" class="form-control" id="{{spec.spec.name}}"
+                            value="{{spec.value}}" />
+                        <small id="{{spec.spec.name}}Help"
+                            class="form-text text-muted">{{ spec.spec.unit }}</small><br />
+                        {% endfor %}
+                        <!-- comment  -->
+                        {% for spec in product.bool_spec.all %}
+                        <label for="{{spec.spec.name}}">{{ spec.spec.name }}</label>
+                        <input type="checkbox" name="{{ spec.spec.name }}" class="form-check-input"
+                            id="{{spec.spec.name}}" value="{{spec.value}}" />
+                        {% endfor %}
+                        <br /><br />
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-<!-- Related items section-->
-            <div class="container px-4 px-lg-5 mt-2">
-                <h2 class="fw-bolder mb-4">منتجات ذات صلة</h2>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% for cat_product in product.category.products.all %}
-                    {% if not cat_product.id  == product.id %}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="{{cat_product.image.url}}" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{cat_product.name}}</h5>
-                                    <!-- Product price-->
-                                    {{cat_product.price}}
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' cat_product.slug %}">View options</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
 
-        
-        {% if product.category.posts.count %}
-        <div class="container">
-            <h2 class="fw-bolder mb-4">مقالات ذات صلة</h2>
-            <div class="row justify-content-center">
-                <!-- Blog entries-->
-                <div class="col-lg-12">
-                    <!-- Featured blog post-->
-                    <!-- Nested row for non-featured blog posts-->
-                    <div class="row justify-content-center">
-                        {% for post in posts %}
-                        <div class="col-lg-4 col-md-6">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">{{ post.title }}</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="{% url 'post' post.slug %}">المزيد</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-product-modal">
+        حذف
+    </button>
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
+        <div class="col-md-6">
+            <div class="small mb-1">{{ product.category }}</div>
+            <h1 class="display-5 fw-bolder">{{product.name}}</h1>
+            <div class="fs-5 mb-5">
+                <span class="text-decoration-line-through">{{product.o_price|floatformat:2|intcomma}}</span>
+                <span>{{product.price|floatformat:2|intcomma}}</span>
+            </div>
+            <p class="lead">{{product.description}}</p>
+            <ul>
+                {% for spec in product.specs.all %}
+                {% if spec.spec.type == 3 %}
+                {% if spec.value == '1' %}
+                <li>{{ spec.spec.name }}</li>
+                {% endif %}
+                {% else %}
+                <li>{{ spec.spec.name }} <strong>{{ spec.value }}</strong>
+                    {% if spec.spec.unit %}{{ spec.spec.unit }}{% endif %}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="d-flex">
+                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                    style="max-width: 3rem" />
+                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <i class="bi-cart-fill me-1"></i>
+                    اضف الي العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Related items section-->
+<div class="container px-4 px-lg-5 mt-2">
+    <h2 class="fw-bolder mb-4">منتجات ذات صلة</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for cat_product in product.category.products.all %}
+        {% if not cat_product.id  == product.id %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{cat_product.image.url}}" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{cat_product.name}}</h5>
+                        <!-- Product price-->
+                        {{cat_product.price}}
                     </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'product' cat_product.slug %}">View options</a></div>
                 </div>
             </div>
         </div>
-
         {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% if product.category.posts.count %}
+<div class="container">
+    <h2 class="fw-bolder mb-4">مقالات ذات صلة</h2>
+    <div class="row justify-content-center">
+        <!-- Blog entries-->
+        <div class="col-lg-12">
+            <!-- Featured blog post-->
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row justify-content-center">
+                {% for post in posts %}
+                <div class="col-lg-4 col-md-6">
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">January 1, 2023</div>
+                            <h2 class="card-title h4">{{ post.title }}</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                                aliquid atque, nulla.</p>
+                            <a class="btn btn-primary" href="{% url 'post' post.slug %}">المزيد</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
 
 <!-- <link rel="stylesheet" href="{% static 'products/product.css' %}" /> -->
 
 <!-- delete-product-modal.html -->
 
-<div
-    class="modal fade"
-    id="delete-product-modal"
-    tabindex="-1"
-    aria-labelledby="delete-product-modal-label"
-    aria-hidden="true"
->
+<div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="delete-product-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-product-modal-label">
                     Delete Product
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close me-auto ms-0"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Are you sure you want to delete this product?
             </div>
             <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <form
-                    action="{% url 'delete_product' product.slug %}"
-                    method="POST"
-                >
-                    <input
-                        type="hidden"
-                        name="csrfmiddlewaretoken"
-                        value="{{ csrf_token }}"
-                    />
-                    <button
-                        type="submit"
-                        class="btn btn-danger"
-                        id="confirm-delete-product"
-                    >
+                <form action="{% url 'delete_product' product.slug %}" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-product">
                         Confirm Delete
                     </button>
                 </form>
@@ -256,31 +192,16 @@
 </div>
 
 
-<div
-    style="margin: 10px 0"
-    class="modal fade"
-    id="update-price-modal"
-    tabindex="-1"
-    aria-labelledby="update-price-modal"
-    aria-hidden="true"
->
+<div style="margin: 10px 0" class="modal fade" id="update-price-modal" tabindex="-1"
+    aria-labelledby="update-price-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="update-price-modal">Update</h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form
-                    action="{% url 'update_price' product.slug %}"
-                    method="post"
-                    name="update-price_form"
-                >
+                <form action="{% url 'update_price' product.slug %}" method="post" name="update-price_form">
                     {% csrf_token %} {{ price_form.as_p }}
                     <button type="submit" class="btn btn-primary">
                         Update
