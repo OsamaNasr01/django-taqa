@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,get_object_or_404, HttpResponse
-from .models import Category, Product, Brand, Price, Spec, Choice
+from .models import Category, Product, Brand, Price, Spec, Choice, SpecValue
 from .forms import AddCategoryForm, AddProductForm, BrandForm, PriceForm, SpecForm, ChoiceForm
 from django.contrib import messages
 import json
@@ -126,44 +126,37 @@ def add_product(request):
             category_id = request.POST.get('category_id')
             category = Category.objects.get(id=category_id)
             productt.category = category
-            productt.save()
+            productt.save()                       
+            messages.success(request, ('تم اضافة المنتج بنجاح'))
             price = price_form.save(commit=False)
             price.product = productt
-            price.save()
+            price.save()                       
+            messages.success(request, ('تم اضافة السعر للمنتج بنجاح'))
             specs = category.specs.all()
-            # for spec in specs:
-            #     spec_type = spec.type
-            #     if spec_type == 1:
-            #         spec_form = NumSpecForm(request.POST)
-            #         spec_value = spec_form.save(commit=False)
-            #         spec_value.value = request.POST.get(spec.name)
-            #         spec_value.spec = spec
-            #         spec_value.product = productt
-            #         spec_value.save()
-            #     if spec_type == 2:
-            #         spec_form = TxtSpecForm(request.POST)
-            #         spec_value = spec_form.save(commit=False)
-            #         spec_value.value = request.POST.get(spec.name)
-            #         spec_value.spec = spec
-            #         spec_value.product = productt
-            #         spec_value.save()
-            #     if spec_type == 3:
-            #         spec_form = BoolSpecForm(request.POST)
-            #         spec_value = spec_form.save(commit=False)
-            #         if request.POST.get(spec.name):
-            #             print(request.POST.get(spec.name))
-            #             spec_value.value = True
-            #         else:
-            #             spec_value.value = False
-            #         spec_value.spec = spec
-            #         spec_value.product = productt
-            #         spec_value.save()                       
-            messages.success(request, ('The Product has been Added Successfully!'))
+            for spec in specs:
+                if spec.type == 1:
+                    new_spec_value = request.POST[f'{spec.id}']
+                elif spec.type == 2:
+                    if spec.choices:
+                        choice = Choice.objects.get(id= request.POST[f'{spec.id}'])
+                        new_spec_value = choice.text
+                    else:
+                        new_spec_value = request.POST[f'{spec.id}']
+                elif spec.type == 3:
+                        try:
+                            request.POST[f'{spec.id}']
+                            new_spec_value = 1
+                        except:
+                            new_spec_value = 0
+                SpecValue.objects.create(
+                    spec = spec, product = productt, value = new_spec_value
+                )                       
+            messages.success(request, ('تم اضافة جميع خصائص المنتج بنجاح'))
             return product(request, productt.slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the category' + error_message))
+            messages.error(request, ('حدث خطأ اثناء اضافة المنتج' ))
             return render(request, 'products/products/add_product.html', {'form' : form, 'errors': errors})
     else:
         form = AddProductForm()
