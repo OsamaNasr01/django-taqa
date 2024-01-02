@@ -202,6 +202,10 @@ def update_product(request, slug):
         form = AddProductForm(request.POST, request.FILES, instance=productt,)
         if form.is_valid():
             form.save()
+            for spec in productt.category.specs.all():
+                for value in spec.values.filter(product=productt):
+                    value.value = request.POST[f'{value.id}']
+                    value.save()
             # for spec in productt.num_spec.all():
             #     spec_form = NumSpecForm(instance = spec)
             #     spec_value = spec_form.save(commit=False)
