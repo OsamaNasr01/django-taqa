@@ -68,12 +68,45 @@
 <!-- Product section-->
 
 
-{% if not category.parent_id %}
-<button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
-    data-bs-target="#add-category-modal">
-    إضافة قسم فرعي</button>
-{% endif %}
-<br /><br />
+
+
+<!-- Related items section-->
+<div class="container py-1 px-4 px-lg-5 mt-2">
+    {% if not category.parent_id %}
+    <button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-category-modal">
+        إضافة قسم فرعي</button>
+    {% else %}
+    <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-product-modal">
+        إضافة منتج
+    </button>
+    {% endif %}
+    <h2 class="fw-bolder mb-4">الاقسام المرتبطة بمناقصة {{ category.name }}</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for product in category.products.all %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <div class="badge  text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><a class="btn btn-close" onclick="cat_delete('{{category.id}}')" href="#"></i></a></div>
+                <!-- Product image-->
+                {% if product.image %}
+                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                {% endif %}
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{product.name}}</h5>
+                        <!-- Product price-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
 <div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="add-category-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -164,6 +197,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="modal fade" id="add-product-modal" tabindex="-1" aria-labelledby="add-product-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -210,29 +245,29 @@
 </div>
 
 
-<button hidden  id="question_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-question-modal" >
+<button hidden  id="spec_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-spec-modal" >
 </button>
-<div class="modal fade" id="delete-question-modal" tabindex="-1" aria-labelledby="delete-question-modal-label"
+<div class="modal fade" id="delete-spec-modal" tabindex="-1" aria-labelledby="delete-spec-modal-label"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-question-modal-label">
+                <h5 class="modal-title" id="delete-spec-modal-label">
                     حذف السؤال
                 </h5>
                 <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                هل انت متأكد من حذف السؤال؟
+                هل انت متأكد من حذف هذه الخاصية؟
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     إلغاء
                 </button>
-                <form id="question_delete_modal" action="" method="POST">
+                <form id="spec_delete_modal" action="" method="POST">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-                    <button type="submit" class="btn btn-danger" id="confirm-delete-question">
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-spec">
                         تأكيد الحذف
                     </button>
                 </form>
@@ -356,9 +391,9 @@
 
 <script>
 function spec_delete(id) {
-    const del_question = document.getElementById('question_delete_modal')
-    del_question.setAttribute('action', `/product/specs/delete/${id}`)
-    const modal_btn = document.getElementById('question_delete_btn')
+    const del_spec = document.getElementById('spec_delete_modal')
+    del_spec.setAttribute('action', `/product/specs/delete/${id}`)
+    const modal_btn = document.getElementById('spec_delete_btn')
     modal_btn.click()
 }
 
