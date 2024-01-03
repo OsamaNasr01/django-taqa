@@ -210,25 +210,30 @@ def update_product(request, slug):
         if form.is_valid():
             form.save()
             for spec in productt.category.specs.all():
-                for value in spec.values.filter(product=productt):
-                    value.value = request.POST[f'{spec.id}']
-                    value.save()
-            # for spec in productt.num_spec.all():
-            #     spec_form = NumSpecForm(instance = spec)
-            #     spec_value = spec_form.save(commit=False)
-            #     spec_value.value = request.POST.get(spec.spec.name)
-            #     spec_value.save()
-            # for spec in productt.txt_spec.all():
-            #     spec_form = TxtSpecForm(instance = spec)
-            #     spec_value = spec_form.save(commit=False)
-            #     spec_value.value = request.POST.get(spec.spec.name)
-            #     spec_value.save()
-            # for spec in productt.bool_spec.all():
-            #     spec_form = BoolSpecForm(instance = spec)
-            #     spec_value = spec_form.save(commit=False)
-            #     spec_value.value = request.POST.get(spec.spec.name)
-            #     spec_value.save()
-            messages.success(request, ('The Product has been Updated Successfully!'))
+                if spec.type == 1:
+                    new_spec_value = request.POST[f'{spec.id}']
+                elif spec.type == 2:
+                    if spec.choices:
+                        choice = Choice.objects.get(id= request.POST[f'{spec.id}'])
+                        new_spec_value = choice.text
+                    else:
+                        new_spec_value = request.POST[f'{spec.id}']
+                elif spec.type == 3:
+                        try:
+                            request.POST[f'{spec.id}']
+                            new_spec_value = 1
+                        except:
+                            new_spec_value = 0
+                try:
+                    spec_value = spec.values.get(product = productt) 
+                    spec_value.value = new_spec_value
+                    spec_value.save()
+                except:
+                    SpecValue.objects.create(
+                        product=productt, 
+                        spec=spec, 
+                        value = new_spec_value)
+            messages.success(request, ('تم تعديل بيانات المنتج بنجاح'))
             return product(request, productt.slug)
     else:
         form = AddProductForm(instance=product)
