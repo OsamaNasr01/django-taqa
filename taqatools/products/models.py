@@ -214,7 +214,6 @@ class Spec(models.Model):
     unit = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category, related_name='specs', on_delete=models.CASCADE)
 
-
     
 class Choice(models.Model):
     text = models.CharField(max_length=55)

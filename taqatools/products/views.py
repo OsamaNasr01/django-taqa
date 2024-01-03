@@ -165,6 +165,13 @@ def add_product(request):
 def product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     specs = Spec.objects.filter(category = product.category)
+    values = {}
+    for spec in specs:
+        try:
+            spec.value = spec.values.get(product = product).value
+        except:
+            spec.value = None
+        # print(value)
     original_price = product.prices.last().value
     discount  = product.prices.last().discount
     price = (original_price * (100 - discount ))/100
@@ -204,7 +211,7 @@ def update_product(request, slug):
             form.save()
             for spec in productt.category.specs.all():
                 for value in spec.values.filter(product=productt):
-                    value.value = request.POST[f'{value.id}']
+                    value.value = request.POST[f'{spec.id}']
                     value.save()
             # for spec in productt.num_spec.all():
             #     spec_form = NumSpecForm(instance = spec)

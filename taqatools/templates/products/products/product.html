@@ -29,31 +29,41 @@
                         name="update-product_form">
                         {% csrf_token %} {{ form.as_p }}
                         <!-- comment  -->
-                        {% for spec in product.category.specs.all %}
+                        {% for spec in specs %}
                         {% if spec.type == 1 %}
                         <div class="mb-3">
                             <label for="{{spec.id}}" class="form-label">{{spec.name}} ({{spec.unit}}):</label>
-                            <input type="number" class="form-control" id="name" name="{{spec.id}}"  value="" required>
+                            <input type="number" class="form-control" id="name" name="{{spec.id}}"  value="{{ spec.value }}" required>
                         </div>
                         {% elif spec.type == 2 %}
                         {% if not spec.choices %}
                         <div class="mb-3">
                             <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
-                            <input type="text" class="form-control" id="name" name="{{spec.id}}"  value="" required>
+                            <input type="text" class="form-control" id="name" name="{{spec.id}}"  value="{{ spec.value }}" required>
                         </div>
                         {% else %}
                         <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
                         <select name="{{spec.id}}" class="form-select" aria-label="Default select example">
-                            <option selected>اختر من القائمة</option>
+                            {% if not spec.value %}
+                            <option selected value="{{spec.value}}">اختر من القائمة</option>
+                            {% endif %}
                             {% for choice in spec.choices.all %}
+                            {% if choice.text == spec.value %}
+                            <option selected value="{{choice.id}}">{{ choice.text }}</option>
+                            {% else %}
                             <option value="{{choice.id}}">{{choice.text}}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                         <br>
                         {% endif %}
                         {% elif spec.type == 3 %}
                         <div class="form-check form-switch form-check-reverse">
-                            <input name="{{spec.id}}" class="form-check-input" type="checkbox" id="check{{spec.id}}">
+                            {% if not spec.value or spec.value == 0 %}
+                            <input name="{{spec.id}}" class="form-check-input"  type="checkbox" id="check{{spec.id}}">
+                            {% else %}
+                            <input name="{{spec.id}}" class="form-check-input" checked type="checkbox" id="check{{spec.id}}">
+                            {% endif %}
                             <label class="form-check-label" for="flexSwitchCheckReverse">{{spec.name}}</label>
                         </div>
                         <br>
@@ -135,8 +145,6 @@
         {% endfor %}
     </div>
 </div>
-
-
 {% if product.category.posts.count %}
 <div class="container">
     <h2 class="fw-bolder mb-4">مقالات ذات صلة</h2>
