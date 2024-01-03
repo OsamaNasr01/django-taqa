@@ -249,7 +249,7 @@ def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
         product.delete()
-        messages.success(request, ('The product has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف المنتج بنجاح'))
         return redirect('p_category_list')
 
 
@@ -277,7 +277,7 @@ def add_brand(request):
             'brand_name': brand.name,
             'brand_id': brand.id
         })
-        messages.success(request, ('The Brand has been Added Successfully!'))
+        messages.success(request, ('تم اضافة البراند بنجاح'))
         return HttpResponse(json_data, content_type="application/json")
     
 
@@ -298,7 +298,7 @@ def update_brand(request, slug):
         form = BrandForm(request.POST, request.FILES, instance=brand)
         if form.is_valid():
             form.save()
-            messages.success(request, ('The Brand Category has been Updated Successfully!'))
+            messages.success(request, ('تم تعدييل بيانات البراند بنجاح'))
             return brand_profile(request, brand.slug)
     else:
         form = BrandForm(instance=brand)
@@ -314,7 +314,7 @@ def delete_brand(request, slug):
     brand = get_object_or_404(Brand, slug=slug)
     if request.method == 'POST':
         brand.delete()
-        messages.success(request, ('The Brand has been Deleted Successfully!'))
+        messages.success(request, ('تم حذف البراند بنجاح'))
         return redirect('brands')
     
 
@@ -328,12 +328,12 @@ def update_price(request, slug):
             productt = Product.objects.get(slug=slug)
             new_price.product = productt
             new_price.save()
-            messages.success(request, ('The Price has been Updateded Successfully!'))
+            messages.success(request, ('تم تعديل سعر المنتج بنجاح'))
             return product(request, slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the Brand' + error_message))
+            messages.error(request, ('حدث خطأ اثناء تعديل السعر' ))
             return render(request, 'products/brands/add_brand.html', {'form' : form, 'errors': errors})
 
 @login_required(login_url='login')  

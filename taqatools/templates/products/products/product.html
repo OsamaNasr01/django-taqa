@@ -85,7 +85,7 @@
     <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
         <div class="col-md-6">
-            <div class="small mb-1">{{ product.category }}</div>
+            <div class="small mb-1"><a href="{% url 'p_category_profile' product.category.slug  %}">{{ product.category }} ></a></div>
             <h1 class="display-5 fw-bolder">{{product.name}}</h1>
             <div class="fs-5 mb-5">
                 <span class="text-decoration-line-through">{{product.o_price|floatformat:2|intcomma}}</span>
@@ -186,22 +186,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-product-modal-label">
-                    Delete Product
+                    حذف المنتج
                 </h5>
                 <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this product?
+                هل انت متأكد من حذف هذا المنتج؟
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
+                    رجوع
                 </button>
                 <form action="{% url 'delete_product' product.slug %}" method="POST">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
                     <button type="submit" class="btn btn-danger" id="confirm-delete-product">
-                        Confirm Delete
+                        تأكيد الحذف
                     </button>
                 </form>
             </div>
