@@ -15,7 +15,8 @@
 
     </button>
     <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-6">{% if category.image %}<img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}" alt="..." width="400" height="300" />{% endif %}</div>
+        <div class="col-md-6">{% if category.image %}<img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}"
+                alt="..." width="400" height="300" />{% endif %}</div>
         <div class="col-md-6">
             <div class="small mb-1">{{ category.name }}</div>
             <h1 class="display-5 fw-bolder">{{category.name}}</h1>
@@ -23,40 +24,40 @@
             {% if category.parent_id %}
             <ul>
                 {% for spec in category.specs.all %}
-                    <li>
-                        <a href="{% url 'update_spec' spec.id %}" style="text-decoration: none;">
-                            <i class='bx bx-edit'></i>
-                        </a> | 
-                        <a href="#" onclick="spec_delete('{{spec.id}}')" style="text-decoration: none; color: red;">
-                            <i class='bx bx-trash'></i>
-                        </a> | 
-                        <a href="#" onclick="spec_choice('{{spec.id}}')" style="text-decoration: none;">
-                            <i class='bx bx-add-to-queue'></i>
-                        </a> | 
-                        {{ spec.name }}
-                        {% if spec.unit %}
-                        بال{{ spec.unit }}
-                        {% endif %}
-                        <ol>
-                            {% for choice in spec.choices.all %}
-                                <li>
-                                    <a href="{% url 'update_choice_spec' choice.id %}" style="text-decoration: none;">
-                                        <i class='bx bx-edit'></i>
-                                    </a> | 
-                                    <a href="#" onclick="choice_delete('{{choice.id}}')" style="text-decoration: none; color: red;">
-                                        <i class='bx bx-trash'></i>
-                                    </a> | 
-                                    {{ choice.text }}
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </li>
+                <li>
+                    <a href="{% url 'update_spec' spec.id %}" style="text-decoration: none;">
+                        <i class='bx bx-edit'></i>
+                    </a> |
+                    <a href="#" onclick="spec_delete('{{spec.id}}')" style="text-decoration: none; color: red;">
+                        <i class='bx bx-trash'></i>
+                    </a> |
+                    <a href="#" onclick="spec_choice('{{spec.id}}')" style="text-decoration: none;">
+                        <i class='bx bx-add-to-queue'></i>
+                    </a> |
+                    {{ spec.name }}
+                    {% if spec.unit %}
+                    بال{{ spec.unit }}
+                    {% endif %}
+                    <ol>
+                        {% for choice in spec.choices.all %}
+                        <li>
+                            <a href="{% url 'update_choice_spec' choice.id %}" style="text-decoration: none;">
+                                <i class='bx bx-edit'></i>
+                            </a> |
+                            <a href="#" onclick="choice_delete('{{choice.id}}')"
+                                style="text-decoration: none; color: red;">
+                                <i class='bx bx-trash'></i>
+                            </a> |
+                            {{ choice.text }}
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </li>
                 {% endfor %}
                 <li>
-                    <a href="" data-bs-toggle="modal"
-                        data-bs-target="#add-spec-modal" >
-                        <i class='bx bx-comment-add' ></i>
-                        <i class='bx bx-question-mark' ></i>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#add-spec-modal">
+                        <i class='bx bx-comment-add'></i>
+                        <i class='bx bx-question-mark'></i>
                         إضافة خاصية جديدة
                     </a>
                 </li>
@@ -72,17 +73,13 @@
 
 <!-- Related items section-->
 <div class="container py-1 px-4 px-lg-5 mt-2">
-    {% if not category.parent_id %}
-    <button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
-        data-bs-target="#add-category-modal">
-        إضافة قسم فرعي</button>
-    {% else %}
+    {% if category.parent_id %}
     <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#add-product-modal">
         إضافة منتج
     </button>
-    {% endif %}
-    <h2 class="fw-bolder mb-4">الاقسام المرتبطة بمناقصة {{ category.name }}</h2>
+    {% if category.products.count %}
+    <h2 class="fw-bolder mb-4"> المنتجات الخاصة بقسم {{ category.name }}</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         {% for product in category.products.all %}
         <div class="col mb-5">
@@ -109,6 +106,46 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <h2 class="fw-bolder mb-4">لم يتم اضافة منتجات بقسم {{ category.name }} حتى الان</h2>
+    {% endif %}
+    {% else %}
+    <button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-category-modal">
+        إضافة قسم فرعي</button>
+    {% if sub_categories %}
+    <h2 class="fw-bolder mb-4">الاقسام المرتبطة بقسم {{ category.name }}</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for sub_category in sub_categories %}
+        {% if sub_category.parent_id == category.id %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                {% if sub_category.image %}
+                <img class="card-img-top" src="{{sub_category.image.url}}" height="200" alt="..." />
+                {% endif %}
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{sub_category.name}}</h5>
+                        <p>{{ sub_category.description }}</p>
+                    </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'p_category_profile' sub_category.slug %}">المزيد عن القسم</a></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2 class="fw-bolder mb-4"> لا يوجد اقسام فرعية بقسم {{ category.name }} حتى الان.</h2>
+    {% endif %}
+    {% endif %}
 </div>
 
 
@@ -136,23 +173,6 @@
     </div>
 </div>
 
-{% if sub_categories %}
-<div class="container">
-    <div class="container-container-content">
-        {% for sub in sub_categories %}
-        <a href="{% url 'p_category_profile' sub.slug %}" class="card">
-            <div class="image">
-                <img src="/{{sub.image}}" alt="" />
-            </div>
-            <div class="text">
-                <h4>{{ sub.name }}</h4>
-                <p>{{ sub.description|truncatewords:20 }}</p>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 
 <button type="button" hidden id="brand_modal" class="btn btn-primary" data-bs-toggle="modal"
     data-bs-target="#add-brand-modal">
@@ -223,34 +243,34 @@
                     </button>
                     {{ price_form.as_p }}
                     {% for spec in category.specs.all %}
-                        {% if spec.type == 1 %}
-                        <div class="mb-3">
-                            <label for="{{spec.id}}" class="form-label">{{spec.name}} ({{spec.unit}}):</label>
-                            <input type="number" class="form-control" id="name" name="{{spec.id}}" required>
-                        </div>
-                        {% elif spec.type == 2 %}
-                        {% if not spec.choices %}
-                        <div class="mb-3">
-                            <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
-                            <input type="text" class="form-control" id="name" name="{{spec.id}}" required>
-                        </div>
-                        {% else %}
+                    {% if spec.type == 1 %}
+                    <div class="mb-3">
+                        <label for="{{spec.id}}" class="form-label">{{spec.name}} ({{spec.unit}}):</label>
+                        <input type="number" class="form-control" id="name" name="{{spec.id}}" required>
+                    </div>
+                    {% elif spec.type == 2 %}
+                    {% if not spec.choices %}
+                    <div class="mb-3">
                         <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
-                        <select name="{{spec.id}}" class="form-select" aria-label="Default select example">
-                            <option selected>اختر من القائمة</option>
-                            {% for choice in spec.choices.all %}
-                            <option value="{{choice.id}}">{{choice.text}}</option>
-                            {% endfor %}
-                        </select>
-                        <br>
-                        {% endif %}
-                        {% elif spec.type == 3 %}
-                        <div class="form-check form-switch form-check-reverse">
-                          <input name="{{spec.id}}" class="form-check-input" type="checkbox" id="check{{spec.id}}">
-                          <label class="form-check-label" for="flexSwitchCheckReverse">{{spec.name}}</label>
-                        </div>
-                        <br>
-                        {% endif %}
+                        <input type="text" class="form-control" id="name" name="{{spec.id}}" required>
+                    </div>
+                    {% else %}
+                    <label for="{{spec.id}}" class="form-label">{{spec.name}}:</label>
+                    <select name="{{spec.id}}" class="form-select" aria-label="Default select example">
+                        <option selected>اختر من القائمة</option>
+                        {% for choice in spec.choices.all %}
+                        <option value="{{choice.id}}">{{choice.text}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    {% endif %}
+                    {% elif spec.type == 3 %}
+                    <div class="form-check form-switch form-check-reverse">
+                        <input name="{{spec.id}}" class="form-check-input" type="checkbox" id="check{{spec.id}}">
+                        <label class="form-check-label" for="flexSwitchCheckReverse">{{spec.name}}</label>
+                    </div>
+                    <br>
+                    {% endif %}
                     {% endfor %}
                     <input type="hidden" name="category_id" value="{{ category.id }}" />
                     <button type="submit" class="btn btn-primary">
@@ -263,7 +283,7 @@
 </div>
 
 
-<button hidden  id="spec_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-spec-modal" >
+<button hidden id="spec_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-spec-modal">
 </button>
 <div class="modal fade" id="delete-spec-modal" tabindex="-1" aria-labelledby="delete-spec-modal-label"
     aria-hidden="true">
@@ -295,7 +315,7 @@
 </div>
 
 
-<button hidden  id="choice_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-choice-modal" >
+<button hidden id="choice_delete_btn" data-bs-toggle="modal" data-bs-target="#delete-choice-modal">
 </button>
 <div class="modal fade" id="delete-choice-modal" tabindex="-1" aria-labelledby="delete-choice-modal-label"
     aria-hidden="true">
@@ -360,7 +380,7 @@
 
 
 
-<button hidden  id="add_choice_btn" data-bs-toggle="modal" data-bs-target="#add-choice-modal" >
+<button hidden id="add_choice_btn" data-bs-toggle="modal" data-bs-target="#add-choice-modal">
 </button>
 <div class="modal fade" id="add-choice-modal" tabindex="-1" aria-labelledby="add-choice-modal" aria-hidden="true">
     <div class="modal-dialog">
@@ -372,7 +392,7 @@
             </div>
             <div class="modal-body">
                 <form action="{% url 'add_choice_spec' %}" method="post" name="add_choice_form">
-                    {% csrf_token %} 
+                    {% csrf_token %}
                     {{ choiceform.as_p }}
                     <input id="spec_id" type="hidden" name="spec_id" value="" />
                     <button type="submit" class="btn btn-primary">
@@ -408,29 +428,29 @@
 </div>
 
 <script>
-function spec_delete(id) {
-    const del_spec = document.getElementById('spec_delete_modal')
-    del_spec.setAttribute('action', `/product/specs/delete/${id}`)
-    const modal_btn = document.getElementById('spec_delete_btn')
-    modal_btn.click()
-}
+    function spec_delete(id) {
+        const del_spec = document.getElementById('spec_delete_modal')
+        del_spec.setAttribute('action', `/product/specs/delete/${id}`)
+        const modal_btn = document.getElementById('spec_delete_btn')
+        modal_btn.click()
+    }
 
 
 
-function choice_delete(id) {
-    const del_choice = document.getElementById('choice_delete_modal')
-    del_choice.setAttribute('action', `/product/specs/choice/${id}/delete`)
-    const choice_del_modal_btn = document.getElementById('choice_delete_btn')
-    choice_del_modal_btn.click()
-}
+    function choice_delete(id) {
+        const del_choice = document.getElementById('choice_delete_modal')
+        del_choice.setAttribute('action', `/product/specs/choice/${id}/delete`)
+        const choice_del_modal_btn = document.getElementById('choice_delete_btn')
+        choice_del_modal_btn.click()
+    }
 
 
-function spec_choice(id) {
-    const question = document.getElementById('spec_id')
-    question.value = `${id}`
-    const choice_modal_btn = document.getElementById('add_choice_btn')
-    choice_modal_btn.click()
-}
+    function spec_choice(id) {
+        const question = document.getElementById('spec_id')
+        question.value = `${id}`
+        const choice_modal_btn = document.getElementById('add_choice_btn')
+        choice_modal_btn.click()
+    }
 
 </script>
 
