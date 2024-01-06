@@ -5,12 +5,27 @@
 {% block content %}
 
 
-  <h1 id="messege_id">نموذج مقال جديد</h1>
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">نموذج مقال جديد</h4>
+        </div>
+        <div class="card-body">
+          <div class="">
+            <form enctype="multipart/form-data" action="{% url 'add_post' %}" method="POST" id="form_id"
+              class="container">
+              {% csrf_token %}
+              {{ post_form.media }}
+              {{ post_form.as_p }}
+              <button class="btn btn-primary form-control" type="submit">إضافة المقال</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <form enctype="multipart/form-data" action="{% url 'add_post' %}" method="POST" id="form_id" class="container">
-    {% csrf_token %}
-    {{ post_form.media }}
-    {{ post_form.as_p }}
-    <input type="submit" class="btn btn-primary">
-  </form>
 {% endblock %}

@@ -4,16 +4,13 @@
 
 
 <div class="container mt-3">
-<button
-    type="button"
-    id="modal_button"
-    class="btn btn-danger"
-    data-bs-toggle="modal"
-    data-bs-target="#delete-post-modal"
->
-    حذف
-</button>
-<a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">تعديل</a>
+    {% if user.is_authenticated and user.is_superuser or user == post.auther %}
+    <button type="button" id="modal_button" class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#delete-post-modal">
+        حذف
+    </button>
+    <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary">تعديل</a>
+    {% endif %}
     <div class="row">
         <div class="col-lg-8">
             <!-- Post content-->
@@ -23,7 +20,8 @@
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">{{ post.created_at|naturaltime }} by {{ post.auther.full_name }}</div>
+                    <div class="text-muted fst-italic mb-2">{{ post.created_at|naturaltime }} by
+                        {{ post.auther.full_name }}</div>
                     <!-- Post categories-->
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category }}</a>
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.timeToRead }}</a>
@@ -40,25 +38,32 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <!-- Comment form-->
-                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                        <form class="mb-4"><textarea class="form-control" rows="3"
+                                placeholder="Join the discussion and leave a comment!"></textarea></form>
                         <!-- Comment with nested comments-->
                         <div class="d-flex mb-4">
                             <!-- Parent comment-->
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="flex-shrink-0"><img class="rounded-circle"
+                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                             <div class="ms-3">
                                 <div class="fw-bold">Commenter Name</div>
-                                If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                                If you're going to lead a space frontier, it has to be government; it'll never be
+                                private enterprise. Because the space frontier is dangerous, and it's expensive, and it
+                                has unquantified risks.
                                 <!-- Child comment 1-->
                                 <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="flex-shrink-0"><img class="rounded-circle"
+                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
                                         <div class="fw-bold">Commenter Name</div>
-                                        And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                        And under those conditions, you cannot establish a capital-market evaluation of
+                                        that enterprise. You can't get investors.
                                     </div>
                                 </div>
                                 <!-- Child comment 2-->
                                 <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="flex-shrink-0"><img class="rounded-circle"
+                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
                                         <div class="fw-bold">Commenter Name</div>
                                         When you put money directly to a problem, it makes a good headline.
@@ -68,10 +73,12 @@
                         </div>
                         <!-- Single comment-->
                         <div class="d-flex">
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="flex-shrink-0"><img class="rounded-circle"
+                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                             <div class="ms-3">
                                 <div class="fw-bold">Commenter Name</div>
-                                When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                                When I look at the universe and all the ways the universe wants to kill us, I find it
+                                hard to reconcile that with statements of beneficence.
                             </div>
                         </div>
                     </div>
@@ -85,7 +92,8 @@
                 <div class="card-header">Search</div>
                 <div class="card-body">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                        <input class="form-control" type="text" placeholder="Enter search term..."
+                            aria-label="Enter search term..." aria-describedby="button-search" />
                         <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                     </div>
                 </div>
@@ -98,18 +106,18 @@
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 {% for category in categories %}
-                                    {% if forloop.counter <= categories|length|div:2 %}
-                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
-                                    {% endif %}
+                                {% if forloop.counter <= categories|length|div:2 %}
+                                <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 {% for category in categories %}
-                                    {% if forloop.counter > categories|length|div:2 %}
-                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
-                                    {% endif %}
+                                {% if forloop.counter > categories|length|div:2 %}
+                                <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -118,68 +126,72 @@
             </div>
             <!-- Side widget-->
             {% if post.category.posts.count > 1 %}
-                <div class="card mb-4">
-                    <div class="card-header">مقالات مشابهة</div>
-                    <div class="card-body">
-                        
-                            {% for cat_post in post.category.posts.all %}
-                            <!-- comment -->
-                                {% if not cat_post.id == post.id %}
-                                <div class="card  mb-4">
-                                    <a href="{% url 'post' cat_post.slug %}">{% if cat_post.image %}<img class="card-img-top" src="{{cat_post.image.url}}" alt="..." />{% else %}<img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
-                                    <div class="card-body">
-                                        <div class="small text-muted">{{post.created_at}}</div>
-                                        <h2 class="card-title h4">{{ cat_post.title }}</h2>
-                                        <p class="card-text">{{ cat_post.content|safe|truncatewords:20 }}</p>
-                                        <a class="btn btn-primary" href="{% url 'post' cat_post.slug %}">المزيد</a>
-                                    </div>
-                                </div>
-                                {% endif %}
-                            <!-- comment -->
-                            {% endfor %}
-                        <!-- comment  -->
+            <div class="card mb-4">
+                <div class="card-header">مقالات مشابهة</div>
+                <div class="card-body">
+
+                    {% for cat_post in post.category.posts.all %}
+                    <!-- comment -->
+                    {% if not cat_post.id == post.id %}
+                    <div class="card  mb-4">
+                        <a href="{% url 'post' cat_post.slug %}">{% if cat_post.image %}<img class="card-img-top"
+                                src="{{cat_post.image.url}}" alt="..." />{% else %}<img class="card-img-top"
+                                src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
+                        <div class="card-body">
+                            <div class="small text-muted">{{post.created_at}}</div>
+                            <h2 class="card-title h4">{{ cat_post.title }}</h2>
+                            <p class="card-text">{{ cat_post.content|safe|truncatewords:20 }}</p>
+                            <a class="btn btn-primary" href="{% url 'post' cat_post.slug %}">المزيد</a>
+                        </div>
                     </div>
+                    {% endif %}
+                    <!-- comment -->
+                    {% endfor %}
+                    <!-- comment  -->
                 </div>
+            </div>
             {% endif %}
             <!-- Side widget-->
             {% if post.category.products.count %}
-                <div class="card mb-4">
-                    <div class="card-header"> منتجات متعلقة بالمقال</div>
-                    <div class="card-body justify-content-center row">
-                        
-                            {% for product in post.category.products.all %}
-                            <div class="card m-1 col-lg-12 col-md-4 col-sm-6 mb-3 h-100 px-2">
-                                <!-- Sale badge-->
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                <!-- Product image-->
-                                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <h5 class="fw-bolder">{{product.name}}</h5>
-                                        <!-- Product reviews-->
-                                        <div class="d-flex justify-content-center small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                        </div>
-                                        <!-- Product price-->
-                                        <span class="text-muted text-decoration-line-through">{{product.o_price}}</span>
-                                        {{product.price}}
-                                    </div>
+            <div class="card mb-4">
+                <div class="card-header"> منتجات متعلقة بالمقال</div>
+                <div class="card-body justify-content-center row">
+
+                    {% for product in post.category.products.all %}
+                    <div class="card m-1 col-lg-12 col-md-4 col-sm-6 mb-3 h-100 px-2">
+                        <!-- Sale badge-->
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
+                        </div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{product.image.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{product.name}}</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
                                 </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.slug %}">عرض المنتج</a></div>
-                                </div>
+                                <!-- Product price-->
+                                <span class="text-muted text-decoration-line-through">{{product.o_price}}</span>
+                                {{product.price}}
                             </div>
-                            {% endfor %}
-                        <!-- comment  -->
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                    href="{% url 'product' product.slug %}">عرض المنتج</a></div>
+                        </div>
                     </div>
+                    {% endfor %}
+                    <!-- comment  -->
                 </div>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -190,52 +202,27 @@
 
 <!-- delete-post-modal.html -->
 
-<div
-    class="modal fade"
-    id="delete-post-modal"
-    tabindex="-1"
-    aria-labelledby="delete-post-modal-label"
-    aria-hidden="true"
->
+<div class="modal fade" id="delete-post-modal" tabindex="-1" aria-labelledby="delete-post-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-post-modal-label">
                     حذف المقال
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close me-auto ms-0"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 هل انت متأكد من حذف المقال؟
             </div>
             <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     إلغاء
                 </button>
-                <form
-                    id="post_del_form"
-                    action="{% url 'post_delete' post.slug %}"
-                    method="POST"
-                >
-                    <input
-                        type="hidden"
-                        name="csrfmiddlewaretoken"
-                        value="{{ csrf_token }}"
-                    />
-                    <button
-                        type="submit"
-                        class="btn btn-danger"
-                        id="confirm-delete-post"
-                    >
+                <form id="post_del_form" action="{% url 'post_delete' post.slug %}" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-post">
                         تأكيد الحذف
                     </button>
                 </form>

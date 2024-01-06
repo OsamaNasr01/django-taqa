@@ -33,7 +33,7 @@ def p_category_list(request):
 
  
 @login_required(login_url='login')  
-@user_passes_test(admin_company, login_url='company_only')  
+@user_passes_test(is_superuser, login_url='not_auth')  
 def add_p_category(request):
     if request.method == 'POST':
         form = AddCategoryForm(request.POST, request.FILES)
@@ -47,12 +47,12 @@ def add_p_category(request):
                 category.parent_id = 0
             category.image = request.FILES.get('image')
             category.save()
-            messages.success(request, ('The Category has been Added Successfully!'))
+            messages.success(request, ('تم إضافة القسم بنجاح'))
             return p_category_profile(request, category.slug)
         else:
             errors = form.errors
             error_message = errors.as_text().split(':')[0]
-            messages.error(request, ('There Was An Error adding the category' + error_message))
+            messages.error(request, ('حدث خطأ أثناء إضافة القسم' ))
             return render(request, 'products/categories/add_p_category.html', {'form' : form, 'errors': errors})
     else:
         form = AddCategoryForm()

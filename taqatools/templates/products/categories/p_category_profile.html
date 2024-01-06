@@ -7,6 +7,7 @@
 {% block content %}
 
 <div class="container  px-4 px-lg-5 my-5">
+    {% if user.is_authenticated and user.is_superuser %}
     <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#update-category-modal">
         <i class='bx h2 mt-2 bx-edit bx-flip-horizontal'></i>
     </button>
@@ -14,6 +15,7 @@
     <button type="button" class="btn btn-close" data-bs-toggle="modal" data-bs-target="#delete-category-modal">
 
     </button>
+    {% endif %}
     <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-6">{% if category.image %}<img class="card-img-top mb-5 mb-md-0" src="{{category.image.url}}"
                 alt="..." width="400" height="300" />{% endif %}</div>
@@ -22,6 +24,7 @@
             <h1 class="display-5 fw-bolder">{{category.name}}</h1>
             <p class="lead">{{category.description}}</p>
             {% if category.parent_id %}
+            {% if user.is_authenticated and user.is_superuser %}
             <ul>
                 {% for spec in category.specs.all %}
                 <li>
@@ -63,6 +66,7 @@
                 </li>
             </ul>
             {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -74,10 +78,12 @@
 <!-- Related items section-->
 <div class="container py-1 px-4 px-lg-5 mt-2">
     {% if category.parent_id %}
+    {% if user.is_authenticated and user.is_superuser %}
     <button style="margin: 20px" type="button" id="product_modal" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#add-product-modal">
         إضافة منتج
     </button>
+    {% endif %}
     {% if category.products.count %}
     <h2 class="fw-bolder mb-4"> المنتجات الخاصة بقسم {{ category.name }}</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -110,9 +116,11 @@
     <h2 class="fw-bolder mb-4">لم يتم اضافة منتجات بقسم {{ category.name }} حتى الان</h2>
     {% endif %}
     {% else %}
+    {% if user.is_authenticated and user.is_superuser %}
     <button style="margin: 0 0 0 20px" type="button" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#add-category-modal">
         إضافة قسم فرعي</button>
+    {% endif %}
     {% if sub_categories %}
     <h2 class="fw-bolder mb-4">الاقسام المرتبطة بقسم {{ category.name }}</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

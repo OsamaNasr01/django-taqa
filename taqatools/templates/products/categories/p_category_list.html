@@ -32,9 +32,11 @@
 </div>
 
 <div class="container px-4 px-lg-5 mt-5">
+    {% if user.is_authenticated and user.is_superuser %}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-co-category-modal">
         اضافة قسم رئيسي
     </button>
+    {% endif %}
     {% for category in categories %}
     {% if not category.parent_id %}
     <div class="container  px-4 px-lg-5 my-5">

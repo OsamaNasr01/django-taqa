@@ -6,20 +6,26 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container py-5">
     <h1>جميع المقالات</h1>
-    <p>{{ posts|length }}</p>
+    {% if user.is_authenticated and user.is_superuser or user.has_company %}
+    <a href="{% url 'add_post' %}" class="btn btn-primary">اضف مقال جديد</a>
+    <br><br>
+    {% endif %}
     <div class="row">
         <!-- Blog entries-->
         <div class="col-lg-8">
             {% if posts %}
             <!-- Featured blog post-->
             <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                        alt="..." /></a>
                 <div class="card-body">
                     <div class="small text-muted">January 1, 2023</div>
                     <h2 class="card-title">Featured Post Title</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid
+                        atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero
+                        voluptate voluptatibus possimus, veniam magni quis!</p>
                     <a class="btn btn-primary" href="#!">Read more →</a>
                 </div>
             </div>
@@ -29,7 +35,9 @@
                 <div class="col-lg-6 col-md-6">
                     <!-- Blog post-->
                     <div class="card mb-4">
-                        <a href="{% url 'post' post.slug %}">{% if post.image %}<img class="card-img-top" src="{{post.image.url}}" alt="..." />{% else %}<img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
+                        <a href="{% url 'post' post.slug %}">{% if post.image %}<img class="card-img-top"
+                                src="{{post.image.url}}" alt="..." />{% else %}<img class="card-img-top"
+                                src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." />{% endif %}</a>
                         <div class="card-body">
                             <div class="small text-muted">{{post.created_at}}</div>
                             <h2 class="card-title h4">{{post.title}}</h2>
@@ -40,27 +48,34 @@
                 </div>
                 {% endfor %}
             </div>
-                {% if current_page.paginator.num_pages > 1 %}
-                    <!-- Pagination-->
-                    <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            {% if current_page.has_previous %}
-                                <li class="page-item "><a class="page-link" href="?page=1" tabindex="-1">الاحدث</a></li>
-                                <li class="page-item"><a class="page-link" href="?page={{current_page.previous_page_number}}">{{current_page.previous_page_number}}</a></li>
-                            {% else %}
-                                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">الاحدث</a></li>
-                            {% endif %}
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">صفحة {{ current_page.number }} من {{ current_page.paginator.num_pages }}.</a></li>
-                            {% if current_page.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">{{ current_page.next_page_number }}</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{ current_page.paginator.num_pages }}">الاقدم</a></li>
-                            {% else %}
-                            <li class="page-item disabled"><a class="page-link" href="#!" aria-disabled="true">الاقدم</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                {% endif %}
+            {% if current_page.paginator.num_pages > 1 %}
+            <!-- Pagination-->
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    {% if current_page.has_previous %}
+                    <li class="page-item "><a class="page-link" href="?page=1" tabindex="-1">الاحدث</a></li>
+                    <li class="page-item"><a class="page-link"
+                            href="?page={{current_page.previous_page_number}}">{{current_page.previous_page_number}}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                            aria-disabled="true">الاحدث</a></li>
+                    {% endif %}
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">صفحة
+                            {{ current_page.number }} من {{ current_page.paginator.num_pages }}.</a></li>
+                    {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link"
+                            href="?page={{ current_page.next_page_number }}">{{ current_page.next_page_number }}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                            href="?page={{ current_page.paginator.num_pages }}">الاقدم</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#!" aria-disabled="true">الاقدم</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
             {% endif %}
         </div>
         <!-- Side widgets-->
@@ -70,7 +85,8 @@
                 <div class="card-header">Search</div>
                 <div class="card-body">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                        <input class="form-control" type="text" placeholder="Enter search term..."
+                            aria-label="Enter search term..." aria-describedby="button-search" />
                         <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                     </div>
                 </div>
@@ -83,18 +99,18 @@
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 {% for category in categories %}
-                                    {% if forloop.counter <= categories|length|div:2 %}
-                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
-                                    {% endif %}
+                                {% if forloop.counter <= categories|length|div:2 %}
+                                <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 {% for category in categories %}
-                                    {% if forloop.counter > categories|length|div:2 %}
-                                        <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
-                                    {% endif %}
+                                {% if forloop.counter > categories|length|div:2 %}
+                                <li><a href="{% url 'post_category' category.slug %}">{{category.name}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -104,58 +120,8 @@
             <!-- Side widget-->
             <div class="card mb-4">
                 <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- delete-post-modal.html -->
-
-<div
-    class="modal fade"
-    id="delete-post-modal"
-    tabindex="-1"
-    aria-labelledby="delete-post-modal-label"
-    aria-hidden="true"
->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="delete-post-modal-label">
-                    حذف المقال
-                </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
-            </div>
-            <div class="modal-body">
-                هل انت متأكد من حذف المقال؟
-            </div>
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                >
-                    Cancel
-                </button>
-                id="post_del" action="" method="POST">
-                <input
-                    type="hidden"
-                    name="csrfmiddlewaretoken"
-                    value="{{ csrf_token }}"
-                />
-                <button
-                    type="submit"
-                    class="btn btn-danger"
-                    id="confirm-delete-post"
-                >
-                    تأكيد الحذف
-                </button>
-                <>
+                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
+                    and feature the Bootstrap 5 card component!</div>
             </div>
         </div>
     </div>
