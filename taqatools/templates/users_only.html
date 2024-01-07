@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %}
+<!-- <link rel="stylesheet" href="{% static 'membersjs/login.css' %}" /> -->
+{% endblock mycss %} {% block title %}نطاق خاص بالمستخدمين فقط{% endblock %}
+{% block content %}
+
+
+
+<div class="container my-1 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">نطاق خاص بالمستخدمين فقط</h4>
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            <p>عذرا  {{user.first_name}}! غير مصرح لك بدخول هذه الصفحة حيث انها خاصة بالمستخدمين فقط</p>
+            <p> يمكنك العودة الي <a href="{% url 'home' %}">الصفحة الرئيسية من هنا</a></p>
+            <p>شكرا لك {{user.first_name}} على تفهمك.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

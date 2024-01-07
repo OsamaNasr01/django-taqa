@@ -377,3 +377,6 @@ def not_auth(request):
 
 def company_only(request):
     return render(request, 'company_only.html', {})
+
+def users_only(request):
+    return render(request, 'users_only.html', {})

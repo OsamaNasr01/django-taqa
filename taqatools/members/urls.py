@@ -36,6 +36,7 @@ urlpatterns = [
     
     
     path('not-authinticated/', views.not_auth, name='not_auth'),
-    path('company-only/', views.company_only, name='company_only')
+    path('company-only/', views.company_only, name='company_only'),
+    path('users-only/', views.users_only, name='users_only')
     
 ]
