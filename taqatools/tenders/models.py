@@ -14,6 +14,18 @@ class Tender(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=255)
     image = ResizedImageField(size=[300, 300], upload_to='images', null= True, blank=True)
+    @property
+    def no_requests(self):
+        return len(self.requests.all())
+    
+    
+    @property
+    def no_offers(self):
+        no_offers = 0
+        for request in self.requests.all():
+            no_offers += len(request.offers.all())
+        return no_offers
+
     
     
 class Question(models.Model):

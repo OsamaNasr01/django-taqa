@@ -12,14 +12,14 @@
 <!-- Product section-->
 <div class="container  px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{tender_request.tender.image.url}}" alt="..." width="400"
-                height="300" /></div>
+        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{tender_request.tender.image.url}}" alt="..."
+                width="400" height="300" /></div>
         <div class="col-md-6">
             <div class="small mb-1">{{ tender_request.tender.name }}</div>
             <h1 class="display-5 fw-bolder">{{tender_request.location.location}}</h1>
             <h3>{{ tender_request.created_at }}</h3>
             <p class="lead">{{tender_request.tender.description}}</p>
-            
+
             <ul>
                 {% for answer in tender_request.answers.all %}
                 {% if answer.question.type == 3 %}
@@ -36,45 +36,48 @@
     </div>
 </div>
 
-    <div class="container px-4 px-lg-5 mt-5">
-        <form action="{% url 'add_offer' %}" method="post" >
-          {% csrf_token %}
-            <input type="hidden"  name="tender_request" value="{{tender_request.id}}">
-            <input type="hidden" name="count" value="0">
-          <div class="d-grid mb-3">
+<div class="container px-4 px-lg-5 mt-5">
+    {% if user.is_authenticated and user.is_superuser or user.has_company %}
+    <form action="{% url 'add_offer' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="tender_request" value="{{tender_request.id}}">
+        <input type="hidden" name="count" value="0">
+        <div class="d-grid mb-3">
             <button type="submit" class="btn btn-primary">إضافة عرض سعر</button>
-          </div>
-        </form>
-        <br>
-        <h3>عروض الاسعار المقدمة لهذا الطلب</h3><br>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for offer in tender_request.offers.all %}
-            {% if offer.submit %}
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{offer.company.image.url}}" height="200" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{offer.company.name}}</h5>
-                            <!-- Product price-->
-                            {{offer.value}}
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'offer_profile' offer.id %}">تفاصيل العرض</a></div>
+        </div>
+    </form>
+    <br>
+    {% endif %}
+    <h3>عروض الاسعار المقدمة لهذا الطلب</h3><br>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for offer in tender_request.offers.all %}
+        {% if offer.submit %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Sale badge-->
+                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                <!-- Product image-->
+                <img class="card-img-top" src="{{offer.company.image.url}}" height="200" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{offer.company.name}}</h5>
+                        <!-- Product price-->
+                        {{offer.value}}
                     </div>
                 </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                            href="{% url 'offer_profile' offer.id %}">تفاصيل العرض</a></div>
+                </div>
             </div>
-            {% endif %}
-            {% endfor %}
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
+</div>
 
 
 {% endblock %}
