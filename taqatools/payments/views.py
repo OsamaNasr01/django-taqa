@@ -169,3 +169,8 @@ def wallet_pay_request(payment_token, wallet_no):
 def card_pay_request(payment_token):
     url = f'https://accept.paymob.com/api/acceptance/iframes/740313?payment_token={payment_token}'
     return url
+
+
+
+def payment_status(request):
+    return render(request, 'payments/status.html', {})
