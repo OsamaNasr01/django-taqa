@@ -25,6 +25,17 @@ class Tender(models.Model):
         for request in self.requests.all():
             no_offers += len(request.offers.all())
         return no_offers
+    
+    @property
+    def companies(self):
+        companies = set()
+        for request in self.requests.all():
+            for offer in request.offers.all():
+                if offer.company:
+                    company = offer.company.id
+                    if company not in companies:
+                        companies.add(company)
+        return len(companies)
 
     
     
