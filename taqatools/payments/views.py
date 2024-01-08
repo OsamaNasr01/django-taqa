@@ -173,5 +173,8 @@ def card_pay_request(payment_token):
 
 
 def payment_status(request):
+    status = {}
+    for key, value in request.GET:
+        status += {key, value}
     success = request.GET['success']
-    return render(request, 'payments/status.html', {'success':success})
+    return render(request, 'payments/status.html', {'success':success, 'status':status})
